@@ -3,7 +3,7 @@
 
 This project aims at re-design the drools overall framework.
 By itself it has to be considered as a to-be-thrown PoC: as soon as a good design has been achieved and agreed upon,
-such design should be iteratively introduced inside `drool` repository.
+such design should be iteratively introduced inside `drools` repository.
 
 The main focus of this project is on:
 1. clear separation between compile-time and runtime
