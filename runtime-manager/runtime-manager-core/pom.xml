@@ -6,16 +6,16 @@
 
     <parent>
         <groupId>org.kie</groupId>
-        <artifactId>compilation-manager</artifactId>
+        <artifactId>runtime-manager</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>compilation-manager-common</artifactId>
+    <artifactId>runtime-manager-core</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>compilation-manager-api</artifactId>
+            <artifactId>runtime-manager-api</artifactId>
         </dependency>
     </dependencies>
 

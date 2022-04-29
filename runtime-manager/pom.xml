@@ -15,7 +15,7 @@
 
     <modules>
         <module>runtime-manager-api</module>
-        <module>runtime-manager-common</module>
+        <module>runtime-manager-core</module>
     </modules>
 
     

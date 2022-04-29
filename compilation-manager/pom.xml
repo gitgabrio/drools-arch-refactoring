@@ -15,7 +15,7 @@
 
     <modules>
         <module>compilation-manager-api</module>
-        <module>compilation-manager-common</module>
+        <module>compilation-manager-core</module>
     </modules>
 
 

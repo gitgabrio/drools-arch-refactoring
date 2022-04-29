@@ -12,6 +12,11 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>1.7.30</slf4j.version>
+        <jupiter.version>5.8.2</jupiter.version>
+        <mockito.version>4.4.0</mockito.version>
+        <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
     </properties>
 
     <modules>
@@ -29,7 +34,7 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>compilation-manager-common</artifactId>
+                <artifactId>compilation-manager-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -39,10 +44,72 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>runtime-manager-common</artifactId>
+                <artifactId>runtime-manager-core</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <!-- External -->
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!-- Test -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!-- Dependencies common to all modules. Keep that as limited as possible. Please avoid indirect or looped dependencies-->
+    <dependencies>
+        <!-- External -->
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
