@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.common.utils;
+package org.kie.dar.compilationmanager.core.utils;
 
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
@@ -34,7 +34,7 @@ public class SPIUtils {
     public static Optional<KieCompilerService> getKieCompilerService(DARResource resource, boolean refresh) {
         logger.debug("getKieCompilerService {} {}", resource, refresh);
         List<KieCompilerService> retrieved = getKieCompilerServices(refresh);
-        return retrieved.stream().filter(service -> service.manageResource(resource)).findFirst();
+        return retrieved.stream().filter(service -> service.canManageResource(resource)).findFirst();
     }
 
     public static List<KieCompilerService> getKieCompilerServices(boolean refresh) {

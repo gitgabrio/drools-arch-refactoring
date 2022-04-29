@@ -15,7 +15,7 @@
  */
 package org.kie.dar.compilationmanager.api.service;
 
-import org.kie.dar.compilationmanager.api.model.DAROutput;
+import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 
 import java.util.List;
@@ -24,20 +24,20 @@ import java.util.Optional;
 public interface CompilationManager {
 
     /**
-     * Produce one <code>DAROutput</code> from the given <code>DARResource</code>.
+     * Produce one <code>DARProcessed</code> from the given <code>DARResource</code>.
      * The return is <code>Optional</code> because the engine required to process given <code>DARResource</code>
      * may not be found
      * @param toProcess
      * @return
      */
-    Optional<DAROutput> processResource(DARResource toProcess);
+    Optional<DARProcessed> processResource(DARResource toProcess);
 
     /**
-     * Produce a <code>List&lt;DAROutput&gt;</code> from the given <code>List&lt;DARResource&gt;</code>
+     * Produce a <code>List&lt;DARProcessed&gt;</code> from the given <code>List&lt;DARResource&gt;</code>
      * @param toProcess
      * @return
      */
-    List<DAROutput> processResources(List<DARResource> toProcess);
+    List<DARProcessed> processResources(List<DARResource> toProcess);
 
 
 }

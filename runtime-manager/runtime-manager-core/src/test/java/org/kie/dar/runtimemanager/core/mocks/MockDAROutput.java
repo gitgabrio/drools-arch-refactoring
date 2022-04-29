@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.common.mocks;
+package org.kie.dar.runtimemanager.core.mocks;
 
-import org.kie.dar.compilationmanager.api.model.DARResource;
 
-public class MockDARResourceC implements DARResource {
+import org.kie.dar.runtimemanager.api.model.DAROutput;
+
+public class MockDAROutput implements DAROutput {
 }

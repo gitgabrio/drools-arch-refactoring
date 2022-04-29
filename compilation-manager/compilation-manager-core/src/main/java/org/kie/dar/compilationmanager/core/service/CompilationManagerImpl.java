@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.common.service;
+package org.kie.dar.compilationmanager.core.service;
 
-import org.kie.dar.compilationmanager.api.model.DAROutput;
+import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
@@ -26,14 +26,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.kie.dar.compilationmanager.common.utils.SPIUtils.getKieCompilerService;
+import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerService;
 
 public class CompilationManagerImpl implements CompilationManager {
 
     private static final Logger logger = LoggerFactory.getLogger(CompilationManagerImpl.class.getName());
 
     @Override
-    public Optional<DAROutput> processResource(DARResource toProcess) {
+    public Optional<DARProcessed> processResource(DARResource toProcess) {
         Optional<KieCompilerService> retrieved = getKieCompilerService(toProcess, true);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
@@ -42,7 +42,7 @@ public class CompilationManagerImpl implements CompilationManager {
     }
 
     @Override
-    public List<DAROutput> processResources(List<DARResource> toProcess) {
+    public List<DARProcessed> processResources(List<DARResource> toProcess) {
         return toProcess.stream().map(this::processResource)
                 .filter(Optional::isPresent)
                 .map(Optional::get)

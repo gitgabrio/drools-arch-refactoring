@@ -1,4 +1,4 @@
-package org.kie.dar.compilationmanager.common.utils;/*
+package org.kie.dar.compilationmanager.core.utils;/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@ package org.kie.dar.compilationmanager.common.utils;/*
 
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.dar.compilationmanager.common.mocks.*;
+import org.kie.dar.compilationmanager.core.mocks.*;
 
 import java.util.Arrays;
 import java.util.List;

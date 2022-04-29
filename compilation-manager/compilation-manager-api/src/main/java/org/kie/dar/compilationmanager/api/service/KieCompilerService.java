@@ -15,7 +15,7 @@
  */
 package org.kie.dar.compilationmanager.api.service;
 
-import org.kie.dar.compilationmanager.api.model.DAROutput;
+import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
 public interface KieCompilerService {
 
 
-    <T extends DARResource> boolean manageResource(T toProcess);
+    <T extends DARResource> boolean canManageResource(T toProcess);
 
     /**
      * Produce one <code>E</code> from the given <code>T</code>
@@ -36,13 +36,6 @@ public interface KieCompilerService {
      * @param toProcess
      * @return
      */
-    <T extends DARResource, E extends DAROutput> E processResource(T toProcess);
+    <T extends DARResource, E extends DARProcessed> E processResource(T toProcess);
 
-    /**
-     * Produce a <code>List&lt;E&gt;</code> from the given <code>List&lt;T&gt;</code>
-     *
-     * @param toProcess
-     * @return
-     */
-    <T extends DARResource, E extends DAROutput> List<E> processResources(List<T> toProcess);
 }

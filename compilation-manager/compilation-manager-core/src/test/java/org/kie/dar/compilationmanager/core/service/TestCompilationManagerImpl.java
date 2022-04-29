@@ -1,4 +1,4 @@
-package org.kie.dar.compilationmanager.common.service;/*
+package org.kie.dar.compilationmanager.core.service;/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +16,13 @@ package org.kie.dar.compilationmanager.common.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DAROutput;
+import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.common.mocks.MockDARResourceA;
-import org.kie.dar.compilationmanager.common.mocks.MockDARResourceB;
-import org.kie.dar.compilationmanager.common.mocks.MockDARResourceC;
-import org.kie.dar.compilationmanager.common.mocks.MockDARResourceD;
+import org.kie.dar.compilationmanager.core.mocks.MockDARResourceA;
+import org.kie.dar.compilationmanager.core.mocks.MockDARResourceB;
+import org.kie.dar.compilationmanager.core.mocks.MockDARResourceC;
+import org.kie.dar.compilationmanager.core.mocks.MockDARResourceD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,13 +48,13 @@ class TestCompilationManagerImpl {
         MANAGED_DAR_RESOURCES.forEach(managedResource -> {
             try {
                 DARResource toProcess = managedResource.getDeclaredConstructor().newInstance();
-                Optional<DAROutput> retrieved = compilationManager.processResource(toProcess);
+                Optional<DARProcessed> retrieved = compilationManager.processResource(toProcess);
                 assertTrue(retrieved.isPresent());
             } catch (Exception e) {
                 fail(e);
             }
         });
-        Optional<DAROutput> retrieved = compilationManager.processResource(new MockDARResourceD());
+        Optional<DARProcessed> retrieved = compilationManager.processResource(new MockDARResourceD());
         assertTrue(retrieved.isEmpty());
     }
 
@@ -70,7 +70,7 @@ class TestCompilationManagerImpl {
             }
         });
         toProcess.add(new MockDARResourceD());
-        List<DAROutput> retrieved = compilationManager.processResources(toProcess);
+        List<DARProcessed> retrieved = compilationManager.processResources(toProcess);
         assertNotNull(retrieved);
         assertEquals(MANAGED_DAR_RESOURCES.size(), retrieved.size());
     }

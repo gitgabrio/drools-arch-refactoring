@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.api.model;
+package org.kie.dar.compilationmanager.core.mocks;
 
-/**
- * A generic <i>Resource</i> to be processed by specific engine
- */
-public interface DARResource {
+import org.kie.dar.compilationmanager.api.model.DARResource;
 
-    /**
-     * The unique, full identifier of a given model' resource
-     * @return
-     */
-    String getFullResourceName();
+public abstract class AbstractMockDARResource implements DARResource {
+
+    @Override
+    public String getFullResourceName() {
+        return this.getClass().getSimpleName();
+    }
 }

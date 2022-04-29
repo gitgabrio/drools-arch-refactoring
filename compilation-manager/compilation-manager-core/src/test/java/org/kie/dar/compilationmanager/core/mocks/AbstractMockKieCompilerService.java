@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.common.mocks;
+package org.kie.dar.compilationmanager.core.mocks;
 
+import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class MockKieCompilerServiceAB extends MockKieCompilerService {
-
-    private static List<Class<? extends DARResource>> managedResources = Arrays.asList(MockDARResourceA.class, MockDARResourceB.class);
+public abstract class AbstractMockKieCompilerService implements KieCompilerService {
 
     @Override
-    public boolean manageResource(DARResource toProcess) {
-        return managedResources.contains(toProcess.getClass());
+    @SuppressWarnings("unchecked")
+    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess) {
+        if (!canManageResource(toProcess)) {
+            throw new KieCompilerServiceException(String.format("Unmanaged resource %s", toProcess.getClass()));
+        }
+        return (E) new MockDARProcessed();
     }
 
 }

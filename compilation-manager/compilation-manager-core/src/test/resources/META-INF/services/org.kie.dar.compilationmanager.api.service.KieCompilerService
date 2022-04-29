@@ -1,3 +1,3 @@
 # SPI implementations
-org.kie.dar.compilationmanager.common.mocks.MockKieCompilerServiceAB
-org.kie.dar.compilationmanager.common.mocks.MockKieCompilerServiceC
+org.kie.dar.compilationmanager.core.mocks.MockKieCompilerServiceAB
+org.kie.dar.compilationmanager.core.mocks.MockKieCompilerServiceC
