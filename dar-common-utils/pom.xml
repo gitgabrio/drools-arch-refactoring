@@ -10,19 +10,14 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>engines</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>foo-engine</module>
-    </modules>
+    <artifactId>dar-common-utils</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>dar-common-utils</artifactId>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
         </dependency>
     </dependencies>
 
-
+    
 </project>

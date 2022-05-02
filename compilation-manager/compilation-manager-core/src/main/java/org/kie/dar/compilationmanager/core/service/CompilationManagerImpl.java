@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerService;
 
 public class CompilationManagerImpl implements CompilationManager {
-
     private static final Logger logger = LoggerFactory.getLogger(CompilationManagerImpl.class.getName());
 
     @Override

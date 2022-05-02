@@ -6,23 +6,18 @@
 
     <parent>
         <groupId>org.kie</groupId>
-        <artifactId>drools-arch-refactoring</artifactId>
+        <artifactId>engines</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>engines</artifactId>
+    <artifactId>foo-engine</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>foo-engine</module>
+        <module>foo-engine-compilation</module>
+        <module>foo-engine-runtime</module>
+        <module>foo-engine-test</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>dar-common-utils</artifactId>
-        </dependency>
-    </dependencies>
-
-
+    
 </project>
