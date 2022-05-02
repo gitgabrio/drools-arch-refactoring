@@ -16,7 +16,15 @@
 package org.kie.foo.engine.compilation.utils;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.SimpleName;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import org.kie.dar.common.utils.JavaParserUtils;
+import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
 import org.kie.memorycompiler.JavaConfiguration;
@@ -24,17 +32,22 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import static org.kie.dar.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
+import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 
 public class FooCompilerHelper {
-
-    static final String FOO_MODEL_PACKAGE_NAME = "org.kie.foo.engine.compilation.model";
     static final String FOO_MODEL_TEMPLATE_JAVA = "FooModelTemplate.tmpl";
     static final String FOO_MODEL_TEMPLATE = "FooModelTemplate";
 
-    static final KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(FooCompilerHelper.class.getClassLoader());
+    static final String FOO_RESOURCES_TEMPLATE_JAVA = "FooResourcesTemplate.tmpl";
+
+    static final String FOO_RESOURCES_TEMPLATE = "FooResourcesTemplate";
+
+    public static final KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(FooCompilerHelper.class.getClassLoader());
 
     private FooCompilerHelper() {
     }
@@ -47,13 +60,35 @@ public class FooCompilerHelper {
                 FOO_MODEL_TEMPLATE);
         Map<String, String> sourcesMap = new HashMap<>();
         sourcesMap.put(getFullClassName(compilationUnit), compilationUnit.toString());
+        String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
+        CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
+        sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap);
         return new DARProcessedFoo(compiledClasses);
+    }
+
+    static CompilationUnit getFooResourcesCompilationUnit(Set<String> generatedSources, String fooResourcesSourceClassName) {
+        CompilationUnit toReturn = JavaParserUtils.getCompilationUnit(fooResourcesSourceClassName,
+                FOO_MODEL_PACKAGE_NAME,
+                FOO_RESOURCES_TEMPLATE_JAVA,
+                FOO_RESOURCES_TEMPLATE);
+        ClassOrInterfaceDeclaration classOrInterfaceDeclaration = toReturn.getClassByName(fooResourcesSourceClassName)
+                .orElseThrow(() -> new KieCompilerServiceException("Failed to find expected class " + fooResourcesSourceClassName));
+        ConstructorDeclaration constructorDeclaration = classOrInterfaceDeclaration.getConstructors().get(0);
+        constructorDeclaration.setName(new SimpleName(fooResourcesSourceClassName));
+        final NodeList<Expression> generatedSourcesArgument = new NodeList<>();
+        for (String generatedSource : generatedSources) {
+            generatedSourcesArgument.add(new StringLiteralExpr(generatedSource));
+        }
+        ExplicitConstructorInvocationStmt explicitConstructorInvocationStmt = getSuperConstructorInvocation(constructorDeclaration);
+        explicitConstructorInvocationStmt.getArguments().get(0).asMethodCallExpr().setArguments(generatedSourcesArgument);
+        return toReturn;
     }
 
     /**
      * Compile the given sources and add them to given <code>Classloader</code> of the current instance.
      * Returns the <code>compiled bytecode</code>
+     *
      * @param sourcesMap
      * @return
      */

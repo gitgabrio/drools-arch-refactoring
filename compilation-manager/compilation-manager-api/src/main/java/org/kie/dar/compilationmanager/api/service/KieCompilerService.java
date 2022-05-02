@@ -33,6 +33,10 @@ public interface KieCompilerService {
     /**
      * Produce one <code>E</code> from the given <code>T</code>
      *
+     * Implementation are also required to generate a "mapping" class, i.e. a class specific for the given
+     * model responsible to list all the other generated ones; engine-specific runtimes will look for such
+     * class to know if it can manage given resource
+     *
      * @param toProcess
      * @return
      */

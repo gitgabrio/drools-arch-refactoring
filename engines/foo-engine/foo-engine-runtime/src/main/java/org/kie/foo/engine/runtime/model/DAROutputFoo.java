@@ -13,20 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
-
+package org.kie.foo.engine.runtime.model;
 
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 
-public class MockDAROutput implements DAROutput {
+public class DAROutputFoo implements DAROutput {
+
+    private final String fullResourceName;
+    private final Object outputData;
+
+    public DAROutputFoo(String fullResourceName, Object outputData) {
+        this.fullResourceName = fullResourceName;
+        this.outputData = outputData;
+    }
 
     @Override
     public String getFullResourceName() {
-        return null;
+        return fullResourceName;
     }
 
     @Override
     public Object getOutputData() {
-        return null;
+        return outputData;
     }
 }

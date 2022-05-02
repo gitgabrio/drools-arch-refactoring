@@ -19,4 +19,11 @@ package org.kie.dar.runtimemanager.api.model;
  * A generic <i>result</i> of evaluation
  */
 public interface DAROutput {
+
+    /**
+     * The unique, full identifier of a given model' resource
+     * @return
+     */
+    String getFullResourceName();
+    Object getOutputData();
 }

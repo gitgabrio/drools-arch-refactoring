@@ -14,18 +14,23 @@ package org.kie.foo.engine.compilation.utils;/*
  * limitations under the License.
  */
 
+import com.github.javaparser.ast.CompilationUnit;
 import org.junit.jupiter.api.Test;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.foo.engine.compilation.utils.FooCompilerHelper.FOO_MODEL_PACKAGE_NAME;
-import static org.kie.foo.engine.compilation.utils.FooCompilerHelper.memoryClassLoader;
+import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
+import static org.kie.foo.engine.compilation.TestingUtils.commonEvaluateByteCode;
 
 class FooCompilerHelperTest {
 
@@ -37,6 +42,21 @@ class FooCompilerHelperTest {
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(darResourceFoo.getFullResourceName());
         commonEvaluateByteCode(retrievedByteCode, fullClassName);
+        fullClassName += "Resources";
+        commonEvaluateByteCode(retrievedByteCode, fullClassName);
+    }
+
+    @Test
+    void getFooResourcesCompilationUnit() {
+        Set<String> generatedSources = IntStream.range(0, 3).mapToObj(i -> "GeneratedSource" + i).collect(Collectors.toSet());
+        String fooResourcesSourceClassName = "FooResourcesSourceClass";
+        CompilationUnit retrieved = FooCompilerHelper.getFooResourcesCompilationUnit(generatedSources, fooResourcesSourceClassName);
+        assertNotNull(retrieved);
+        Map<String, String> sourcesMap = new HashMap<>();
+        sourcesMap.put(getFullClassName(retrieved), retrieved.toString());
+        Map<String, byte[]> compiledClasses = FooCompilerHelper.compileClasses(sourcesMap);
+        assertEquals(sourcesMap.size(), compiledClasses.size());
+        commonEvaluateByteCode(compiledClasses, getFullClassName(retrieved));
     }
 
     @Test
@@ -53,14 +73,4 @@ class FooCompilerHelperTest {
         commonEvaluateByteCode(retrieved, fullClassName);
     }
 
-    private void commonEvaluateByteCode(Map<String, byte[]> retrieved, String fullClassName) {
-        assertNotNull(retrieved);
-        retrieved.forEach(memoryClassLoader::addCode);
-        try {
-            Class<?> loadedClass = memoryClassLoader.loadClass(fullClassName);
-            loadedClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            fail(e);
-        }
-    }
 }

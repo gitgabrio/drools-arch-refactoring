@@ -13,20 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.foo.engine.api.constants;
 
+public class Constants {
 
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-
-public class MockDAROutput implements DAROutput {
-
-    @Override
-    public String getFullResourceName() {
-        return null;
+    private Constants() {
     }
 
-    @Override
-    public Object getOutputData() {
-        return null;
-    }
+    public static final String FOO_MODEL_PACKAGE_NAME = "org.kie.foo.engine.compilation.model";
 }

@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.foo.engine.compilation.model;
 
+import org.kie.foo.engine.api.model.FooResources;
 
-import org.kie.dar.runtimemanager.api.model.DAROutput;
+import java.util.Arrays;
 
-public class MockDAROutput implements DAROutput {
+public class DarFooResources extends FooResources {
 
-    @Override
-    public String getFullResourceName() {
-        return null;
-    }
-
-    @Override
-    public Object getOutputData() {
-        return null;
+    public DarFooResources() {
+        super(Arrays.asList("FooResOne", "FooResTwo"));
     }
 }

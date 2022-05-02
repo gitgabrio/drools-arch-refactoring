@@ -12,5 +12,16 @@
 
     <artifactId>foo-engine-runtime</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>foo-engine-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>runtime-manager-api</artifactId>
+        </dependency>
+    </dependencies>
+
     
 </project>
