@@ -62,12 +62,6 @@ public class FooCompilerHelper {
         String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
         sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
-        sourcesMap.forEach(new BiConsumer<String, String>() {
-            @Override
-            public void accept(String s, String s2) {
-                System.out.println(s2);
-            }
-        });
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
         return new DARProcessedFoo(compiledClasses);
     }

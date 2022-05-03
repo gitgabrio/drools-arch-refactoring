@@ -23,8 +23,7 @@
 
     <modules>
         <module>dar-common-utils</module>
-        <module>compilation-manager</module>
-        <module>runtime-manager</module>
+        <module>dar-core</module>
         <module>engines</module>
     </modules>
 
