@@ -23,6 +23,7 @@ import org.kie.dar.runtimemanager.core.mocks.MockDARInputA;
 import org.kie.dar.runtimemanager.core.mocks.MockDARInputB;
 import org.kie.dar.runtimemanager.core.mocks.MockDARInputC;
 import org.kie.dar.runtimemanager.core.mocks.MockDARInputD;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestRuntimeManagerImpl {
 
     private static RuntimeManager runtimeManager;
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     private static final List<Class<? extends DARInput>> MANAGED_DAR_INPUTS = Arrays.asList(MockDARInputA.class,
             MockDARInputB.class,
@@ -43,6 +45,7 @@ class TestRuntimeManagerImpl {
     @BeforeAll
     static void setUp() {
         runtimeManager = new RuntimeManagerImpl();
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     @Test
@@ -50,13 +53,13 @@ class TestRuntimeManagerImpl {
         MANAGED_DAR_INPUTS.forEach(managedInput -> {
             try {
                 DARInput toProcess = managedInput.getDeclaredConstructor().newInstance();
-                Optional<DAROutput> retrieved = runtimeManager.evaluateInput(toProcess);
+                Optional<DAROutput> retrieved = runtimeManager.evaluateInput(toProcess, memoryCompilerClassLoader);
                 assertTrue(retrieved.isPresent());
             } catch (Exception e) {
                 fail(e);
             }
         });
-        Optional<DAROutput> retrieved = runtimeManager.evaluateInput(new MockDARInputD());
+        Optional<DAROutput> retrieved = runtimeManager.evaluateInput(new MockDARInputD(), memoryCompilerClassLoader);
         assertTrue(retrieved.isEmpty());
     }
 
@@ -72,7 +75,7 @@ class TestRuntimeManagerImpl {
             }
         });
         toProcess.add(new MockDARInputD());
-        List<DAROutput> retrieved = runtimeManager.evaluateInputs(toProcess);
+        List<DAROutput> retrieved = runtimeManager.evaluateInputs(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(MANAGED_DAR_INPUTS.size(), retrieved.size());
     }

@@ -15,10 +15,13 @@ package org.kie.foo.engine.compilation.utils;/*
  */
 
 import com.github.javaparser.ast.CompilationUnit;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -31,19 +34,28 @@ import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 import static org.kie.foo.engine.compilation.TestingUtils.commonEvaluateByteCode;
+import static org.kie.foo.engine.compilation.TestingUtils.getFileFromFileName;
 
 class FooCompilerHelperTest {
 
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+    @BeforeAll
+    static void setUp() {
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
+    }
+
     @Test
     void getDARProcessedFoo() {
-        DARResourceFoo darResourceFoo = new DARResourceFoo("fullResourceName");
-        DARProcessedFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo);
+        File fooFile = getFileFromFileName("DarFoo.foo");
+        DARResourceFoo darResourceFoo = new DARResourceFoo(fooFile);
+        DARProcessedFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(darResourceFoo.getFullResourceName());
-        commonEvaluateByteCode(retrievedByteCode, fullClassName);
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
         fullClassName += "Resources";
-        commonEvaluateByteCode(retrievedByteCode, fullClassName);
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
     }
 
     @Test
@@ -54,9 +66,9 @@ class FooCompilerHelperTest {
         assertNotNull(retrieved);
         Map<String, String> sourcesMap = new HashMap<>();
         sourcesMap.put(getFullClassName(retrieved), retrieved.toString());
-        Map<String, byte[]> compiledClasses = FooCompilerHelper.compileClasses(sourcesMap);
+        Map<String, byte[]> compiledClasses = FooCompilerHelper.compileClasses(sourcesMap, memoryCompilerClassLoader);
         assertEquals(sourcesMap.size(), compiledClasses.size());
-        commonEvaluateByteCode(compiledClasses, getFullClassName(retrieved));
+        commonEvaluateByteCode(compiledClasses, getFullClassName(retrieved), memoryCompilerClassLoader);
     }
 
     @Test
@@ -68,9 +80,9 @@ class FooCompilerHelperTest {
                 "}";
         Map<String, String> sourcesMap = new HashMap<>();
         sourcesMap.put(fullClassName, testingSource);
-        Map<String, byte[]> retrieved = FooCompilerHelper.compileClasses(sourcesMap);
+        Map<String, byte[]> retrieved = FooCompilerHelper.compileClasses(sourcesMap, memoryCompilerClassLoader);
         assertEquals(sourcesMap.size(), retrieved.size());
-        commonEvaluateByteCode(retrieved, fullClassName);
+        commonEvaluateByteCode(retrieved, fullClassName, memoryCompilerClassLoader);
     }
 
 }

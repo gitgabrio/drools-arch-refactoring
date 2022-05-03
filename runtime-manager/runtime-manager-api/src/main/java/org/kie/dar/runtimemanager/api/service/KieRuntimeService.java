@@ -17,8 +17,7 @@ package org.kie.dar.runtimemanager.api.service;
 
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
-
-import java.util.List;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 /**
  * The compilation-related interface to be implemented by engine-plugin.
@@ -30,17 +29,20 @@ public interface KieRuntimeService {
 
     /**
      * Every engine is responsible to verify if it can evaluate a result with the resource of the given <b>fullResourceName</b>
+     *
      * @param fullResourceName
+     * @param memoryCompilerClassLoader
      * @return
      */
-    boolean canManageInput(String fullResourceName);
+    boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
     /**
      * Produce one <code>DAROutput</code> from the given <code>DARInput</code>
      *
      * @param toEvaluate
+     * @param memoryCompilerClassLoader
      * @return
      */
-    <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate);
+    <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 }

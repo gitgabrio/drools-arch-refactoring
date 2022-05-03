@@ -20,28 +20,31 @@ import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class KieRuntimeServiceFooTest {
 
     private static KieRuntimeService kieRuntimeService;
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     @BeforeAll
     static void setUp() {
         kieRuntimeService = new KieRuntimeServiceFoo();
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput("DarFoo"));
-        assertFalse(kieRuntimeService.canManageInput("DarNotFoo"));
+        assertTrue(kieRuntimeService.canManageInput("DarFoo", memoryCompilerClassLoader));
+        assertFalse(kieRuntimeService.canManageInput("DarNotFoo", memoryCompilerClassLoader));
     }
 
     @Test
     void evaluateInputExistingFooResources() {
         DARInputFoo toEvaluate = new DARInputFoo("DarFoo", "InputData");
-        DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate);
+        DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(toEvaluate.getFullResourceName(), retrieved.getFullResourceName());
         assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
@@ -51,7 +54,7 @@ class KieRuntimeServiceFooTest {
     void evaluateInputNotExistingFooResources() {
         try {
             DARInputFoo toEvaluate = new DARInputFoo("DarNotFoo", "InputData");
-            kieRuntimeService.evaluateInput(toEvaluate);
+            kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieRuntimeServiceException);

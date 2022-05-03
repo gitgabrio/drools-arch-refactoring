@@ -17,8 +17,7 @@ package org.kie.dar.compilationmanager.api.service;
 
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
-
-import java.util.List;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 /**
  * The compilation-related interface to be implemented by engine-plugin.
@@ -38,8 +37,9 @@ public interface KieCompilerService {
      * class to know if it can manage given resource
      *
      * @param toProcess
+     * @param memoryCompilerClassLoader
      * @return
      */
-    <T extends DARResource, E extends DARProcessed> E processResource(T toProcess);
+    <T extends DARResource, E extends DARProcessed> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 }

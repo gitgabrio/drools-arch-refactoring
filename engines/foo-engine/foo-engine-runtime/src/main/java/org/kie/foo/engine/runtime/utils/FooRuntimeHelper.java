@@ -19,6 +19,7 @@ import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.api.model.FooResources;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
@@ -29,13 +30,12 @@ public class FooRuntimeHelper {
     }
 
 
-    public static FooResources loadFooResources(String fullResourceName)   {
+    public static FooResources loadFooResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader)   {
         String simpleClassName = getSanitizedClassName(fullResourceName) + "Resources";
         String fullFooResourcesSourceClassName = FOO_MODEL_PACKAGE_NAME + "." + simpleClassName;
-        ClassLoader classLoader = FooRuntimeHelper.class.getClassLoader();
         try {
             final Class<? extends FooResources> aClass =
-                    (Class<? extends FooResources>) classLoader.loadClass(fullFooResourcesSourceClassName);
+                    (Class<? extends FooResources>) memoryCompilerClassLoader.loadClass(fullFooResourcesSourceClassName);
             return aClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new KieRuntimeServiceException(e);

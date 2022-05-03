@@ -19,6 +19,7 @@ import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,17 +33,17 @@ public class CompilationManagerImpl implements CompilationManager {
     private static final Logger logger = LoggerFactory.getLogger(CompilationManagerImpl.class.getName());
 
     @Override
-    public Optional<DARProcessed> processResource(DARResource toProcess) {
+    public Optional<DARProcessed> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         Optional<KieCompilerService> retrieved = getKieCompilerService(toProcess, true);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
         }
-        return retrieved.map(service -> service.processResource(toProcess));
+        return retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
     }
 
     @Override
-    public List<DARProcessed> processResources(List<DARResource> toProcess) {
-        return toProcess.stream().map(this::processResource)
+    public List<DARProcessed> processResources(List<DARResource> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return toProcess.stream().map(darResource -> this.processResource(darResource, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());

@@ -11,5 +11,12 @@
     </parent>
 
     <artifactId>compilation-manager-api</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-memory-compiler</artifactId>
+        </dependency>
+    </dependencies>
     
 </project>

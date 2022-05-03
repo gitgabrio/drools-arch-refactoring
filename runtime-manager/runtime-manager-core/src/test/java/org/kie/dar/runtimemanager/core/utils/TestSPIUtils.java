@@ -14,9 +14,11 @@ package org.kie.dar.runtimemanager.core.utils;/*
  * limitations under the License.
  */
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.dar.runtimemanager.core.mocks.*;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,18 +30,26 @@ class TestSPIUtils {
 
     private static final List<Class<? extends KieRuntimeService>> KIE_RUNTIME_SERVICES = Arrays.asList(MockKieRuntimeServiceAB.class, MockKieRuntimeServiceC.class);
 
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+    @BeforeAll
+    static void setUp() {
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
+    }
+
+
     @Test
     void getKieRuntimeService() {
-        Optional<KieRuntimeService> retrieved = SPIUtils.getKieRuntimeService(MockDARInputA.class.getSimpleName(), true);
+        Optional<KieRuntimeService> retrieved = SPIUtils.getKieRuntimeService(MockDARInputA.class.getSimpleName(), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceAB);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputB.class.getSimpleName(), true);
+        retrieved = SPIUtils.getKieRuntimeService(MockDARInputB.class.getSimpleName(), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceAB);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputC.class.getSimpleName(), true);
+        retrieved = SPIUtils.getKieRuntimeService(MockDARInputC.class.getSimpleName(), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceC);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputD.class.getSimpleName(), true);
+        retrieved = SPIUtils.getKieRuntimeService(MockDARInputD.class.getSimpleName(), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isEmpty());
     }
 

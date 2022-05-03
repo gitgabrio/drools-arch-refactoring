@@ -14,19 +14,28 @@ package org.kie.foo.engine.runtime.utils;/*
  * limitations under the License.
  */
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.api.model.FooResources;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FooRuntimeHelperTest {
 
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+    @BeforeAll
+    static void setUp() {
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
+    }
+
     @Test
     void loadExistingFooResources() {
-        FooResources retrieved = FooRuntimeHelper.loadFooResources("DarFoo");
+        FooResources retrieved = FooRuntimeHelper.loadFooResources("DarFoo", memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(2, retrieved.getManagedResources().size());
         assertTrue(retrieved.getManagedResources().contains("FooResOne"));
@@ -36,7 +45,7 @@ class FooRuntimeHelperTest {
     @Test
     void loadNotExistingFooResources() {
         try {
-            FooRuntimeHelper.loadFooResources("DarNotFoo");
+            FooRuntimeHelper.loadFooResources("DarNotFoo", memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieRuntimeServiceException);
@@ -45,7 +54,7 @@ class FooRuntimeHelperTest {
 
     @Test
     void getDAROutput() {
-        FooResources fooResources = FooRuntimeHelper.loadFooResources("DarFoo");
+        FooResources fooResources = FooRuntimeHelper.loadFooResources("DarFoo", memoryCompilerClassLoader);
         DARInputFoo darInputFoo = new DARInputFoo("DarFoo", "InputData");
         DAROutputFoo retrieved = FooRuntimeHelper.getDAROutput(fooResources, darInputFoo);
         assertNotNull(retrieved);

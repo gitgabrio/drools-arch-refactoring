@@ -33,6 +33,7 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import static org.kie.dar.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
@@ -47,12 +48,10 @@ public class FooCompilerHelper {
 
     static final String FOO_RESOURCES_TEMPLATE = "FooResourcesTemplate";
 
-    public static final KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(FooCompilerHelper.class.getClassLoader());
-
     private FooCompilerHelper() {
     }
 
-    public static DARProcessedFoo getDARProcessedFoo(DARResourceFoo resource) {
+    public static DARProcessedFoo getDARProcessedFoo(DARResourceFoo resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         String simpleClassName = getSanitizedClassName(resource.getFullResourceName());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
                 FOO_MODEL_PACKAGE_NAME,
@@ -63,7 +62,13 @@ public class FooCompilerHelper {
         String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
         sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
-        final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap);
+        sourcesMap.forEach(new BiConsumer<String, String>() {
+            @Override
+            public void accept(String s, String s2) {
+                System.out.println(s2);
+            }
+        });
+        final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
         return new DARProcessedFoo(compiledClasses);
     }
 
@@ -92,7 +97,7 @@ public class FooCompilerHelper {
      * @param sourcesMap
      * @return
      */
-    static Map<String, byte[]> compileClasses(Map<String, String> sourcesMap) {
+    static Map<String, byte[]> compileClasses(Map<String, String> sourcesMap, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         return KieMemoryCompiler.compileNoLoad(sourcesMap, memoryClassLoader, JavaConfiguration.CompilerType.NATIVE);
     }
 

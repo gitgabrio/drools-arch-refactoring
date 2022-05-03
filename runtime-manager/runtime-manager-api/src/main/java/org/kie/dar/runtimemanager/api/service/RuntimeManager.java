@@ -17,19 +17,27 @@ package org.kie.dar.runtimemanager.api.service;
 
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface RuntimeManager {
 
-    Optional<DAROutput> evaluateInput(DARInput toEvaluate);
+    /**
+     *
+     * @param toEvaluate
+     * @param memoryCompilerClassLoader
+     * @return
+     */
+    Optional<DAROutput> evaluateInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
     /**
      * Produce a <code>List&lt;DAROutput&gt;</code> from the given <code>List&lt;DARInput&gt;</code>
      *
      * @param toEvaluate
+     * @param memoryCompilerClassLoader
      * @return
      */
-     List<DAROutput> evaluateInputs(List<DARInput> toEvaluate);
+     List<DAROutput> evaluateInputs(List<DARInput> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 }

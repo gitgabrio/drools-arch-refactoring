@@ -16,6 +16,7 @@
 package org.kie.dar.runtimemanager.core.utils;
 
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,10 +31,10 @@ public class SPIUtils {
 
     private static final ServiceLoader<KieRuntimeService> loader = ServiceLoader.load(KieRuntimeService.class);
 
-    public static Optional<KieRuntimeService> getKieRuntimeService(String fullResourceName, boolean refresh) {
+    public static Optional<KieRuntimeService> getKieRuntimeService(String fullResourceName, boolean refresh, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         logger.debug("getKieRuntimeService {} {}", fullResourceName, refresh);
         List<KieRuntimeService> retrieved = getKieRuntimeServices(refresh);
-        return retrieved.stream().filter(service -> service.canManageInput(fullResourceName)).findFirst();
+        return retrieved.stream().filter(service -> service.canManageInput(fullResourceName, memoryCompilerClassLoader)).findFirst();
     }
 
     public static List<KieRuntimeService> getKieRuntimeServices(boolean refresh) {

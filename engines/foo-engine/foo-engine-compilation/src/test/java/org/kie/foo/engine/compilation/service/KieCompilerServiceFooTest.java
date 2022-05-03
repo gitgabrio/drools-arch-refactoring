@@ -21,26 +21,32 @@ import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.io.File;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 import static org.kie.foo.engine.compilation.TestingUtils.commonEvaluateByteCode;
+import static org.kie.foo.engine.compilation.TestingUtils.getFileFromFileName;
 
 class KieCompilerServiceFooTest {
 
     private static KieCompilerService kieCompilerService;
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     @BeforeAll
     static void setUp() {
         kieCompilerService = new KieCompilerServiceFoo();
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     @Test
     void canManageResource() {
-        DARResource toProcess = new DARResourceFoo("DarResourceFoo");
+        File fooFile = getFileFromFileName("DarFoo.foo");
+        DARResource toProcess = new DARResourceFoo(fooFile);
         assertTrue(kieCompilerService.canManageResource(toProcess));
         toProcess = () -> "DARResource";
         assertFalse(kieCompilerService.canManageResource(toProcess));
@@ -48,17 +54,18 @@ class KieCompilerServiceFooTest {
 
     @Test
     void processResource() {
-        DARResource toProcess = new DARResourceFoo("fullResourceName");
-        DARProcessedFoo retrieved = kieCompilerService.processResource(toProcess);
+        File fooFile = getFileFromFileName("DarFoo.foo");
+        DARResource toProcess = new DARResourceFoo(fooFile);
+        DARProcessedFoo retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(toProcess.getFullResourceName());
-        commonEvaluateByteCode(retrievedByteCode, fullClassName);
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
         fullClassName += "Resources";
-        commonEvaluateByteCode(retrievedByteCode, fullClassName);
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
         try {
             toProcess = () -> "DARResource";
-            kieCompilerService.processResource(toProcess);
+            kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieCompilerServiceException);

@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.memorycompiler.KieMemoryCompiler;
+import java.io.File;
 
-import java.util.Arrays;
-import java.util.List;
+/**
+ * A generic <i>Resource</i> to be processed by specific engine
+ */
+public interface DARResourceFileContainer extends DARResource{
 
-public class MockKieRuntimeServiceAB extends AbstractMockKieRuntimeService {
-
-
-    private static List<String> managedResources = Arrays.asList(MockDARInputA.class.getSimpleName(),
-            MockDARInputB.class.getSimpleName());
+    /**
+     * The <code>File</code> with the model' resource
+     * @return
+     */
+    File getModelFile();
 
     @Override
-    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return managedResources.contains(fullResourceName);
+    default String getFullResourceName() {
+        return getModelFile().getName();
     }
 }

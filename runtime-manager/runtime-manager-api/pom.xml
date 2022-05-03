@@ -12,5 +12,13 @@
 
     <artifactId>runtime-manager-api</artifactId>
 
+    <dependencies>
+        <!--- Needed to propagate MemoryCompiler for on-the-fly compilation -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-memory-compiler</artifactId>
+        </dependency>
+    </dependencies>
+
     
 </project>

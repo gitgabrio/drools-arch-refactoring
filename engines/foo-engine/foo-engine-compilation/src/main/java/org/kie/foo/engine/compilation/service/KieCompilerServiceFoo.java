@@ -18,8 +18,10 @@ package org.kie.foo.engine.compilation.service;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.kie.foo.engine.compilation.utils.FooCompilerHelper.getDARProcessedFoo;
 
@@ -27,17 +29,17 @@ public class KieCompilerServiceFoo implements KieCompilerService {
 
     @Override
     public <T extends DARResource> boolean canManageResource(T toProcess) {
-        return toProcess instanceof DARResourceFoo;
+        return toProcess instanceof DARResourceFileContainer && ((DARResourceFileContainer)toProcess).getModelFile().getName().endsWith(".foo");
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess) {
+    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("%s can not process %s",
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (E) getDARProcessedFoo((DARResourceFoo)toProcess);
+        return (E) getDARProcessedFoo((DARResourceFoo)toProcess, memoryCompilerClassLoader);
     }
 }

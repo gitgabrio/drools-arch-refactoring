@@ -15,10 +15,12 @@
  */
 package org.kie.dar.runtimemanager.core.mocks;
 
+import org.kie.memorycompiler.KieMemoryCompiler;
+
 public class MockKieRuntimeServiceC extends AbstractMockKieRuntimeService {
 
     @Override
-    public boolean canManageInput(String fullResourceName) {
+    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return fullResourceName.equals(MockDARInputC.class.getSimpleName());
     }
 

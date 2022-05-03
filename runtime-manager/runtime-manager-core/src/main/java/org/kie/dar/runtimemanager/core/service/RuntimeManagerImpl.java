@@ -19,6 +19,7 @@ import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,17 +33,17 @@ public class RuntimeManagerImpl implements RuntimeManager {
     private static final Logger logger = LoggerFactory.getLogger(RuntimeManagerImpl.class.getName());
 
     @Override
-    public Optional<DAROutput> evaluateInput(DARInput toEvaluate) {
-        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFullResourceName(), true);
+    public Optional<DAROutput> evaluateInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFullResourceName(), true, memoryCompilerClassLoader);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFullResourceName());
         }
-        return retrieved.map(service -> service.evaluateInput(toEvaluate));
+        return retrieved.map(service -> service.evaluateInput(toEvaluate, memoryCompilerClassLoader));
     }
 
     @Override
-    public List<DAROutput> evaluateInputs(List<DARInput> toEvaluate) {
-        return toEvaluate.stream().map(this::evaluateInput)
+    public List<DAROutput> evaluateInputs(List<DARInput> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return toEvaluate.stream().map(darInput -> evaluateInput(darInput, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());

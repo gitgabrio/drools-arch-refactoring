@@ -15,18 +15,20 @@
  */
 package org.kie.foo.engine.compilation.model;
 
-import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
 
-public class DARResourceFoo implements DARResource {
+import java.io.File;
 
-    private final String fullResourceName;
+public class DARResourceFoo implements DARResourceFileContainer {
 
-    public DARResourceFoo(String fullResourceName) {
-        this.fullResourceName = fullResourceName;
+    private final File modelFile;
+
+    public DARResourceFoo(File modelFile) {
+        this.modelFile = modelFile;
     }
 
     @Override
-    public String getFullResourceName() {
-        return fullResourceName;
+    public File getModelFile() {
+        return modelFile;
     }
 }

@@ -19,12 +19,13 @@ import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.memorycompiler.KieMemoryCompiler;
 
 public abstract class AbstractMockKieCompilerService implements KieCompilerService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess) {
+    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("Unmanaged resource %s", toProcess.getClass()));
         }
