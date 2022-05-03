@@ -18,9 +18,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
+import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
+import org.kie.foo.engine.compilation.model.DARResourceIntermediateFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -29,8 +32,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
-import static org.kie.foo.engine.compilation.TestingUtils.commonEvaluateByteCode;
-import static org.kie.foo.engine.compilation.TestingUtils.getFileFromFileName;
+import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class KieCompilerServiceFooTest {
 
@@ -45,17 +47,17 @@ class KieCompilerServiceFooTest {
 
     @Test
     void canManageResource() {
-        File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResource toProcess = new DARResourceFoo(fooFile);
+        DARResource toProcess = getDARResourceFileContainer(getFileFromFileName("DarFoo.foo"));
         assertTrue(kieCompilerService.canManageResource(toProcess));
-        toProcess = () -> "DARResource";
+        toProcess = getDARResourceIntermediate();
+        assertTrue(kieCompilerService.canManageResource(toProcess));
+        toProcess = getDARResource();
         assertFalse(kieCompilerService.canManageResource(toProcess));
     }
 
     @Test
     void processResource() {
-        File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResource toProcess = new DARResourceFoo(fooFile);
+        DARResource toProcess = getDARResourceFileContainer(getFileFromFileName("DarFoo.foo"));
         DARProcessedFoo retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
@@ -63,12 +65,21 @@ class KieCompilerServiceFooTest {
         commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
         fullClassName += "Resources";
         commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        toProcess = getDARResourceIntermediate();
+        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        assertNotNull(retrieved);
+        retrievedByteCode = retrieved.getCompiledClassesMap();
+        fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(toProcess.getFullResourceName());
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        fullClassName += "Resources";
+        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
         try {
-            toProcess = () -> "DARResource";
+            toProcess = getDARResource();
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieCompilerServiceException);
         }
     }
+
 }

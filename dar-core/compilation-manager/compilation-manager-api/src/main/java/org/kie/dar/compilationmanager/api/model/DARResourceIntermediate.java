@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.foo.engine.compilation.model;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.compilationmanager.api.model.DARResource;
+/**
+ * A generic <i>Resource</i> to be processed by specific engine
+ */
+public interface DARResourceIntermediate extends DARResource{
 
-public interface DARResourceFoo extends DARResource {
+    /**
+     * The <b>engine</b> that could process the resource
+     * @return
+     */
+    String getTargetEngine();
+
+
+    Object getContent();
+
 }

@@ -25,7 +25,7 @@ import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -56,8 +56,8 @@ class RuntimeFooTest {
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFoo darResourceFoo = new DARResourceFoo(fooFile);
-        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFoo, memoryCompilerClassLoader);
+        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(fooFile);
+        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         Map<String, byte[]> compiledClasses = ((DARProcessedFoo) darProcessed.get()).getCompiledClassesMap();
         compiledClasses.forEach(memoryCompilerClassLoader::addCode);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);

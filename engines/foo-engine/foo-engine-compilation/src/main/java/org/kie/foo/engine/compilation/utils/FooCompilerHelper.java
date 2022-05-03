@@ -26,14 +26,15 @@ import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import org.kie.dar.common.utils.JavaParserUtils;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceIntermediateFoo;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 import static org.kie.dar.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
@@ -52,6 +53,31 @@ public class FooCompilerHelper {
     }
 
     public static DARProcessedFoo getDARProcessedFoo(DARResourceFoo resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        if (resource instanceof DARResourceFileFoo) {
+            return getDARProcessedFooFromFile((DARResourceFileFoo) resource, memoryClassLoader);
+        } else if (resource instanceof DARResourceIntermediateFoo) {
+            return getDARProcessedFooFromIntermediate((DARResourceIntermediateFoo) resource, memoryClassLoader);
+        } else {
+            throw new KieCompilerServiceException("Unexpected DARResourceFoo " + resource.getClass());
+        }
+    }
+
+    static DARProcessedFoo getDARProcessedFooFromFile(DARResourceFileFoo resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        String simpleClassName = getSanitizedClassName(resource.getFullResourceName());
+        CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
+                FOO_MODEL_PACKAGE_NAME,
+                FOO_MODEL_TEMPLATE_JAVA,
+                FOO_MODEL_TEMPLATE);
+        Map<String, String> sourcesMap = new HashMap<>();
+        sourcesMap.put(getFullClassName(compilationUnit), compilationUnit.toString());
+        String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
+        CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
+        sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
+        final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
+        return new DARProcessedFoo(compiledClasses);
+    }
+
+    static DARProcessedFoo getDARProcessedFooFromIntermediate(DARResourceIntermediateFoo resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         String simpleClassName = getSanitizedClassName(resource.getFullResourceName());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
                 FOO_MODEL_PACKAGE_NAME,

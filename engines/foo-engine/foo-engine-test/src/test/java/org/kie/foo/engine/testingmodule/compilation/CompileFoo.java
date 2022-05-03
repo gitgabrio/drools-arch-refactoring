@@ -22,7 +22,7 @@ import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -46,8 +46,8 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFoo darResourceFoo = new DARResourceFoo(fooFile);
-        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFoo, memoryCompilerClassLoader);
+        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(fooFile);
+        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertTrue(darProcessed.isPresent());
         DARProcessed retrieved = darProcessed.get();
         assertTrue(retrieved instanceof DARProcessedFoo);

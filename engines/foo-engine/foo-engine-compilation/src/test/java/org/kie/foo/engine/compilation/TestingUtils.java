@@ -16,6 +16,9 @@
 package org.kie.foo.engine.compilation;
 
 import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
+import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -49,5 +52,37 @@ public class TestingUtils {
             throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
+    }
+
+
+    public static DARResource getDARResource() {
+        return new DARResource() {
+            @Override
+            public String getFullResourceName() {
+                return "UnmanagedResource";
+            }
+        };
+    }
+
+    public static DARResourceFileContainer getDARResourceFileContainer(File fooFile) {
+        return () -> fooFile;
+    }
+    public static DARResourceIntermediate getDARResourceIntermediate() {
+        return new DARResourceIntermediate() {
+            @Override
+            public String getTargetEngine() {
+                return "foo";
+            }
+
+            @Override
+            public Object getContent() {
+                return "Content";
+            }
+
+            @Override
+            public String getFullResourceName() {
+                return "fullResourcesName";
+            }
+        };
     }
 }

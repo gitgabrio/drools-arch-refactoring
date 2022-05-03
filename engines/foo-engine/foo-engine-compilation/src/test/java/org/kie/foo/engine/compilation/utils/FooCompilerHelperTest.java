@@ -18,10 +18,9 @@ import com.github.javaparser.ast.CompilationUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -33,8 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
-import static org.kie.foo.engine.compilation.TestingUtils.commonEvaluateByteCode;
-import static org.kie.foo.engine.compilation.TestingUtils.getFileFromFileName;
+import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class FooCompilerHelperTest {
 
@@ -47,8 +45,7 @@ class FooCompilerHelperTest {
 
     @Test
     void getDARProcessedFoo() {
-        File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFoo darResourceFoo = new DARResourceFoo(fooFile);
+        DARResourceFileFoo darResourceFoo = new DARResourceFileFoo(getDARResourceFileContainer(getFileFromFileName("DarFoo.foo")));
         DARProcessedFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();

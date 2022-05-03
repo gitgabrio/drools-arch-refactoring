@@ -15,7 +15,20 @@
  */
 package org.kie.foo.engine.compilation.model;
 
-import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
 
-public interface DARResourceFoo extends DARResource {
+import java.io.File;
+
+public class DARResourceFileFoo implements DARResourceFileContainer, DARResourceFoo {
+
+    private final File modelFile;
+
+    public DARResourceFileFoo(DARResourceFileContainer original) {
+        this.modelFile = original.getModelFile();
+    }
+
+    @Override
+    public File getModelFile() {
+        return modelFile;
+    }
 }

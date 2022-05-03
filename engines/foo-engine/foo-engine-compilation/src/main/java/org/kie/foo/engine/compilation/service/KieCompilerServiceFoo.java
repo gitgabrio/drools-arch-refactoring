@@ -19,8 +19,11 @@ import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
+import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
+import org.kie.foo.engine.compilation.model.DARResourceIntermediateFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.kie.foo.engine.compilation.utils.FooCompilerHelper.getDARProcessedFoo;
@@ -29,7 +32,13 @@ public class KieCompilerServiceFoo implements KieCompilerService {
 
     @Override
     public <T extends DARResource> boolean canManageResource(T toProcess) {
-        return toProcess instanceof DARResourceFileContainer && ((DARResourceFileContainer)toProcess).getModelFile().getName().endsWith(".foo");
+        if (toProcess instanceof DARResourceFileContainer && ((DARResourceFileContainer) toProcess).getModelFile().getName().endsWith(".foo")) {
+            return true;
+        } else if (toProcess instanceof DARResourceIntermediate && ((DARResourceIntermediate) toProcess).getTargetEngine().equalsIgnoreCase("foo")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -40,6 +49,8 @@ public class KieCompilerServiceFoo implements KieCompilerService {
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (E) getDARProcessedFoo((DARResourceFoo)toProcess, memoryCompilerClassLoader);
+        DARResourceFoo toManage = toProcess instanceof DARResourceFileContainer ? new DARResourceFileFoo((DARResourceFileContainer) toProcess) :
+                new DARResourceIntermediateFoo((DARResourceIntermediate) toProcess);
+        return (E) getDARProcessedFoo(toManage, memoryCompilerClassLoader);
     }
 }
