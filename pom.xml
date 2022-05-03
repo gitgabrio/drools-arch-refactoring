@@ -54,12 +54,13 @@
                 <artifactId>runtime-manager-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- Engines -->
-                <dependency>
-                    <groupId>org.kie</groupId>
-                    <artifactId>foo-engine-api</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
+            <!-- ENGINS -->
+            <!-- Foo -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>foo-engine-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>foo-engine-compilation</artifactId>
@@ -73,6 +74,27 @@
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>foo-engine-test</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Bar -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>bar-engine-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>bar-engine-compilation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>bar-engine-runtime</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>bar-engine-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- External -->
