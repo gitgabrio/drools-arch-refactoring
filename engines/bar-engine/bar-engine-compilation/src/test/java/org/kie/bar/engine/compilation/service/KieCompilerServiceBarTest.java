@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.bar.engine.compilation.model.DARProcessedBar;
+import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
 import org.kie.bar.engine.compilation.model.DARResourceBar;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -56,13 +56,11 @@ class KieCompilerServiceBarTest {
     void processResource() {
         File fooFile = getFileFromFileName("DarBar.bar");
         DARResource toProcess = new DARResourceBar(fooFile);
-        DARProcessedBar retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        DARResourceIntermediateBar retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
-        String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(toProcess.getFullResourceName());
-        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
-        fullClassName += "Resources";
-        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        assertEquals(toProcess.getFullResourceName(), retrieved.getFullResourceName());
+        assertEquals("foo", retrieved.getTargetEngine());
+        assertEquals(toProcess, retrieved.getContent());
         try {
             toProcess = () -> "DARResource";
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);

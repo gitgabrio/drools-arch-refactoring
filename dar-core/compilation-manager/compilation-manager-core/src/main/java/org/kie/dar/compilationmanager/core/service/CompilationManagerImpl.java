@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerService;
@@ -39,7 +40,8 @@ public class CompilationManagerImpl implements CompilationManager {
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
         }
-        return retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
+        Optional<DARCompilationOutput> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
+        return darCompilationOutputOptional.map(darCompilationOutput -> darCompilationOutput instanceof DARProcessed ? darCompilationOutput : processResource((DARResource) darCompilationOutput, memoryCompilerClassLoader).get());
     }
 
     @Override

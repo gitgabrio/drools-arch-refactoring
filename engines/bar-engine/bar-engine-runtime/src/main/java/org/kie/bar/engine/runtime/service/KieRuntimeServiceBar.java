@@ -35,13 +35,14 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
 
     @Override
     public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        try {
-            loadBarResources(fullResourceName, memoryCompilerClassLoader);
-            return true;
-        } catch (Exception e) {
-            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
-            return false;
-        }
+        return false;
+        //try {
+        //    loadBarResources(fullResourceName, memoryCompilerClassLoader);
+        //    return true;
+        //} catch (Exception e) {
+         //   logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
+         //   return false;
+        //}
     }
 
     @Override

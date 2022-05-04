@@ -22,8 +22,9 @@ import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.bar.engine.compilation.model.DARProcessedBar;
+import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
 import org.kie.bar.engine.compilation.model.DARResourceBar;
+import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -48,10 +49,10 @@ class CompileBarTest {
     void compileBar() {
         File fooFile = getFileFromFileName("DarBar.bar");
         DARResourceBar darResourceBar = new DARResourceBar(fooFile);
-        Optional<DARCompilationOutput> darProcessed = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        assertTrue(darProcessed.isPresent());
-        DARCompilationOutput retrieved = darProcessed.get();
-        assertTrue(retrieved instanceof DARProcessedBar);
+        Optional<DARCompilationOutput> darCompilationOutput = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        assertTrue(darCompilationOutput.isPresent());
+        DARCompilationOutput retrieved = darCompilationOutput.get();
+        assertTrue(retrieved instanceof DARProcessedFoo);
     }
 
     public static File getFileFromFileName(String fileName) {

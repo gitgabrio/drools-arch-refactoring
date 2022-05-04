@@ -49,7 +49,8 @@ public class KieRuntimeServiceFoo implements KieRuntimeService {
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
             FooResources fooResources = loadFooResources(toEvaluate.getFullResourceName(), memoryCompilerClassLoader);
-            return (E) getDAROutput(fooResources, (DARInputFoo) toEvaluate);
+            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFullResourceName(), toEvaluate.getInputData());
+            return (E) getDAROutput(fooResources, darInputFoo);
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                     this.getClass().getName(),
