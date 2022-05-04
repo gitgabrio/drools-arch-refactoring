@@ -16,10 +16,7 @@
 package org.kie.foo.engine.compilation.service;
 
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
-import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
+import org.kie.dar.compilationmanager.api.model.*;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;
@@ -43,7 +40,7 @@ public class KieCompilerServiceFoo implements KieCompilerService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARProcessed> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public <T extends DARResource, E extends DARCompilationOutput> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("%s can not process %s",
                     this.getClass().getName(),

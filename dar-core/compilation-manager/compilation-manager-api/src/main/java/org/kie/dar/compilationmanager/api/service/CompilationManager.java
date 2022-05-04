@@ -15,6 +15,7 @@
  */
 package org.kie.dar.compilationmanager.api.service;
 
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -31,14 +32,14 @@ public interface CompilationManager {
      * @param toProcess
      * @return
      */
-    Optional<DARProcessed> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    Optional<DARCompilationOutput> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
     /**
      * Produce a <code>List&lt;DARProcessed&gt;</code> from the given <code>List&lt;DARResource&gt;</code>
      * @param toProcess
      * @return
      */
-    List<DARProcessed> processResources(List<DARResource> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    List<DARCompilationOutput> processResources(List<DARResource> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 
 }

@@ -18,6 +18,7 @@ package org.kie.bar.engine.testingmodule.runtime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
@@ -57,7 +58,7 @@ class RuntimeBarTest {
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarBar.bar");
         DARResourceBar darResourceBar = new DARResourceBar(fooFile);
-        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        Optional<DARCompilationOutput> darProcessed = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         Map<String, byte[]> compiledClasses = ((DARProcessedBar) darProcessed.get()).getCompiledClassesMap();
         compiledClasses.forEach(memoryCompilerClassLoader::addCode);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);

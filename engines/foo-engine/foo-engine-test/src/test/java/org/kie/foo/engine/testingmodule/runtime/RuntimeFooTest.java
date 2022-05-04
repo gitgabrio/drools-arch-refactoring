@@ -18,6 +18,7 @@ package org.kie.foo.engine.testingmodule.runtime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
@@ -56,8 +57,8 @@ class RuntimeFooTest {
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(fooFile);
-        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
+        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(() -> fooFile);
+        Optional<DARCompilationOutput> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         Map<String, byte[]> compiledClasses = ((DARProcessedFoo) darProcessed.get()).getCompiledClassesMap();
         compiledClasses.forEach(memoryCompilerClassLoader::addCode);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);

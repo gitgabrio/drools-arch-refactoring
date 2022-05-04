@@ -18,6 +18,7 @@ package org.kie.foo.engine.testingmodule.compilation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
@@ -46,10 +47,10 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(fooFile);
-        Optional<DARProcessed> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
+        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(() -> fooFile);
+        Optional<DARCompilationOutput> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertTrue(darProcessed.isPresent());
-        DARProcessed retrieved = darProcessed.get();
+        DARCompilationOutput retrieved = darProcessed.get();
         assertTrue(retrieved instanceof DARProcessedFoo);
     }
 

@@ -16,13 +16,7 @@
 package org.kie.dar.compilationmanager.api.model;
 
 /**
- * A generic <i>Resource</i> to be processed by specific engine
+ * This is the output of a engine-compilation. It could be a processed object (i.e. a final step) or an intermediate resource
  */
-public interface DARResource extends DARCompilationOutput {
-
-    /**
-     * The unique, full identifier of a given model' resource
-     * @return
-     */
-    String getFullResourceName();
+public interface DARCompilationOutput {
 }

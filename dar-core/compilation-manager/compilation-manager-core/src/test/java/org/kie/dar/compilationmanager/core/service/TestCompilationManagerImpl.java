@@ -16,6 +16,7 @@ package org.kie.dar.compilationmanager.core.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
@@ -51,13 +52,13 @@ class TestCompilationManagerImpl {
         MANAGED_DAR_RESOURCES.forEach(managedResource -> {
             try {
                 DARResource toProcess = managedResource.getDeclaredConstructor().newInstance();
-                Optional<DARProcessed> retrieved = compilationManager.processResource(toProcess, memoryCompilerClassLoader);
+                Optional<DARCompilationOutput> retrieved = compilationManager.processResource(toProcess, memoryCompilerClassLoader);
                 assertTrue(retrieved.isPresent());
             } catch (Exception e) {
                 fail(e);
             }
         });
-        Optional<DARProcessed> retrieved = compilationManager.processResource(new MockDARResourceD(), memoryCompilerClassLoader);
+        Optional<DARCompilationOutput> retrieved = compilationManager.processResource(new MockDARResourceD(), memoryCompilerClassLoader);
         assertTrue(retrieved.isEmpty());
     }
 
@@ -73,7 +74,7 @@ class TestCompilationManagerImpl {
             }
         });
         toProcess.add(new MockDARResourceD());
-        List<DARProcessed> retrieved = compilationManager.processResources(toProcess, memoryCompilerClassLoader);
+        List<DARCompilationOutput> retrieved = compilationManager.processResources(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(MANAGED_DAR_RESOURCES.size(), retrieved.size());
     }
