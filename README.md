@@ -6,8 +6,10 @@ By itself it has to be considered as a to-be-thrown PoC: as soon as a good desig
 such design should be iteratively introduced inside `drools` repository.
 
 The main focus of this project is on:
-1. clear separation between compile-time and runtime
-2. uniform overall management of different models/engines
+
+1. clear separation between "container" and "content" contexts; the "content" is represented by functionalities exposed by the compile-time and runtime; the "context" is the environment in which such functionalities are invoked (see [architectural choices](https://docs.google.com/document/d/1n9rKcMh0qnP7R4DUb3xqanFZcN0q7SL8aBRoAdQDSH0) for more details)
+2. clear separation between compile-time and runtime
+3. uniform overall management of different models/engines
 
 Regarding the overall module organization/relationship, this project should follow the guidelines of the "Clean Architecture" principle.
 As per the design style, the microkernel-style will be featured, where each model/engine will represent a specific `plugin`.
