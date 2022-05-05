@@ -17,6 +17,7 @@ package org.kie.bar.engine.runtime.service;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.runtime.model.DARInputBar;
+import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -36,19 +37,18 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        assertFalse(kieRuntimeService.canManageInput("DarBar", memoryCompilerClassLoader));
+        assertTrue(kieRuntimeService.canManageInput("DarBar", memoryCompilerClassLoader));
         assertFalse(kieRuntimeService.canManageInput("DarNotBar", memoryCompilerClassLoader));
     }
 
     @Test
     void evaluateInputExistingBarResources() {
-        try {
-            DARInputBar toEvaluate = new DARInputBar("DarBar", "InputData");
-            kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-            fail("Expecting KieRuntimeServiceException");
-        } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
-        }
+        DARInputBar toEvaluate = new DARInputBar("DarBar", "InputData");
+        DAROutputBar retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertNotNull(retrieved);
+        assertEquals(toEvaluate.getFullResourceName(), retrieved.getFullResourceName());
+        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
+
     }
 
     @Test

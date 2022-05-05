@@ -15,14 +15,14 @@
  */
 package org.kie.bar.engine.runtime.utils;
 
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import static org.kie.bar.engine.api.constants.Constants.BAR_MODEL_PACKAGE_NAME;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.bar.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 
 public class BarRuntimeHelper {
 
@@ -30,9 +30,9 @@ public class BarRuntimeHelper {
     }
 
 
-    public static BarResources loadBarResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader)   {
+    public static BarResources loadBarResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         String simpleClassName = getSanitizedClassName(fullResourceName) + "Resources";
-        String fullBarResourcesSourceClassName = FOO_MODEL_PACKAGE_NAME + "." + simpleClassName;
+        String fullBarResourcesSourceClassName = BAR_MODEL_PACKAGE_NAME + "." + simpleClassName;
         try {
             final Class<? extends BarResources> aClass =
                     (Class<? extends BarResources>) memoryCompilerClassLoader.loadClass(fullBarResourcesSourceClassName);

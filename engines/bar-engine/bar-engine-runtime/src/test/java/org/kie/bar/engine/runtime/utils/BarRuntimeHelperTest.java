@@ -35,12 +35,11 @@ class BarRuntimeHelperTest {
 
     @Test
     void loadExistingBarResources() {
-        try {
-            BarRuntimeHelper.loadBarResources("DarBar", memoryCompilerClassLoader);
-            fail("Expecting KieRuntimeServiceException");
-        } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
-        }
+        BarResources retrieved = BarRuntimeHelper.loadBarResources("DarBar", memoryCompilerClassLoader);
+        assertNotNull(retrieved);
+        assertEquals(2, retrieved.getManagedResources().size());
+        assertTrue(retrieved.getManagedResources().contains("BarResOne"));
+        assertTrue(retrieved.getManagedResources().contains("BarResTwo"));
     }
 
     @Test
@@ -53,7 +52,7 @@ class BarRuntimeHelperTest {
         }
     }
 
-   /* @Test
+    @Test
     void getDAROutput() {
         BarResources fooResources = BarRuntimeHelper.loadBarResources("DarBar", memoryCompilerClassLoader);
         DARInputBar darInputBar = new DARInputBar("DarBar", "InputData");
@@ -61,5 +60,5 @@ class BarRuntimeHelperTest {
         assertNotNull(retrieved);
         assertEquals(darInputBar.getFullResourceName(), retrieved.getFullResourceName());
         assertEquals(darInputBar.getInputData(), retrieved.getOutputData());
-    }*/
+    }
 }

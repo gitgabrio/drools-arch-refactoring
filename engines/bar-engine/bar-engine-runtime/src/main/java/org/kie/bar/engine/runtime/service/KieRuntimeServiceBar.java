@@ -15,12 +15,12 @@
  */
 package org.kie.bar.engine.runtime.service;
 
+import org.kie.bar.engine.api.model.BarResources;
+import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
-import org.kie.bar.engine.api.model.BarResources;
-import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +35,13 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
 
     @Override
     public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return false;
-        //try {
-        //    loadBarResources(fullResourceName, memoryCompilerClassLoader);
-        //    return true;
-        //} catch (Exception e) {
-         //   logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
-         //   return false;
-        //}
+        try {
+            loadBarResources(fullResourceName, memoryCompilerClassLoader);
+            return true;
+        } catch (Exception e) {
+            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
+            return false;
+        }
     }
 
     @Override

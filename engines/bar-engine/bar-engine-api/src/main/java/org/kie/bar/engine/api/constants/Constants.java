@@ -20,5 +20,6 @@ public class Constants {
     private Constants() {
     }
 
+    public static final String BAR_MODEL_PACKAGE_NAME = "org.kie.bar.engine.compilation.model";
     public static final String FOO_MODEL_PACKAGE_NAME = "org.kie.foo.engine.compilation.model";
 }
