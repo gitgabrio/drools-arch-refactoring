@@ -16,7 +16,7 @@ As per the design style, the microkernel-style will be featured, where each mode
 
 Each plugin should provide a `compilation` and a `runtime` component.
 
-That [MIRO](https://miro.com/app/board/uXjVO7-T2EE=/) page will be used as "brainstorm" place to share idea, suggestions, notes...
+That [brainstorm](https://miro.com/app/board/uXjVO3fJxsY=/) page will be used as a place to share idea, suggestions, notes, while the [refactoring proposal](https://miro.com/app/board/uXjVO3eklbE=/) will be used to show technical diagrams.
 
 The most important decisions (reason and choice) will be documented [here](https://docs.google.com/document/d/1n9rKcMh0qnP7R4DUb3xqanFZcN0q7SL8aBRoAdQDSH0).
 
