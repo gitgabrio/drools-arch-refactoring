@@ -22,8 +22,10 @@ public interface DARInput {
 
     /**
      * The unique, full identifier of a given model' resource
+     *
      * @return
      */
     String getFullResourceName();
+
     Object getInputData();
 }

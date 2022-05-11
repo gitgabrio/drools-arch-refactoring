@@ -16,20 +16,16 @@ package org.kie.bar.engine.compilation.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.bar.engine.compilation.model.DARResourceBar;
+import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
-import org.kie.bar.engine.compilation.model.DARResourceBar;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.bar.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
-import static org.kie.bar.engine.compilation.TestingUtils.commonEvaluateByteCode;
 import static org.kie.bar.engine.compilation.TestingUtils.getFileFromFileName;
 
 class KieCompilerServiceBarTest {

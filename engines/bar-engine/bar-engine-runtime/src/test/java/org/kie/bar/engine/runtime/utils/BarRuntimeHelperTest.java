@@ -16,10 +16,10 @@ package org.kie.bar.engine.runtime.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -16,7 +16,6 @@
 package org.kie.dar.compilationmanager.api.service;
 
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -32,7 +31,7 @@ public interface KieCompilerService {
 
     /**
      * Produce one <code>E</code> from the given <code>T</code>
-     *
+     * <p>
      * Implementation are also required to generate a "mapping" class, i.e. a class specific for the given
      * model responsible to list all the other generated ones; engine-specific runtimes will look for such
      * class to know if it can manage given resource

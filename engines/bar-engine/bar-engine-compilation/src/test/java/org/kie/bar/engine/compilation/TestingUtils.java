@@ -15,7 +15,7 @@
  */
 package org.kie.bar.engine.compilation;
 
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -30,6 +30,7 @@ public class TestingUtils {
 
     private TestingUtils() {
     }
+
     public static void commonEvaluateByteCode(Map<String, byte[]> retrieved, String fullClassName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         assertNotNull(retrieved);
         retrieved.forEach(memoryCompilerClassLoader::addCode);

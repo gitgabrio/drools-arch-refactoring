@@ -22,8 +22,10 @@ public interface DAROutput {
 
     /**
      * The unique, full identifier of a given model' resource
+     *
      * @return
      */
     String getFullResourceName();
+
     Object getOutputData();
 }

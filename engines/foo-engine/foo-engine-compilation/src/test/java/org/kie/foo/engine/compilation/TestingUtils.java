@@ -15,7 +15,7 @@
  */
 package org.kie.foo.engine.compilation;
 
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
 import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
@@ -33,6 +33,7 @@ public class TestingUtils {
 
     private TestingUtils() {
     }
+
     public static void commonEvaluateByteCode(Map<String, byte[]> retrieved, String fullClassName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         assertNotNull(retrieved);
         retrieved.forEach(memoryCompilerClassLoader::addCode);
@@ -67,6 +68,7 @@ public class TestingUtils {
     public static DARResourceFileContainer getDARResourceFileContainer(File fooFile) {
         return () -> fooFile;
     }
+
     public static DARResourceIntermediate getDARResourceIntermediate() {
         return new DARResourceIntermediate() {
             @Override

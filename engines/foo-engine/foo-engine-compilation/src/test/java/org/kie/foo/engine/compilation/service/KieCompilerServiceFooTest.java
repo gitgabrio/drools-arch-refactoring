@@ -18,15 +18,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
-import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
-import org.kie.foo.engine.compilation.model.DARResourceIntermediateFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import java.io.File;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;

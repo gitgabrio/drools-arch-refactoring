@@ -23,7 +23,7 @@ import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -474,7 +474,7 @@ public class CommonCodegenUtils {
     public static ExplicitConstructorInvocationStmt getSuperConstructorInvocation(final ConstructorDeclaration constructorDeclaration) {
         final BlockStmt body = constructorDeclaration.getBody();
         return CommonCodegenUtils.getExplicitConstructorInvocationStmt(body)
-                        .orElseThrow(() -> new KieDARCommonException(String.format(MISSING_CONSTRUCTOR_IN_BODY, body)));
+                .orElseThrow(() -> new KieDARCommonException(String.format(MISSING_CONSTRUCTOR_IN_BODY, body)));
     }
 
     /**

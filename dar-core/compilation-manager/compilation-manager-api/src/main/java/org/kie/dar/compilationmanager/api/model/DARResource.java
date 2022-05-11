@@ -22,6 +22,7 @@ public interface DARResource extends DARCompilationOutput {
 
     /**
      * The unique, full identifier of a given model' resource
+     *
      * @return
      */
     String getFullResourceName();

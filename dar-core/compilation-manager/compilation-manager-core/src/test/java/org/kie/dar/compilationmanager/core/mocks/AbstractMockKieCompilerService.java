@@ -17,7 +17,6 @@ package org.kie.dar.compilationmanager.core.mocks;
 
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;

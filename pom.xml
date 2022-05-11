@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kie.drools.version>8.20.0.Beta</kie.drools.version>
         <javaparser.version>3.23.1</javaparser.version>
+        <jackson.version>2.13.0</jackson.version>
         <slf4j.version>1.7.30</slf4j.version>
         <jupiter.version>5.8.2</jupiter.version>
         <mockito.version>4.4.0</mockito.version>
@@ -32,6 +33,11 @@
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>dar-common-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>common-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -54,7 +60,7 @@
                 <artifactId>runtime-manager-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- ENGINS -->
+            <!-- ENGINES -->
             <!-- Foo -->
             <dependency>
                 <groupId>org.kie</groupId>
@@ -115,10 +121,16 @@
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+            <!-- Others -->
             <dependency>
                 <groupId>com.github.javaparser</groupId>
                 <artifactId>javaparser-core</artifactId>
                 <version>${javaparser.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- Test -->
             <dependency>

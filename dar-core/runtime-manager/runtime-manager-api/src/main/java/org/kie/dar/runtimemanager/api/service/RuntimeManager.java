@@ -25,7 +25,6 @@ import java.util.Optional;
 public interface RuntimeManager {
 
     /**
-     *
      * @param toEvaluate
      * @param memoryCompilerClassLoader
      * @return
@@ -39,5 +38,5 @@ public interface RuntimeManager {
      * @param memoryCompilerClassLoader
      * @return
      */
-     List<DAROutput> evaluateInputs(List<DARInput> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    List<DAROutput> evaluateInputs(List<DARInput> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 }

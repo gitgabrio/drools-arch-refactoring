@@ -15,13 +15,12 @@
  */
 package org.kie.bar.engine.compilation.service;
 
+import org.kie.bar.engine.compilation.model.DARResourceBar;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.bar.engine.compilation.model.DARResourceBar;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getDARProcessedBar;
@@ -30,7 +29,7 @@ public class KieCompilerServiceBar implements KieCompilerService {
 
     @Override
     public <T extends DARResource> boolean canManageResource(T toProcess) {
-        return toProcess instanceof DARResourceFileContainer && ((DARResourceFileContainer)toProcess).getModelFile().getName().endsWith(".bar");
+        return toProcess instanceof DARResourceFileContainer && ((DARResourceFileContainer) toProcess).getModelFile().getName().endsWith(".bar");
     }
 
     @Override
@@ -41,6 +40,6 @@ public class KieCompilerServiceBar implements KieCompilerService {
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (E) getDARProcessedBar((DARResourceBar)toProcess, memoryCompilerClassLoader);
+        return (E) getDARProcessedBar((DARResourceBar) toProcess, memoryCompilerClassLoader);
     }
 }

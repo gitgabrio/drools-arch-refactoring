@@ -20,10 +20,11 @@ import java.io.File;
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
-public interface DARResourceFileContainer extends DARResource{
+public interface DARResourceFileContainer extends DARResource {
 
     /**
      * The <code>File</code> with the model' resource
+     *
      * @return
      */
     File getModelFile();

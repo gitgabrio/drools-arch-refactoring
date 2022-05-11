@@ -16,7 +16,6 @@
 package org.kie.dar.compilationmanager.api.service;
 
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -29,6 +28,7 @@ public interface CompilationManager {
      * Produce one <code>DARProcessed</code> from the given <code>DARResource</code>.
      * The return is <code>Optional</code> because the engine required to process given <code>DARResource</code>
      * may not be found
+     *
      * @param toProcess
      * @return
      */
@@ -36,6 +36,7 @@ public interface CompilationManager {
 
     /**
      * Produce a <code>List&lt;DARProcessed&gt;</code> from the given <code>List&lt;DARResource&gt;</code>
+     *
      * @param toProcess
      * @return
      */

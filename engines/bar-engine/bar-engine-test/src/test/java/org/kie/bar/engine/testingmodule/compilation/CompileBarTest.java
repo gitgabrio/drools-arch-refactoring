@@ -17,13 +17,11 @@ package org.kie.bar.engine.testingmodule.compilation;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.bar.engine.compilation.model.DARResourceBar;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
-import org.kie.bar.engine.compilation.model.DARResourceBar;
 import org.kie.foo.engine.compilation.model.DARProcessedFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 

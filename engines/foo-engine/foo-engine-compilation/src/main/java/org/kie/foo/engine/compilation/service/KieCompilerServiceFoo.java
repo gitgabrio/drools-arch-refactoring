@@ -16,7 +16,10 @@
 package org.kie.foo.engine.compilation.service;
 
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.*;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
+import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.foo.engine.compilation.model.DARResourceFoo;

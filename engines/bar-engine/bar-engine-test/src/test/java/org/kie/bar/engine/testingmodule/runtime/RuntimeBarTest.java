@@ -17,7 +17,9 @@ package org.kie.bar.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.bar.engine.compilation.model.DARResourceBar;
+import org.kie.bar.engine.runtime.model.DARInputBar;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARProcessedClassesContainer;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
@@ -25,9 +27,6 @@ import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
-import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
-import org.kie.bar.engine.compilation.model.DARResourceBar;
-import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;

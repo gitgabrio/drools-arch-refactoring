@@ -23,6 +23,7 @@ public class StringUtils {
     /**
      * Method to be used by <b>every</b> KiePMML implementation to retrieve the <b>package</b> name
      * out of the model name
+     *
      * @param modelName
      * @return
      */
@@ -32,6 +33,7 @@ public class StringUtils {
 
     /**
      * Convert the given <code>String</code> in a valid class name (i.e. no dots, no spaces, first letter upper case)
+     *
      * @param input
      * @return
      */

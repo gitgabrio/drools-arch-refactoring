@@ -18,7 +18,7 @@ package org.kie.dar.common.utils;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import org.kie.dar.common.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +40,9 @@ public class JavaParserUtils {
      * @return
      */
     public static CompilationUnit getCompilationUnit(final String className,
-                                                                 final String packageName,
-                                                                 final String javaTemplate,
-                                                                 final String modelClassName) {
+                                                     final String packageName,
+                                                     final String javaTemplate,
+                                                     final String modelClassName) {
         logger.trace("getCompilationUnit {} {}", className, packageName);
         CompilationUnit templateCU = getFromFileName(javaTemplate);
         CompilationUnit toReturn = templateCU.clone();
@@ -58,6 +58,7 @@ public class JavaParserUtils {
     /**
      * Return the fully qualified name of the generated class.
      * It throws <code>KiePMMLException</code> if the package name is missing
+     *
      * @param cu
      * @return
      */

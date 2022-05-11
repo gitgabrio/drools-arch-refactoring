@@ -18,10 +18,11 @@ package org.kie.dar.compilationmanager.api.model;
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
-public interface DARResourceIntermediate extends DARResource{
+public interface DARResourceIntermediate extends DARResource {
 
     /**
      * The <b>engine</b> that could process the resource
+     *
      * @return
      */
     String getTargetEngine();

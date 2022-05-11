@@ -30,7 +30,7 @@ public class FooRuntimeHelper {
     }
 
 
-    public static FooResources loadFooResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader)   {
+    public static FooResources loadFooResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         String simpleClassName = getSanitizedClassName(fullResourceName) + "Resources";
         String fullFooResourcesSourceClassName = FOO_MODEL_PACKAGE_NAME + "." + simpleClassName;
         try {
