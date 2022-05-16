@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.api.model;
+package org.kie.bar.engine.compilation.model;
 
-import java.io.File;
+import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 
-/**
- * A generic <i>Resource</i> to be processed by specific engine
- */
-public interface DARResourceFileContainer extends DARResource {
+import java.util.Map;
 
-    /**
-     * The <code>File</code> with the model' resource
-     *
-     * @return
-     */
-    File getModelFile();
+public class DARFinalOutputBar extends DARFinalOutputClassesContainer {
 
-    @Override
-    default String getFullResourceName() {
-        return getModelFile().getName();
+
+    public DARFinalOutputBar(String fri, Map<String, byte[]> compiledClassMap) {
+        super(fri, "bar", compiledClassMap);
     }
+
 }

@@ -16,9 +16,9 @@
 package org.kie.foo.engine.compilation;
 
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
+import org.kie.dar.compilationmanager.api.model.DARFileResource;
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
-import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -57,34 +57,20 @@ public class TestingUtils {
 
 
     public static DARResource getDARResource() {
-        return new DARResource() {
-            @Override
-            public String getFullResourceName() {
-                return "UnmanagedResource";
-            }
+        return () -> "UnmanagedResource";
+    }
+
+    public static DARFileResource getDARFileResource(File fooFile) {
+        return new DARFileResource(fooFile);
+    }
+
+    public static DARIntermediateOutput getDARResourceIntermediate() {
+        return new DARIntermediateOutput("foo", "Content") {
         };
     }
 
-    public static DARResourceFileContainer getDARResourceFileContainer(File fooFile) {
-        return () -> fooFile;
-    }
-
-    public static DARResourceIntermediate getDARResourceIntermediate() {
-        return new DARResourceIntermediate() {
-            @Override
-            public String getTargetEngine() {
-                return "foo";
-            }
-
-            @Override
-            public Object getContent() {
-                return "Content";
-            }
-
-            @Override
-            public String getFullResourceName() {
-                return "fullResourcesName";
-            }
+    public static DARIntermediateOutput getDARResourceIntermediate( File fooFile) {
+        return new DARIntermediateOutput("foo", fooFile) {
         };
     }
 }

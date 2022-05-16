@@ -16,9 +16,12 @@
 package org.kie.dar.common.api.io;
 
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.utils.FileNameUtils;
 
 import java.io.File;
 import java.net.URI;
+
+import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
 
 
 /**
@@ -45,17 +48,8 @@ public final class IndexFile extends File {
         return toValidate;
     }
 
-    static String getFileName(String source) {
-        return source.contains(File.separator) ?
-                source.substring(source.lastIndexOf(File.separatorChar) + 1) : source;
-    }
-
     static String getModel(String fileName) {
-        return getSuffix(fileName).replace(FINAL_SUFFIX, "");
-    }
-
-    static String getSuffix(String fileName) {
-        return fileName.substring(fileName.lastIndexOf('.') + 1);
+        return FileNameUtils.getSuffix(fileName).replace(FINAL_SUFFIX, "");
     }
 
     public IndexFile(String pathname) {
@@ -79,7 +73,7 @@ public final class IndexFile extends File {
     }
 
     private String getSuffix() {
-        return getSuffix(this.getName());
+        return FileNameUtils.getSuffix(this.getName());
     }
 
 }

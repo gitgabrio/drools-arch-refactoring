@@ -13,22 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.foo.engine.compilation.model;
+package org.kie.dar.compilationmanager.core.mocks;
 
-import org.kie.dar.compilationmanager.api.model.DARProcessedClassesContainer;
+public class MockDARIntermediateOutputD extends AbstractMockDARIntermediateOutput {
 
-import java.util.Map;
-
-public class DARProcessedFoo implements DARProcessedClassesContainer {
-
-    private final Map<String, byte[]> compiledClassMap;
-
-    public DARProcessedFoo(Map<String, byte[]> compiledClassMap) {
-        this.compiledClassMap = compiledClassMap;
-    }
-
-    @Override
-    public Map<String, byte[]> getCompiledClassesMap() {
-        return compiledClassMap;
+    public MockDARIntermediateOutputD() {
+        super("mock", "MockDARIntermediateOutputD");
     }
 }

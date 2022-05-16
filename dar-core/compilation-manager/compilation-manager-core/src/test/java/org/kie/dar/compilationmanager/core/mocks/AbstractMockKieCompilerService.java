@@ -17,6 +17,7 @@ package org.kie.dar.compilationmanager.core.mocks;
 
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -29,7 +30,7 @@ public abstract class AbstractMockKieCompilerService implements KieCompilerServi
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("Unmanaged resource %s", toProcess.getClass()));
         }
-        return (E) new MockDARProcessed();
+        return (E) new MockDARFinalOutput();
     }
 
 }

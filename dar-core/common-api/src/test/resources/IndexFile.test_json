@@ -1,0 +1,13 @@
+[
+  {
+    "step-type": "final",
+    "fullPath": "full/path/final",
+    "type": "type",
+    "frn": "this/is/frn"
+  },
+  {
+    "step-type": "intermediate",
+    "fullPath": "full/path/intermediate",
+    "type": "type"
+  }
+]

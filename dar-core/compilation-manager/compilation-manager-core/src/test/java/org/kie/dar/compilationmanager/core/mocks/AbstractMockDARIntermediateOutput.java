@@ -15,7 +15,12 @@
  */
 package org.kie.dar.compilationmanager.core.mocks;
 
-public class MockDARResourceC extends AbstractMockDARResource {
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+
+public abstract class AbstractMockDARIntermediateOutput extends DARIntermediateOutput {
 
 
+    protected AbstractMockDARIntermediateOutput(String targetEngine, Object content) {
+        super(targetEngine, content);
+    }
 }

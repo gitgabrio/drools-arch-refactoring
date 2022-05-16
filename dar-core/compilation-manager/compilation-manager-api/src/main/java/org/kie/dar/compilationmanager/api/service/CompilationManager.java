@@ -15,32 +15,32 @@
  */
 package org.kie.dar.compilationmanager.api.service;
 
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CompilationManager {
 
     /**
-     * Produce one <code>DARProcessed</code> from the given <code>DARResource</code>.
-     * The return is <code>Optional</code> because the engine required to process given <code>DARResource</code>
+     * Produce one <code>DARFinalOutput</code> from the given <code>DARIntermediateOutput</code>.
+     * The return is <code>Optional</code> because the engine required to process given <code>DARIntermediateOutput</code>
      * may not be found
      *
      * @param toProcess
      * @return
      */
-    Optional<DARCompilationOutput> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    List<IndexFile> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
-    /**
-     * Produce a <code>List&lt;DARProcessed&gt;</code> from the given <code>List&lt;DARResource&gt;</code>
-     *
-     * @param toProcess
-     * @return
-     */
-    List<DARCompilationOutput> processResources(List<DARResource> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+//    /**
+//     * Produce a <code>List&lt;DARFinalOutput&gt;</code> from the given <code>List&lt;DARIntermediateOutput&gt;</code>
+//     *
+//     * @param toProcess
+//     * @return
+//     */
+//    List<IndexFile> processResources(List<DARIntermediateOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 
 }

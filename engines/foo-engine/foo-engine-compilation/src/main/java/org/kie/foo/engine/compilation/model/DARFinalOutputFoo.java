@@ -13,8 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.foo.engine.compilation.model;
 
-public class MockDARResourceB extends AbstractMockDARResource {
+import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+
+import java.util.Map;
+
+public class DARFinalOutputFoo extends DARFinalOutputClassesContainer {
+
+    public DARFinalOutputFoo(String fri, Map<String, byte[]> compiledClassMap) {
+        super(fri, "foo", compiledClassMap);
+    }
 
 }

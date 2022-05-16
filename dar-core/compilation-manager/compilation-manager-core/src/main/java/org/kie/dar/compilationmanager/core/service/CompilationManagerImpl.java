@@ -15,39 +15,36 @@
  */
 package org.kie.dar.compilationmanager.core.service;
 
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
+import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerService;
+import static org.kie.dar.compilationmanager.core.utils.CompilationManagerUtils.populateIndexFilesWithProcessedResource;
 
 public class CompilationManagerImpl implements CompilationManager {
     private static final Logger logger = LoggerFactory.getLogger(CompilationManagerImpl.class.getName());
 
     @Override
-    public Optional<DARCompilationOutput> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        Optional<KieCompilerService> retrieved = getKieCompilerService(toProcess, true);
-        if (retrieved.isEmpty()) {
-            logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
-        }
-        Optional<DARCompilationOutput> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
-        return darCompilationOutputOptional.map(darCompilationOutput -> darCompilationOutput instanceof DARProcessed ? darCompilationOutput : processResource((DARResource) darCompilationOutput, memoryCompilerClassLoader).get());
+    public List<IndexFile> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        final List<IndexFile> toReturn = new ArrayList<>();
+        populateIndexFilesWithProcessedResource(toReturn, toProcess, memoryCompilerClassLoader);
+        return toReturn;
     }
 
-    @Override
-    public List<DARCompilationOutput> processResources(List<DARResource> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return toProcess.stream().map(darResource -> this.processResource(darResource, memoryCompilerClassLoader))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-    }
+
+//    @Override
+//    public List<IndexFile>  processResources(List<DARIntermediateOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+//        return toProcess.stream()
+//                .map(darResource -> this.processResource(darResource, memoryCompilerClassLoader))
+//                .flatMap(Collection::stream)
+//                .collect(Collectors.toList());
+//    }
+
+
 }

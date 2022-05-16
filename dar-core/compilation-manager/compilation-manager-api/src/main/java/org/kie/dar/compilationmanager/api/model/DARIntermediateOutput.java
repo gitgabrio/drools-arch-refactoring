@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.foo.engine.compilation.model;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.compilationmanager.api.model.DARResourceIntermediate;
+/**
+ * A generic <i>Resource</i> to be processed by specific engine
+ */
+public class DARIntermediateOutput implements DARCompilationOutput, DARResource {
 
-public class DARResourceIntermediateFoo implements DARResourceIntermediate, DARResourceFoo {
-
-    private final String fullResourceName;
     private final String targetEngine;
     private final Object content;
 
-    public DARResourceIntermediateFoo(DARResourceIntermediate original) {
-        this.fullResourceName = original.getFullResourceName();
-        this.targetEngine = original.getTargetEngine();
-        this.content = original.getContent();
+    protected DARIntermediateOutput(String targetEngine, Object content) {
+        this.targetEngine = targetEngine;
+        this.content = content;
     }
 
-
-    @Override
-    public String getFullResourceName() {
-        return fullResourceName;
-    }
-
-    @Override
     public String getTargetEngine() {
         return targetEngine;
     }

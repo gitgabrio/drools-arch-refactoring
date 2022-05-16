@@ -15,6 +15,9 @@
  */
 package org.kie.dar.compilationmanager.core.mocks;
 
-public class MockDARResourceA extends AbstractMockDARResource {
+public class MockDARIntermediateOutputC extends AbstractMockDARIntermediateOutput {
 
+    public MockDARIntermediateOutputC() {
+        super("mock", "MockDARIntermediateOutputC");
+    }
 }

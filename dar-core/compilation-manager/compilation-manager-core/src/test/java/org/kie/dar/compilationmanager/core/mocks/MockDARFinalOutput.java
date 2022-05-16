@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.api.model;
+package org.kie.dar.compilationmanager.core.mocks;
 
-/**
- * A generic <i>Resource</i> to be processed by specific engine
- */
-public interface DARResourceIntermediate extends DARResource {
+import org.kie.dar.compilationmanager.api.model.DARFinalOutput;
 
-    /**
-     * The <b>engine</b> that could process the resource
-     *
-     * @return
-     */
-    String getTargetEngine();
+public class MockDARFinalOutput implements DARFinalOutput {
 
+    @Override
+    public String getFri() {
+        return "mock/dar/output/module";
+    }
 
-    Object getContent();
-
+    @Override
+    public String getModelType() {
+        return "mock";
+    }
 }

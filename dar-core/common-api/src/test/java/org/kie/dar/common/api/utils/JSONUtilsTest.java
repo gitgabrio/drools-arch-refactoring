@@ -16,10 +16,15 @@ package org.kie.dar.common.api.utils;/*
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
+import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.GeneratedFinalResource;
 import org.kie.dar.common.api.model.GeneratedIntermediateResource;
 import org.kie.dar.common.api.model.GeneratedResource;
 import org.kie.dar.common.api.model.GeneratedResources;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,7 +96,7 @@ class JSONUtilsTest {
     }
 
     @Test
-    void getGeneratedResourcesObject() throws JsonProcessingException {
+    void getGeneratedResourcesObjectFromString() throws JsonProcessingException {
         String generatedResourcesString = "[{\"step-type\":\"final\",\"fullPath\":\"full/path/final\",\"type\":\"type\",\"frn\":\"this/is/frn\"},{\"step-type\":\"intermediate\",\"fullPath\":\"full/path/intermediate\",\"type\":\"type\"}]";
         GeneratedResources retrieved = JSONUtils.getGeneratedResourcesObject(generatedResourcesString);
         assertNotNull(retrieved);
@@ -103,5 +108,27 @@ class JSONUtilsTest {
         GeneratedResource expected2 = new GeneratedFinalResource(fullPathFinal, type, frn);
         assertTrue(retrieved.contains(expected1));
         assertTrue(retrieved.contains(expected2));
+    }
+
+    @Test
+    void getGeneratedResourcesObjectFromFile() throws JsonProcessingException {
+        String fileName = "IndexFile.test_json";
+        try {
+            URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
+            assert resource != null;
+            IndexFile indexFile = new IndexFile(resource.getFile());
+            GeneratedResources retrieved = JSONUtils.getGeneratedResourcesObject(indexFile);
+            assertNotNull(retrieved);
+            String fullPathIntermediate = "full/path/intermediate";
+            String type = "type";
+            GeneratedResource expected1 = new GeneratedIntermediateResource(fullPathIntermediate, type);
+            String fullPathFinal = "full/path/final";
+            String frn = "this/is/frn";
+            GeneratedResource expected2 = new GeneratedFinalResource(fullPathFinal, type, frn);
+            assertTrue(retrieved.contains(expected1));
+            assertTrue(retrieved.contains(expected2));
+        } catch (Exception e) {
+            fail(e);
+        }
     }
 }

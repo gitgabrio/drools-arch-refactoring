@@ -18,19 +18,19 @@ package org.kie.foo.engine.testingmodule.compilation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.foo.engine.compilation.model.DARProcessedFoo;
-import org.kie.foo.engine.compilation.model.DARResourceFileFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CompileFooTest {
 
@@ -46,11 +46,10 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResourceFileFoo darResourceFileFoo = new DARResourceFileFoo(() -> fooFile);
-        Optional<DARCompilationOutput> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
-        assertTrue(darProcessed.isPresent());
-        DARCompilationOutput retrieved = darProcessed.get();
-        assertTrue(retrieved instanceof DARProcessedFoo);
+        DARIntermediateOutput darResourceFileFoo = new DARIntermediateOutput("foo", fooFile) {};
+        List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
+        assertNotNull(retrieved);
+        assertEquals(1, retrieved.size());
     }
 
     public static File getFileFromFileName(String fileName) {

@@ -20,7 +20,30 @@ import java.util.Map;
 /**
  * A <i>product</i> containing compiled classes
  */
-public interface DARProcessedClassesContainer extends DARProcessed {
+public abstract class DARFinalOutputClassesContainer implements DARFinalOutput {
 
-    Map<String, byte[]> getCompiledClassesMap();
+
+    private final String fri;
+
+    private final String modelType;
+    private final Map<String, byte[]> compiledClassMap;
+
+    protected DARFinalOutputClassesContainer(String fri, String modelType, Map<String, byte[]> compiledClassMap) {
+        this.fri = fri;
+        this.modelType = modelType;
+        this.compiledClassMap = compiledClassMap;
+    }
+
+    public String getFri() {
+        return fri;
+    }
+
+    @Override
+    public String getModelType() {
+        return modelType;
+    }
+
+    public Map<String, byte[]> getCompiledClassesMap() {
+        return compiledClassMap;
+    }
 }

@@ -15,17 +15,19 @@
  */
 package org.kie.bar.engine.compilation.utils;
 
-import org.kie.bar.engine.compilation.model.DARResourceBar;
-import org.kie.bar.engine.compilation.model.DARResourceIntermediateBar;
+import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
+import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
+
+import java.io.File;
 
 public class BarCompilerHelper {
 
     private BarCompilerHelper() {
     }
 
-    public static DARResourceIntermediateBar getDARProcessedBar(DARResourceBar resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        return new DARResourceIntermediateBar(resource.getFullResourceName(), "foo", resource);
+    public static DARIntermediateOutputBar getDARProcessedBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        return new DARIntermediateOutputBar((File) resource.getContent());
     }
 
 }

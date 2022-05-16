@@ -13,22 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.bar.engine.compilation.model;
+package org.kie.dar.compilationmanager.core.mocks;
 
-import org.kie.dar.compilationmanager.api.model.DARResourceFileContainer;
+public class MockDARIntermediateOutputB extends AbstractMockDARIntermediateOutput {
 
-import java.io.File;
-
-public class DARResourceBar implements DARResourceFileContainer {
-
-    private final File modelFile;
-
-    public DARResourceBar(File modelFile) {
-        this.modelFile = modelFile;
-    }
-
-    @Override
-    public File getModelFile() {
-        return modelFile;
+    public MockDARIntermediateOutputB() {
+        super("mock", "MockDARIntermediateOutputB");
     }
 }

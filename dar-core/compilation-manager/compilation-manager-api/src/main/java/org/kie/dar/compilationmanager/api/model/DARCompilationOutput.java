@@ -16,7 +16,7 @@
 package org.kie.dar.compilationmanager.api.model;
 
 /**
- * This is the output of a engine-compilation. It could be a processed object (i.e. a final step) or an intermediate resource
+ * This is the output of an engine-compilation. It could be a processed object (i.e. a final step) or an intermediate resource
  */
 public interface DARCompilationOutput {
 }

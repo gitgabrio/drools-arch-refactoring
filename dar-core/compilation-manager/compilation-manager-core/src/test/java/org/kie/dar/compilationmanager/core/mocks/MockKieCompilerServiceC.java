@@ -21,7 +21,7 @@ public class MockKieCompilerServiceC extends AbstractMockKieCompilerService {
 
     @Override
     public boolean canManageResource(DARResource toProcess) {
-        return toProcess instanceof MockDARResourceC;
+        return toProcess instanceof MockDARIntermediateOutputC;
     }
 
 }

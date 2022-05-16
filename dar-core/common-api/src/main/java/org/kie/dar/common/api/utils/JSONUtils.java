@@ -17,8 +17,11 @@ package org.kie.dar.common.api.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.GeneratedResource;
 import org.kie.dar.common.api.model.GeneratedResources;
+
+import java.io.IOException;
 
 public class JSONUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -40,5 +43,9 @@ public class JSONUtils {
 
     public static GeneratedResources getGeneratedResourcesObject(String generatedResourcesString) throws JsonProcessingException {
         return objectMapper.readValue(generatedResourcesString, GeneratedResources.class);
+    }
+
+    public static GeneratedResources getGeneratedResourcesObject(IndexFile indexFile) throws IOException {
+        return objectMapper.readValue(indexFile, GeneratedResources.class);
     }
 }

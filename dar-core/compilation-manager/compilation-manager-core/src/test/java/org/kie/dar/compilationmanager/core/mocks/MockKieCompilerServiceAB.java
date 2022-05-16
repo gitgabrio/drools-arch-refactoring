@@ -15,6 +15,7 @@
  */
 package org.kie.dar.compilationmanager.core.mocks;
 
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class MockKieCompilerServiceAB extends AbstractMockKieCompilerService {
 
-    private static List<Class<? extends DARResource>> managedResources = Arrays.asList(MockDARResourceA.class, MockDARResourceB.class);
+    private static List<Class<? extends DARIntermediateOutput>> managedResources = Arrays.asList(MockDARIntermediateOutputA.class, MockDARIntermediateOutputB.class);
 
     @Override
     public boolean canManageResource(DARResource toProcess) {

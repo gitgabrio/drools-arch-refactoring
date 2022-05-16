@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.dar.common.api.utils;
 
-import org.kie.dar.compilationmanager.api.model.DARProcessed;
+import java.io.File;
 
-public class MockDARProcessed implements DARProcessed {
+public class FileNameUtils {
+    private FileNameUtils() {
+    }
+
+    public static String getFileName(String source) {
+        return source.contains(File.separator) ?
+                source.substring(source.lastIndexOf(File.separatorChar) + 1) : source;
+    }
+
+    public static String getSuffix(String fileName) {
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
+    }
 }

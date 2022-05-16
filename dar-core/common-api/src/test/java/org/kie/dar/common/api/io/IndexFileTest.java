@@ -85,15 +85,6 @@ class IndexFileTest {
     }
 
     @Test
-    void getFileName() {
-        String fileName = "file_name.txt";
-        String source = fileName;
-        assertEquals(fileName, IndexFile.getFileName(source));
-        source = File.separator + "dir" + File.separator + fileName;
-        assertEquals(fileName, IndexFile.getFileName(source));
-    }
-
-    @Test
     void getModel() {
         String fileName = "file_name.model_json";
         String expected = "model";
@@ -101,16 +92,6 @@ class IndexFileTest {
         assertEquals(expected, IndexFile.getModel(source));
         source = File.separator + "dir" + File.separator + fileName;
         assertEquals(expected, IndexFile.getModel(source));
-    }
-
-    @Test
-    void getSuffix() {
-        String fileName = "file_name.model_json";
-        String expected = "model_json";
-        String source = fileName;
-        assertEquals(expected, IndexFile.getSuffix(source));
-        source = File.separator + "dir" + File.separator + fileName;
-        assertEquals(expected, IndexFile.getSuffix(source));
     }
 
     @Test
