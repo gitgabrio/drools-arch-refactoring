@@ -29,7 +29,12 @@ import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
  */
 public final class IndexFile extends File {
 
+    public static final String INDEX_FILE = "IndexFile";
     public static final String FINAL_SUFFIX = "_json";
+
+    static String getIndexFileName(String modelType) {
+        return String.format("%s.%s%s", INDEX_FILE, modelType, FINAL_SUFFIX);
+    }
 
     static String validatePathName(String toValidate) {
         String fileName = getFileName(toValidate);
@@ -43,29 +48,20 @@ public final class IndexFile extends File {
         return toValidate;
     }
 
-    static URI validateURI(URI toValidate) {
-        validatePathName(toValidate.getPath());
-        return toValidate;
-    }
-
     static String getModel(String fileName) {
         return FileNameUtils.getSuffix(fileName).replace(FINAL_SUFFIX, "");
     }
 
-    public IndexFile(String pathname) {
-        super(validatePathName(pathname));
+    public IndexFile(String modelType) {
+        super(validatePathName(getIndexFileName(modelType)));
     }
 
-    public IndexFile(String parent, String child) {
-        super(parent, validatePathName(child));
+    public IndexFile(String parent, String modelType) {
+        super(parent, validatePathName(getIndexFileName(modelType)));
     }
 
-    public IndexFile(File parent, String child) {
-        super(parent, validatePathName(child));
-    }
-
-    public IndexFile(URI uri) {
-        super(validateURI(uri));
+    public IndexFile(File existingFile) {
+        super(existingFile.toURI());
     }
 
     public String getModel() {

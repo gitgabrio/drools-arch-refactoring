@@ -18,8 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,13 +27,6 @@ class IndexFileTest {
     void validatePathName() {
         String toValidate = "/this/is/valid/file.model_json";
         assertEquals(toValidate, IndexFile.validatePathName(toValidate));
-    }
-
-    @Test
-    void validateURI() throws URISyntaxException {
-        String basePath = "file:///this/is/valid/file.model_json";
-        URI toValidate = new URI(basePath);
-        assertEquals(toValidate, IndexFile.validateURI(toValidate));
     }
 
     @Test
@@ -61,30 +52,6 @@ class IndexFileTest {
     }
 
     @Test
-    void validateWrongURI() throws URISyntaxException {
-        String basePath = "file:///this/is/invalid/file._json";
-        URI toValidate = new URI(basePath);
-        try {
-            IndexFile.validateURI(toValidate);
-            fail("Expecting KieDARCommonException");
-        } catch (Exception e) {
-            assertTrue(e instanceof KieDARCommonException);
-            String expected = "Wrong file name file._json";
-            assertEquals(expected, e.getMessage());
-        }
-        basePath = "file:///this/is/invalid/file.model";
-        toValidate = new URI(basePath);
-        try {
-            IndexFile.validateURI(toValidate);
-            fail("Expecting KieDARCommonException");
-        } catch (Exception e) {
-            assertTrue(e instanceof KieDARCommonException);
-            String expected = "Wrong file name file.model";
-            assertEquals(expected, e.getMessage());
-        }
-    }
-
-    @Test
     void getModel() {
         String fileName = "file_name.model_json";
         String expected = "model";
@@ -95,14 +62,10 @@ class IndexFileTest {
     }
 
     @Test
-    void testGetModel() throws URISyntaxException {
+    void testGetModel() {
         String fileName = "/this/is/valid/file.model_json";
         String expected = "model";
         IndexFile indexFile = new IndexFile(fileName);
-        assertEquals(expected, indexFile.getModel());
-        fileName = "file:///this/is/valid/file.model_json";
-        URI uri = new URI(fileName);
-        indexFile = new IndexFile(uri);
         assertEquals(expected, indexFile.getModel());
     }
 }

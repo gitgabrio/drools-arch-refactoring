@@ -15,6 +15,7 @@ package org.kie.dar.compilationmanager.core.service;/*
  */
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
@@ -26,12 +27,14 @@ import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputB;
 import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputD;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 
 class TestCompilationManagerImpl {
 
@@ -54,6 +57,7 @@ class TestCompilationManagerImpl {
                 DARIntermediateOutput toProcess = managedResource.getDeclaredConstructor().newInstance();
                 List<IndexFile> retrieved = compilationManager.processResource(toProcess, memoryCompilerClassLoader);
                 assertEquals(1, retrieved.size());
+                retrieved.get(0).delete();
             } catch (Exception e) {
                 fail(e);
             }

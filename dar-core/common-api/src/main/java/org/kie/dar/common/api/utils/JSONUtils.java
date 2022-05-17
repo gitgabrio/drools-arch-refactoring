@@ -46,6 +46,10 @@ public class JSONUtils {
     }
 
     public static GeneratedResources getGeneratedResourcesObject(IndexFile indexFile) throws IOException {
-        return objectMapper.readValue(indexFile, GeneratedResources.class);
+        return indexFile.length() == 0 ? new GeneratedResources() : objectMapper.readValue(indexFile, GeneratedResources.class);
+    }
+
+    public static void writeGeneratedResourcesObject(GeneratedResources toWrite, IndexFile indexFile) throws IOException {
+        objectMapper.writeValue(indexFile, toWrite);
     }
 }

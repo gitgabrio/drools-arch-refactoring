@@ -21,21 +21,21 @@ package org.kie.dar.common.api.model;
 public final class GeneratedFinalResource extends GeneratedResource {
 
     /**
-     * the full reference name (e.g. "bar/resource/some_final_model")
+     * the full reference identifier (e.g. "bar/resource/some_final_model")
      */
-    private final String frn;
+    private final String fri;
 
     public GeneratedFinalResource() {
         this(null, null, null);
     }
 
-    public GeneratedFinalResource(String fullPath, String type, String frn) {
+    public GeneratedFinalResource(String fullPath, String type, String fri) {
         super(fullPath, type);
-        this.frn = frn;
+        this.fri = fri;
     }
 
-    public String getFrn() {
-        return frn;
+    public String getFri() {
+        return fri;
     }
 
     /**
@@ -51,7 +51,7 @@ public final class GeneratedFinalResource extends GeneratedResource {
             return false;
         }
         GeneratedFinalResource that = (GeneratedFinalResource) o;
-        return frn.equals(that.frn);
+        return fri.equals(that.fri);
     }
 
 }

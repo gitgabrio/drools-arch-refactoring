@@ -18,7 +18,7 @@ package org.kie.dar.compilationmanager.api.model;
 import java.util.Map;
 
 /**
- * A <i>product</i> containing compiled classes
+ * A <code>DARFinalOutput</code> containing compiled classes
  */
 public abstract class DARFinalOutputClassesContainer implements DARFinalOutput {
 

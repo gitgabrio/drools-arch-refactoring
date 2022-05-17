@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
+import static org.kie.dar.common.api.utils.FileUtils.getInputStreamFromFileName;
+
 public class JavaParserUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JavaParserUtils.class.getName());
@@ -72,7 +74,7 @@ public class JavaParserUtils {
 
     private static CompilationUnit getFromFileName(String fileName) {
         try {
-            final InputStream resource = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
+            final InputStream resource = getInputStreamFromFileName(fileName);
             return StaticJavaParser.parse(resource);
         } catch (Exception e) {
             throw new KieDARCommonException(String.format("Failed to parse %s due to %s", fileName,
