@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.common.constants;
+package org.kie.dar.common.api.constants;
 
 public class Constants {
 
@@ -58,6 +58,9 @@ public class Constants {
     public static final String EMPTY_LIST = "emptyList";
     public static final String AS_LIST = "asList";
     public static final String TO_RETURN = "toReturn";
+
+    //
+    public static final String INDEXFILE_DIRECTORY_PROPERTY = "indexfile.directory";
 
     private Constants() {
         // Avoid instantiation

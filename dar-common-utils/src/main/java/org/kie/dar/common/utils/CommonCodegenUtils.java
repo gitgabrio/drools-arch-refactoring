@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.github.javaparser.StaticJavaParser.parseClassOrInterfaceType;
-import static org.kie.dar.common.constants.Constants.*;
+import static org.kie.dar.common.api.constants.Constants.*;
 
 /**
  * Class meant to provide <i>helper</i> methods to all <i>code-generating</i> classes

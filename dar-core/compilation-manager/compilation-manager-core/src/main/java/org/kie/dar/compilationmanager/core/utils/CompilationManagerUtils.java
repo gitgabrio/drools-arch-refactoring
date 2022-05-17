@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.kie.dar.common.api.constants.Constants.INDEXFILE_DIRECTORY_PROPERTY;
 import static org.kie.dar.common.api.io.IndexFile.FINAL_SUFFIX;
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
@@ -43,7 +44,6 @@ import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerS
 
 public class CompilationManagerUtils {
 
-    public static final String INDEXFILE_DIRECTORY_PROPERTY = "indexfile.directory";
     private static final Logger logger = LoggerFactory.getLogger(CompilationManagerUtils.class.getName());
     private static final String DEFAULT_INDEXFILE_DIRECTORY = "./target/classes";
 
