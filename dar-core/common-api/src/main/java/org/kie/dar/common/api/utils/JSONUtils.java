@@ -18,6 +18,7 @@ package org.kie.dar.common.api.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 
@@ -51,5 +52,13 @@ public class JSONUtils {
 
     public static void writeGeneratedResourcesObject(GeneratedResources toWrite, IndexFile indexFile) throws IOException {
         objectMapper.writeValue(indexFile, toWrite);
+    }
+
+    public static String getFRIString(FRI fri) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(fri);
+    }
+
+    public static FRI getFRIObject(String friString) throws JsonProcessingException {
+        return objectMapper.readValue(friString, FRI.class);
     }
 }

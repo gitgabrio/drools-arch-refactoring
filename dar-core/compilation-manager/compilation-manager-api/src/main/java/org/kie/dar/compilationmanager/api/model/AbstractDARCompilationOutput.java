@@ -15,13 +15,23 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
+import org.kie.dar.common.api.model.FRI;
+
 public abstract class AbstractDARCompilationOutput implements DARCompilationOutput {
 
+    private final FRI fri;
     private final String modelType;
 
-    protected AbstractDARCompilationOutput(String modelType) {
+    protected AbstractDARCompilationOutput(FRI fri, String modelType) {
+        this.fri = fri;
         this.modelType = modelType;
     }
+
+    @Override
+    public FRI getFri() {
+        return fri;
+    }
+
     @Override
     public String getModelType() {
         return modelType;

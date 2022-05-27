@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
@@ -46,7 +47,7 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARIntermediateOutput darResourceFileFoo = new DARIntermediateOutput("not_foo", "foo", fooFile) {};
+        DARIntermediateOutput darResourceFileFoo = new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "not_foo", "foo", fooFile) {};
         List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(1, retrieved.size());

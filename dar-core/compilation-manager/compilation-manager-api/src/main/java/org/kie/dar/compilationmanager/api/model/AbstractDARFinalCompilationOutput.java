@@ -15,21 +15,17 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
+import org.kie.dar.common.api.model.FRI;
+
 public abstract class AbstractDARFinalCompilationOutput extends AbstractDARCompilationOutput implements DARFinalOutput {
 
-    private final String fri;
     private final String fullClassName;
 
-    protected AbstractDARFinalCompilationOutput(String fri, String modelType, String fullClassName) {
-        super(modelType);
-        this.fri = fri;
+    protected AbstractDARFinalCompilationOutput(FRI fri, String modelType, String fullClassName) {
+        super(fri, modelType);
         this.fullClassName = fullClassName;
     }
 
-    @Override
-    public String getFri() {
-        return fri;
-    }
 
     @Override
     public String getFullClassName() {

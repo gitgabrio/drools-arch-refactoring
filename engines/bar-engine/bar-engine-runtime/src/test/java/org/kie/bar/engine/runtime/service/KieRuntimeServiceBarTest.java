@@ -38,13 +38,14 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput("bar/dar", memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput("notbar/dar", memoryCompilerClassLoader));
+        assertTrue(kieRuntimeService.canManageInput("/bar/dar", memoryCompilerClassLoader));
+        assertFalse(kieRuntimeService.canManageInput("/notbar/dar", memoryCompilerClassLoader));
+        assertFalse(kieRuntimeService.canManageInput("/bar/darfoo", memoryCompilerClassLoader));
     }
 
     @Test
     void evaluateInputExistingBarResources() {
-        DARInput toEvaluate = new DARInputBar("bar/dar", "InputData");
+        DARInput toEvaluate = new DARInputBar("/bar/dar", "InputData");
         DAROutput retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(toEvaluate.getFullResourceIdentifier(), retrieved.getFullResourceName());

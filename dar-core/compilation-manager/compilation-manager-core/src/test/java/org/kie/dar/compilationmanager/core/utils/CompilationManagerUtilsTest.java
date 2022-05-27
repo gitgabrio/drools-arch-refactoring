@@ -16,10 +16,7 @@ package org.kie.dar.compilationmanager.core.utils;/*
 
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.GeneratedClassResource;
-import org.kie.dar.common.api.model.GeneratedExecutableResource;
-import org.kie.dar.common.api.model.GeneratedResource;
-import org.kie.dar.common.api.model.GeneratedResources;
+import org.kie.dar.common.api.model.*;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 
 import java.io.IOException;
@@ -34,8 +31,8 @@ import static org.kie.dar.common.api.utils.JSONUtils.writeGeneratedResourcesObje
 
 class CompilationManagerUtilsTest {
 
-    private final static String fri = "fri";
     private final static String modelType = "test";
+    private final static FRI fri = new FRI("this/is/fri", modelType);
     private final static Map<String, byte[]> compiledClassMap = IntStream.range(0, 3).boxed().collect(Collectors.toMap(integer -> "class_" + integer, integer -> new byte[0]));
     private final static DARFinalOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(modelType);
 

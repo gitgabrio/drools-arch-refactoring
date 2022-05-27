@@ -15,6 +15,7 @@
  */
 package org.kie.bar.engine.compilation.model;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 
 import java.io.File;
@@ -22,8 +23,8 @@ import java.io.File;
 public class DARIntermediateOutputBar extends DARIntermediateOutput {
 
 
-    public DARIntermediateOutputBar(String fri, File modelFile) {
-        super("bar", "foo", modelFile);
+    public DARIntermediateOutputBar(FRI fri, File modelFile) {
+        super(fri, "bar", "foo", modelFile);
     }
 
 }

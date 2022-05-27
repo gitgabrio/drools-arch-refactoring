@@ -15,13 +15,16 @@
  */
 package org.kie.dar.compilationmanager.core.mocks;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutput;
 
 public class MockDARFinalOutput implements DARFinalOutput {
 
+    private FRI fri = new FRI( "mock/dar/output/module", "mock");
+
     @Override
-    public String getFri() {
-        return "mock/dar/output/module";
+    public FRI getFri() {
+        return fri;
     }
 
     @Override

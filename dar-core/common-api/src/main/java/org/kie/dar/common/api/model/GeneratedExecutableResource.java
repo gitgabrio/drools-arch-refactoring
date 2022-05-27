@@ -22,10 +22,11 @@ import java.util.Objects;
  */
 public final class GeneratedExecutableResource implements GeneratedResource {
 
+    private static final long serialVersionUID = 6588314882989626752L;
     /**
      * the full reference identifier (e.g. "bar/resource/some_final_model")
      */
-    private final String fri;
+    private final FRI fri;
 
     private final String model;
 
@@ -35,13 +36,13 @@ public final class GeneratedExecutableResource implements GeneratedResource {
         this(null, null, null);
     }
 
-    public GeneratedExecutableResource(String fri, String model, String fullClassName) {
+    public GeneratedExecutableResource(FRI fri, String model, String fullClassName) {
         this.fri = fri;
         this.model = model;
         this.fullClassName = fullClassName;
     }
 
-    public String getFri() {
+    public FRI getFri() {
         return fri;
     }
 

@@ -21,6 +21,7 @@ import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
@@ -55,8 +56,8 @@ class RuntimeBarTest {
 
     @Test
     void evaluateBarCompilationOnTheFly() {
-        String fri = "bar/darbar";
-        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
+        FRI fri = new FRI("bar/darbar", "bar");
+        DARInputBar toEvaluate = new DARInputBar(fri.getFri(), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarBar.bar");

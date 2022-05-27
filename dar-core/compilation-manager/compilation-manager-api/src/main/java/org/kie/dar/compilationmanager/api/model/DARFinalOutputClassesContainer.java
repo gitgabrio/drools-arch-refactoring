@@ -15,6 +15,8 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
+import org.kie.dar.common.api.model.FRI;
+
 import java.util.Map;
 
 /**
@@ -24,7 +26,7 @@ public abstract class DARFinalOutputClassesContainer extends AbstractDARFinalCom
 
     private final Map<String, byte[]> compiledClassMap;
 
-    protected DARFinalOutputClassesContainer(String fri, String modelType, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    protected DARFinalOutputClassesContainer(FRI fri, String modelType, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, modelType, fullClassName);
         this.compiledClassMap = compiledClassMap;
     }

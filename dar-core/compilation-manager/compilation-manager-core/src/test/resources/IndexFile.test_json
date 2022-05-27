@@ -1,8 +1,12 @@
 [
   {
     "step-type": "executable",
-    "model": "type",
-    "fri": "this/is/fri",
+    "model": "foo",
+    "fri": {
+      "basePath": "this/is/fri",
+      "model": "foo",
+      "fri": "/foo/this/is/fri"
+    },
     "fullClassName": "full.class.Name"
   },
   {

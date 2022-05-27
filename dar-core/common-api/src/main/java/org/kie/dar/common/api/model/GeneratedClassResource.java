@@ -22,6 +22,7 @@ import java.util.Objects;
  */
 public final class GeneratedClassResource implements GeneratedResource {
 
+    private static final long serialVersionUID = 8140824908598306598L;
     /**
      * the full class name of generated class
      */

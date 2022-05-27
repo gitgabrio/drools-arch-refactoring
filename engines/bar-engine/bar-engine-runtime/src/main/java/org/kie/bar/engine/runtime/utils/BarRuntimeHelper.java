@@ -79,7 +79,7 @@ public class BarRuntimeHelper {
             GeneratedResources generatedResources = getGeneratedResourcesObject(toSearch);
             return generatedResources.stream()
                     .filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource &&
-                    ((GeneratedExecutableResource)generatedResource).getFri().equals(fullResourceIdentifier))
+                    ((GeneratedExecutableResource)generatedResource).getFri().getFri().equals(fullResourceIdentifier))
                     .findFirst()
                     .map(GeneratedExecutableResource.class::cast);
         } catch (IOException e) {

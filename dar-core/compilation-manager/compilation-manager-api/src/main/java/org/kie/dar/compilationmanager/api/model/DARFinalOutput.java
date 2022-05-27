@@ -21,13 +21,8 @@ package org.kie.dar.compilationmanager.api.model;
 public interface DARFinalOutput extends DARCompilationOutput {
 
     /**
-     * Returns the <b>full resource identifier</b> to be invoked for execution
-     * @return
-     */
-    String getFri();
-
-    /**
-     *  Returns the <b>full class name</b> to be instantiated for execution
+     * Returns the <b>full class name</b> to be instantiated for execution
+     *
      * @return
      */
     String getFullClassName();

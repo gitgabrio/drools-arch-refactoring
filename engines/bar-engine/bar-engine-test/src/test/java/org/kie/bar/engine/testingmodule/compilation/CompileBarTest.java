@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedClassResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
@@ -83,7 +84,7 @@ class CompileBarTest {
 
     @Test
     void compileIntermediateBar() throws IOException {
-        String fri = "bar/darbar";
+        FRI fri = new FRI("bar/darbar", "bar");
         File fooFile = getFileFromFileName("DarBar.bar");
         DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, fooFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);

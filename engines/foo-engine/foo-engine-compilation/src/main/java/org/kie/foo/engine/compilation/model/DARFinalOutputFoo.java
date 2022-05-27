@@ -15,13 +15,14 @@
  */
 package org.kie.foo.engine.compilation.model;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 
 import java.util.Map;
 
 public class DARFinalOutputFoo extends DARFinalOutputClassesContainer {
 
-    public DARFinalOutputFoo(String fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    public DARFinalOutputFoo(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, "foo", fullClassName, compiledClassMap);
     }
 

@@ -15,14 +15,25 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
+import org.kie.dar.common.api.model.FRI;
+
 /**
  * This is the output of an engine-compilation. It could be a processed object (i.e. a final step) or an intermediate resource
  */
 public interface DARCompilationOutput {
 
     /**
+     * Returns the <b>full resource identifier</b> to be invoked for execution
+     * @return
+     */
+    FRI getFri();
+
+    /**
      * Returns the type of model to be executed
      * @return
      */
     String getModelType();
+
+
+
 }

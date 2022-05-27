@@ -22,10 +22,11 @@ import java.util.Objects;
  */
 public final class GeneratedRedirectResource implements GeneratedResource {
 
+    private static final long serialVersionUID = 1356917578380378083L;
     /**
      * the full reference identifier (e.g. "bar/resource/some_final_model")
      */
-    private final String fri;
+    private final FRI fri;
 
     /**
      * the full reference identifier (e.g. "bar/resource/some_final_model")
@@ -36,12 +37,12 @@ public final class GeneratedRedirectResource implements GeneratedResource {
         this(null, null);
     }
 
-    public GeneratedRedirectResource(String fri, String target) {
+    public GeneratedRedirectResource(FRI fri, String target) {
         this.fri = fri;
         this.target = target;
     }
 
-    public String getFri() {
+    public FRI getFri() {
         return fri;
     }
 

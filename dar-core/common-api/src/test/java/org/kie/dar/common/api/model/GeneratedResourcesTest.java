@@ -24,11 +24,10 @@ class GeneratedResourcesTest {
 
     @Test
     void add() {
-        String fullPath = "full/class/path";
         String fullClassName = "full.class.Path";
         GeneratedResource generatedClassResource = new GeneratedClassResource(fullClassName);
-        String fri = "this/is/fri";
         String model = "foo";
+        FRI fri = new FRI("this/is/fri", model);
         GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
@@ -47,7 +46,7 @@ class GeneratedResourcesTest {
 
         generatedResources = new GeneratedResources();
         generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource("different-fri", model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model) , model, fullClassName));
         assertEquals(2, generatedResources.size());
 
         String fullPathIntermediate = "full/path/intermediate";

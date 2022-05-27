@@ -16,6 +16,7 @@
 package org.kie.bar.engine.compilation.utils;
 
 import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -27,7 +28,8 @@ public class BarCompilerHelper {
     }
 
     public static DARIntermediateOutputBar getDARIntermediateOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        return new DARIntermediateOutputBar(resource.toString(), (File) resource.getContent());
+        FRI fri = new FRI (((File) resource.getContent()).getAbsolutePath(), "bar");
+        return new DARIntermediateOutputBar(fri, (File) resource.getContent());
     }
 
 }

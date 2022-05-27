@@ -16,6 +16,7 @@
 package org.kie.foo.engine.compilation;
 
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
@@ -65,7 +66,7 @@ public class TestingUtils {
     }
 
     public static DARIntermediateOutput getDARResourceIntermediate() {
-        return new DARIntermediateOutput("not_foo", "foo", "Content") {
+        return new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "not_foo", "foo", "Content") {
         };
     }
 

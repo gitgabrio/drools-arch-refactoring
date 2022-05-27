@@ -35,7 +35,7 @@ class BarRuntimeHelperTest {
 
     @Test
     void loadExistingBarResources() {
-        BarResources retrieved = BarRuntimeHelper.loadBarResources("bar/dar", memoryCompilerClassLoader);
+        BarResources retrieved = BarRuntimeHelper.loadBarResources("/bar/dar", memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(2, retrieved.getManagedResources().size());
         assertTrue(retrieved.getManagedResources().contains("BarResOne"));
@@ -54,7 +54,7 @@ class BarRuntimeHelperTest {
 
     @Test
     void getDAROutput() {
-        BarResources fooResources = BarRuntimeHelper.loadBarResources("bar/dar", memoryCompilerClassLoader);
+        BarResources fooResources = BarRuntimeHelper.loadBarResources("/bar/dar", memoryCompilerClassLoader);
         DARInputBar darInputBar = new DARInputBar("DarBar", "InputData");
         DAROutputBar retrieved = BarRuntimeHelper.getDAROutput(fooResources, darInputBar);
         assertNotNull(retrieved);

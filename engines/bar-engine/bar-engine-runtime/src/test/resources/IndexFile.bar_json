@@ -2,7 +2,11 @@
   {
     "step-type": "executable",
     "model": "bar",
-    "fri": "bar/dar",
+    "fri": {
+      "basePath": "dar",
+      "model": "bar",
+      "fri": "/bar/dar"
+    },
     "fullClassName": "org.kie.bar.engine.compilation.model.DarBarResources"
   },
   {

@@ -15,6 +15,7 @@
  */
 package org.kie.bar.engine.compilation.model;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class DARFinalOutputBar extends DARFinalOutputClassesContainer {
 
 
-    public DARFinalOutputBar(String fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    public DARFinalOutputBar(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, "bar", fullClassName, compiledClassMap);
     }
 
