@@ -18,4 +18,6 @@ package org.kie.dar.common.api.model;
 import java.util.HashSet;
 
 public final class GeneratedResources extends HashSet<GeneratedResource> {
+
+
 }

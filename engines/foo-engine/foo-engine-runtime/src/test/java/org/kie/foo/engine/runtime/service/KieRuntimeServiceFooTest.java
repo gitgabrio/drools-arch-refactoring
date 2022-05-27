@@ -46,7 +46,7 @@ class KieRuntimeServiceFooTest {
         DARInputFoo toEvaluate = new DARInputFoo("DarFoo", "InputData");
         DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        assertEquals(toEvaluate.getFullResourceName(), retrieved.getFullResourceName());
+        assertEquals(toEvaluate.getFullResourceIdentifier(), retrieved.getFullResourceName());
         assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
     }
 

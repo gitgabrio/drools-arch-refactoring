@@ -21,7 +21,7 @@ import org.kie.dar.runtimemanager.api.model.DARInput;
 public abstract class AbstractMockDARInput implements DARInput {
 
     @Override
-    public String getFullResourceName() {
+    public String getFullResourceIdentifier() {
         return this.getClass().getSimpleName();
     }
 

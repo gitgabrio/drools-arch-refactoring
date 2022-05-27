@@ -34,12 +34,12 @@ public class KieRuntimeServiceFoo implements KieRuntimeService {
 
 
     @Override
-    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            loadFooResources(fullResourceName, memoryCompilerClassLoader);
+            loadFooResources(fullResourceIdentifier, memoryCompilerClassLoader);
             return true;
         } catch (Exception e) {
-            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
+            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceIdentifier, e.getMessage()));
             return false;
         }
     }
@@ -48,13 +48,13 @@ public class KieRuntimeServiceFoo implements KieRuntimeService {
     @SuppressWarnings("unchecked")
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            FooResources fooResources = loadFooResources(toEvaluate.getFullResourceName(), memoryCompilerClassLoader);
-            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFullResourceName(), toEvaluate.getInputData());
+            FooResources fooResources = loadFooResources(toEvaluate.getFullResourceIdentifier(), memoryCompilerClassLoader);
+            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFullResourceIdentifier(), toEvaluate.getInputData());
             return (E) getDAROutput(fooResources, darInputFoo);
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                     this.getClass().getName(),
-                    toEvaluate.getFullResourceName()));
+                    toEvaluate.getFullResourceIdentifier()));
         }
 
     }

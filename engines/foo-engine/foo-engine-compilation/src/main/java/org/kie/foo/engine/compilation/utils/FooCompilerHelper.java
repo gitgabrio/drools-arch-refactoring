@@ -31,6 +31,7 @@ import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.memorycompiler.KieMemoryCompilerException;
 
 import java.io.File;
 import java.util.HashMap;
@@ -64,7 +65,8 @@ public class FooCompilerHelper {
     }
 
     static DARFinalOutputFoo getDARProcessedFooFromFile(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        String simpleClassName = getSanitizedClassName(((File) resource.getContent()).getAbsolutePath());
+        String fri = ((File) resource.getContent()).getAbsolutePath();
+        String simpleClassName = getSanitizedClassName(fri);
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
                 FOO_MODEL_PACKAGE_NAME,
                 FOO_MODEL_TEMPLATE_JAVA,
@@ -75,7 +77,7 @@ public class FooCompilerHelper {
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
         sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputFoo(fooResourcesSourceClassName, compiledClasses);
+        return new DARFinalOutputFoo(fri, fooResourcesSourceClassName, compiledClasses);
     }
 
     static DARFinalOutputFoo getDARProcessedFooFromIntermediate(DARIntermediateOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
@@ -91,7 +93,7 @@ public class FooCompilerHelper {
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
         sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputFoo(fooResourcesSourceClassName, compiledClasses);
+        return new DARFinalOutputFoo("fri", fooResourcesSourceClassName, compiledClasses);
     }
 
     static CompilationUnit getFooResourcesCompilationUnit(Set<String> generatedSources, String fooResourcesSourceClassName) {

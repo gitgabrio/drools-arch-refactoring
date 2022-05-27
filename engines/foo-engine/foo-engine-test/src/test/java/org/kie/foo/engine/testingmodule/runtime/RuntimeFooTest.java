@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
@@ -32,13 +33,16 @@ import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class RuntimeFooTest {
 
@@ -54,13 +58,19 @@ class RuntimeFooTest {
     }
 
     @Test
-    void evaluateFooCompilationOnTheFly() {
+    void evaluateFooCompilationOnTheFly() throws IOException {
         DARInputFoo toEvaluate = new DARInputFoo("DarFoofoo", "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarFoo.foo");
         DARResource darResourceFileFoo = new DARFileResource(fooFile);
-        List<IndexFile> darProcessed = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
+        List<IndexFile> indexFiles = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
+        assertEquals(1, indexFiles.size());
+        IndexFile retrieved = indexFiles.get(0);
+        assertTrue(retrieved.exists());
+        GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved);
+        System.out.println(generatedResources);
+        retrieved.delete();
         // TODO
 //        Map<String, byte[]> compiledClasses = ((DARFinalOutputFoo) darProcessed.get()).getCompiledClassesMap();
 //        compiledClasses.forEach(memoryCompilerClassLoader::addCode);

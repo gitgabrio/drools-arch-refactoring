@@ -39,7 +39,7 @@ class BarCompilerHelperTest {
     void getDARProcessedBar() {
         File fooFile = getFileFromFileName("DarBar.bar");
         DARFileResource darResourceBar = new DARFileResource(fooFile);
-        DARIntermediateOutputBar retrieved = BarCompilerHelper.getDARProcessedBar(darResourceBar, memoryCompilerClassLoader);
+        DARIntermediateOutputBar retrieved = BarCompilerHelper.getDARIntermediateOutputBar(darResourceBar, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals("foo", retrieved.getTargetEngine());
         // TODO

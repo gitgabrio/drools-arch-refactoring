@@ -27,8 +27,8 @@ public interface DARFinalOutput extends DARCompilationOutput {
     String getFri();
 
     /**
-     * Returns the type of model to be executed
+     *  Returns the <b>full class name</b> to be instantiated for execution
      * @return
      */
-    String getModelType();
+    String getFullClassName();
 }

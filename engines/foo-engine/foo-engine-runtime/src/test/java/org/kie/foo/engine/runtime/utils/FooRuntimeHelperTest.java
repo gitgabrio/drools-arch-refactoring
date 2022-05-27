@@ -58,7 +58,7 @@ class FooRuntimeHelperTest {
         DARInputFoo darInputFoo = new DARInputFoo("DarFoo", "InputData");
         DAROutputFoo retrieved = FooRuntimeHelper.getDAROutput(fooResources, darInputFoo);
         assertNotNull(retrieved);
-        assertEquals(darInputFoo.getFullResourceName(), retrieved.getFullResourceName());
+        assertEquals(darInputFoo.getFullResourceIdentifier(), retrieved.getFullResourceName());
         assertEquals(darInputFoo.getInputData(), retrieved.getOutputData());
     }
 }

@@ -13,19 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.common.api.model;
+package org.kie.dar.compilationmanager.api.model;
 
-/**
- * A <code>GeneratedResource</code> not meant to be directly executed, linking to another <code>GeneratedResource</code>
- */
-public final class GeneratedIntermediateResource extends GeneratedResource {
+import java.util.Map;
 
-    public GeneratedIntermediateResource() {
-        this(null, null);
-    }
+public interface DARClassesContainer {
 
-    public GeneratedIntermediateResource(String fullPath, String type) {
-        super(fullPath, type);
-    }
-
+    Map<String, byte[]> getCompiledClassesMap();
 }

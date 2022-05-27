@@ -20,8 +20,8 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 public class MockKieRuntimeServiceC extends AbstractMockKieRuntimeService {
 
     @Override
-    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return fullResourceName.equals(MockDARInputC.class.getSimpleName());
+    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return fullResourceIdentifier.equals(MockDARInputC.class.getSimpleName());
     }
 
 }

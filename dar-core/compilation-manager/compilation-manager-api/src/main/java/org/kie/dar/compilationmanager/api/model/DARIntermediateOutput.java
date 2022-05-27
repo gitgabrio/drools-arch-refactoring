@@ -18,12 +18,17 @@ package org.kie.dar.compilationmanager.api.model;
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
-public class DARIntermediateOutput implements DARCompilationOutput, DARResource {
+public class DARIntermediateOutput extends AbstractDARCompilationOutput implements DARResource {
 
     private final String targetEngine;
+
+    /**
+     * This is the <b>payload</b> to forward to the target compilation-engine
+     */
     private final Object content;
 
-    protected DARIntermediateOutput(String targetEngine, Object content) {
+    protected DARIntermediateOutput(String modelType, String targetEngine, Object content) {
+        super(modelType);
         this.targetEngine = targetEngine;
         this.content = content;
     }
@@ -36,4 +41,5 @@ public class DARIntermediateOutput implements DARCompilationOutput, DARResource 
     public Object getContent() {
         return content;
     }
+
 }

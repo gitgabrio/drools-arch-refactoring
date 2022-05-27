@@ -20,12 +20,12 @@ import java.util.Map;
 /**
  * A <code>DARFinalOutput</code> containing compiled classes
  */
-public abstract class DARFinalOutputClassesContainer extends AbstractDARFinalCompilationOutput implements DARClassesContainer {
+public abstract class DARIntermediateOutputClassesContainer extends DARIntermediateOutput implements DARClassesContainer {
 
     private final Map<String, byte[]> compiledClassMap;
 
-    protected DARFinalOutputClassesContainer(String fri, String modelType, String fullClassName, Map<String, byte[]> compiledClassMap) {
-        super(fri, modelType, fullClassName);
+    protected DARIntermediateOutputClassesContainer(String modelType, String targetEngine, Object content, Map<String, byte[]> compiledClassMap) {
+        super(modelType, targetEngine, content);
         this.compiledClassMap = compiledClassMap;
     }
 

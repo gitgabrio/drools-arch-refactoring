@@ -50,11 +50,7 @@ class FooCompilerHelperTest {
         DARFinalOutputFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
-        // TODO
-//        String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(darResourceFoo.getFullResourceName());
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
-//        fullClassName += "Resources";
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        retrievedByteCode.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader));
     }
 
     @Test

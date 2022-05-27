@@ -15,31 +15,51 @@
  */
 package org.kie.dar.common.api.model;
 
+import java.util.Objects;
+
 /**
  * A <code>GeneratedResource</code> meant to be directly executed, with a <b>full reference name (frn)</b> identifier
  */
-public final class GeneratedFinalResource extends GeneratedResource {
+public final class GeneratedExecutableResource implements GeneratedResource {
 
     /**
      * the full reference identifier (e.g. "bar/resource/some_final_model")
      */
     private final String fri;
 
-    public GeneratedFinalResource() {
+    private final String model;
+
+    private final String fullClassName;
+
+    public GeneratedExecutableResource() {
         this(null, null, null);
     }
 
-    public GeneratedFinalResource(String fullPath, String type, String fri) {
-        super(fullPath, type);
+    public GeneratedExecutableResource(String fri, String model, String fullClassName) {
         this.fri = fri;
+        this.model = model;
+        this.fullClassName = fullClassName;
     }
 
     public String getFri() {
         return fri;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public String getFullClassName() {
+        return fullClassName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fri);
+    }
+
     /**
-     * Two <code>GeneratedFinalResource</code>s are equals if they have the same full path <b>OR</b>
+     * Two <code>GeneratedExecutableResource</code>s are equals if they have the same full path <b>OR</b>
      * if they have the same full reference name
      */
     @Override
@@ -47,11 +67,18 @@ public final class GeneratedFinalResource extends GeneratedResource {
         if (this == o) return true;
         if (o == null) return false;
         if (super.equals(o)) return true;
-        if (!(o instanceof GeneratedFinalResource)) {
+        if (!(o instanceof GeneratedExecutableResource)) {
             return false;
         }
-        GeneratedFinalResource that = (GeneratedFinalResource) o;
+        GeneratedExecutableResource that = (GeneratedExecutableResource) o;
         return fri.equals(that.fri);
     }
 
+    @Override
+    public String toString() {
+        return "GeneratedExecutableResource{" +
+                "fri='" + fri + '\'' +
+                ", model='" + model + '\'' +
+                "} " + super.toString();
+    }
 }

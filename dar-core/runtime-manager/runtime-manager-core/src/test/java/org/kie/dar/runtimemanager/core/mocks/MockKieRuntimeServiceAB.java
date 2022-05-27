@@ -27,7 +27,7 @@ public class MockKieRuntimeServiceAB extends AbstractMockKieRuntimeService {
             MockDARInputB.class.getSimpleName());
 
     @Override
-    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return managedResources.contains(fullResourceName);
+    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return managedResources.contains(fullResourceIdentifier);
     }
 }

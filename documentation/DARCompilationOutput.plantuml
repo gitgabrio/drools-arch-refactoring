@@ -1,0 +1,25 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractDARCompilationOutput
+class AbstractDARFinalCompilationOutput
+interface DARClassesContainer << interface >>
+interface DARCompilationOutput << interface >>
+interface DARFinalOutput << interface >>
+class DARFinalOutputClassesContainer
+class DARIntermediateOutput
+class DARIntermediateOutputClassesContainer
+
+AbstractDARCompilationOutput           -[#008200,dashed]-^  DARCompilationOutput                  
+AbstractDARFinalCompilationOutput      -[#000082,plain]-^  AbstractDARCompilationOutput          
+AbstractDARFinalCompilationOutput      -[#008200,dashed]-^  DARFinalOutput                        
+DARFinalOutput                         -[#008200,plain]-^  DARCompilationOutput                  
+DARFinalOutputClassesContainer         -[#000082,plain]-^  AbstractDARFinalCompilationOutput     
+DARFinalOutputClassesContainer         -[#008200,dashed]-^  DARClassesContainer                   
+DARIntermediateOutput                  -[#000082,plain]-^  AbstractDARCompilationOutput          
+DARIntermediateOutputClassesContainer  -[#008200,dashed]-^  DARClassesContainer                   
+DARIntermediateOutputClassesContainer  -[#000082,plain]-^  DARIntermediateOutput                 
+@enduml

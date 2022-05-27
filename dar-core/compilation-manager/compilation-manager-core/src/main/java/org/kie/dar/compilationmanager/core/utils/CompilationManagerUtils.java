@@ -17,26 +17,23 @@ package org.kie.dar.compilationmanager.core.utils;
 
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.GeneratedFinalResource;
-import org.kie.dar.common.api.model.GeneratedIntermediateResource;
-import org.kie.dar.common.api.model.GeneratedResource;
-import org.kie.dar.common.api.model.GeneratedResources;
-import org.kie.dar.common.api.utils.FileUtils;
+import org.kie.dar.common.api.model.*;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.*;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.memorycompiler.KieMemoryCompilerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.kie.dar.common.api.constants.Constants.INDEXFILE_DIRECTORY_PROPERTY;
-import static org.kie.dar.common.api.io.IndexFile.FINAL_SUFFIX;
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 import static org.kie.dar.common.api.utils.JSONUtils.writeGeneratedResourcesObject;
@@ -57,23 +54,25 @@ public class CompilationManagerUtils {
         }
         Optional<DARCompilationOutput> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
         darCompilationOutputOptional.ifPresent(darCompilationOutput -> {
-            if (darCompilationOutput instanceof DARFinalOutput) {
-                toPopulate.add(getIndexFileFromFinalOutput((DARFinalOutput) darCompilationOutput));
-            } else {
+            toPopulate.add(getIndexFileFromCompilationOutput(darCompilationOutput));
+            if (darCompilationOutput instanceof DARFinalOutputClassesContainer) {
+                loadClasses(((DARFinalOutputClassesContainer) darCompilationOutput).getCompiledClassesMap(), memoryCompilerClassLoader);
+            }
+            if (darCompilationOutput instanceof DARIntermediateOutput) {
                 populateIndexFilesWithProcessedResource(toPopulate, (DARIntermediateOutput) darCompilationOutput, memoryCompilerClassLoader);
             }
         });
     }
 
-    static IndexFile getIndexFileFromFinalOutput(DARFinalOutput finalOutput) {
-        IndexFile toReturn = getIndexFile(finalOutput);
-        populateIndexFile(toReturn, finalOutput);
-        return  toReturn;
+    static IndexFile getIndexFileFromCompilationOutput(DARCompilationOutput compilationOutput) {
+        IndexFile toReturn = getIndexFile(compilationOutput);
+        populateIndexFile(toReturn, compilationOutput);
+        return toReturn;
     }
 
-    static IndexFile getIndexFile(DARFinalOutput finalOutput) {
+    static IndexFile getIndexFile(DARCompilationOutput compilationOutput) {
         String parentPath = System.getProperty(INDEXFILE_DIRECTORY_PROPERTY, DEFAULT_INDEXFILE_DIRECTORY);
-        IndexFile toReturn = new IndexFile(parentPath, finalOutput.getModelType());
+        IndexFile toReturn = new IndexFile(parentPath, compilationOutput.getModelType());
         File existingFile;
         try {
             existingFile = getFileFromFileName(toReturn.getName());
@@ -94,38 +93,58 @@ public class CompilationManagerUtils {
             }
         } catch (IOException e) {
             logger.error("Failed to create {} due to {}", toCreate.getName(), e);
-           throw new KieCompilerServiceException("Failed to create " + toCreate.getName(), e);
+            throw new KieCompilerServiceException("Failed to create " + toCreate.getName(), e);
         }
     }
 
-    static void populateIndexFile(IndexFile toPopulate, DARFinalOutput finalOutput) {
+    static void populateIndexFile(IndexFile toPopulate, DARCompilationOutput compilationOutput) {
         try {
             GeneratedResources generatedResources = getGeneratedResourcesObject(toPopulate);
-            populateGeneratedResources(generatedResources, finalOutput);
+            populateGeneratedResources(generatedResources, compilationOutput);
             writeGeneratedResourcesObject(generatedResources, toPopulate);
         } catch (IOException e) {
             throw new KieCompilerServiceException(e);
         }
     }
 
-    static void populateGeneratedResources(GeneratedResources toPopulate, DARFinalOutput finalOutput) {
-        toPopulate.add(getGeneratedResource(finalOutput));
-        if (finalOutput instanceof DARFinalOutputClassesContainer) {
-            toPopulate.addAll(getGeneratedResources((DARFinalOutputClassesContainer) finalOutput));
+    static void populateGeneratedResources(GeneratedResources toPopulate, DARCompilationOutput compilationOutput) {
+        toPopulate.add(getGeneratedResource(compilationOutput));
+        if (compilationOutput instanceof DARClassesContainer) {
+            toPopulate.addAll(getGeneratedResources((DARClassesContainer) compilationOutput));
         }
     }
 
-    static GeneratedResource getGeneratedResource(DARFinalOutput finalOutput) {
-        return new GeneratedFinalResource(finalOutput.toString(), finalOutput.getModelType(), finalOutput.getFri());
+    static GeneratedResource getGeneratedResource(DARCompilationOutput compilationOutput) {
+        if (compilationOutput instanceof DARFinalOutput) {
+            return new GeneratedExecutableResource(((DARFinalOutput)compilationOutput).getFri(), compilationOutput.getModelType(), ((DARFinalOutput)compilationOutput).getFullClassName());
+        } else if (compilationOutput instanceof DARIntermediateOutput) {
+            return new GeneratedRedirectResource(((DARIntermediateOutput)compilationOutput).toString(), ((DARIntermediateOutput) compilationOutput).getTargetEngine());
+        } else {
+            throw new KieCompilerServiceException("Unmanaged type " + compilationOutput.getClass().getName());
+        }
+
     }
 
-    static List<GeneratedResource> getGeneratedResources(DARFinalOutputClassesContainer finalOutput) {
-        return finalOutput.getCompiledClassesMap().keySet().stream().map(CompilationManagerUtils::GeneratedIntermediateResource).collect(Collectors.toList());
+    static List<GeneratedResource> getGeneratedResources(DARClassesContainer finalOutput) {
+        return finalOutput.getCompiledClassesMap().keySet().stream()
+                .map(CompilationManagerUtils::getGeneratedClassResource)
+                .collect(Collectors.toList());
     }
 
-    static GeneratedResource GeneratedIntermediateResource(String className) {
-        return new GeneratedIntermediateResource(className, "class");
+    static GeneratedClassResource getGeneratedClassResource(String fullClassName) {
+        return new GeneratedClassResource(fullClassName);
     }
 
-
+    static void loadClasses(Map<String, byte[]> compiledClassesMap, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        for (Map.Entry<String, byte[]> entry : compiledClassesMap.entrySet()) {
+            memoryCompilerClassLoader.addCode(entry.getKey(), entry.getValue());
+            try {
+                memoryCompilerClassLoader.loadClass(entry.getKey());
+            } catch (ClassNotFoundException e) {
+                throw new KieMemoryCompilerException(e.getMessage(), e);
+            }
+        }
+    }
 }
+
+

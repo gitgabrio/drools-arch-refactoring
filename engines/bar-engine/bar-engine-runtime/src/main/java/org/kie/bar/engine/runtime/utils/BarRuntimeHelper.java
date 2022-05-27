@@ -18,21 +18,39 @@ package org.kie.bar.engine.runtime.utils;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
+import org.kie.dar.common.api.exceptions.KieDARCommonException;
+import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.GeneratedExecutableResource;
+import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.kie.bar.engine.api.constants.Constants.BAR_MODEL_PACKAGE_NAME;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+
+import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 public class BarRuntimeHelper {
+
+    private static final Logger logger = LoggerFactory.getLogger(BarRuntimeHelper.class.getName());
+
 
     private BarRuntimeHelper() {
     }
 
 
-    public static BarResources loadBarResources(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        String simpleClassName = getSanitizedClassName(fullResourceName) + "Resources";
-        String fullBarResourcesSourceClassName = BAR_MODEL_PACKAGE_NAME + "." + simpleClassName;
+    public static boolean canManage(String fullResourceIdentifier) {
+        return getGeneratedFinalResource(fullResourceIdentifier).isPresent();
+    }
+
+    public static BarResources loadBarResources(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        GeneratedExecutableResource finalResource = getGeneratedFinalResource(fullResourceIdentifier)
+                .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fullResourceIdentifier));
+        String fullBarResourcesSourceClassName = finalResource.getFullClassName();
         try {
             final Class<? extends BarResources> aClass =
                     (Class<? extends BarResources>) memoryCompilerClassLoader.loadClass(fullBarResourcesSourceClassName);
@@ -43,6 +61,30 @@ public class BarRuntimeHelper {
     }
 
     public static DAROutputBar getDAROutput(BarResources fooResources, DARInputBar darInputBar) {
-        return new DAROutputBar(darInputBar.getFullResourceName(), darInputBar.getInputData());
+        return new DAROutputBar(darInputBar.getFullResourceIdentifier(), darInputBar.getInputData());
+    }
+
+    static Optional<GeneratedExecutableResource> getGeneratedFinalResource(String fullResourceIdentifier) {
+        IndexFile toSearch = new IndexFile("bar");
+        File existingFile;
+        try {
+            existingFile = getFileFromFileName(toSearch.getName());
+            toSearch = new IndexFile(existingFile);
+            logger.debug("IndexFile {} exists", toSearch.getName());
+        } catch (KieDARCommonException e) {
+            logger.debug("IndexFile {} does not exists.", toSearch.getName());
+            return Optional.empty();
+        }
+        try {
+            GeneratedResources generatedResources = getGeneratedResourcesObject(toSearch);
+            return generatedResources.stream()
+                    .filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource &&
+                    ((GeneratedExecutableResource)generatedResource).getFri().equals(fullResourceIdentifier))
+                    .findFirst()
+                    .map(GeneratedExecutableResource.class::cast);
+        } catch (IOException e) {
+            logger.debug("Failed to read GeneratedResources from {}.", toSearch.getName(), e);
+            return Optional.empty();
+        }
     }
 }

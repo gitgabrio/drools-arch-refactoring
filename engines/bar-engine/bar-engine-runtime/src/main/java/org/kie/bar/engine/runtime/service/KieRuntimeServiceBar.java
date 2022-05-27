@@ -25,8 +25,7 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.getDAROutput;
-import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.loadBarResources;
+import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.*;
 
 public class KieRuntimeServiceBar implements KieRuntimeService {
 
@@ -34,26 +33,20 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
 
 
     @Override
-    public boolean canManageInput(String fullResourceName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        try {
-            loadBarResources(fullResourceName, memoryCompilerClassLoader);
-            return true;
-        } catch (Exception e) {
-            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceName, e.getMessage()));
-            return false;
-        }
+    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return canManage(fullResourceIdentifier);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            BarResources fooResources = loadBarResources(toEvaluate.getFullResourceName(), memoryCompilerClassLoader);
+            BarResources fooResources = loadBarResources(toEvaluate.getFullResourceIdentifier(), memoryCompilerClassLoader);
             return (E) getDAROutput(fooResources, (DARInputBar) toEvaluate);
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                     this.getClass().getName(),
-                    toEvaluate.getFullResourceName()));
+                    toEvaluate.getFullResourceIdentifier()));
         }
 
     }

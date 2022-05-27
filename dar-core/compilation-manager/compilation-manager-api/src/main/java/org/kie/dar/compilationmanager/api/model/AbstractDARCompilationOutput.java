@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+public abstract class AbstractDARCompilationOutput implements DARCompilationOutput {
 
-public abstract class AbstractMockDARIntermediateOutput extends DARIntermediateOutput {
+    private final String modelType;
 
-
-    protected AbstractMockDARIntermediateOutput(String targetEngine, Object content) {
-        super(targetEngine, content);
+    protected AbstractDARCompilationOutput(String modelType) {
+        this.modelType = modelType;
     }
+    @Override
+    public String getModelType() {
+        return modelType;
+    }
+
 }

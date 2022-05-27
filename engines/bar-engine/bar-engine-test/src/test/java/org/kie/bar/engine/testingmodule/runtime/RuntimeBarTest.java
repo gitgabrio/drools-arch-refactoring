@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RuntimeBarTest {
@@ -54,12 +55,14 @@ class RuntimeBarTest {
 
     @Test
     void evaluateBarCompilationOnTheFly() {
-        DARInputBar toEvaluate = new DARInputBar("DarBarbar", "InputData");
+        String fri = "bar/darbar";
+        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarBar.bar");
-        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fooFile);
+        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, fooFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        assertNotNull(retrieved);
         // TODO
 //        Map<String, byte[]> compiledClasses = ((DARFinalOutputClassesContainer) retrieved.get()).getCompiledClassesMap();
 //        compiledClasses.forEach(memoryCompilerClassLoader::addCode);

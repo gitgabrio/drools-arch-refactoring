@@ -15,9 +15,11 @@
  */
 package org.kie.dar.compilationmanager.core.mocks;
 
-public class MockDARIntermediateOutputB extends AbstractMockDARIntermediateOutput {
+import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+
+public class MockDARIntermediateOutputB extends DARIntermediateOutput {
 
     public MockDARIntermediateOutputB() {
-        super("mock", "MockDARIntermediateOutputB");
+       super( "mock", "notmock", "MockDARIntermediateOutputB");
     }
 }

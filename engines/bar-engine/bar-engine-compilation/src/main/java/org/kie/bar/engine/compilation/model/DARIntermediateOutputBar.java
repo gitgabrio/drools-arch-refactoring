@@ -22,9 +22,8 @@ import java.io.File;
 public class DARIntermediateOutputBar extends DARIntermediateOutput {
 
 
-    public DARIntermediateOutputBar(File modelFile) {
-        super("foo", modelFile);
-
+    public DARIntermediateOutputBar(String fri, File modelFile) {
+        super("bar", "foo", modelFile);
     }
 
 }

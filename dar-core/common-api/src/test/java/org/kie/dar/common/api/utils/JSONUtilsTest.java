@@ -1,4 +1,4 @@
-package org.kie.dar.common.api.utils;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,12 @@ package org.kie.dar.common.api.utils;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.kie.dar.common.api.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.GeneratedFinalResource;
-import org.kie.dar.common.api.model.GeneratedIntermediateResource;
-import org.kie.dar.common.api.model.GeneratedResource;
-import org.kie.dar.common.api.model.GeneratedResources;
+import org.kie.dar.common.api.model.*;
 
 import java.io.File;
 import java.net.URL;
@@ -31,78 +29,71 @@ class JSONUtilsTest {
 
     @Test
     void getGeneratedResourceString() throws JsonProcessingException {
-        String fullPath = "full/path";
-        String type = "type";
-        GeneratedResource generatedResource = new GeneratedIntermediateResource(fullPath, type);
-        String expected = String.format("{\"step-type\":\"intermediate\",\"fullPath\":\"%s\",\"type\":\"%s\"}", fullPath, type);
+        String fullClassName = "full.class.Name";
+        GeneratedResource generatedResource = new GeneratedClassResource(fullClassName);
+        String expected = String.format("{\"step-type\":\"class\",\"fullClassName\":\"%s\"}", fullClassName);
         String retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertEquals(expected, retrieved);
+
         String fri = "this/is/fri";
-        generatedResource = new GeneratedFinalResource(fullPath, type, fri);
-        expected = String.format("{\"step-type\":\"final\",\"fullPath\":\"%s\",\"type\":\"%s\",\"fri\":\"%s\"}", fullPath, type, fri);
+        String target = "foo";
+        generatedResource = new GeneratedRedirectResource(fri, target);
+        expected = String.format("{\"step-type\":\"redirect\",\"fri\":\"%s\",\"target\":\"%s\"}", fri, target);
+        retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
+        assertEquals(expected, retrieved);
+
+        String model = "foo";
+        generatedResource = new GeneratedExecutableResource(fri, model, fullClassName);
+        expected = String.format("{\"step-type\":\"executable\",\"fri\":\"%s\",\"model\":\"%s\",\"fullClassName\":\"%s\"}", fri, model, fullClassName);
         retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertEquals(expected, retrieved);
     }
 
     @Test
     void getGeneratedResourceObject() throws JsonProcessingException {
-        String generatedResourceString = "{\"step-type\":\"intermediate\",\"fullPath\":\"full/path\",\"type\":\"type\"}";
+        String generatedResourceString = "{\"step-type\":\"redirect\",\"fri\":\"this/is/fri\",\"target\":\"foo\"}";
         GeneratedResource retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
         assertNotNull(retrieved);
-        assertTrue(retrieved instanceof GeneratedIntermediateResource);
-        generatedResourceString = "{\"step-type\":\"final\",\"fullPath\":\"full/path\",\"type\":\"type\",\"fri\":\"this/is/fri\"}}";
+        assertTrue(retrieved instanceof GeneratedRedirectResource);
+
+        generatedResourceString = "{\"step-type\":\"class\",\"fullClassName\":\"full.class.Name\"}\"";
         retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
         assertNotNull(retrieved);
-        assertTrue(retrieved instanceof GeneratedFinalResource);
+        assertTrue(retrieved instanceof GeneratedClassResource);
+
+        generatedResourceString = "{\"step-type\":\"executable\",\"fri\":\"this/is/fri\",\"model\":\"foo\",\"fullClassName\":\"full.class.Name\"}\"}}";
+        retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
+        assertNotNull(retrieved);
+        assertTrue(retrieved instanceof GeneratedExecutableResource);
     }
 
     @Test
     void getGeneratedResourcesString() throws JsonProcessingException {
-        String fullPathIntermediate = "full/path/intermediate";
-        String type = "type";
-        GeneratedResource generatedIntermediateResource = new GeneratedIntermediateResource(fullPathIntermediate, type);
-        String fullPathFinal = "full/path/final";
+        String fullClassName = "full.class.Name";
+        GeneratedResource generatedIntermediateResource = new GeneratedClassResource(fullClassName);
         String fri = "this/is/fri";
-        GeneratedResource generatedFinalResource = new GeneratedFinalResource(fullPathFinal, type, fri);
+        String model = "foo";
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedIntermediateResource);
         generatedResources.add(generatedFinalResource);
         String retrieved = JSONUtils.getGeneratedResourcesString(generatedResources);
-        String expected1 = String.format("{\"step-type\":\"intermediate\",\"fullPath\":\"%s\",\"type\":\"%s\"}", fullPathIntermediate, type);
-        String expected2 = String.format("{\"step-type\":\"final\",\"fullPath\":\"%s\",\"type\":\"%s\",\"fri\":\"%s\"}", fullPathFinal, type, fri);
-        assertTrue(retrieved.contains(expected1));
-        assertTrue(retrieved.contains(expected2));
-    }
-
-    @Test
-    void getGeneratedResourcesStringFoo() throws JsonProcessingException {
-        String fullPathIntermediate = "full/path/intermediate";
-        String type = "type";
-        GeneratedResource generatedIntermediateResource = new GeneratedIntermediateResource(fullPathIntermediate, type);
-        String fullPathFinal = "full/path/final";
-        String fri = "this/is/fri";
-        GeneratedResource generatedFinalResource = new GeneratedFinalResource(fullPathFinal, type, fri);
-        GeneratedResources generatedResources = new GeneratedResources();
-        generatedResources.add(generatedIntermediateResource);
-        generatedResources.add(generatedFinalResource);
-        String retrieved = JSONUtils.getGeneratedResourcesString(generatedResources);
-        String expected1 = String.format("{\"step-type\":\"intermediate\",\"fullPath\":\"%s\",\"type\":\"%s\"}", fullPathIntermediate, type);
-        String expected2 = String.format("{\"step-type\":\"final\",\"fullPath\":\"%s\",\"type\":\"%s\",\"fri\":\"%s\"}", fullPathFinal, type, fri);
+        String expected1 = String.format("{\"step-type\":\"class\",\"fullClassName\":\"%s\"}", fullClassName);
+        String expected2 = String.format("{\"step-type\":\"executable\",\"fri\":\"%s\",\"model\":\"%s\",\"fullClassName\":\"%s\"}", fri, model, fullClassName);
         assertTrue(retrieved.contains(expected1));
         assertTrue(retrieved.contains(expected2));
     }
 
     @Test
     void getGeneratedResourcesObjectFromString() throws JsonProcessingException {
-        String generatedResourcesString = "[{\"step-type\":\"final\",\"fullPath\":\"full/path/final\",\"type\":\"type\",\"fri\":\"this/is/fri\"},{\"step-type\":\"intermediate\",\"fullPath\":\"full/path/intermediate\",\"type\":\"type\"}]";
+        String generatedResourcesString = "[{\"step-type\":\"executable\",\"fri\":\"this/is/fri\",\"model\":\"foo\"},{\"step-type\":\"class\",\"fullClassName\":\"full.class.Name\"}]";
         GeneratedResources retrieved = JSONUtils.getGeneratedResourcesObject(generatedResourcesString);
         assertNotNull(retrieved);
-        String fullPathIntermediate = "full/path/intermediate";
-        String type = "type";
-        GeneratedResource expected1 = new GeneratedIntermediateResource(fullPathIntermediate, type);
-        String fullPathFinal = "full/path/final";
+        String fullClassName = "full.class.Name";
+        GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
         String fri = "this/is/fri";
-        GeneratedResource expected2 = new GeneratedFinalResource(fullPathFinal, type, fri);
+        String model = "foo";
+        GeneratedResource expected2 = new GeneratedExecutableResource(fri, model, fullClassName);
         assertTrue(retrieved.contains(expected1));
         assertTrue(retrieved.contains(expected2));
     }
@@ -116,12 +107,11 @@ class JSONUtilsTest {
             IndexFile indexFile = new IndexFile(new File(resource.toURI()));
             GeneratedResources retrieved = JSONUtils.getGeneratedResourcesObject(indexFile);
             assertNotNull(retrieved);
-            String fullPathIntermediate = "full/path/intermediate";
-            String type = "type";
-            GeneratedResource expected1 = new GeneratedIntermediateResource(fullPathIntermediate, type);
-            String fullPathFinal = "full/path/final";
+            String fullClassName = "full.class.Name";
+            GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
             String fri = "this/is/fri";
-            GeneratedResource expected2 = new GeneratedFinalResource(fullPathFinal, type, fri);
+            String model = "foo";
+            GeneratedResource expected2 = new GeneratedExecutableResource(fri, model, fullClassName);
             assertTrue(retrieved.contains(expected1));
             assertTrue(retrieved.contains(expected2));
         } catch (Exception e) {

@@ -65,12 +65,8 @@ public class TestingUtils {
     }
 
     public static DARIntermediateOutput getDARResourceIntermediate() {
-        return new DARIntermediateOutput("foo", "Content") {
+        return new DARIntermediateOutput("not_foo", "foo", "Content") {
         };
     }
 
-    public static DARIntermediateOutput getDARResourceIntermediate( File fooFile) {
-        return new DARIntermediateOutput("foo", fooFile) {
-        };
-    }
 }

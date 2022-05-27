@@ -24,6 +24,7 @@ import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
@@ -56,21 +57,15 @@ class KieCompilerServiceFooTest {
         DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
         DARFinalOutputFoo retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
-        // TODO
-//        String fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(toProcess.toString());
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
-//        fullClassName += "Resources";
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        Map<String, byte[]> retrievedByteCode1 = retrieved.getCompiledClassesMap();
+        retrievedByteCode1.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode1, fullClassName, memoryCompilerClassLoader));
+
         toProcess = getDARResourceIntermediate();
         retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        retrievedByteCode = retrieved.getCompiledClassesMap();
-        // TODO
-//        fullClassName = FOO_MODEL_PACKAGE_NAME + "." + getSanitizedClassName(toProcess.toString());
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
-//        fullClassName += "Resources";
-//        commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader);
+        Map<String, byte[]> retrievedByteCode2 = retrieved.getCompiledClassesMap();
+        retrievedByteCode2.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode2, fullClassName, memoryCompilerClassLoader));
+
         try {
             toProcess = getDARResource();
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);

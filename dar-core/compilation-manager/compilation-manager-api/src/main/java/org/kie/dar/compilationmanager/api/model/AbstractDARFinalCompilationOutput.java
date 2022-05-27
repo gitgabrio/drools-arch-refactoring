@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.bar.engine.runtime.model;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.runtimemanager.api.model.DARInput;
+public abstract class AbstractDARFinalCompilationOutput extends AbstractDARCompilationOutput implements DARFinalOutput {
 
-public class DARInputBar implements DARInput {
-    private final String fullResourceIdentifier;
-    private final Object inputData;
+    private final String fri;
+    private final String fullClassName;
 
-    public DARInputBar(String fullResourceIdentifier, Object inputData) {
-        this.fullResourceIdentifier = fullResourceIdentifier;
-        this.inputData = inputData;
+    protected AbstractDARFinalCompilationOutput(String fri, String modelType, String fullClassName) {
+        super(modelType);
+        this.fri = fri;
+        this.fullClassName = fullClassName;
     }
 
     @Override
-    public String getFullResourceIdentifier() {
-        return fullResourceIdentifier;
+    public String getFri() {
+        return fri;
     }
 
     @Override
-    public Object getInputData() {
-        return inputData;
+    public String getFullClassName() {
+        return fullClassName;
     }
 }

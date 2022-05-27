@@ -1,13 +1,12 @@
 [
   {
-    "step-type": "final",
-    "fullPath": "full/path/final",
-    "type": "type",
-    "fri": "this/is/fri"
+    "step-type": "executable",
+    "model": "type",
+    "fri": "this/is/fri",
+    "fullClassName": "full.class.Name"
   },
   {
-    "step-type": "intermediate",
-    "fullPath": "full/path/intermediate",
-    "type": "type"
+    "step-type": "class",
+    "fullClassName": "full.class.Name"
   }
 ]

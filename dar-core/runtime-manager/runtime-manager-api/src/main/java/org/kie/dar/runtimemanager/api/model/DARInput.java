@@ -25,7 +25,7 @@ public interface DARInput {
      *
      * @return
      */
-    String getFullResourceName();
+    String getFullResourceIdentifier();
 
     Object getInputData();
 }

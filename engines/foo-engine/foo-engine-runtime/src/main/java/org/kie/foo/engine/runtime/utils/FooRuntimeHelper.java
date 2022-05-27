@@ -43,6 +43,6 @@ public class FooRuntimeHelper {
     }
 
     public static DAROutputFoo getDAROutput(FooResources fooResources, DARInputFoo darInputFoo) {
-        return new DAROutputFoo(darInputFoo.getFullResourceName(), darInputFoo.getInputData());
+        return new DAROutputFoo(darInputFoo.getFullResourceIdentifier(), darInputFoo.getInputData());
     }
 }

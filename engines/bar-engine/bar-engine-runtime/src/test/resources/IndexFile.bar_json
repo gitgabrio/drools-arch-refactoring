@@ -1,0 +1,12 @@
+[
+  {
+    "step-type": "executable",
+    "model": "bar",
+    "fri": "bar/dar",
+    "fullClassName": "org.kie.bar.engine.compilation.model.DarBarResources"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "full.path.Intermediate"
+  }
+]

@@ -1,4 +1,4 @@
-package org.kie.dar.common.api.model;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@ package org.kie.dar.common.api.model;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.kie.dar.common.api.model;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,31 +24,40 @@ class GeneratedResourcesTest {
 
     @Test
     void add() {
-        String fullPath = "full/path";
-        String type = "type";
-        GeneratedResource generatedIntermediateResource = new GeneratedIntermediateResource(fullPath, type);
-        String frn = "this/is/frn";
-        GeneratedResource generatedFinalResource = new GeneratedFinalResource(fullPath, type, frn);
+        String fullPath = "full/class/path";
+        String fullClassName = "full.class.Path";
+        GeneratedResource generatedClassResource = new GeneratedClassResource(fullClassName);
+        String fri = "this/is/fri";
+        String model = "foo";
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
         GeneratedResources generatedResources = new GeneratedResources();
-        generatedResources.add(generatedIntermediateResource);
-        generatedResources.add(generatedFinalResource);
-        assertEquals(1, generatedResources.size());
-
-        generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedFinalResource("fullPath/a", type, frn));
-        generatedResources.add(new GeneratedFinalResource("fullPath/b", type, frn));
-        assertEquals(1, generatedResources.size());
-
-
-        String fullPathIntermediate = "full/path/intermediate";
-        generatedIntermediateResource = new GeneratedIntermediateResource(fullPathIntermediate, type);
-        String fullPathFinal = "full/path/final";
-        generatedFinalResource = new GeneratedFinalResource(fullPathFinal, type, frn);
-        generatedResources = new GeneratedResources();
-        generatedResources.add(generatedIntermediateResource);
+        generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
         assertEquals(2, generatedResources.size());
-        assertTrue(generatedResources.contains(generatedIntermediateResource));
+
+        generatedResources = new GeneratedResources();
+        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
+        assertEquals(1, generatedResources.size());
+
+        generatedResources = new GeneratedResources();
+        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, "different-model", fullClassName));
+        assertEquals(1, generatedResources.size());
+
+        generatedResources = new GeneratedResources();
+        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource("different-fri", model, fullClassName));
+        assertEquals(2, generatedResources.size());
+
+        String fullPathIntermediate = "full/path/intermediate";
+        generatedClassResource = new GeneratedClassResource(fullClassName);
+        generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
+        generatedResources = new GeneratedResources();
+        generatedResources.add(generatedClassResource);
+        generatedResources.add(generatedFinalResource);
+        assertEquals(2, generatedResources.size());
+        assertTrue(generatedResources.contains(generatedClassResource));
         assertTrue(generatedResources.contains(generatedFinalResource));
     }
 

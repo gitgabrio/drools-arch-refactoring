@@ -26,8 +26,8 @@ public class BarCompilerHelper {
     private BarCompilerHelper() {
     }
 
-    public static DARIntermediateOutputBar getDARProcessedBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        return new DARIntermediateOutputBar((File) resource.getContent());
+    public static DARIntermediateOutputBar getDARIntermediateOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        return new DARIntermediateOutputBar(resource.toString(), (File) resource.getContent());
     }
 
 }

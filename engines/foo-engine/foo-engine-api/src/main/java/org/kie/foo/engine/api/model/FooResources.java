@@ -21,11 +21,11 @@ public abstract class FooResources {
 
     private final List<String> managedResources;
 
-    public FooResources(List<String> managedResources) {
-        this.managedResources = managedResources;
-    }
-
     public List<String> getManagedResources() {
         return managedResources;
+    }
+
+    protected FooResources(List<String> managedResources) {
+        this.managedResources = managedResources;
     }
 }

@@ -16,8 +16,8 @@ package org.kie.dar.compilationmanager.core.utils;/*
 
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.GeneratedFinalResource;
-import org.kie.dar.common.api.model.GeneratedIntermediateResource;
+import org.kie.dar.common.api.model.GeneratedClassResource;
+import org.kie.dar.common.api.model.GeneratedExecutableResource;
 import org.kie.dar.common.api.model.GeneratedResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
@@ -30,16 +30,23 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
+import static org.kie.dar.common.api.utils.JSONUtils.writeGeneratedResourcesObject;
 
 class CompilationManagerUtilsTest {
 
     private final static String fri = "fri";
     private final static String modelType = "test";
-    private final static Map<String, byte[]> compiledClassMap = IntStream.range(0, 3)
-            .boxed()
-            .collect(Collectors.toMap(integer -> "class_" + integer,
-                    integer -> new byte[0]));
+    private final static Map<String, byte[]> compiledClassMap = IntStream.range(0, 3).boxed().collect(Collectors.toMap(integer -> "class_" + integer, integer -> new byte[0]));
     private final static DARFinalOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(modelType);
+
+//    @BeforeEach
+//    public void init() {
+//        try {
+//            CompilationManagerUtils.getIndexFile(finalOutput).delete();
+//        } catch (KieDARCommonException e) {
+//            // Ignore
+//        }
+//    }
 
     @Test
     void populateIndexFilesWithProcessedResource() {
@@ -70,21 +77,29 @@ class CompilationManagerUtilsTest {
     @Test
     void populateIndexFile() throws IOException {
         IndexFile toPopulate = CompilationManagerUtils.getIndexFile(finalOutput);
-        GeneratedResources generatedResources = getGeneratedResourcesObject(toPopulate);
+        GeneratedResources originalGeneratedResources = getGeneratedResourcesObject(toPopulate);
         int expectedResources = 2; // 1 final resource + 1 intermediate resources
-        assertEquals(expectedResources, generatedResources.size());
+        assertEquals(expectedResources, originalGeneratedResources.size());
         CompilationManagerUtils.populateIndexFile(toPopulate, finalOutput);
-        generatedResources = getGeneratedResourcesObject(toPopulate);
-        expectedResources = 6; // 2 final resource + 4 intermediate resources
+        GeneratedResources generatedResources = getGeneratedResourcesObject(toPopulate);
+        expectedResources = 6; // 2 final resource + 4 class resources
         assertEquals(expectedResources, generatedResources.size());
-//        GeneratedResource finalResource = toPopulate.stream()
-//                .filter(generatedResource -> generatedResource instanceof GeneratedFinalResource)
-//                .findFirst().orElse(null);
-//        commonEvaluateGeneratedFinalResource(finalResource, finalOutput);
-//        List<GeneratedResource> intermediateResources = toPopulate.stream()
-//                .filter(generatedResource -> generatedResource instanceof GeneratedIntermediateResource)
-//                .collect(Collectors.toList());
-//        commonEvaluateGeneratedIntermediateResources(intermediateResources);
+        List<GeneratedExecutableResource> executableResources = generatedResources.stream().filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource).map(GeneratedExecutableResource.class::cast).collect(Collectors.toList());
+        expectedResources = 2; // 2 final resource
+        assertEquals(expectedResources, executableResources.size());
+
+        GeneratedExecutableResource finalResource = executableResources.stream().filter(generatedExecutableResource -> finalOutput.getFri().equals(generatedExecutableResource.getFri())).findFirst().orElse(null);
+
+        commonEvaluateGeneratedExecutableResource(finalResource);
+        List<GeneratedClassResource> classResources = generatedResources.stream().filter(generatedResource -> generatedResource instanceof GeneratedClassResource).map(GeneratedClassResource.class::cast).collect(Collectors.toList());
+        expectedResources = 4; // 4 class resources
+        assertEquals(expectedResources, classResources.size());
+
+        List<GeneratedResource> classResourcesGenerated = classResources.stream().filter(generatedResource -> !generatedResource.getFullClassName().equals("type")).collect(Collectors.toList());
+        commonEvaluateGeneratedIntermediateResources(classResourcesGenerated);
+
+        // restore clean situation
+        writeGeneratedResourcesObject(originalGeneratedResources, toPopulate);
     }
 
     @Test
@@ -94,20 +109,16 @@ class CompilationManagerUtilsTest {
         CompilationManagerUtils.populateGeneratedResources(toPopulate, finalOutput);
         int expectedResources = 4; // 1 final resource + 3 intermediate resources
         assertEquals(expectedResources, toPopulate.size());
-        GeneratedResource finalResource = toPopulate.stream()
-                .filter(generatedResource -> generatedResource instanceof GeneratedFinalResource)
-                .findFirst().orElse(null);
-        commonEvaluateGeneratedFinalResource(finalResource, finalOutput);
-        List<GeneratedResource> intermediateResources = toPopulate.stream()
-                .filter(generatedResource -> generatedResource instanceof GeneratedIntermediateResource)
-                .collect(Collectors.toList());
-        commonEvaluateGeneratedIntermediateResources(intermediateResources);
+        GeneratedResource finalResource = toPopulate.stream().filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource).findFirst().orElse(null);
+        commonEvaluateGeneratedExecutableResource(finalResource);
+        List<GeneratedResource> classResources = toPopulate.stream().filter(generatedResource -> generatedResource instanceof GeneratedClassResource).map(GeneratedClassResource.class::cast).collect(Collectors.toList());
+        commonEvaluateGeneratedIntermediateResources(classResources);
     }
 
     @Test
     void getGeneratedResource() {
         GeneratedResource retrieved = CompilationManagerUtils.getGeneratedResource(finalOutput);
-        commonEvaluateGeneratedFinalResource(retrieved, finalOutput);
+        commonEvaluateGeneratedExecutableResource(retrieved);
     }
 
     @Test
@@ -119,36 +130,28 @@ class CompilationManagerUtilsTest {
     @Test
     void getGeneratedIntermediateResource() {
         String className = "className";
-        GeneratedResource retrieved = CompilationManagerUtils.GeneratedIntermediateResource(className);
-        commonEvaluateGeneratedIntermediateResource(retrieved, className);
+        GeneratedClassResource retrieved = CompilationManagerUtils.getGeneratedClassResource(className);
+        assertNotNull(retrieved);
+        assertEquals(className, retrieved.getFullClassName());
     }
 
-    private void commonEvaluateGeneratedFinalResource(GeneratedResource generatedResource, DARFinalOutputClassesContainer finalOutput) {
+    private void commonEvaluateGeneratedExecutableResource(GeneratedResource generatedResource) {
         assertNotNull(generatedResource);
-        assertTrue(generatedResource instanceof GeneratedFinalResource);
-        assertEquals(finalOutput.toString(), generatedResource.getFullPath());
-        assertEquals(finalOutput.getModelType(), generatedResource.getType());
-        assertEquals(finalOutput.getFri(), ((GeneratedFinalResource) generatedResource).getFri());
+        assertTrue(generatedResource instanceof GeneratedExecutableResource);
+        assertEquals(finalOutput.getModelType(), ((GeneratedExecutableResource) generatedResource).getModel());
+        assertEquals(finalOutput.getFri(), ((GeneratedExecutableResource) generatedResource).getFri());
     }
 
     private void commonEvaluateGeneratedIntermediateResources(List<GeneratedResource> retrieved) {
         assertNotNull(retrieved);
         assertEquals(compiledClassMap.size(), retrieved.size());
-        compiledClassMap.keySet().forEach(fullPath -> {
-            GeneratedResource mappedResource = retrieved.stream().filter(generatedResource -> generatedResource.getFullPath().equals(fullPath)).findFirst().orElse(null);
-            commonEvaluateGeneratedIntermediateResource(mappedResource, fullPath);
+        compiledClassMap.keySet().forEach(fullClassName -> {
+            assertTrue(retrieved.stream().filter(GeneratedClassResource.class::isInstance).map(GeneratedClassResource.class::cast).anyMatch(generatedResource -> generatedResource.getFullClassName().equals(fullClassName)));
         });
     }
 
-    private void commonEvaluateGeneratedIntermediateResource(GeneratedResource generatedResource, String expectedFullPath) {
-        assertNotNull(generatedResource);
-        assertTrue(generatedResource instanceof GeneratedIntermediateResource);
-        assertEquals(expectedFullPath, generatedResource.getFullPath());
-        assertEquals("class", generatedResource.getType());
-    }
-
     private static DARFinalOutputClassesContainer getDARFinalOutputClassesContainer(String outputModelType) {
-        return new DARFinalOutputClassesContainer(fri, outputModelType, compiledClassMap) {
+        return new DARFinalOutputClassesContainer(fri, outputModelType, outputModelType+ "Resources", compiledClassMap) {
         };
     }
 }

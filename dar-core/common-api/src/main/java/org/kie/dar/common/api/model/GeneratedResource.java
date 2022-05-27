@@ -25,41 +25,10 @@ import java.io.Serializable;
         include = JsonTypeInfo.As.PROPERTY,
         property = "step-type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = GeneratedIntermediateResource.class, name = "intermediate"),
-        @JsonSubTypes.Type(value = GeneratedFinalResource.class, name = "final")
+        @JsonSubTypes.Type(value = GeneratedRedirectResource.class, name = "redirect"),
+        @JsonSubTypes.Type(value = GeneratedClassResource.class, name = "class"),
+        @JsonSubTypes.Type(value = GeneratedExecutableResource.class, name = "executable")
 })
-public abstract class GeneratedResource implements Serializable {
+public interface GeneratedResource extends Serializable {
 
-    private final String fullPath;
-    private final String type;
-
-    protected GeneratedResource(String fullPath, String type) {
-        this.fullPath = fullPath;
-        this.type = type;
-    }
-
-    public String getFullPath() {
-        return fullPath;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Two <code>GeneratedResource</code>s are equals if they have the same full path
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        GeneratedResource that = (GeneratedResource) o;
-        return fullPath.equals(that.fullPath);
-    }
-
-    @Override
-    public int hashCode() {
-        // TODO verify
-        return 1;
-    }
 }
