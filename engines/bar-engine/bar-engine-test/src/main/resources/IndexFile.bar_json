@@ -1,0 +1,16 @@
+[
+  {
+    "step-type": "executable",
+    "model": "bar",
+    "fri": {
+      "basePath": "staticdar",
+      "model": "bar",
+      "fri": "/bar/staticdar"
+    },
+    "fullClassName": "org.kie.bar.engine.compilation.model.DarBarStaticbarResources"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.kie.bar.engine.compilation.model.DarBarStaticbar"
+  }
+]

@@ -67,12 +67,12 @@ public class FRI implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FRI fri1 = (FRI) o;
-        return Objects.equals(basePath, fri1.basePath) && Objects.equals(model, fri1.model) && Objects.equals(fri, fri1.fri);
+        return Objects.equals(fri, fri1.fri);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(basePath, model, fri);
+        return Objects.hash(fri);
     }
 
     static String generateFri(String basePath, String model) {

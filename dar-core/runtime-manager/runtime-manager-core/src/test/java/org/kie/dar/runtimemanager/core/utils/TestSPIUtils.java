@@ -16,6 +16,7 @@ package org.kie.dar.runtimemanager.core.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.dar.runtimemanager.core.mocks.*;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -40,16 +41,16 @@ class TestSPIUtils {
 
     @Test
     void getKieRuntimeService() {
-        Optional<KieRuntimeService> retrieved = SPIUtils.getKieRuntimeService(MockDARInputA.class.getSimpleName(), true, memoryCompilerClassLoader);
+        Optional<KieRuntimeService> retrieved = SPIUtils.getKieRuntimeService(new FRI(MockDARInputA.class.getPackageName(), MockDARInputA.class.getSimpleName()), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceAB);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputB.class.getSimpleName(), true, memoryCompilerClassLoader);
+        retrieved = SPIUtils.getKieRuntimeService(new FRI(MockDARInputA.class.getPackageName(), MockDARInputA.class.getSimpleName()), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceAB);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputC.class.getSimpleName(), true, memoryCompilerClassLoader);
+        retrieved = SPIUtils.getKieRuntimeService(new FRI(MockDARInputC.class.getPackageName(), MockDARInputC.class.getSimpleName()), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieRuntimeServiceC);
-        retrieved = SPIUtils.getKieRuntimeService(MockDARInputD.class.getSimpleName(), true, memoryCompilerClassLoader);
+        retrieved = SPIUtils.getKieRuntimeService(new FRI(MockDARInputD.class.getPackageName(), MockDARInputD.class.getSimpleName()), true, memoryCompilerClassLoader);
         assertTrue(retrieved.isEmpty());
     }
 

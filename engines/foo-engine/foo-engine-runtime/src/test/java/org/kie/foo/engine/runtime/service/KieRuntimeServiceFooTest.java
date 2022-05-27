@@ -16,6 +16,7 @@ package org.kie.foo.engine.runtime.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
@@ -37,23 +38,24 @@ class KieRuntimeServiceFooTest {
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput("DarFoo", memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput("DarNotFoo", memoryCompilerClassLoader));
+        assertTrue(kieRuntimeService.canManageInput(new FRI("dar", "foo"), memoryCompilerClassLoader));
+        assertFalse(kieRuntimeService.canManageInput(new FRI("dar", "notfoo"), memoryCompilerClassLoader));
+        assertFalse(kieRuntimeService.canManageInput(new FRI("notdar", "foo"), memoryCompilerClassLoader));
     }
 
     @Test
     void evaluateInputExistingFooResources() {
-        DARInputFoo toEvaluate = new DARInputFoo("DarFoo", "InputData");
+        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
         DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        assertEquals(toEvaluate.getFullResourceIdentifier(), retrieved.getFullResourceName());
+        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
         assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
     }
 
     @Test
     void evaluateInputNotExistingFooResources() {
         try {
-            DARInputFoo toEvaluate = new DARInputFoo("DarNotFoo", "InputData");
+            DARInputFoo toEvaluate = new DARInputFoo(new FRI("DarFoo", "notfoo"), "InputData");
             kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {

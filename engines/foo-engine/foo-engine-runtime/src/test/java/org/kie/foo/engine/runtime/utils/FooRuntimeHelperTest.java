@@ -16,6 +16,7 @@ package org.kie.foo.engine.runtime.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.api.model.FooResources;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
@@ -35,7 +36,7 @@ class FooRuntimeHelperTest {
 
     @Test
     void loadExistingFooResources() {
-        FooResources retrieved = FooRuntimeHelper.loadFooResources("DarFoo", memoryCompilerClassLoader);
+        FooResources retrieved = FooRuntimeHelper.loadFooResources(new FRI("dar", "foo"), memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(2, retrieved.getManagedResources().size());
         assertTrue(retrieved.getManagedResources().contains("FooResOne"));
@@ -45,7 +46,7 @@ class FooRuntimeHelperTest {
     @Test
     void loadNotExistingFooResources() {
         try {
-            FooRuntimeHelper.loadFooResources("DarNotFoo", memoryCompilerClassLoader);
+            FooRuntimeHelper.loadFooResources(new FRI("dar", "notfoo"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieRuntimeServiceException);
@@ -54,11 +55,12 @@ class FooRuntimeHelperTest {
 
     @Test
     void getDAROutput() {
-        FooResources fooResources = FooRuntimeHelper.loadFooResources("DarFoo", memoryCompilerClassLoader);
-        DARInputFoo darInputFoo = new DARInputFoo("DarFoo", "InputData");
+        FRI fri = new FRI("dar", "foo");
+        FooResources fooResources = FooRuntimeHelper.loadFooResources(fri, memoryCompilerClassLoader);
+        DARInputFoo darInputFoo = new DARInputFoo(fri, "InputData");
         DAROutputFoo retrieved = FooRuntimeHelper.getDAROutput(fooResources, darInputFoo);
         assertNotNull(retrieved);
-        assertEquals(darInputFoo.getFullResourceIdentifier(), retrieved.getFullResourceName());
+        assertEquals(darInputFoo.getFRI(), retrieved.getFRI());
         assertEquals(darInputFoo.getInputData(), retrieved.getOutputData());
     }
 }

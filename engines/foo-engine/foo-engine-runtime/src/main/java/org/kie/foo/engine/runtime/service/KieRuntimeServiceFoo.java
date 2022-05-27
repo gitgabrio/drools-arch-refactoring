@@ -15,6 +15,7 @@
  */
 package org.kie.foo.engine.runtime.service;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
@@ -25,8 +26,7 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.getDAROutput;
-import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.loadFooResources;
+import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.*;
 
 public class KieRuntimeServiceFoo implements KieRuntimeService {
 
@@ -34,28 +34,22 @@ public class KieRuntimeServiceFoo implements KieRuntimeService {
 
 
     @Override
-    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        try {
-            loadFooResources(fullResourceIdentifier, memoryCompilerClassLoader);
-            return true;
-        } catch (Exception e) {
-            logger.warn(String.format("Failed to find resource %s due to: %s", fullResourceIdentifier, e.getMessage()));
-            return false;
-        }
+    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return canManage(fri);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            FooResources fooResources = loadFooResources(toEvaluate.getFullResourceIdentifier(), memoryCompilerClassLoader);
-            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFullResourceIdentifier(), toEvaluate.getInputData());
+            FooResources fooResources = loadFooResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
+            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFRI(), toEvaluate.getInputData());
             return (E) getDAROutput(fooResources, darInputFoo);
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                     this.getClass().getName(),
-                    toEvaluate.getFullResourceIdentifier()));
+                    toEvaluate.getFRI()));
         }
-
     }
+
 }

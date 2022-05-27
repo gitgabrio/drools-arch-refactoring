@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -35,7 +36,7 @@ class BarRuntimeHelperTest {
 
     @Test
     void loadExistingBarResources() {
-        BarResources retrieved = BarRuntimeHelper.loadBarResources("/bar/dar", memoryCompilerClassLoader);
+        BarResources retrieved = BarRuntimeHelper.loadBarResources(new FRI("dar", "bar"), memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(2, retrieved.getManagedResources().size());
         assertTrue(retrieved.getManagedResources().contains("BarResOne"));
@@ -45,7 +46,7 @@ class BarRuntimeHelperTest {
     @Test
     void loadNotExistingBarResources() {
         try {
-            BarRuntimeHelper.loadBarResources("notbar/dar", memoryCompilerClassLoader);
+            BarRuntimeHelper.loadBarResources(new FRI("dar", "notbar"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertTrue(e instanceof KieRuntimeServiceException);
@@ -54,11 +55,12 @@ class BarRuntimeHelperTest {
 
     @Test
     void getDAROutput() {
-        BarResources fooResources = BarRuntimeHelper.loadBarResources("/bar/dar", memoryCompilerClassLoader);
-        DARInputBar darInputBar = new DARInputBar("DarBar", "InputData");
+        FRI fri = new FRI("dar", "bar");
+        BarResources fooResources = BarRuntimeHelper.loadBarResources(fri, memoryCompilerClassLoader);
+        DARInputBar darInputBar = new DARInputBar(fri, "InputData");
         DAROutputBar retrieved = BarRuntimeHelper.getDAROutput(fooResources, darInputBar);
         assertNotNull(retrieved);
-        assertEquals(darInputBar.getFullResourceIdentifier(), retrieved.getFullResourceName());
+        assertEquals(darInputBar.getFRI(), retrieved.getFRI());
         assertEquals(darInputBar.getInputData(), retrieved.getOutputData());
     }
 }

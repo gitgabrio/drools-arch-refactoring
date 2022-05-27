@@ -16,13 +16,16 @@
 package org.kie.dar.runtimemanager.core.mocks;
 
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 
 public abstract class AbstractMockDARInput implements DARInput {
 
+    private final FRI fri = new FRI(this.getClass().getPackageName(), this.getClass().getSimpleName());
+
     @Override
-    public String getFullResourceIdentifier() {
-        return this.getClass().getSimpleName();
+    public FRI getFRI() {
+        return fri;
     }
 
     @Override

@@ -15,21 +15,15 @@
  */
 package org.kie.bar.engine.runtime.model;
 
-import org.kie.dar.runtimemanager.api.model.DAROutput;
+import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
-public class DAROutputBar implements DAROutput {
-
-    private final String fullResourceName;
+public class DAROutputBar extends AbstractDAROutput {
     private final Object outputData;
 
-    public DAROutputBar(String fullResourceName, Object outputData) {
-        this.fullResourceName = fullResourceName;
+    public DAROutputBar(FRI fri, Object outputData) {
+        super(fri);
         this.outputData = outputData;
-    }
-
-    @Override
-    public String getFullResourceName() {
-        return fullResourceName;
     }
 
     @Override

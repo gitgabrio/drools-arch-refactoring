@@ -15,6 +15,7 @@
  */
 package org.kie.dar.runtimemanager.api.service;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -28,13 +29,13 @@ public interface KieRuntimeService {
 
 
     /**
-     * Every engine is responsible to verify if it can evaluate a result with the resource of the given <b>fullResourceIdentifier</b>
+     * Every engine is responsible to verify if it can evaluate a result with the resource of the given <code>FRI</code>
      *
-     * @param fullResourceIdentifier
+     * @param fri
      * @param memoryCompilerClassLoader
      * @return
      */
-    boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
     /**
      * Produce one <code>DAROutput</code> from the given <code>DARInput</code>

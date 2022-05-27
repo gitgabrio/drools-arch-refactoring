@@ -1,0 +1,20 @@
+[
+  {
+    "step-type": "executable",
+    "model": "foo",
+    "fri": {
+      "basePath": "staticdar",
+      "model": "foo",
+      "fri": "/foo/staticdar"
+    },
+    "fullClassName": "org.kie.foo.engine.compilation.model.DarFooStaticfooResources"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.kie.foo.engine.compilation.model.FooResOne"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.kie.foo.engine.compilation.model.FooResTwo"
+  }
+]

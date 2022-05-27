@@ -57,7 +57,7 @@ class RuntimeBarTest {
     @Test
     void evaluateBarCompilationOnTheFly() {
         FRI fri = new FRI("bar/darbar", "bar");
-        DARInputBar toEvaluate = new DARInputBar(fri.getFri(), "InputData");
+        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarBar.bar");
@@ -72,8 +72,15 @@ class RuntimeBarTest {
     }
 
     @Test
-    void evaluateBarStaticCompilation() {
-        DARInputBar toEvaluate = new DARInputBar("DarBarStaticbar", "InputData");
+    void evaluateExecutableBarStaticCompilation() {
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/staticdar", "bar"), "InputData");
+        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertTrue(darOutput.isPresent());
+    }
+
+    @Test
+    void evaluateRedirectBarStaticCompilation() {
+        DARInputBar toEvaluate = new DARInputBar(new FRI("staticdar", "bar"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isPresent());
     }

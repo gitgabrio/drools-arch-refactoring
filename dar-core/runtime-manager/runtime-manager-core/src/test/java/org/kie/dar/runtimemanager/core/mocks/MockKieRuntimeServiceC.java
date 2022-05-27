@@ -15,13 +15,15 @@
  */
 package org.kie.dar.runtimemanager.core.mocks;
 
+import org.kie.dar.common.api.model.FRI;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 public class MockKieRuntimeServiceC extends AbstractMockKieRuntimeService {
 
+    private final static FRI friC = new FRI(MockDARInputC.class.getPackageName(), MockDARInputC.class.getSimpleName());
     @Override
-    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return fullResourceIdentifier.equals(MockDARInputC.class.getSimpleName());
+    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return fri.equals(friC);
     }
 
 }

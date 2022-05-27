@@ -15,6 +15,8 @@
  */
 package org.kie.dar.runtimemanager.api.model;
 
+import org.kie.dar.common.api.model.FRI;
+
 /**
  * A generic <i>input</i> to be consumed
  */
@@ -25,7 +27,7 @@ public interface DARInput {
      *
      * @return
      */
-    String getFullResourceIdentifier();
+    FRI getFRI();
 
     Object getInputData();
 }

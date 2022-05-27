@@ -17,6 +17,7 @@ package org.kie.bar.engine.runtime.service;
 
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
@@ -33,20 +34,20 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
 
 
     @Override
-    public boolean canManageInput(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return canManage(fullResourceIdentifier);
+    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return canManage(fri);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            BarResources fooResources = loadBarResources(toEvaluate.getFullResourceIdentifier(), memoryCompilerClassLoader);
+            BarResources fooResources = loadBarResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
             return (E) getDAROutput(fooResources, (DARInputBar) toEvaluate);
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                     this.getClass().getName(),
-                    toEvaluate.getFullResourceIdentifier()));
+                    toEvaluate.getFRI()));
         }
 
     }

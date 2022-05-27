@@ -20,6 +20,7 @@ import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedExecutableResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
@@ -43,13 +44,13 @@ public class BarRuntimeHelper {
     }
 
 
-    public static boolean canManage(String fullResourceIdentifier) {
-        return getGeneratedFinalResource(fullResourceIdentifier).isPresent();
+    public static boolean canManage(FRI fri) {
+        return getGeneratedFinalResource(fri).isPresent();
     }
 
-    public static BarResources loadBarResources(String fullResourceIdentifier, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedExecutableResource finalResource = getGeneratedFinalResource(fullResourceIdentifier)
-                .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fullResourceIdentifier));
+    public static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        GeneratedExecutableResource finalResource = getGeneratedFinalResource(fri)
+                .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         String fullBarResourcesSourceClassName = finalResource.getFullClassName();
         try {
             final Class<? extends BarResources> aClass =
@@ -61,10 +62,10 @@ public class BarRuntimeHelper {
     }
 
     public static DAROutputBar getDAROutput(BarResources fooResources, DARInputBar darInputBar) {
-        return new DAROutputBar(darInputBar.getFullResourceIdentifier(), darInputBar.getInputData());
+        return new DAROutputBar(darInputBar.getFRI(), darInputBar.getInputData());
     }
 
-    static Optional<GeneratedExecutableResource> getGeneratedFinalResource(String fullResourceIdentifier) {
+    static Optional<GeneratedExecutableResource> getGeneratedFinalResource(FRI fri) {
         IndexFile toSearch = new IndexFile("bar");
         File existingFile;
         try {
@@ -79,7 +80,7 @@ public class BarRuntimeHelper {
             GeneratedResources generatedResources = getGeneratedResourcesObject(toSearch);
             return generatedResources.stream()
                     .filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource &&
-                    ((GeneratedExecutableResource)generatedResource).getFri().getFri().equals(fullResourceIdentifier))
+                    ((GeneratedExecutableResource)generatedResource).getFri().equals(fri))
                     .findFirst()
                     .map(GeneratedExecutableResource.class::cast);
         } catch (IOException e) {

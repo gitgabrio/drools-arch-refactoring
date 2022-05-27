@@ -17,17 +17,16 @@ package org.kie.dar.runtimemanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
-/**
- * A generic <i>result</i> of evaluation
- */
-public interface DAROutput {
+public abstract class AbstractDARInput implements DARInput  {
 
-    /**
-     * The unique, full identifier of a given model' resource
-     *
-     * @return
-     */
-    FRI getFRI();
+    private final FRI fri;
 
-    Object getOutputData();
+    protected AbstractDARInput(FRI fri) {
+        this.fri = fri;
+    }
+
+    @Override
+    public FRI getFRI() {
+        return fri;
+    }
 }

@@ -15,20 +15,17 @@
  */
 package org.kie.foo.engine.runtime.model;
 
-import org.kie.dar.runtimemanager.api.model.DARInput;
+import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 
-public class DARInputFoo implements DARInput {
-    private final String fullResourceIdentifier;
+public class DARInputFoo extends AbstractDARInput {
+
+
     private final Object inputData;
 
-    public DARInputFoo(String fullResourceIdentifier, Object inputData) {
-        this.fullResourceIdentifier = fullResourceIdentifier;
+    public DARInputFoo(FRI fri, Object inputData) {
+        super(fri);
         this.inputData = inputData;
-    }
-
-    @Override
-    public String getFullResourceIdentifier() {
-        return fullResourceIdentifier;
     }
 
     @Override

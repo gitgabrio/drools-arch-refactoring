@@ -1,0 +1,20 @@
+[
+  {
+    "step-type": "executable",
+    "model": "foo",
+    "fri": {
+      "basePath": "dar",
+      "model": "foo",
+      "fri": "/foo/dar"
+    },
+    "fullClassName": "org.kie.foo.engine.compilation.model.DarFooResources"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.kie.foo.engine.compilation.model.FooResOne"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.kie.foo.engine.compilation.model.FooResTwo"
+  }
+]

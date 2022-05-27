@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
@@ -59,7 +60,7 @@ class RuntimeFooTest {
 
     @Test
     void evaluateFooCompilationOnTheFly() throws IOException {
-        DARInputFoo toEvaluate = new DARInputFoo("DarFoofoo", "InputData");
+        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
         File fooFile = getFileFromFileName("DarFoo.foo");
@@ -80,7 +81,7 @@ class RuntimeFooTest {
 
     @Test
     void evaluateFooStaticCompilation() {
-        DARInputFoo toEvaluate = new DARInputFoo("DarFooStaticfoo", "InputData");
+        DARInputFoo toEvaluate = new DARInputFoo(new FRI("staticdar", "foo"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isPresent());
     }

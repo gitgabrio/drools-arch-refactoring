@@ -26,8 +26,8 @@ public abstract class AbstractMockKieRuntimeService implements KieRuntimeService
     @Override
     @SuppressWarnings("unchecked")
     public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        if (!canManageInput(toEvaluate.getFullResourceIdentifier(), memoryCompilerClassLoader)) {
-            throw new KieRuntimeServiceException(String.format("Unmanaged input %s", toEvaluate.getFullResourceIdentifier()));
+        if (!canManageInput(toEvaluate.getFRI(), memoryCompilerClassLoader)) {
+            throw new KieRuntimeServiceException(String.format("Unmanaged input %s", toEvaluate.getFRI()));
         }
         return (E) new MockDAROutput();
     }
