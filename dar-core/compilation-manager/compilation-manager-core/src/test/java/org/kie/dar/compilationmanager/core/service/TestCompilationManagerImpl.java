@@ -15,33 +15,27 @@ package org.kie.dar.compilationmanager.core.service;/*
  */
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputC;
-import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputA;
-import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputB;
-import org.kie.dar.compilationmanager.core.mocks.MockDARIntermediateOutputD;
+import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputC;
+import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputA;
+import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputB;
+import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputD;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 
 class TestCompilationManagerImpl {
 
     private static CompilationManager compilationManager;
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
-    private static final List<Class<? extends DARIntermediateOutput>> MANAGED_DAR_RESOURCES = Arrays.asList(MockDARIntermediateOutputA.class, MockDARIntermediateOutputB.class, MockDARIntermediateOutputC.class);
+    private static final List<Class<? extends DARRedirectOutput>> MANAGED_DAR_RESOURCES = Arrays.asList(MockDARRedirectOutputA.class, MockDARRedirectOutputB.class, MockDARRedirectOutputC.class);
 
 
     @BeforeAll
@@ -54,7 +48,7 @@ class TestCompilationManagerImpl {
     void processResource() {
         MANAGED_DAR_RESOURCES.forEach(managedResource -> {
             try {
-                DARIntermediateOutput toProcess = managedResource.getDeclaredConstructor().newInstance();
+                DARRedirectOutput toProcess = managedResource.getDeclaredConstructor().newInstance();
                 List<IndexFile> retrieved = compilationManager.processResource(toProcess, memoryCompilerClassLoader);
                 assertEquals(1, retrieved.size());
                 retrieved.get(0).delete();
@@ -62,23 +56,23 @@ class TestCompilationManagerImpl {
                 fail(e);
             }
         });
-        List<IndexFile> retrieved = compilationManager.processResource(new MockDARIntermediateOutputD(), memoryCompilerClassLoader);
+        List<IndexFile> retrieved = compilationManager.processResource(new MockDARRedirectOutputD(), memoryCompilerClassLoader);
         assertTrue(retrieved.isEmpty());
     }
 
     // TODO restore
 //    @Test
 //    void processResources() {
-//        List<DARIntermediateOutput> toProcess = new ArrayList<>();
+//        List<DARRedirectOutput> toProcess = new ArrayList<>();
 //        MANAGED_DAR_RESOURCES.forEach(managedResource -> {
 //            try {
-//                DARIntermediateOutput toAdd = managedResource.getDeclaredConstructor().newInstance();
+//                DARRedirectOutput toAdd = managedResource.getDeclaredConstructor().newInstance();
 //                toProcess.add(toAdd);
 //            } catch (Exception e) {
 //                fail(e);
 //            }
 //        });
-//        toProcess.add(new MockDARIntermediateOutputD());
+//        toProcess.add(new MockDARRedirectOutputD());
 //        List<DARCompilationOutput> retrieved = compilationManager.processResources(toProcess, memoryCompilerClassLoader);
 //        assertNotNull(retrieved);
 //        assertEquals(MANAGED_DAR_RESOURCES.size(), retrieved.size());

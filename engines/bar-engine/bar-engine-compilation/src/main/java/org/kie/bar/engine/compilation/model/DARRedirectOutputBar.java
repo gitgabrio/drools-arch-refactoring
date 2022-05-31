@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.bar.engine.compilation.model;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 
-public class MockDARIntermediateOutputB extends DARIntermediateOutput {
+import java.io.File;
 
-    public MockDARIntermediateOutputB() {
-       super( new FRI("this/is/mock/friB", "mock"),"notmock", "MockDARIntermediateOutputB");
+public class DARRedirectOutputBar extends DARRedirectOutput {
+
+
+    public DARRedirectOutputBar(FRI fri, File modelFile) {
+        super(fri, "foo", modelFile);
     }
+
 }

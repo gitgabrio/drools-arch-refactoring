@@ -27,12 +27,11 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.utils.JavaParserUtils;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
-import org.kie.memorycompiler.KieMemoryCompilerException;
 
 import java.io.File;
 import java.util.HashMap;
@@ -58,8 +57,8 @@ public class FooCompilerHelper {
     public static DARFinalOutputFoo getDARProcessedFoo(DARResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         if (resource instanceof DARFileResource) {
             return getDARProcessedFooFromFile((DARFileResource) resource, memoryClassLoader);
-        } else if (resource instanceof DARIntermediateOutput) {
-            return getDARProcessedFooFromIntermediate((DARIntermediateOutput) resource, memoryClassLoader);
+        } else if (resource instanceof DARRedirectOutput) {
+            return getDARProcessedFooFromIntermediate((DARRedirectOutput) resource, memoryClassLoader);
         } else {
             throw new KieCompilerServiceException("Unexpected DARIntermediateOutputFoo " + resource.getClass());
         }
@@ -76,12 +75,13 @@ public class FooCompilerHelper {
         sourcesMap.put(getFullClassName(compilationUnit), compilationUnit.toString());
         String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
-        sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
+        String fullResourcesClassName = getFullClassName(fooResourcesSourceCompilationUnit);
+        sourcesMap.put(fullResourcesClassName, fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputFoo(fri, fooResourcesSourceClassName, compiledClasses);
+        return new DARFinalOutputFoo(fri, fullResourcesClassName, compiledClasses);
     }
 
-    static DARFinalOutputFoo getDARProcessedFooFromIntermediate(DARIntermediateOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static DARFinalOutputFoo getDARProcessedFooFromIntermediate(DARRedirectOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         FRI fooFri = new FRI(resource.getFri().getBasePath(), "foo");
         String simpleClassName = getSanitizedClassName(fooFri.getFri());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
@@ -92,9 +92,10 @@ public class FooCompilerHelper {
         sourcesMap.put(getFullClassName(compilationUnit), compilationUnit.toString());
         String fooResourcesSourceClassName = getSanitizedClassName(simpleClassName + "Resources");
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
-        sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
+        String fullResourcesClassName = getFullClassName(fooResourcesSourceCompilationUnit);
+        sourcesMap.put(fullResourcesClassName, fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputFoo(fooFri, fooResourcesSourceClassName, compiledClasses);
+        return new DARFinalOutputFoo(fooFri, fullResourcesClassName, compiledClasses);
     }
 
     static CompilationUnit getFooResourcesCompilationUnit(Set<String> generatedSources, String fooResourcesSourceClassName) {

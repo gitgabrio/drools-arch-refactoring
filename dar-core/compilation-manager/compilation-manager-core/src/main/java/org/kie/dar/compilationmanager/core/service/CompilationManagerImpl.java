@@ -39,7 +39,7 @@ public class CompilationManagerImpl implements CompilationManager {
 
 
 //    @Override
-//    public List<IndexFile>  processResources(List<DARIntermediateOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+//    public List<IndexFile>  processResources(List<DARRedirectOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
 //        return toProcess.stream()
 //                .map(darResource -> this.processResource(darResource, memoryCompilerClassLoader))
 //                .flatMap(Collection::stream)

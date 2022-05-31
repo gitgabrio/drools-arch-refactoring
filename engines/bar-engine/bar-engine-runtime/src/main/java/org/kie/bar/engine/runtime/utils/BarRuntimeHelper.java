@@ -93,7 +93,7 @@ public class BarRuntimeHelper {
 
     }
 
-    public static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri)
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         String fullBarResourcesSourceClassName = finalResource.getFullClassName();
@@ -106,7 +106,7 @@ public class BarRuntimeHelper {
         }
     }
 
-    public static DAROutputBar getDAROutput(BarResources barResources, DARInputBar darInputBar) {
+    static DAROutputBar getDAROutput(BarResources barResources, DARInputBar darInputBar) {
         return new DAROutputBar(darInputBar.getFRI(), darInputBar.getInputData());
     }
 

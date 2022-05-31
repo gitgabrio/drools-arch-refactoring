@@ -17,7 +17,6 @@ package org.kie.foo.engine.compilation.utils;/*
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -31,8 +30,6 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class FooCompilerHelperTest {

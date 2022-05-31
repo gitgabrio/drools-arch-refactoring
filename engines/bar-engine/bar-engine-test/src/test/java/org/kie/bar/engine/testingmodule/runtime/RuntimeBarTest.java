@@ -16,16 +16,12 @@
 package org.kie.bar.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
@@ -39,7 +35,6 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,20 +52,6 @@ class RuntimeBarTest {
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
-    @BeforeEach
-    public void init() {
-        try {
-            getFileFromFileName("IndexFile.foo_json").delete();
-        } catch (KieDARCommonException e) {
-            // Ignore
-        }
-        try {
-            getFileFromFileName("IndexFile.bar_json").delete();
-        } catch (KieDARCommonException e) {
-            // Ignore
-        }
-    }
-
     @Test
     void evaluateExecutableBarCompilationOnTheFly() {
         FRI fri = new FRI("darbar", "bar");
@@ -78,7 +59,7 @@ class RuntimeBarTest {
         Optional<DAROutput> retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(retrievedOutput.isEmpty());
         File barFile = getFileFromFileName("DarBar.bar");
-        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, barFile);
+        DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertNotNull(indexFiles);
         assertEquals(1, indexFiles.size());
@@ -96,11 +77,11 @@ class RuntimeBarTest {
 
     @Test
     void evaluateRedirectBarCompilationOnTheFly() {
-        FRI fri = new FRI("bar/darbar", "bar");
+        FRI fri = new FRI("redirectbar", "bar");
         DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isEmpty());
-        File barFile = getFileFromFileName("DarBar.bar");
+        File barFile = getFileFromFileName("RedirectBar.bar");
         DARResource darResourceBar = new DARFileResource( barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertNotNull(indexFiles);

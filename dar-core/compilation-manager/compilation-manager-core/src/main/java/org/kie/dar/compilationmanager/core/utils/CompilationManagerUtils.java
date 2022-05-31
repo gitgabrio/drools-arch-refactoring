@@ -58,8 +58,8 @@ public class CompilationManagerUtils {
             if (darCompilationOutput instanceof DARFinalOutputClassesContainer) {
                 loadClasses(((DARFinalOutputClassesContainer) darCompilationOutput).getCompiledClassesMap(), memoryCompilerClassLoader);
             }
-            if (darCompilationOutput instanceof DARIntermediateOutput) {
-                populateIndexFilesWithProcessedResource(toPopulate, (DARIntermediateOutput) darCompilationOutput, memoryCompilerClassLoader);
+            if (darCompilationOutput instanceof DARRedirectOutput) {
+                populateIndexFilesWithProcessedResource(toPopulate, (DARRedirectOutput) darCompilationOutput, memoryCompilerClassLoader);
             }
         });
     }
@@ -117,8 +117,8 @@ public class CompilationManagerUtils {
     static GeneratedResource getGeneratedResource(DARCompilationOutput compilationOutput) {
         if (compilationOutput instanceof DARFinalOutput) {
             return new GeneratedExecutableResource(compilationOutput.getFri(), ((DARFinalOutput)compilationOutput).getFullClassName());
-        } else if (compilationOutput instanceof DARIntermediateOutput) {
-            return new GeneratedRedirectResource(compilationOutput.getFri(), ((DARIntermediateOutput) compilationOutput).getTargetEngine());
+        } else if (compilationOutput instanceof DARRedirectOutput) {
+            return new GeneratedRedirectResource(compilationOutput.getFri(), ((DARRedirectOutput) compilationOutput).getTargetEngine());
         } else {
             throw new KieCompilerServiceException("Unmanaged type " + compilationOutput.getClass().getName());
         }

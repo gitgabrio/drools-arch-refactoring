@@ -22,7 +22,7 @@ import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getDARIntermediateOutputBar;
+import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getDARCompilationOutputBar;
 
 public class KieCompilerServiceBar implements KieCompilerService {
 
@@ -39,6 +39,6 @@ public class KieCompilerServiceBar implements KieCompilerService {
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (E) getDARIntermediateOutputBar((DARFileResource) toProcess, memoryCompilerClassLoader);
+        return (E) getDARCompilationOutputBar((DARFileResource) toProcess, memoryCompilerClassLoader);
     }
 }

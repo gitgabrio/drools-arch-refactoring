@@ -16,8 +16,10 @@ package org.kie.bar.engine.compilation.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
+import org.kie.bar.engine.compilation.model.DARFinalOutputBar;
+import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
@@ -41,26 +43,33 @@ class KieCompilerServiceBarTest {
 
     @Test
     void canManageResource() {
-        File fooFile = getFileFromFileName("DarBar.bar");
-        DARResource toProcess = new DARFileResource(fooFile);
+        File barFile = getFileFromFileName("DarBar.bar");
+        DARResource toProcess = new DARFileResource(barFile);
         assertTrue(kieCompilerService.canManageResource(toProcess));
-        toProcess = () -> "DARIntermediateOutput";
+        barFile = getFileFromFileName("RedirectBar.bar");
+        toProcess = new DARFileResource(barFile);
+        assertTrue(kieCompilerService.canManageResource(toProcess));
+        toProcess = () -> "DARRedirectOutput";
         assertFalse(kieCompilerService.canManageResource(toProcess));
     }
 
     @Test
     void processResource() {
-        File fooFile = getFileFromFileName("DarBar.bar");
-        DARResource toProcess = new DARFileResource(fooFile);
-        DARIntermediateOutputBar retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        File barFile = getFileFromFileName("DarBar.bar");
+        DARResource toProcess = new DARFileResource(barFile);
+        DARCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertNotNull(retrieved);
-        // TODO
-//        assertEquals(toProcess.getFullResourceName(), retrieved.getFullResourceName());
-        assertEquals("foo", retrieved.getTargetEngine());
-        // TODO
-//        assertEquals(toProcess, retrieved.getContent());
+        assertTrue(retrieved instanceof DARFinalOutputBar);
+
+        barFile = getFileFromFileName("RedirectBar.bar");
+        toProcess = new DARFileResource(barFile);
+        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        assertNotNull(retrieved);
+        assertTrue(retrieved instanceof DARRedirectOutputBar);
+        assertEquals("foo", ((DARRedirectOutputBar)retrieved).getTargetEngine());
+
         try {
-            toProcess = () -> "DARIntermediateOutput";
+            toProcess = () -> "DARRedirectOutput";
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {

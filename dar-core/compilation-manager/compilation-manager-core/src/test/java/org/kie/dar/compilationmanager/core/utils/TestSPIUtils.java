@@ -30,16 +30,16 @@ class TestSPIUtils {
 
     @Test
     void getKieCompilerService() {
-        Optional<KieCompilerService> retrieved = SPIUtils.getKieCompilerService(new MockDARIntermediateOutputA(), true);
+        Optional<KieCompilerService> retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputA(), true);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieCompilerServiceAB);
-        retrieved = SPIUtils.getKieCompilerService(new MockDARIntermediateOutputB(), true);
+        retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputB(), true);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieCompilerServiceAB);
-        retrieved = SPIUtils.getKieCompilerService(new MockDARIntermediateOutputC(), true);
+        retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputC(), true);
         assertTrue(retrieved.isPresent());
         assertTrue(retrieved.get() instanceof MockKieCompilerServiceC);
-        retrieved = SPIUtils.getKieCompilerService(new MockDARIntermediateOutputD(), true);
+        retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputD(), true);
         assertTrue(retrieved.isEmpty());
     }
 

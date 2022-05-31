@@ -15,7 +15,6 @@
  */
 package org.kie.dar.compilationmanager.core.utils;
 
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.slf4j.Logger;

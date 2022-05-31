@@ -25,8 +25,8 @@ import java.util.List;
 public interface CompilationManager {
 
     /**
-     * Produce one <code>DARFinalOutput</code> from the given <code>DARIntermediateOutput</code>.
-     * The return is <code>Optional</code> because the engine required to process given <code>DARIntermediateOutput</code>
+     * Produce one <code>DARFinalOutput</code> from the given <code>DARRedirectOutput</code>.
+     * The return is <code>Optional</code> because the engine required to process given <code>DARRedirectOutput</code>
      * may not be found
      *
      * @param toProcess
@@ -35,12 +35,12 @@ public interface CompilationManager {
     List<IndexFile> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 //    /**
-//     * Produce a <code>List&lt;DARFinalOutput&gt;</code> from the given <code>List&lt;DARIntermediateOutput&gt;</code>
+//     * Produce a <code>List&lt;DARFinalOutput&gt;</code> from the given <code>List&lt;DARRedirectOutput&gt;</code>
 //     *
 //     * @param toProcess
 //     * @return
 //     */
-//    List<IndexFile> processResources(List<DARIntermediateOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+//    List<IndexFile> processResources(List<DARRedirectOutput> toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 
 }

@@ -20,7 +20,7 @@ import org.kie.dar.common.api.model.FRI;
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
-public class DARIntermediateOutput extends AbstractDARCompilationOutput implements DARResource {
+public class DARRedirectOutput extends AbstractDARCompilationOutput implements DARResource {
 
     private final String targetEngine;
 
@@ -29,7 +29,7 @@ public class DARIntermediateOutput extends AbstractDARCompilationOutput implemen
      */
     private final Object content;
 
-    protected DARIntermediateOutput(FRI fri, String targetEngine, Object content) {
+    protected DARRedirectOutput(FRI fri, String targetEngine, Object content) {
         super(fri);
         this.targetEngine = targetEngine;
         this.content = content;

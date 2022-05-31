@@ -18,7 +18,7 @@ package org.kie.bar.engine.testingmodule.compilation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
+import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -68,13 +68,13 @@ class CompileBarTest {
 
     @Test
     void compileRedirectBar() {
-        File barFile = getFileFromFileName("DarBar.bar");
+        File barFile = getFileFromFileName("RedirectBar.bar");
         DARResource darResourceBar = new DARFileResource( barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(2, retrieved.size());
-        assertTrue(retrieved.stream().anyMatch(ind -> ind.getName().equals("IndexFile.bar_json")));
-        assertTrue(retrieved.stream().anyMatch(ind -> ind.getName().equals("IndexFile.foo_json")));
+        assertTrue(retrieved.stream().anyMatch(ind -> ind.getModel().equals("bar")));
+        assertTrue(retrieved.stream().anyMatch(ind -> ind.getModel().equals("foo")));
 
 
         // TODO
@@ -86,12 +86,12 @@ class CompileBarTest {
     @Test
     void compileExecuteBar() throws IOException {
         FRI fri = new FRI("bar/darbar", "bar");
-        File fooFile = getFileFromFileName("DarBar.bar");
-        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, fooFile);
+        File barFile = getFileFromFileName("DarBar.bar");
+        DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         int involvedEngines = 1;
         assertEquals(involvedEngines, retrieved.size());
-        assertEquals("foo", retrieved.get(0).getModel());
+        assertEquals("bar", retrieved.get(0).getModel());
         GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved.get(0));
         List<String> generatedClasses = generatedResources.stream()
                 .filter(GeneratedClassResource.class::isInstance)

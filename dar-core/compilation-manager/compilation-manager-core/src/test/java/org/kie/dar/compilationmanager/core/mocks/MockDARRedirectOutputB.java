@@ -16,11 +16,11 @@
 package org.kie.dar.compilationmanager.core.mocks;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
+import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 
-public class MockDARIntermediateOutputA extends DARIntermediateOutput {
+public class MockDARRedirectOutputB extends DARRedirectOutput {
 
-    public MockDARIntermediateOutputA() {
-        super( new FRI("this/is/mock/friA", "mock"),"notmock", "MockDARIntermediateOutputA");
+    public MockDARRedirectOutputB() {
+       super( new FRI("this/is/mock/friB", "mock"),"notmock", "MockDARRedirectOutputB");
     }
 }

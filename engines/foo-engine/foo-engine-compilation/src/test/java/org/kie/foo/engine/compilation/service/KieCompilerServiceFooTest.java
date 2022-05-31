@@ -17,18 +17,14 @@ package org.kie.foo.engine.compilation.service;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class KieCompilerServiceFooTest {
