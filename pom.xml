@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kie.drools.version>8.20.0.Beta</kie.drools.version>
         <javaparser.version>3.23.1</javaparser.version>
-        <jackson.version>2.13.0</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
         <slf4j.version>1.7.30</slf4j.version>
         <jupiter.version>5.8.2</jupiter.version>
         <mockito.version>4.4.0</mockito.version>
