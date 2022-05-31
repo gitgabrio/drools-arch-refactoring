@@ -32,8 +32,4 @@ public class MockDARFinalOutput implements DARFinalOutput {
         return "mock.dar.output.Module";
     }
 
-    @Override
-    public String getModelType() {
-        return "mock";
-    }
 }

@@ -24,7 +24,7 @@ public class DARIntermediateOutputBar extends DARIntermediateOutput {
 
 
     public DARIntermediateOutputBar(FRI fri, File modelFile) {
-        super(fri, "bar", "foo", modelFile);
+        super(fri, "foo", modelFile);
     }
 
 }

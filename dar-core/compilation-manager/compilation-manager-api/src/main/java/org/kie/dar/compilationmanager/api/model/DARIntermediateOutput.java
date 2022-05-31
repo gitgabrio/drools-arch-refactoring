@@ -29,8 +29,8 @@ public class DARIntermediateOutput extends AbstractDARCompilationOutput implemen
      */
     private final Object content;
 
-    protected DARIntermediateOutput(FRI fri, String modelType, String targetEngine, Object content) {
-        super(fri, modelType);
+    protected DARIntermediateOutput(FRI fri, String targetEngine, Object content) {
+        super(fri);
         this.targetEngine = targetEngine;
         this.content = content;
     }

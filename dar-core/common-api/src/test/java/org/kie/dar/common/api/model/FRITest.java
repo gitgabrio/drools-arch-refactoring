@@ -28,7 +28,7 @@ class FRITest {
     @Test
     void getBasePath() {
         FRI retrieved = new FRI(basePath, model);
-        assertEquals(basePath, retrieved.getBasePath());
+        assertEquals(SLASH + basePath, retrieved.getBasePath());
     }
 
     @Test
@@ -42,6 +42,17 @@ class FRITest {
         FRI retrieved = new FRI(basePath, model);
         String expected = SLASH + model + SLASH + basePath;
         assertEquals(expected, retrieved.getFri());
+    }
+
+    @Test
+    void generateBasePath() {
+        String expected = SLASH + basePath;
+        String retrieved = FRI.generateBasePath(basePath, model);
+        assertEquals(expected, retrieved);
+        retrieved = FRI.generateBasePath(SLASH + basePath, model);
+        assertEquals(expected, retrieved);
+        retrieved = FRI.generateBasePath(SLASH + model + SLASH + basePath, model);
+        assertEquals(expected, retrieved);
     }
 
     @Test

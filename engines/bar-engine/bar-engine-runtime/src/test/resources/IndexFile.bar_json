@@ -1,9 +1,8 @@
 [
   {
     "step-type": "executable",
-    "model": "bar",
     "fri": {
-      "basePath": "dar",
+      "basePath": "/dar",
       "model": "bar",
       "fri": "/bar/dar"
     },

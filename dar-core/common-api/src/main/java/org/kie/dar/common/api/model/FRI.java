@@ -36,7 +36,7 @@ public class FRI implements Serializable {
     }
 
     public FRI(String basePath, String model) {
-        this.basePath = basePath;
+        this.basePath = generateBasePath(basePath, model);
         this.model = model;
         fri = generateFri(basePath, model);
     }
@@ -73,6 +73,21 @@ public class FRI implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(fri);
+    }
+
+    static String generateBasePath(String basePath, String model) {
+        if (basePath == null) {
+            return null;
+        }
+        String toReturn = basePath;
+        String modelPrefix = SLASH + model + SLASH;
+        if (!toReturn.startsWith(SLASH)) {
+            toReturn = SLASH + toReturn;
+        }
+        if (toReturn.startsWith(modelPrefix)) {
+            toReturn =  toReturn.substring(modelPrefix.length() -1) ;
+        }
+        return toReturn;
     }
 
     static String generateFri(String basePath, String model) {

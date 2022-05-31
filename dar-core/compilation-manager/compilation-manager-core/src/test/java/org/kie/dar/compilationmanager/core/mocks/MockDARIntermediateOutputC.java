@@ -21,6 +21,6 @@ import org.kie.dar.compilationmanager.api.model.DARIntermediateOutput;
 public class MockDARIntermediateOutputC extends DARIntermediateOutput {
 
     public MockDARIntermediateOutputC() {
-        super( new FRI("this/is/mock/friC", "mock"),"mock", "notmock", "MockDARIntermediateOutputC");
+        super( new FRI("this/is/mock/friC", "mock"),"notmock", "MockDARIntermediateOutputC");
     }
 }

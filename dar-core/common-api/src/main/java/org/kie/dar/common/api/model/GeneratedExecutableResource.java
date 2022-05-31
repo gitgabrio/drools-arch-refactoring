@@ -28,26 +28,20 @@ public final class GeneratedExecutableResource implements GeneratedResource {
      */
     private final FRI fri;
 
-    private final String model;
 
     private final String fullClassName;
 
     public GeneratedExecutableResource() {
-        this(null, null, null);
+        this(null, null);
     }
 
-    public GeneratedExecutableResource(FRI fri, String model, String fullClassName) {
+    public GeneratedExecutableResource(FRI fri, String fullClassName) {
         this.fri = fri;
-        this.model = model;
         this.fullClassName = fullClassName;
     }
 
     public FRI getFri() {
         return fri;
-    }
-
-    public String getModel() {
-        return model;
     }
 
     public String getFullClassName() {
@@ -79,7 +73,6 @@ public final class GeneratedExecutableResource implements GeneratedResource {
     public String toString() {
         return "GeneratedExecutableResource{" +
                 "fri='" + fri + '\'' +
-                ", model='" + model + '\'' +
                 "} " + super.toString();
     }
 }

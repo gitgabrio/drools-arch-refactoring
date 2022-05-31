@@ -23,7 +23,7 @@ import java.util.Map;
 public class DARFinalOutputFoo extends DARFinalOutputClassesContainer {
 
     public DARFinalOutputFoo(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
-        super(fri, "foo", fullClassName, compiledClassMap);
+        super(fri, fullClassName, compiledClassMap);
     }
 
 }

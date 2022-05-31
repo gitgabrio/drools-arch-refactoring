@@ -1,13 +1,21 @@
 [
   {
     "step-type": "executable",
-    "model": "bar",
     "fri": {
-      "basePath": "staticdar",
+      "basePath": "/staticdar",
       "model": "bar",
       "fri": "/bar/staticdar"
     },
     "fullClassName": "org.kie.bar.engine.compilation.model.DarBarStaticbarResources"
+  },
+  {
+    "step-type": "redirect",
+    "fri": {
+      "basePath": "/this/is/fri",
+      "model": "bar",
+      "fri": "/bar/this/is/fri"
+    },
+    "target": "foo"
   },
   {
     "step-type": "class",

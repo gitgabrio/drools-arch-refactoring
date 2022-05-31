@@ -40,7 +40,6 @@ class KieRuntimeServiceFooTest {
     void canManageResource() {
         assertTrue(kieRuntimeService.canManageInput(new FRI("dar", "foo"), memoryCompilerClassLoader));
         assertFalse(kieRuntimeService.canManageInput(new FRI("dar", "notfoo"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("notdar", "foo"), memoryCompilerClassLoader));
     }
 
     @Test

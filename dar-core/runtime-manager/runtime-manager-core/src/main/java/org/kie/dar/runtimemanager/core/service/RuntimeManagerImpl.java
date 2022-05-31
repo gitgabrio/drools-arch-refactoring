@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.kie.dar.runtimemanager.core.utils.SPIUtils.getKieRuntimeService;
+import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 
 public class RuntimeManagerImpl implements RuntimeManager {
     private static final Logger logger = LoggerFactory.getLogger(RuntimeManagerImpl.class.getName());

@@ -24,7 +24,7 @@ public class DARFinalOutputBar extends DARFinalOutputClassesContainer {
 
 
     public DARFinalOutputBar(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
-        super(fri, "bar", fullClassName, compiledClassMap);
+        super(fri, fullClassName, compiledClassMap);
     }
 
 }

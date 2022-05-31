@@ -20,11 +20,9 @@ import org.kie.dar.common.api.model.FRI;
 public abstract class AbstractDARCompilationOutput implements DARCompilationOutput {
 
     private final FRI fri;
-    private final String modelType;
 
-    protected AbstractDARCompilationOutput(FRI fri, String modelType) {
+    protected AbstractDARCompilationOutput(FRI fri) {
         this.fri = fri;
-        this.modelType = modelType;
     }
 
     @Override
@@ -32,9 +30,5 @@ public abstract class AbstractDARCompilationOutput implements DARCompilationOutp
         return fri;
     }
 
-    @Override
-    public String getModelType() {
-        return modelType;
-    }
 
 }

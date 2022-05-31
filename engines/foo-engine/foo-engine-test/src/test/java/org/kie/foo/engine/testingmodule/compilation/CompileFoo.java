@@ -47,7 +47,7 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARIntermediateOutput darResourceFileFoo = new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "not_foo", "foo", fooFile) {};
+        DARIntermediateOutput darResourceFileFoo = new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "foo", fooFile) {};
         List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertNotNull(retrieved);
         assertEquals(1, retrieved.size());

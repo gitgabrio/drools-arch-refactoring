@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.dar.runtimemanager.api.mocks;
 
-public class MockDARInputC extends AbstractMockDARInput {
-
+public class MockDARInputB extends AbstractMockDARInput {
 
 }

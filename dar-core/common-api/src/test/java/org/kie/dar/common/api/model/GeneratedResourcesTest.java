@@ -28,30 +28,29 @@ class GeneratedResourcesTest {
         GeneratedResource generatedClassResource = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
         assertEquals(2, generatedResources.size());
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
         assertEquals(1, generatedResources.size());
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(fri, "different-model", fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
         assertEquals(1, generatedResources.size());
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, model, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model) , model, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model) , fullClassName));
         assertEquals(2, generatedResources.size());
 
-        String fullPathIntermediate = "full/path/intermediate";
         generatedClassResource = new GeneratedClassResource(fullClassName);
-        generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
+        generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
         generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);

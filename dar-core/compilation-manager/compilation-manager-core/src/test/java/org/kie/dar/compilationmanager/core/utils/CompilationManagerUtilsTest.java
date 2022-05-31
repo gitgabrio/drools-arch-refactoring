@@ -33,8 +33,9 @@ class CompilationManagerUtilsTest {
 
     private final static String modelType = "test";
     private final static FRI fri = new FRI("this/is/fri", modelType);
+    private final static FRI notExistingfri = new FRI("this/is/fri", "notexisting");
     private final static Map<String, byte[]> compiledClassMap = IntStream.range(0, 3).boxed().collect(Collectors.toMap(integer -> "class_" + integer, integer -> new byte[0]));
-    private final static DARFinalOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(modelType);
+    private final static DARFinalOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(fri);
 
 //    @BeforeEach
 //    public void init() {
@@ -63,8 +64,7 @@ class CompilationManagerUtilsTest {
 
     @Test
     void getIndexFileNotExisting() {
-        String notExistingModelType = "notexisting";
-        DARFinalOutputClassesContainer notExistingOutput = getDARFinalOutputClassesContainer(notExistingModelType);
+        DARFinalOutputClassesContainer notExistingOutput = getDARFinalOutputClassesContainer(notExistingfri);
         IndexFile retrieved = CompilationManagerUtils.getIndexFile(notExistingOutput);
         assertNotNull(retrieved);
         String expectedName = "IndexFile.notexisting_json";
@@ -135,7 +135,6 @@ class CompilationManagerUtilsTest {
     private void commonEvaluateGeneratedExecutableResource(GeneratedResource generatedResource) {
         assertNotNull(generatedResource);
         assertTrue(generatedResource instanceof GeneratedExecutableResource);
-        assertEquals(finalOutput.getModelType(), ((GeneratedExecutableResource) generatedResource).getModel());
         assertEquals(finalOutput.getFri(), ((GeneratedExecutableResource) generatedResource).getFri());
     }
 
@@ -147,8 +146,8 @@ class CompilationManagerUtilsTest {
         });
     }
 
-    private static DARFinalOutputClassesContainer getDARFinalOutputClassesContainer(String outputModelType) {
-        return new DARFinalOutputClassesContainer(fri, outputModelType, outputModelType+ "Resources", compiledClassMap) {
+    private static DARFinalOutputClassesContainer getDARFinalOutputClassesContainer(FRI usedFri) {
+        return new DARFinalOutputClassesContainer(usedFri, usedFri.getModel() +"Resources", compiledClassMap) {
         };
     }
 }

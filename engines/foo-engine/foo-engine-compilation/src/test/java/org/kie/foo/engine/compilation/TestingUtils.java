@@ -66,7 +66,7 @@ public class TestingUtils {
     }
 
     public static DARIntermediateOutput getDARResourceIntermediate() {
-        return new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "not_foo", "foo", "Content") {
+        return new DARIntermediateOutput(new FRI("this/is/fri","not_foo"), "foo", "Content") {
         };
     }
 

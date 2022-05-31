@@ -16,6 +16,7 @@
 package org.kie.bar.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.compilation.model.DARIntermediateOutputBar;
 import org.kie.bar.engine.runtime.model.DARInputBar;
@@ -23,12 +24,15 @@ import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
+import org.kie.foo.engine.runtime.model.DAROutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -38,8 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RuntimeBarTest {
 
@@ -54,16 +57,36 @@ class RuntimeBarTest {
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
+    @BeforeEach
+    public void init() {
+        try {
+            getFileFromFileName("IndexFile.foo_json").delete();
+        } catch (KieDARCommonException e) {
+            // Ignore
+        }
+        try {
+            getFileFromFileName("IndexFile.bar_json").delete();
+        } catch (KieDARCommonException e) {
+            // Ignore
+        }
+    }
+
     @Test
-    void evaluateBarCompilationOnTheFly() {
-        FRI fri = new FRI("bar/darbar", "bar");
+    void evaluateExecutableBarCompilationOnTheFly() {
+        FRI fri = new FRI("darbar", "bar");
         DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertTrue(darOutput.isEmpty());
-        File fooFile = getFileFromFileName("DarBar.bar");
-        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, fooFile);
-        List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        Optional<DAROutput> retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertTrue(retrievedOutput.isEmpty());
+        File barFile = getFileFromFileName("DarBar.bar");
+        DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, barFile);
+        List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        assertNotNull(indexFiles);
+        assertEquals(1, indexFiles.size());
+        retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertTrue(retrievedOutput.isPresent());
+        DAROutput retrieved = retrievedOutput.get();
+        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
+        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
         // TODO
 //        Map<String, byte[]> compiledClasses = ((DARFinalOutputClassesContainer) retrieved.get()).getCompiledClassesMap();
 //        compiledClasses.forEach(memoryCompilerClassLoader::addCode);
@@ -72,17 +95,43 @@ class RuntimeBarTest {
     }
 
     @Test
+    void evaluateRedirectBarCompilationOnTheFly() {
+        FRI fri = new FRI("bar/darbar", "bar");
+        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
+        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertTrue(darOutput.isEmpty());
+        File barFile = getFileFromFileName("DarBar.bar");
+        DARResource darResourceBar = new DARFileResource( barFile);
+        List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        assertNotNull(indexFiles);
+        assertEquals(2, indexFiles.size());
+        darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertFalse(darOutput.isEmpty());
+        DAROutput retrieved = darOutput.get();
+        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
+        assertTrue(retrieved.getOutputData() instanceof DAROutputFoo);
+        assertEquals(toEvaluate.getInputData(), ((DAROutputFoo)retrieved.getOutputData()).getOutputData());
+    }
+
+    @Test
     void evaluateExecutableBarStaticCompilation() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/staticdar", "bar"), "InputData");
+        DARInputBar toEvaluate = new DARInputBar(new FRI("staticdar", "bar"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isPresent());
+        DAROutput retrieved = darOutput.get();
+        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
+        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
     }
 
     @Test
     void evaluateRedirectBarStaticCompilation() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("staticdar", "bar"), "InputData");
+        DARInputBar toEvaluate = new DARInputBar(new FRI("this/is/fri", "bar"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertTrue(darOutput.isPresent());
+        DAROutput retrieved = darOutput.get();
+        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
+        assertTrue(retrieved.getOutputData() instanceof DAROutputFoo);
+        assertEquals(toEvaluate.getInputData(), ((DAROutputFoo)retrieved.getOutputData()).getOutputData());
     }
 
     public static File getFileFromFileName(String fileName) {

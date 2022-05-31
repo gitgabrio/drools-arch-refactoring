@@ -17,6 +17,11 @@
             <groupId>org.kie</groupId>
             <artifactId>runtime-manager-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>runtime-manager-api</artifactId>
+            <classifier>tests</classifier>
+        </dependency>
     </dependencies>
 
 

@@ -1,9 +1,8 @@
 [
   {
     "step-type": "executable",
-    "model": "foo",
     "fri": {
-      "basePath": "staticdar",
+      "basePath": "/staticdar",
       "model": "foo",
       "fri": "/foo/staticdar"
     },

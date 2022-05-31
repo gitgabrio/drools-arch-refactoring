@@ -72,7 +72,7 @@ public class CompilationManagerUtils {
 
     static IndexFile getIndexFile(DARCompilationOutput compilationOutput) {
         String parentPath = System.getProperty(INDEXFILE_DIRECTORY_PROPERTY, DEFAULT_INDEXFILE_DIRECTORY);
-        IndexFile toReturn = new IndexFile(parentPath, compilationOutput.getModelType());
+        IndexFile toReturn = new IndexFile(parentPath, compilationOutput.getFri().getModel());
         File existingFile;
         try {
             existingFile = getFileFromFileName(toReturn.getName());
@@ -116,7 +116,7 @@ public class CompilationManagerUtils {
 
     static GeneratedResource getGeneratedResource(DARCompilationOutput compilationOutput) {
         if (compilationOutput instanceof DARFinalOutput) {
-            return new GeneratedExecutableResource(compilationOutput.getFri(), compilationOutput.getModelType(), ((DARFinalOutput)compilationOutput).getFullClassName());
+            return new GeneratedExecutableResource(compilationOutput.getFri(), ((DARFinalOutput)compilationOutput).getFullClassName());
         } else if (compilationOutput instanceof DARIntermediateOutput) {
             return new GeneratedRedirectResource(compilationOutput.getFri(), ((DARIntermediateOutput) compilationOutput).getTargetEngine());
         } else {

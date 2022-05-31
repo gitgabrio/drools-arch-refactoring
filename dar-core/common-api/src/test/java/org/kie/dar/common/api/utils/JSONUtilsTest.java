@@ -43,15 +43,15 @@ class JSONUtilsTest {
         retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertEquals(expected, retrieved);
 
-        generatedResource = new GeneratedExecutableResource(fri, model, fullClassName);
-        expected = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"model\":\"%s\",\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), model, fullClassName);
+        generatedResource = new GeneratedExecutableResource(fri, fullClassName);
+        expected = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), fullClassName);
         retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertEquals(expected, retrieved);
     }
 
     @Test
     void getGeneratedResourceObject() throws JsonProcessingException {
-        String generatedResourceString = "{\"step-type\":\"redirect\",\"fri\":{\"basePath\":\"this/is/fri\",\"model\":\"foo\",\"fri\":\"this/is/fri_foo\"},\"target\":\"foo\"}";
+        String generatedResourceString = "{\"step-type\":\"redirect\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"this/is/fri_foo\"},\"target\":\"foo\"}";
         GeneratedResource retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
         assertNotNull(retrieved);
         assertTrue(retrieved instanceof GeneratedRedirectResource);
@@ -61,7 +61,7 @@ class JSONUtilsTest {
         assertNotNull(retrieved);
         assertTrue(retrieved instanceof GeneratedClassResource);
 
-        generatedResourceString = "{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"model\":\"foo\",\"fri\":\"this/is/fri_foo\"},\"model\":\"foo\",\"fullClassName\":\"full.class.Name\"}";
+        generatedResourceString = "{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"this/is/fri_foo\",\"model\":\"foo\"},\"fullClassName\":\"full.class.Name\"}";
         retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
         assertNotNull(retrieved);
         assertTrue(retrieved instanceof GeneratedExecutableResource);
@@ -73,27 +73,27 @@ class JSONUtilsTest {
         GeneratedResource generatedIntermediateResource = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, model, fullClassName);
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedIntermediateResource);
         generatedResources.add(generatedFinalResource);
         String retrieved = JSONUtils.getGeneratedResourcesString(generatedResources);
         String expected1 = String.format("{\"step-type\":\"class\",\"fullClassName\":\"%s\"}", fullClassName);
-        String expected2 = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"model\":\"%s\",\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), model, fullClassName);
+        String expected2 = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), fullClassName);
         assertTrue(retrieved.contains(expected1));
         assertTrue(retrieved.contains(expected2));
     }
 
     @Test
     void getGeneratedResourcesObjectFromString() throws JsonProcessingException {
-        String generatedResourcesString = "[{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"model\":\"foo\",\"fri\":\"/foo/this/is/fri\"},\"model\":\"foo\"},{\"step-type\":\"class\",\"fullClassName\":\"full.class.Name\"}]";
+        String generatedResourcesString = "[{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"/foo/this/is/fri\"}},{\"step-type\":\"class\",\"fullClassName\":\"full.class.Name\"}]";
         GeneratedResources retrieved = JSONUtils.getGeneratedResourcesObject(generatedResourcesString);
         assertNotNull(retrieved);
         String fullClassName = "full.class.Name";
         GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource expected2 = new GeneratedExecutableResource(fri, model, fullClassName);
+        GeneratedResource expected2 = new GeneratedExecutableResource(fri, fullClassName);
         assertTrue(retrieved.contains(expected1));
         assertTrue(retrieved.contains(expected2));
     }
@@ -111,7 +111,7 @@ class JSONUtilsTest {
             GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
             String model = "foo";
             FRI fri = new FRI("this/is/fri", model);
-            GeneratedResource expected2 = new GeneratedExecutableResource(fri, model, fullClassName);
+            GeneratedResource expected2 = new GeneratedExecutableResource(fri, fullClassName);
             assertTrue(retrieved.contains(expected1));
             assertTrue(retrieved.contains(expected2));
         } catch (Exception e) {
@@ -125,7 +125,7 @@ class JSONUtilsTest {
         String basePath = "this/is/fri";
         FRI fri = new FRI(basePath, model);
         String retrieved = JSONUtils.getFRIString(fri);
-        String expected = String.format("{\"basePath\":\"%1$s\",\"model\":\"%2$s\",\"fri\":\"/%2$s/%1$s\"}", basePath, model);
+        String expected = String.format("{\"basePath\":\"%1$s\",\"model\":\"%2$s\",\"fri\":\"/%2$s%1$s\"}", "/" + basePath, model);
         assertEquals(expected, retrieved);
     }
 

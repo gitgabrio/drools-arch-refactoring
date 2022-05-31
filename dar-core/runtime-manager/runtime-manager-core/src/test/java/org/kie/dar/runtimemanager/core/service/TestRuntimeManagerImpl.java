@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
-import org.kie.dar.runtimemanager.core.mocks.MockDARInputA;
-import org.kie.dar.runtimemanager.core.mocks.MockDARInputB;
-import org.kie.dar.runtimemanager.core.mocks.MockDARInputC;
-import org.kie.dar.runtimemanager.core.mocks.MockDARInputD;
+import org.kie.dar.runtimemanager.api.mocks.MockDARInputA;
+import org.kie.dar.runtimemanager.api.mocks.MockDARInputB;
+import org.kie.dar.runtimemanager.api.mocks.MockDARInputC;
+import org.kie.dar.runtimemanager.api.mocks.MockDARInputD;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.ArrayList;

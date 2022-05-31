@@ -24,16 +24,10 @@ public interface DARCompilationOutput {
 
     /**
      * Returns the <b>full resource identifier</b> to be invoked for execution
+     *
      * @return
      */
     FRI getFri();
-
-    /**
-     * Returns the type of model to be executed
-     * @return
-     */
-    String getModelType();
-
 
 
 }

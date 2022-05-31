@@ -1,9 +1,8 @@
 [
   {
     "step-type": "executable",
-    "model": "foo",
     "fri": {
-      "basePath": "this/is/fri",
+      "basePath": "/this/is/fri",
       "model": "foo",
       "fri": "/foo/this/is/fri"
     },

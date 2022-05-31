@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.dar.runtimemanager.api.mocks;
 
 import org.kie.dar.common.api.model.FRI;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import java.util.Arrays;
-import java.util.List;
+public class MockKieRuntimeServiceC extends AbstractMockKieRuntimeService {
 
-public class MockKieRuntimeServiceAB extends AbstractMockKieRuntimeService {
-
-
-    private static List<FRI> managedResources = Arrays.asList(new FRI(MockDARInputA.class.getPackageName(), MockDARInputA.class.getSimpleName()),
-            new FRI(MockDARInputB.class.getPackageName(), MockDARInputB.class.getSimpleName()));
-
+    private final static FRI friC = new FRI(MockDARInputC.class.getPackageName(), MockDARInputC.class.getSimpleName());
     @Override
     public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return managedResources.contains(fri);
+        return fri.equals(friC);
     }
+
 }

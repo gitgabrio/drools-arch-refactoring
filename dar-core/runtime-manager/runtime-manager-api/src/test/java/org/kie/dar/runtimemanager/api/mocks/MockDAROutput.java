@@ -13,8 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.dar.runtimemanager.api.mocks;
 
-public class MockDARInputD extends AbstractMockDARInput {
 
+import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
+
+public class MockDAROutput extends AbstractDAROutput {
+
+    public MockDAROutput() {
+        super(new FRI(MockDAROutput.class.getCanonicalName().replace('.', '/'), "mock"));
+    }
+
+    @Override
+    public Object getOutputData() {
+        return null;
+    }
 }

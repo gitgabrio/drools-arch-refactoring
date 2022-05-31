@@ -26,8 +26,8 @@ public abstract class DARFinalOutputClassesContainer extends AbstractDARFinalCom
 
     private final Map<String, byte[]> compiledClassMap;
 
-    protected DARFinalOutputClassesContainer(FRI fri, String modelType, String fullClassName, Map<String, byte[]> compiledClassMap) {
-        super(fri, modelType, fullClassName);
+    protected DARFinalOutputClassesContainer(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+        super(fri, fullClassName);
         this.compiledClassMap = compiledClassMap;
     }
 

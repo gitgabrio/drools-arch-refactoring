@@ -13,23 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.mocks;
+package org.kie.dar.runtimemanager.api.mocks;
+
+public class MockDARInputC extends AbstractMockDARInput {
 
 
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-
-public abstract class AbstractMockDARInput implements DARInput {
-
-    private final FRI fri = new FRI(this.getClass().getPackageName(), this.getClass().getSimpleName());
-
-    @Override
-    public FRI getFRI() {
-        return fri;
-    }
-
-    @Override
-    public Object getInputData() {
-        return null;
-    }
 }

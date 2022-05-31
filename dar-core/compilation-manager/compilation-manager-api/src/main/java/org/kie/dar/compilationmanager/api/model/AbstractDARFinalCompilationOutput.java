@@ -21,8 +21,8 @@ public abstract class AbstractDARFinalCompilationOutput extends AbstractDARCompi
 
     private final String fullClassName;
 
-    protected AbstractDARFinalCompilationOutput(FRI fri, String modelType, String fullClassName) {
-        super(fri, modelType);
+    protected AbstractDARFinalCompilationOutput(FRI fri, String fullClassName) {
+        super(fri);
         this.fullClassName = fullClassName;
     }
 

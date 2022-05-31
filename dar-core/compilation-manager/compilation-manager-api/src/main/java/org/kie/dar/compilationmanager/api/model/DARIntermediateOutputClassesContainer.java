@@ -26,8 +26,8 @@ public abstract class DARIntermediateOutputClassesContainer extends DARIntermedi
 
     private final Map<String, byte[]> compiledClassMap;
 
-    protected DARIntermediateOutputClassesContainer(FRI fri, String modelType, String targetEngine, Object content, Map<String, byte[]> compiledClassMap) {
-        super(fri, modelType, targetEngine, content);
+    protected DARIntermediateOutputClassesContainer(FRI fri, String targetEngine, Object content, Map<String, byte[]> compiledClassMap) {
+        super(fri, targetEngine, content);
         this.compiledClassMap = compiledClassMap;
     }
 

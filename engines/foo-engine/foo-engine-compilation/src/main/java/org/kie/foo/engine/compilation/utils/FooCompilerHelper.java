@@ -82,7 +82,8 @@ public class FooCompilerHelper {
     }
 
     static DARFinalOutputFoo getDARProcessedFooFromIntermediate(DARIntermediateOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        String simpleClassName = getSanitizedClassName(resource.getFri().getFri());
+        FRI fooFri = new FRI(resource.getFri().getBasePath(), "foo");
+        String simpleClassName = getSanitizedClassName(fooFri.getFri());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
                 FOO_MODEL_PACKAGE_NAME,
                 FOO_MODEL_TEMPLATE_JAVA,
@@ -93,7 +94,7 @@ public class FooCompilerHelper {
         CompilationUnit fooResourcesSourceCompilationUnit = getFooResourcesCompilationUnit(sourcesMap.keySet(), fooResourcesSourceClassName);
         sourcesMap.put(getFullClassName(fooResourcesSourceCompilationUnit), fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputFoo(resource.getFri(), fooResourcesSourceClassName, compiledClasses);
+        return new DARFinalOutputFoo(fooFri, fooResourcesSourceClassName, compiledClasses);
     }
 
     static CompilationUnit getFooResourcesCompilationUnit(Set<String> generatedSources, String fooResourcesSourceClassName) {

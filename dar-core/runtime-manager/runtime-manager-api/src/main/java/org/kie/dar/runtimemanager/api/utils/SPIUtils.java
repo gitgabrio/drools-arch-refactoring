@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.core.utils;
+package org.kie.dar.runtimemanager.api.utils;
 
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;

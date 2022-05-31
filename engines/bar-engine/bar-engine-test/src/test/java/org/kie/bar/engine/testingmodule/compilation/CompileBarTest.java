@@ -25,6 +25,7 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedClassResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
+import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -66,14 +67,14 @@ class CompileBarTest {
     }
 
     @Test
-    void compileInitialBar() {
+    void compileRedirectBar() {
         File barFile = getFileFromFileName("DarBar.bar");
-        DARFileResource darResourceBar = new DARFileResource(barFile);
+        DARResource darResourceBar = new DARFileResource( barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        int involvedEngines = 2;
-        assertEquals(involvedEngines, retrieved.size());
-        assertEquals("bar", retrieved.get(0).getModel());
-        assertEquals("foo", retrieved.get(1).getModel());
+        assertNotNull(retrieved);
+        assertEquals(2, retrieved.size());
+        assertTrue(retrieved.stream().anyMatch(ind -> ind.getName().equals("IndexFile.bar_json")));
+        assertTrue(retrieved.stream().anyMatch(ind -> ind.getName().equals("IndexFile.foo_json")));
 
 
         // TODO
@@ -83,7 +84,7 @@ class CompileBarTest {
     }
 
     @Test
-    void compileIntermediateBar() throws IOException {
+    void compileExecuteBar() throws IOException {
         FRI fri = new FRI("bar/darbar", "bar");
         File fooFile = getFileFromFileName("DarBar.bar");
         DARIntermediateOutputBar darResourceBar = new DARIntermediateOutputBar(fri, fooFile);
@@ -92,7 +93,6 @@ class CompileBarTest {
         assertEquals(involvedEngines, retrieved.size());
         assertEquals("foo", retrieved.get(0).getModel());
         GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved.get(0));
-        System.out.println(generatedResources);
         List<String> generatedClasses = generatedResources.stream()
                 .filter(GeneratedClassResource.class::isInstance)
                 .map(GeneratedClassResource.class::cast)
@@ -106,10 +106,6 @@ class CompileBarTest {
                 fail("Failed to load " + generatedClass);
             }
         }
-        // TODO
-//        assertTrue(darCompilationOutput.isPresent());
-//        DARCompilationOutput retrieved = darCompilationOutput.get();
-//        assertTrue(retrieved instanceof DARFinalOutputFoo);
     }
 
     public static File getFileFromFileName(String fileName) {
