@@ -16,6 +16,7 @@
     <modules>
         <module>foo-engine</module>
         <module>bar-engine</module>
+        <module>pmml-engine</module>
     </modules>
 
     <dependencies>
