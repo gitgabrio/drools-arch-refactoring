@@ -4,21 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-pmml-compilation</artifactId>
+    <artifactId>pmml-engine-compilation</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-compilation-commons</artifactId>
+  <artifactId>pmml-engine-compilation-commons</artifactId>
 
-  <name>KIE :: PMML :: Compiler :: Commons</name>
+  <name>PMML :: ENGINE :: Compilation :: Commons</name>
   <description>Kie PMML Compiler Commons</description>
 
   <dependencies>
     <!-- PMML -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-api</artifactId>
+      <artifactId>pmml-engine-compilation-api</artifactId>
     </dependency>
     <!-- DROOLS -->
     <!-- EXTERNAL -->
@@ -29,30 +29,15 @@
     <!-- TEST -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-commons</artifactId>
+      <artifactId>pmml-engine-commons</artifactId>
       <scope>test</scope>
       <classifier>tests</classifier>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-api</artifactId>
+      <artifactId>pmml-engine-compilation-api</artifactId>
       <classifier>tests</classifier>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-test-util</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>

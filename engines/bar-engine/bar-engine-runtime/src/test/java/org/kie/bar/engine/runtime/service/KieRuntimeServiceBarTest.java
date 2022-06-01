@@ -24,7 +24,8 @@ import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class KieRuntimeServiceBarTest {
 
@@ -39,18 +40,18 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput(new FRI("/bar/dar", "bar"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("/bar/dar", "notbar"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("darfoo", "bar"), memoryCompilerClassLoader));
+        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "bar"), memoryCompilerClassLoader)).isTrue();
+        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "notbar"), memoryCompilerClassLoader)).isFalse();
+        assertThat(kieRuntimeService.canManageInput(new FRI("darfoo", "bar"), memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInputExistingBarResources() {
         DARInput toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
         DAROutput retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
-        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
+        assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
 
     }
 
@@ -61,7 +62,7 @@ class KieRuntimeServiceBarTest {
             kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
+            assertThat(e instanceof KieRuntimeServiceException).isTrue();
         }
     }
 

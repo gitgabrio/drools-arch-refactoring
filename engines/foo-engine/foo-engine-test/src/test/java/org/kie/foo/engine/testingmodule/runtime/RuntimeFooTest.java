@@ -41,8 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class RuntimeFooTest {
@@ -62,13 +61,13 @@ class RuntimeFooTest {
     void evaluateFooCompilationOnTheFly() throws IOException {
         DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertTrue(darOutput.isEmpty());
+        assertThat(darOutput.isEmpty()).isTrue();
         File fooFile = getFileFromFileName("DarFoo.foo");
         DARResource darResourceFileFoo = new DARFileResource(fooFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
-        assertEquals(1, indexFiles.size());
+        assertThat(indexFiles.size()).isEqualTo(1);
         IndexFile retrieved = indexFiles.get(0);
-        assertTrue(retrieved.exists());
+        assertThat(retrieved.exists()).isTrue();
         GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved);
         System.out.println(generatedResources);
         retrieved.delete();
@@ -83,7 +82,7 @@ class RuntimeFooTest {
     void evaluateFooStaticCompilation() {
         DARInputFoo toEvaluate = new DARInputFoo(new FRI("staticdar", "foo"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertTrue(darOutput.isPresent());
+        assertThat(darOutput.isPresent()).isTrue();
     }
 
     public static File getFileFromFileName(String fileName) {

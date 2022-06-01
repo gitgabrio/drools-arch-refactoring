@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-pmml-compilation</artifactId>
+    <artifactId>pmml-engine-compilation</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-compilation-core</artifactId>
+  <artifactId>pmml-engine-compilation-core</artifactId>
 
-  <name>KIE :: PMML :: Compiler :: Core</name>
+  <name>PMML :: ENGINE :: Compilation :: Core</name>
   <description>PMML Compiler Core</description>
 
 
@@ -19,13 +19,13 @@
     <!-- PMML -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-commons</artifactId>
+      <artifactId>pmml-engine-compilation-commons</artifactId>
     </dependency>
     <!-- EXTERNAL -->
     <!-- TEST -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-api</artifactId>
+      <artifactId>pmml-engine-compilation-api</artifactId>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>

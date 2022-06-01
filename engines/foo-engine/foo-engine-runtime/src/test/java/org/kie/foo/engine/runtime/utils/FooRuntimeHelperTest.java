@@ -23,7 +23,8 @@ import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class FooRuntimeHelperTest {
 
@@ -37,10 +38,10 @@ class FooRuntimeHelperTest {
     @Test
     void loadExistingFooResources() {
         FooResources retrieved = FooRuntimeHelper.loadFooResources(new FRI("dar", "foo"), memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(2, retrieved.getManagedResources().size());
-        assertTrue(retrieved.getManagedResources().contains("FooResOne"));
-        assertTrue(retrieved.getManagedResources().contains("FooResTwo"));
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getManagedResources().size()).isEqualTo(2);
+        assertThat(retrieved.getManagedResources().contains("FooResOne")).isTrue();
+        assertThat(retrieved.getManagedResources().contains("FooResTwo")).isTrue();
     }
 
     @Test
@@ -49,7 +50,7 @@ class FooRuntimeHelperTest {
             FooRuntimeHelper.loadFooResources(new FRI("dar", "notfoo"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
+            assertThat(e instanceof KieRuntimeServiceException).isTrue();
         }
     }
 
@@ -59,8 +60,8 @@ class FooRuntimeHelperTest {
         FooResources fooResources = FooRuntimeHelper.loadFooResources(fri, memoryCompilerClassLoader);
         DARInputFoo darInputFoo = new DARInputFoo(fri, "InputData");
         DAROutputFoo retrieved = FooRuntimeHelper.getDAROutput(fooResources, darInputFoo);
-        assertNotNull(retrieved);
-        assertEquals(darInputFoo.getFRI(), retrieved.getFRI());
-        assertEquals(darInputFoo.getInputData(), retrieved.getOutputData());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getFRI()).isEqualTo(darInputFoo.getFRI());
+        assertThat(retrieved.getOutputData()).isEqualTo(darInputFoo.getInputData());
     }
 }

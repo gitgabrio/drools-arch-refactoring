@@ -18,7 +18,6 @@ package org.kie.bar.engine.testingmodule.compilation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -37,7 +36,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class CompileBarTest {
@@ -71,10 +70,10 @@ class CompileBarTest {
         File barFile = getFileFromFileName("RedirectBar.bar");
         DARResource darResourceBar = new DARFileResource( barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(2, retrieved.size());
-        assertTrue(retrieved.stream().anyMatch(ind -> ind.getModel().equals("bar")));
-        assertTrue(retrieved.stream().anyMatch(ind -> ind.getModel().equals("foo")));
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.size()).isEqualTo(2);
+        assertThat(retrieved.stream().anyMatch(ind -> ind.getModel().equals("bar"))).isTrue();
+        assertThat(retrieved.stream().anyMatch(ind -> ind.getModel().equals("foo"))).isTrue();
 
 
         // TODO
@@ -90,8 +89,8 @@ class CompileBarTest {
         DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         int involvedEngines = 1;
-        assertEquals(involvedEngines, retrieved.size());
-        assertEquals("bar", retrieved.get(0).getModel());
+        assertThat(retrieved.size()).isEqualTo(involvedEngines);
+        assertThat(retrieved.get(0).getModel()).isEqualTo("bar");
         GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved.get(0));
         List<String> generatedClasses = generatedResources.stream()
                 .filter(GeneratedClassResource.class::isInstance)
@@ -103,7 +102,7 @@ class CompileBarTest {
                 Class<?> loadedClass = memoryCompilerClassLoader.loadClass(generatedClass);
                 System.out.println(loadedClass);
             } catch (Exception e) {
-                fail("Failed to load " + generatedClass);
+                org.assertj.core.api.Assertions.fail("", "Failed to load " + generatedClass);
             }
         }
     }

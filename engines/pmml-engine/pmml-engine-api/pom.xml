@@ -9,24 +9,24 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-api</artifactId>
+  <artifactId>pmml-engine-api</artifactId>
 
-  <name>KIE :: PMML :: API</name>
+  <name>PMML :: ENGINE :: API</name>
   <description>Public APIs from Trusty PMML</description>
 
-    <properties>
-        <commons.math.version>3.4.1</commons.math.version>
-    </properties>
+  <properties>
+    <commons.math.version>3.4.1</commons.math.version>
+  </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-math3</artifactId>
-                <version>${commons.math.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-math3</artifactId>
+        <version>${commons.math.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!-- KIE -->
@@ -51,6 +51,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
 
 </project>

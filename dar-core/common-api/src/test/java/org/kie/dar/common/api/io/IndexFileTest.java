@@ -19,14 +19,15 @@ import org.kie.dar.common.api.exceptions.KieDARCommonException;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class IndexFileTest {
 
     @Test
     void validatePathName() {
         String toValidate = "/this/is/valid/file.model_json";
-        assertEquals(toValidate, IndexFile.validatePathName(toValidate));
+        assertThat(IndexFile.validatePathName(toValidate)).isEqualTo(toValidate);
     }
 
     @Test
@@ -36,18 +37,18 @@ class IndexFileTest {
             IndexFile.validatePathName(toValidate);
             fail("Expecting KieDARCommonException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieDARCommonException);
+            assertThat(e instanceof KieDARCommonException).isTrue();
             String expected = "Wrong file name file._json";
-            assertEquals(expected, e.getMessage());
+            assertThat(e.getMessage()).isEqualTo(expected);
         }
         toValidate = "/this/is/invalid/file.model";
         try {
             IndexFile.validatePathName(toValidate);
             fail("Expecting KieDARCommonException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieDARCommonException);
+            assertThat(e instanceof KieDARCommonException).isTrue();
             String expected = "Wrong file name file.model";
-            assertEquals(expected, e.getMessage());
+            assertThat(e.getMessage()).isEqualTo(expected);
         }
     }
 
@@ -56,9 +57,9 @@ class IndexFileTest {
         String fileName = "file_name.model_json";
         String expected = "model";
         String source = fileName;
-        assertEquals(expected, IndexFile.getModel(source));
+        assertThat(IndexFile.getModel(source)).isEqualTo(expected);
         source = File.separator + "dir" + File.separator + fileName;
-        assertEquals(expected, IndexFile.getModel(source));
+        assertThat(IndexFile.getModel(source)).isEqualTo(expected);
     }
 
     @Test
@@ -66,6 +67,6 @@ class IndexFileTest {
         String fileName = "/this/is/valid/file.model_json";
         String expected = "model";
         IndexFile indexFile = new IndexFile(fileName);
-        assertEquals(expected, indexFile.getModel());
+        assertThat(indexFile.getModel()).isEqualTo(expected);
     }
 }

@@ -28,7 +28,7 @@ import org.dmg.pmml.Constant;
 import org.dmg.pmml.FieldName;
 import org.dmg.pmml.FieldRef;
 import org.dmg.pmml.InvalidValueTreatmentMethod;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
@@ -36,7 +36,7 @@ import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
-import static org.kie.test.util.filesystem.FileUtils.getFileContent;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLApplyFactoryTest {
 
@@ -50,7 +50,7 @@ public class KiePMMLApplyFactoryTest {
     private static final String TEST_03_SOURCE = "KiePMMLApplyFactoryTest_03.txt";
 
     @Test
-    public void getApplyVariableDeclarationWithConstants() throws IOException {
+    void getApplyVariableDeclarationWithConstants() throws IOException {
         String variableName = "variableName";
         Apply apply = new Apply();
         apply.setFunction(function);
@@ -68,16 +68,16 @@ public class KiePMMLApplyFactoryTest {
         BlockStmt retrieved = KiePMMLApplyFactory.getApplyVariableDeclaration(variableName, apply);
         String text = getFileContent(TEST_01_SOURCE);
         Statement expected = JavaParserUtils.parseBlock(String.format(text, value1, value2, variableName, function,
-                                                                      defaultValue, mapMissingTo,
-                                                                      invalidValueTreatmentMethod.value()));
+                defaultValue, mapMissingTo,
+                invalidValueTreatmentMethod.value()));
         assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLConstant.class, KiePMMLApply.class, Collections.class,
-                                               Arrays.class);
+                Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }
 
     @Test
-    public void getApplyVariableDeclarationWithFieldRefs() throws IOException {
+    void getApplyVariableDeclarationWithFieldRefs() throws IOException {
         String variableName = "variableName";
         Apply apply = new Apply();
         apply.setFunction(function);
@@ -95,16 +95,16 @@ public class KiePMMLApplyFactoryTest {
         BlockStmt retrieved = KiePMMLApplyFactory.getApplyVariableDeclaration(variableName, apply);
         String text = getFileContent(TEST_02_SOURCE);
         Statement expected = JavaParserUtils.parseBlock(String.format(text, PARAM_1, PARAM_2, variableName, function,
-                                                                      defaultValue, mapMissingTo,
-                                                                      invalidValueTreatmentMethod.value()));
+                defaultValue, mapMissingTo,
+                invalidValueTreatmentMethod.value()));
         assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLFieldRef.class, KiePMMLApply.class, Collections.class,
-                                               Arrays.class);
+                Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }
 
     @Test
-    public void getApplyVariableDeclarationWithApply() throws IOException {
+    void getApplyVariableDeclarationWithApply() throws IOException {
         String variableName = "variableName";
         Apply nestedApply = new Apply();
         nestedApply.setFunction("nested_function");
@@ -127,13 +127,13 @@ public class KiePMMLApplyFactoryTest {
         BlockStmt retrieved = KiePMMLApplyFactory.getApplyVariableDeclaration(variableName, apply);
         String text = getFileContent(TEST_03_SOURCE);
         Statement expected = JavaParserUtils.parseBlock(String.format(text, PARAM_1, PARAM_2,
-                                                                      defaultValue, mapMissingTo,
-                                                                      nestedInvalidValueTreatmentMethod.value(),
-                                                                      variableName,
-                                                                      invalidValueTreatmentMethod.value()));
+                defaultValue, mapMissingTo,
+                nestedInvalidValueTreatmentMethod.value(),
+                variableName,
+                invalidValueTreatmentMethod.value()));
         assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLFieldRef.class, KiePMMLApply.class, Collections.class,
-                                               Arrays.class);
+                Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }
 }

@@ -23,7 +23,8 @@ import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class KieRuntimeServiceFooTest {
 
@@ -38,17 +39,17 @@ class KieRuntimeServiceFooTest {
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput(new FRI("dar", "foo"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("dar", "notfoo"), memoryCompilerClassLoader));
+        assertThat(kieRuntimeService.canManageInput(new FRI("dar", "foo"), memoryCompilerClassLoader)).isTrue();
+        assertThat(kieRuntimeService.canManageInput(new FRI("dar", "notfoo"), memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInputExistingFooResources() {
         DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
         DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
-        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
+        assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
 
     @Test
@@ -58,7 +59,7 @@ class KieRuntimeServiceFooTest {
             kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
+            assertThat(e instanceof KieRuntimeServiceException).isTrue();
         }
     }
 

@@ -30,7 +30,7 @@ import org.dmg.pmml.DerivedField;
 import org.dmg.pmml.FieldName;
 import org.dmg.pmml.LocalTransformations;
 import org.dmg.pmml.OpType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
@@ -39,7 +39,7 @@ import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
-import static org.kie.test.util.filesystem.FileUtils.getFileContent;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLLocalTransformationsFactoryTest {
 
@@ -50,7 +50,7 @@ public class KiePMMLLocalTransformationsFactoryTest {
     private static final String TEST_01_SOURCE = "KiePMMLLocalTransformationsFactoryTest_01.txt";
 
     @Test
-    public void getKiePMMLTransformationDictionaryVariableDeclaration() throws IOException {
+    void getKiePMMLTransformationDictionaryVariableDeclaration() throws IOException {
         LocalTransformations localTransformations = new LocalTransformations();
         localTransformations.addDerivedFields(getDerivedFields());
 
@@ -60,11 +60,11 @@ public class KiePMMLLocalTransformationsFactoryTest {
         Statement expected = JavaParserUtils.parseBlock(text);
         assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLConstant.class,
-                                               KiePMMLApply.class,
-                                               KiePMMLDerivedField.class,
-                                               KiePMMLLocalTransformations.class,
-                                               Arrays.class,
-                                               Collections.class);
+                KiePMMLApply.class,
+                KiePMMLDerivedField.class,
+                KiePMMLLocalTransformations.class,
+                Arrays.class,
+                Collections.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }
 

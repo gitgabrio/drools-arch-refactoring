@@ -27,8 +27,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class TestingUtils {
 
@@ -36,13 +36,13 @@ public class TestingUtils {
     }
 
     public static void commonEvaluateByteCode(Map<String, byte[]> retrieved, String fullClassName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         retrieved.forEach(memoryCompilerClassLoader::addCode);
         try {
             Class<?> loadedClass = memoryCompilerClassLoader.loadClass(fullClassName);
             loadedClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            fail(e);
+            fail("", e);
         }
     }
 

@@ -22,12 +22,13 @@ import java.util.Optional;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.Model;
 import org.dmg.pmml.PMML;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameOpType;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.kie.pmml.api.enums.OP_TYPE.CATEGORICAL;
 import static org.kie.pmml.api.enums.OP_TYPE.CONTINUOUS;
 import static org.kie.pmml.compiler.api.CommonTestingUtils.getFieldsFromDataDictionary;
@@ -35,7 +36,7 @@ import static org.kie.pmml.compiler.api.utils.ModelUtils.getOpType;
 import static org.kie.pmml.compiler.api.utils.ModelUtils.getTargetFieldName;
 import static org.kie.pmml.compiler.api.utils.ModelUtils.getTargetFields;
 import static org.kie.pmml.compiler.commons.utils.KiePMMLUtil.MODELNAME_TEMPLATE;
-import static org.kie.test.util.filesystem.FileUtils.getFileInputStream;
+import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
 
 public class KiePMMLLoadedModelUtilsTest {
 
@@ -54,7 +55,7 @@ public class KiePMMLLoadedModelUtilsTest {
     private PMML pmmlModel;
 
     @Test
-    public void getTargetFieldNoTarget() throws Exception {
+    void getTargetFieldNoTarget() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(NO_TARGET_SOURCE), NO_TARGET_SOURCE);
         final List<Field<?>> fields = getFieldsFromDataDictionary(pmmlModel.getDataDictionary());
         assertThat(getTargetFieldName(fields, pmmlModel.getModels().get(0))).isPresent();
@@ -62,7 +63,7 @@ public class KiePMMLLoadedModelUtilsTest {
     }
 
     @Test
-    public void getTargetFieldOneMiningTarget() throws Exception {
+    void getTargetFieldOneMiningTarget() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(ONE_MINING_TARGET_SOURCE), ONE_MINING_TARGET_SOURCE);
         final List<Field<?>> fields = getFieldsFromDataDictionary(pmmlModel.getDataDictionary());
         final Optional<String> retrieved = getTargetFieldName(fields, pmmlModel.getModels().get(0));
@@ -74,7 +75,7 @@ public class KiePMMLLoadedModelUtilsTest {
     }
 
     @Test
-    public void getTargetFieldMultipleTargets() throws Exception {
+    void getTargetFieldMultipleTargets() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(MULTIPLE_TARGETS_SOURCE), MULTIPLE_TARGETS_SOURCE);
         final List<Field<?>> fields = getFieldsFromDataDictionary(pmmlModel.getDataDictionary());
         final Optional<String> retrieved = getTargetFieldName(fields, pmmlModel.getModels().get(0));
@@ -86,7 +87,7 @@ public class KiePMMLLoadedModelUtilsTest {
     }
 
     @Test
-    public void getOpTypeFromDataFieldExisting() throws Exception {
+    void getOpTypeFromDataFieldExisting() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(NO_TARGET_SOURCE), NO_TARGET_SOURCE);
         final OP_TYPE retrieved = getOpType(getFieldsFromDataDictionary(pmmlModel.getDataDictionary()), pmmlModel.getModels().get(0), TEMPERATURE_FIELD);
         assertThat(retrieved).isNotNull();
@@ -94,31 +95,33 @@ public class KiePMMLLoadedModelUtilsTest {
     }
 
     @Test
-    public void getOpTypeFromMiningFieldExisting() throws Exception {
+    void getOpTypeFromMiningFieldExisting() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(ONE_MINING_TARGET_SOURCE), ONE_MINING_TARGET_SOURCE);
         final OP_TYPE retrieved = getOpType(getFieldsFromDataDictionary(pmmlModel.getDataDictionary()), pmmlModel.getModels().get(0), OUTLOOK_FIELD);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved).isEqualTo(CATEGORICAL);
     }
 
-    @Test(expected = KiePMMLInternalException.class)
-    public void getOpTypeNotExistingField() throws Exception {
-        pmmlModel = KiePMMLUtil.load(getFileInputStream(ONE_MINING_TARGET_SOURCE), ONE_MINING_TARGET_SOURCE);
-        getOpType(getFieldsFromDataDictionary(pmmlModel.getDataDictionary()), pmmlModel.getModels().get(0), NOT_EXISTING_FIELD);
+    @Test
+    void getOpTypeNotExistingField() throws Exception {
+        assertThrows(KiePMMLInternalException.class, () -> {
+            pmmlModel = KiePMMLUtil.load(getFileInputStream(ONE_MINING_TARGET_SOURCE), ONE_MINING_TARGET_SOURCE);
+            getOpType(getFieldsFromDataDictionary(pmmlModel.getDataDictionary()), pmmlModel.getModels().get(0), NOT_EXISTING_FIELD);
+        });
     }
 
     @Test
-    public void populateMissingModelNames() throws Exception {
+    void populateMissingModelNames() throws Exception {
         pmmlModel = KiePMMLUtil.load(getFileInputStream(NO_MODELNAME_SAMPLE), NO_MODELNAME_SAMPLE);
         final List<Model> models = pmmlModel.getModels();
-        for (int i = 0; i < models.size(); i ++) {
+        for (int i = 0; i < models.size(); i++) {
             Model model = models.get(i);
             assertThat(model.getModelName()).isNotNull();
             assertThat(model.getModelName()).isNotEmpty();
             String expected = String.format(MODELNAME_TEMPLATE,
-                                            NO_MODELNAME_SAMPLE_NAME,
-                                            model.getClass().getSimpleName(),
-                                            i);
+                    NO_MODELNAME_SAMPLE_NAME,
+                    model.getClass().getSimpleName(),
+                    i);
             assertThat(model.getModelName()).isEqualTo(expected);
         }
 

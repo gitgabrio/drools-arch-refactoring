@@ -24,21 +24,21 @@ import java.util.List;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import org.dmg.pmml.Interval;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.CLOSURE;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
 import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
-import static org.kie.test.util.filesystem.FileUtils.getFileContent;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLIntervalFactoryTest {
 
     private static final String TEST_01_SOURCE = "KiePMMLIntervalFactoryTest_01.txt";
 
     @Test
-    public void getIntervalVariableDeclaration() throws IOException {
+    void getIntervalVariableDeclaration() throws IOException {
         String variableName = "variableName";
         double leftMargin = 45.32;
 
@@ -48,7 +48,7 @@ public class KiePMMLIntervalFactoryTest {
         interval.setClosure(Interval.Closure.CLOSED_OPEN);
 
         BlockStmt retrieved = KiePMMLIntervalFactory.getIntervalVariableDeclaration(variableName,
-                                                                                    interval);
+                interval);
         String closureString =
                 CLOSURE.class.getName() + "." + CLOSURE.byName(interval.getClosure().value()).name();
         String text = getFileContent(TEST_01_SOURCE);

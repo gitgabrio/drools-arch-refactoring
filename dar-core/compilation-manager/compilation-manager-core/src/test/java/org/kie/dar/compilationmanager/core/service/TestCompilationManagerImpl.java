@@ -28,7 +28,9 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestCompilationManagerImpl {
 
@@ -57,7 +59,7 @@ class TestCompilationManagerImpl {
             }
         });
         List<IndexFile> retrieved = compilationManager.processResource(new MockDARRedirectOutputD(), memoryCompilerClassLoader);
-        assertTrue(retrieved.isEmpty());
+        assertThat(retrieved.isEmpty()).isTrue();
     }
 
     // TODO restore

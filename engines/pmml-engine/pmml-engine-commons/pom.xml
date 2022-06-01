@@ -9,9 +9,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-commons</artifactId>
+  <artifactId>pmml-engine-commons</artifactId>
 
-  <name>KIE :: PMML :: Commons</name>
+  <name>PMML :: ENGINE :: Commons</name>
   <description>Common code for PMML module</description>
 
   <properties>
@@ -22,7 +22,7 @@
     <!-- PMML -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-api</artifactId>
+      <artifactId>pmml-engine-api</artifactId>
     </dependency>
     <!-- EXTERNAL -->
     <dependency>
@@ -34,16 +34,6 @@
       <artifactId>commons-text</artifactId>
     </dependency>
     <!-- TEST -->
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
 </project>

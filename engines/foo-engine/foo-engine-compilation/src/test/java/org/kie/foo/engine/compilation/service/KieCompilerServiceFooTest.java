@@ -24,7 +24,8 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class KieCompilerServiceFooTest {
@@ -41,24 +42,24 @@ class KieCompilerServiceFooTest {
     @Test
     void canManageResource() {
         DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
-        assertTrue(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         toProcess = getDARResourceIntermediate();
-        assertTrue(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         toProcess = getDARResource();
-        assertFalse(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
     }
 
     @Test
     void processResource() {
         DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
         DARFinalOutputFoo retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         Map<String, byte[]> retrievedByteCode1 = retrieved.getCompiledClassesMap();
         retrievedByteCode1.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode1, fullClassName, memoryCompilerClassLoader));
 
         toProcess = getDARResourceIntermediate();
         retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         Map<String, byte[]> retrievedByteCode2 = retrieved.getCompiledClassesMap();
         retrievedByteCode2.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode2, fullClassName, memoryCompilerClassLoader));
 
@@ -67,7 +68,7 @@ class KieCompilerServiceFooTest {
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieCompilerServiceException);
+            assertThat(e instanceof KieCompilerServiceException).isTrue();
         }
     }
 

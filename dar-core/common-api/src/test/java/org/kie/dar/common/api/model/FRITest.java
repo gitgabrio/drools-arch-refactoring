@@ -16,7 +16,7 @@ package org.kie.dar.common.api.model;/*
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.dar.common.api.model.FRI.SLASH;
 
 class FRITest {
@@ -28,44 +28,44 @@ class FRITest {
     @Test
     void getBasePath() {
         FRI retrieved = new FRI(basePath, model);
-        assertEquals(SLASH + basePath, retrieved.getBasePath());
+        assertThat(retrieved.getBasePath()).isEqualTo(SLASH + basePath);
     }
 
     @Test
     void getModel() {
         FRI retrieved = new FRI(basePath, model);
-        assertEquals(model, retrieved.getModel());
+        assertThat(retrieved.getModel()).isEqualTo(model);
     }
 
     @Test
     void getFri() {
         FRI retrieved = new FRI(basePath, model);
         String expected = SLASH + model + SLASH + basePath;
-        assertEquals(expected, retrieved.getFri());
+        assertThat(retrieved.getFri()).isEqualTo(expected);
     }
 
     @Test
     void generateBasePath() {
         String expected = SLASH + basePath;
         String retrieved = FRI.generateBasePath(basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
         retrieved = FRI.generateBasePath(SLASH + basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
         retrieved = FRI.generateBasePath(SLASH + model + SLASH + basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
     }
 
     @Test
     void generateFri() {
         String expected = SLASH + model + SLASH + basePath;
         String retrieved = FRI.generateFri(basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
         retrieved = FRI.generateFri(SLASH + basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
         retrieved = FRI.generateFri(SLASH + model + SLASH + basePath, model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
         expected = SLASH + model + SLASH + basePath + SLASH + "notmodel";
         retrieved = FRI.generateFri(basePath + SLASH + "notmodel", model);
-        assertEquals(expected, retrieved);
+        assertThat(retrieved).isEqualTo(expected);
     }
 }

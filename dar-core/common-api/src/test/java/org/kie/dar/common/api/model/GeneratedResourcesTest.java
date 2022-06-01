@@ -17,8 +17,7 @@ package org.kie.dar.common.api.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GeneratedResourcesTest {
 
@@ -32,31 +31,31 @@ class GeneratedResourcesTest {
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
-        assertEquals(2, generatedResources.size());
+        assertThat(generatedResources.size()).isEqualTo(2);
 
         generatedResources = new GeneratedResources();
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        assertEquals(1, generatedResources.size());
+        assertThat(generatedResources.size()).isEqualTo(1);
 
         generatedResources = new GeneratedResources();
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        assertEquals(1, generatedResources.size());
+        assertThat(generatedResources.size()).isEqualTo(1);
 
         generatedResources = new GeneratedResources();
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
         generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model) , fullClassName));
-        assertEquals(2, generatedResources.size());
+        assertThat(generatedResources.size()).isEqualTo(2);
 
         generatedClassResource = new GeneratedClassResource(fullClassName);
         generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
         generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
-        assertEquals(2, generatedResources.size());
-        assertTrue(generatedResources.contains(generatedClassResource));
-        assertTrue(generatedResources.contains(generatedFinalResource));
+        assertThat(generatedResources.size()).isEqualTo(2);
+        assertThat(generatedResources.contains(generatedClassResource)).isTrue();
+        assertThat(generatedResources.contains(generatedFinalResource)).isTrue();
     }
 
 }

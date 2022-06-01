@@ -4,46 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-pmml-compilation</artifactId>
+    <artifactId>pmml-engine-compilation</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-compilation-api</artifactId>
+  <artifactId>pmml-engine-compilation-api</artifactId>
 
-  <name>KIE :: PMML :: Compiler :: API</name>
+  <name>PMML :: ENGINE :: Compilation :: API</name>
   <description>API specific for PMML Compiler</description>
 
   <dependencies>
     <!-- PMML -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-api</artifactId>
+      <artifactId>pmml-engine-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-commons</artifactId>
+      <artifactId>pmml-engine-commons</artifactId>
     </dependency>
     <!-- EXTERNAL -->
     <dependency>
       <groupId>org.jpmml</groupId>
       <artifactId>pmml-model</artifactId>
-    </dependency>
-    <!-- TEST -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-test-util</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 

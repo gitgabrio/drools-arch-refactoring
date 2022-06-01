@@ -14,6 +14,9 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kie.drools.version>8.20.0.Beta</kie.drools.version>
+        <commons.io.version>2.11.0</commons.io.version>
+        <commons.math3.version>3.4.1</commons.math3.version>
+        <commons.text.version>1.9</commons.text.version>
         <javaparser.version>3.23.1</javaparser.version>
         <jackson.version>2.13.3</jackson.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -22,6 +25,8 @@
         <assertj.version>3.20.2</assertj.version>
         <logback.version>1.2.9</logback.version>
         <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+        <rewrite.maven.plugin.version>4.23.0</rewrite.maven.plugin.version>
+        <rewrite.testing.frameworks.version>1.22.0</rewrite.testing.frameworks.version>
     </properties>
 
     <modules>
@@ -134,6 +139,21 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>${commons.math3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons.text.version}</version>
+            </dependency>
             <!-- Test -->
             <dependency>
                 <groupId>org.kie</groupId>
@@ -152,6 +172,11 @@
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -187,6 +212,11 @@
             <artifactId>slf4j-simple</artifactId>
         </dependency>
         <!-- EXTERNAL -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -213,6 +243,16 @@
             <artifactId>logback-core</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- NEEDED BY OPENREWTITE FOR MIGRATION TO JUNIT5 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -223,9 +263,25 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.openrewrite.maven</groupId>
+                    <artifactId>rewrite-maven-plugin</artifactId>
+                    <version>${rewrite.maven.plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/Test*.java</include>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -236,6 +292,25 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <configuration>
+                    <activeRecipes>
+                        <recipe>org.openrewrite.java.testing.assertj.JUnitToAssertj</recipe>
+                        <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+                        <recipe>org.openrewrite.java.testing.junit5.StaticImports</recipe>
+                        <recipe>org.openrewrite.java.testing.junit5.JUnit4to5Migration</recipe>
+                    </activeRecipes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-testing-frameworks</artifactId>
+                        <version>${rewrite.testing.frameworks.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -27,8 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.foo.engine.compilation.TestingUtils.*;
 
@@ -45,7 +44,7 @@ class FooCompilerHelperTest {
     void getDARProcessedFoo() {
         DARResource darResourceFoo = getDARFileResource(getFileFromFileName("DarFoo.foo"));
         DARFinalOutputFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         retrievedByteCode.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader));
     }
@@ -55,11 +54,11 @@ class FooCompilerHelperTest {
         Set<String> generatedSources = IntStream.range(0, 3).mapToObj(i -> "GeneratedSource" + i).collect(Collectors.toSet());
         String fooResourcesSourceClassName = "FooResourcesSourceClass";
         CompilationUnit retrieved = FooCompilerHelper.getFooResourcesCompilationUnit(generatedSources, fooResourcesSourceClassName);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         Map<String, String> sourcesMap = new HashMap<>();
         sourcesMap.put(getFullClassName(retrieved), retrieved.toString());
         Map<String, byte[]> compiledClasses = FooCompilerHelper.compileClasses(sourcesMap, memoryCompilerClassLoader);
-        assertEquals(sourcesMap.size(), compiledClasses.size());
+        assertThat(compiledClasses.size()).isEqualTo(sourcesMap.size());
         commonEvaluateByteCode(compiledClasses, getFullClassName(retrieved), memoryCompilerClassLoader);
     }
 
@@ -73,7 +72,7 @@ class FooCompilerHelperTest {
         Map<String, String> sourcesMap = new HashMap<>();
         sourcesMap.put(fullClassName, testingSource);
         Map<String, byte[]> retrieved = FooCompilerHelper.compileClasses(sourcesMap, memoryCompilerClassLoader);
-        assertEquals(sourcesMap.size(), retrieved.size());
+        assertThat(retrieved.size()).isEqualTo(sourcesMap.size());
         commonEvaluateByteCode(retrieved, fullClassName, memoryCompilerClassLoader);
     }
 

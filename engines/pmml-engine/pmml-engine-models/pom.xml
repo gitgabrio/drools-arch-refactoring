@@ -7,18 +7,18 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-models</artifactId>
+  <artifactId>pmml-engine-models</artifactId>
   <packaging>pom</packaging>
 
-  <name>KIE :: PMML :: Models</name>
+  <name>PMML :: ENGINE :: Models</name>
   <description>PMML Models Implementations</description>
 
   <modules>
-    <module>kie-pmml-models-regression</module>
-<!--    <module>kie-pmml-models-drools</module>-->
-    <module>kie-pmml-models-mining</module>
-    <module>kie-pmml-models-clustering</module>
-    <module>kie-pmml-models-tests</module>
+    <module>pmml-engine-models-regression</module>
+<!--    <module>pmml-engine-models-drools</module>-->
+    <module>pmml-engine-models-mining</module>
+    <module>pmml-engine-models-clustering</module>
+    <module>pmml-engine-models-tests</module>
   </modules>
 
 </project>

@@ -30,8 +30,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CompileFooTest {
 
@@ -49,8 +48,8 @@ class CompileFooTest {
         File fooFile = getFileFromFileName("DarFoo.foo");
         DARRedirectOutput darResourceFileFoo = new DARRedirectOutput(new FRI("this/is/fri","not_foo"), "foo", fooFile) {};
         List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(1, retrieved.size());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.size()).isEqualTo(1);
     }
 
     public static File getFileFromFileName(String fileName) {

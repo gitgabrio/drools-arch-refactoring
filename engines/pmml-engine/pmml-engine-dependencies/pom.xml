@@ -9,10 +9,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>kie-pmml-dependencies</artifactId>
+  <artifactId>pmml-engine-dependencies</artifactId>
   <packaging>jar</packaging>
 
-  <name>KIE :: PMML :: Dependencies</name>
+  <name>PMML :: ENGINE :: Dependencies</name>
   <description>
     Declare this artifact as "pom" dependency to import all default pmml-engine modules.
   </description>
@@ -21,113 +21,82 @@
     <!-- PMML -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-api</artifactId>
+      <artifactId>pmml-engine-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-commons</artifactId>
+      <artifactId>pmml-engine-commons</artifactId>
     </dependency>
-    <!-- Compiler -->
+    <!-- Compilation -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-core</artifactId>
+      <artifactId>pmml-engine-compilation-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-compilation-commons</artifactId>
-    </dependency>
-    <!-- Evaluator -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-runtime-api</artifactId>
+      <artifactId>pmml-engine-compilation-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-runtime-core</artifactId>
+      <artifactId>pmml-engine-compilation-commons</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-runtime-assembler</artifactId>
-    </dependency>
-    <!-- Kie dep -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-kie-internal</artifactId>
-    </dependency>
+    <!-- Runtime -->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-runtime-api</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-runtime-core</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-runtime-assembler</artifactId>-->
+<!--    </dependency>-->
     <!-- Drools -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-drools-common</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-drools-common</artifactId>-->
+<!--    </dependency>-->
     <!-- Regression -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-regression-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-regression-compiler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-regression-evaluator</artifactId>
-    </dependency>
-    <!-- Tree -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-tree-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-tree-compiler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-tree-evaluator</artifactId>
-    </dependency>
-    <!-- Scorecard -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-scorecard-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-scorecard-compiler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-scorecard-evaluator</artifactId>
-    </dependency>
-    <!-- Mining -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-mining-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-mining-compiler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-mining-evaluator</artifactId>
-    </dependency>
-    <!-- Clustering -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-clustering-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-clustering-compiler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-pmml-models-clustering-evaluator</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-regression-model</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-regression-compiler</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-regression-evaluator</artifactId>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; Mining &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-mining-model</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-mining-compiler</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-mining-evaluator</artifactId>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; Clustering &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-clustering-model</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-clustering-compiler</artifactId>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.kie</groupId>-->
+<!--      <artifactId>pmml-engine-models-clustering-evaluator</artifactId>-->
+<!--    </dependency>-->
   </dependencies>
 
 </project>

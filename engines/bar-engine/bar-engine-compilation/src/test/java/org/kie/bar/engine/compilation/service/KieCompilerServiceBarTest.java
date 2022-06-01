@@ -27,7 +27,8 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.kie.bar.engine.compilation.TestingUtils.getFileFromFileName;
 
 class KieCompilerServiceBarTest {
@@ -45,12 +46,12 @@ class KieCompilerServiceBarTest {
     void canManageResource() {
         File barFile = getFileFromFileName("DarBar.bar");
         DARResource toProcess = new DARFileResource(barFile);
-        assertTrue(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         barFile = getFileFromFileName("RedirectBar.bar");
         toProcess = new DARFileResource(barFile);
-        assertTrue(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         toProcess = () -> "DARRedirectOutput";
-        assertFalse(kieCompilerService.canManageResource(toProcess));
+        assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
     }
 
     @Test
@@ -58,22 +59,22 @@ class KieCompilerServiceBarTest {
         File barFile = getFileFromFileName("DarBar.bar");
         DARResource toProcess = new DARFileResource(barFile);
         DARCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertTrue(retrieved instanceof DARFinalOutputBar);
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved instanceof DARFinalOutputBar).isTrue();
 
         barFile = getFileFromFileName("RedirectBar.bar");
         toProcess = new DARFileResource(barFile);
         retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertTrue(retrieved instanceof DARRedirectOutputBar);
-        assertEquals("foo", ((DARRedirectOutputBar)retrieved).getTargetEngine());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved instanceof DARRedirectOutputBar).isTrue();
+        assertThat(((DARRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
 
         try {
             toProcess = () -> "DARRedirectOutput";
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieCompilerServiceException);
+            assertThat(e instanceof KieCompilerServiceException).isTrue();
         }
     }
 }

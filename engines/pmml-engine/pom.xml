@@ -12,32 +12,479 @@
     <artifactId>pmml-engine</artifactId>
     <packaging>pom</packaging>
 
-    <name>KIE :: PMML</name>
+    <name>PMML :: ENGINE</name>
     <description>Support for PMML-Encoded Predictive Models</description>
 
     <properties>
         <kie.drools.version>8.23.0-SNAPSHOT</kie.drools.version>
+        <jpmml.model.version>1.5.1</jpmml.model.version>
+        <jaxb.runtime.version>2.3.6</jaxb.runtime.version>
     </properties>
 
     <modules>
-        <module>kie-pmml-commons</module>
-        <module>kie-pmml-compilation</module>
-        <module>kie-pmml-runtime</module>
-        <module>kie-pmml-models</module>
-<!--        <module>kie-pmml-benchmarks</module>-->
-        <module>kie-pmml-dependencies</module>
-        <module>kie-pmml-api</module>
-        <module>kie-pmml-kie-internal</module>
+        <module>pmml-engine-commons</module>
+        <module>pmml-engine-compilation</module>
+<!--        <module>pmml-engine-runtime</module>-->
+<!--        <module>pmml-engine-models</module>-->
+        <module>pmml-engine-dependencies</module>
+        <module>pmml-engine-api</module>
+        <!--        <module>pmml-engine-benchmarks</module>-->
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <!-- PMML -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>kie-pmml-bom</artifactId>
+                <artifactId>pmml-engine-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Compiler -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Evaluator -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-assembler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Kie dep -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-kie-internal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Drools -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Regression -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Tree -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Scorecard -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Mining -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Clustering -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- SOURCES -->
+            <!-- PMML -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-api</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-commons</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Compiler -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-api</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-core</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-commons</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Evaluator -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-api</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-core</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-assembler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Kie dep -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-kie-internal</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Drools -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-common</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Regression -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-model</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Tree -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-model</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Scorecard -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-model</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Mining -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-model</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- Clustering -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-model</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <!-- EXTERNAL -->
+            <dependency>
+                <groupId>org.jpmml</groupId>
+                <artifactId>pmml-model</artifactId>
+                <version>${jpmml.model.version}</version>
+            </dependency>
+            <!-- TEST -->
+            <!-- Commons -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-commons</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Compiler -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-api</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-api</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-commons</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Evaluator -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-runtime-core</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Tests -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-tests</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Regression -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Tree Codegen -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-tree-compiler</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-tree-evaluator</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Drools -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-common</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Tree -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Scorecard -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Scorecard codegen -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-scorecard-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>tests</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-scorecard-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>tests</classifier>
+            </dependency>
+            <!-- Mining -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <classifier>tests</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Clustering -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <version>${project.version}</version>
+                <classifier>tests</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <version>${project.version}</version>
+                <classifier>tests</classifier>
+            </dependency>
+            <!-- KIE -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-api</artifactId>
                 <version>${kie.drools.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb.runtime.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
