@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.bar.engine.runtime.service;
+package org.kie.pmml.runtime.core.service;
 
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.*;
+import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.*;
 
-public class KieRuntimeServiceBar implements KieRuntimeService {
+public class KieRuntimeServicePMML implements KieRuntimeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceBar.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServicePMML.class.getName());
 
 
     @Override
@@ -50,5 +50,6 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
                 .orElseThrow(() -> new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                         this.getClass().getName(),
                         toEvaluate.getFRI())));
+
     }
 }

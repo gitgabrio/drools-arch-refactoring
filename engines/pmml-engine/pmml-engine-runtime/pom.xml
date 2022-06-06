@@ -14,7 +14,7 @@
 
   <modules>
     <module>pmml-engine-runtime-api</module>
-    <module>pmml-engine-runtime-assembler</module>
+<!--    <module>pmml-engine-runtime-assembler</module>-->
     <module>pmml-engine-runtime-core</module>
   </modules>
 

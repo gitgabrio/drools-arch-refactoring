@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.bar.engine.runtime.service;
+package org.kie.pmml.evaluator.assembler.service;
 
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
@@ -29,9 +29,9 @@ import java.util.stream.Stream;
 
 import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.*;
 
-public class KieRuntimeServiceBar implements KieRuntimeService {
+public class KieRuntimeServicePMML implements KieRuntimeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceBar.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServicePMML.class.getName());
 
 
     @Override
@@ -50,5 +50,15 @@ public class KieRuntimeServiceBar implements KieRuntimeService {
                 .orElseThrow(() -> new KieRuntimeServiceException(String.format("%s can not evaluate %s",
                         this.getClass().getName(),
                         toEvaluate.getFRI())));
+
+//        try {
+//            BarResources barResources = loadBarResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
+//            return (E) getDAROutput(barResources, (DARInputBar) toEvaluate);
+//        } catch (Exception e) {
+//            throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
+//                    this.getClass().getName(),
+//                    toEvaluate.getFRI()));
+//        }
+
     }
 }

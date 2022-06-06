@@ -31,112 +31,112 @@ import org.kie.api.io.ResourceType;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PMMLAssemblerServiceTest {
-
-    private static Map<String, String[]> resourcePathMap;
-
-    @BeforeClass
-    public static void setup() {
-        resourcePathMap = new HashMap<>();
-        resourcePathMap.put("/a/linux/path/a-dashed-name.pmml", new String[]{"AdashednameFactory", "adashedname"});
-        resourcePathMap.put("/a_/l inux/p-a_th/an_underscored_name.pmml", new String[]{"AnunderscorednameFactory", "anunderscoredname"});
-        resourcePathMap.put("/a_/l inux/p-a_th/a spaced name.pmml", new String[]{"AspacednameFactory", "aspacedname"});
-        resourcePathMap.put("/A_/L inux/pAtH/AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
-        resourcePathMap.put("C:\\from\\window\\w-ind_ow Path\\AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
-        resourcePathMap.put("C:\\from/window\\mixed Path/AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getFactoryClassNamePackageNameResourceNoFile() {
-        Resource resource = new MockResource();
-        PMMLAssemblerService.getFactoryClassNamePackageName(resource);
-    }
-
-    @Test
-    public void getFactoryClassNamePackageNameResourceWithFile() {
-        resourcePathMap.forEach((sourcePath, comparison) -> {
-            Resource resource = new MockResource(sourcePath);
-            String[] retrieved = PMMLAssemblerService.getFactoryClassNamePackageName(resource);
-            commonVerifyStrings(retrieved, comparison);
-        });
-    }
-
-    @Test
-    public void testGetFactoryClassNamePackageName() {
-        resourcePathMap.forEach((sourcePath, comparison) -> {
-            String[] retrieved = PMMLAssemblerService.getFactoryClassNamePackageName(sourcePath);
-            commonVerifyStrings(retrieved, comparison);
-        });
-    }
-
-    private void commonVerifyStrings(String[] toVerify, String[] comparison) {
-        assertThat(comparison.length).isEqualTo(toVerify.length);
-        assertThat(toVerify.length).isEqualTo(2);
-        for (int i = 0; i < toVerify.length; i ++) {
-        	assertThat(toVerify[i]).isEqualTo(comparison[i]);
-        }
-    }
-
-    private static class  MockResource implements Resource {
-
-        private String sourcePath;
-
-        public MockResource() {
-        }
-
-        public MockResource(String sourcePath) {
-            this.sourcePath = sourcePath;
-        }
-
-
-        @Override
-        public InputStream getInputStream() throws IOException {
-            return null;
-        }
-
-        @Override
-        public Reader getReader() throws IOException {
-            return null;
-        }
-
-        @Override
-        public String getSourcePath() {
-            return sourcePath;
-        }
-
-        @Override
-        public String getTargetPath() {
-            return null;
-        }
-
-        @Override
-        public ResourceType getResourceType() {
-            return null;
-        }
-
-        @Override
-        public ResourceConfiguration getConfiguration() {
-            return null;
-        }
-
-        @Override
-        public Resource setSourcePath(String path) {
-            return null;
-        }
-
-        @Override
-        public Resource setTargetPath(String path) {
-            return null;
-        }
-
-        @Override
-        public Resource setResourceType(ResourceType type) {
-            return null;
-        }
-
-        @Override
-        public Resource setConfiguration(ResourceConfiguration conf) {
-            return null;
-        }
-    }
+//
+//    private static Map<String, String[]> resourcePathMap;
+//
+//    @BeforeClass
+//    public static void setup() {
+//        resourcePathMap = new HashMap<>();
+//        resourcePathMap.put("/a/linux/path/a-dashed-name.pmml", new String[]{"AdashednameFactory", "adashedname"});
+//        resourcePathMap.put("/a_/l inux/p-a_th/an_underscored_name.pmml", new String[]{"AnunderscorednameFactory", "anunderscoredname"});
+//        resourcePathMap.put("/a_/l inux/p-a_th/a spaced name.pmml", new String[]{"AspacednameFactory", "aspacedname"});
+//        resourcePathMap.put("/A_/L inux/pAtH/AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
+//        resourcePathMap.put("C:\\from\\window\\w-ind_ow Path\\AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
+//        resourcePathMap.put("C:\\from/window\\mixed Path/AnUpperCasedMame.pmml", new String[]{"AnUpperCasedMameFactory", "anuppercasedmame"});
+//    }
+//
+//
+//    @Test(expected = IllegalArgumentException.class)
+//    public void getFactoryClassNamePackageNameResourceNoFile() {
+//        Resource resource = new MockResource();
+//        PMMLAssemblerService.getFactoryClassNamePackageName(resource);
+//    }
+//
+//    @Test
+//    public void getFactoryClassNamePackageNameResourceWithFile() {
+//        resourcePathMap.forEach((sourcePath, comparison) -> {
+//            Resource resource = new MockResource(sourcePath);
+//            String[] retrieved = PMMLAssemblerService.getFactoryClassNamePackageName(resource);
+//            commonVerifyStrings(retrieved, comparison);
+//        });
+//    }
+//
+//    @Test
+//    public void testGetFactoryClassNamePackageName() {
+//        resourcePathMap.forEach((sourcePath, comparison) -> {
+//            String[] retrieved = PMMLAssemblerService.getFactoryClassNamePackageName(sourcePath);
+//            commonVerifyStrings(retrieved, comparison);
+//        });
+//    }
+//
+//    private void commonVerifyStrings(String[] toVerify, String[] comparison) {
+//        assertThat(comparison.length).isEqualTo(toVerify.length);
+//        assertThat(toVerify.length).isEqualTo(2);
+//        for (int i = 0; i < toVerify.length; i ++) {
+//        	assertThat(toVerify[i]).isEqualTo(comparison[i]);
+//        }
+//    }
+//
+//    private static class  MockResource implements Resource {
+//
+//        private String sourcePath;
+//
+//        public MockResource() {
+//        }
+//
+//        public MockResource(String sourcePath) {
+//            this.sourcePath = sourcePath;
+//        }
+//
+//
+//        @Override
+//        public InputStream getInputStream() throws IOException {
+//            return null;
+//        }
+//
+//        @Override
+//        public Reader getReader() throws IOException {
+//            return null;
+//        }
+//
+//        @Override
+//        public String getSourcePath() {
+//            return sourcePath;
+//        }
+//
+//        @Override
+//        public String getTargetPath() {
+//            return null;
+//        }
+//
+//        @Override
+//        public ResourceType getResourceType() {
+//            return null;
+//        }
+//
+//        @Override
+//        public ResourceConfiguration getConfiguration() {
+//            return null;
+//        }
+//
+//        @Override
+//        public Resource setSourcePath(String path) {
+//            return null;
+//        }
+//
+//        @Override
+//        public Resource setTargetPath(String path) {
+//            return null;
+//        }
+//
+//        @Override
+//        public Resource setResourceType(ResourceType type) {
+//            return null;
+//        }
+//
+//        @Override
+//        public Resource setConfiguration(ResourceConfiguration conf) {
+//            return null;
+//        }
+//    }
 }

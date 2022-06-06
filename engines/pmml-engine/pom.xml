@@ -24,7 +24,7 @@
     <modules>
         <module>pmml-engine-commons</module>
         <module>pmml-engine-compilation</module>
-<!--        <module>pmml-engine-runtime</module>-->
+        <module>pmml-engine-runtime</module>
 <!--        <module>pmml-engine-models</module>-->
         <module>pmml-engine-dependencies</module>
         <module>pmml-engine-api</module>
