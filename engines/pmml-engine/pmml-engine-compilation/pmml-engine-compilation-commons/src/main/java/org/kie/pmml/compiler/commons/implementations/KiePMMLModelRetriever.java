@@ -16,6 +16,7 @@
 package org.kie.pmml.compiler.commons.implementations;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -50,6 +51,14 @@ public class KiePMMLModelRetriever {
         logger.trace("getFromCommonDataAndTransformationDictionaryAndModel {}", compilationDTO);
         return getModelImplementationProviderStream(compilationDTO.getPMML_MODEL())
                 .map(implementation -> implementation.getKiePMMLModel((CompilationDTO<Model>) compilationDTO))
+                .findFirst();
+    }
+
+
+    public static Optional<Map<String, String>> getSourcesMapFromCommonDataAndTransformationDictionaryAndModel(final CompilationDTO compilationDTO) {
+        logger.trace("getSourcesMapFromCommonDataAndTransformationDictionaryAndModel {}", compilationDTO);
+        return getModelImplementationProviderStream(compilationDTO.getPMML_MODEL())
+                .map(implementation -> implementation.getSourcesMap((CompilationDTO<Model>) compilationDTO))
                 .findFirst();
     }
 

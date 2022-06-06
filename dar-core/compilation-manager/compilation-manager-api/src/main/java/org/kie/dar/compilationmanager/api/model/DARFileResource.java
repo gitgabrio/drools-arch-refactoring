@@ -17,7 +17,7 @@ package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.utils.FileNameUtils;
 
-import java.io.File;
+import java.io.*;
 
 public final class DARFileResource implements DARResource {
 
@@ -35,5 +35,15 @@ public final class DARFileResource implements DARResource {
     public String getModelType() {
         return FileNameUtils.getSuffix(modelFile.getName());
     }
+
+    public InputStream getInputStream() throws IOException {
+        return new FileInputStream(modelFile);
+    }
+
+    public String getSourcePath() {
+        return modelFile.getPath();
+    }
+
+
 
 }

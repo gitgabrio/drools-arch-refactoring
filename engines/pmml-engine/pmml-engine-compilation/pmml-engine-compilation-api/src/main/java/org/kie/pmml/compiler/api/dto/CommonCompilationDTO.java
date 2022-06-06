@@ -250,8 +250,8 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
     }
 
     @Override
-    public Class<?> compileAndLoadClass(Map<String, String> sourcesMap) {
-        return hasClassloader.compileAndLoadClass(sourcesMap, packageCanonicalClassName);
+    public Map<String, byte[]> compileClasses(Map<String, String> sourcesMap) {
+        return hasClassloader.compileClasses(sourcesMap, packageCanonicalClassName);
     }
 
     @Override

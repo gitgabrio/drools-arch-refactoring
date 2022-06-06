@@ -75,7 +75,7 @@ public interface ModelImplementationProvider<T extends Model, E extends KiePMMLM
         KiePMMLModelWithSources toReturn = getKiePMMLModelWithSources(compilationDTO);
         final Map<String, String> sourcesMap = ((HasSourcesMap) toReturn).getSourcesMap();
         try {
-            compilationDTO.compileAndLoadClass(sourcesMap);
+            compilationDTO.compileClasses(sourcesMap);
         } catch (Exception e) {
             throw new KiePMMLException(e);
         }

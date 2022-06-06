@@ -15,34 +15,19 @@
  */
 package org.kie.pmml.compiler.api.dto;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.Targets;
-import org.dmg.pmml.TransformationDictionary;
+import org.dmg.pmml.*;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.api.models.OutputField;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.commons.model.HasClassLoader;
-import org.kie.pmml.commons.model.KiePMMLMiningField;
-import org.kie.pmml.commons.model.KiePMMLOutputField;
-import org.kie.pmml.commons.model.KiePMMLTarget;
-import org.kie.pmml.commons.transformations.KiePMMLLocalTransformations;
-import org.kie.pmml.commons.transformations.KiePMMLTransformationDictionary;
 import org.kie.pmml.compiler.api.utils.ModelUtils;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Interface to be implemented by all concrete <b>compilation dtos</b>
@@ -114,7 +99,7 @@ public interface CompilationDTO<T extends Model> extends Serializable {
      * @return
      * @see HasClassLoader#compileAndLoadClass(Map, String)
      */
-    Class<?> compileAndLoadClass(Map<String, String> sourcesMap);
+    Map<String, byte[]> compileClasses(Map<String, String> sourcesMap);
 
     HasClassLoader getHasClassloader();
 

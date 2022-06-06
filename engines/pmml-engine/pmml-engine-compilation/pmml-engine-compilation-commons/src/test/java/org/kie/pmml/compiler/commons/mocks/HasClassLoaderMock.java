@@ -34,8 +34,7 @@ public class HasClassLoaderMock implements HasClassLoader {
     }
 
     @Override
-    public Class<?> compileAndLoadClass(Map<String, String> sourcesMap, String fullClassName) {
-        Map<String, Class<?>> compiled = KieMemoryCompiler.compile(sourcesMap, classLoader);
-        return compiled.get(fullClassName);
+    public Map<String, byte[]>  compileClasses(Map<String, String> sourcesMap, String fullClassName) {
+        return KieMemoryCompiler.compileNoLoad(sourcesMap, classLoader);
     }
 }
