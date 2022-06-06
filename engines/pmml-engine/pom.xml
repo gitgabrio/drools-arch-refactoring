@@ -343,6 +343,13 @@
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-commons</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
             <!-- Compiler -->
             <dependency>
                 <groupId>org.kie</groupId>
@@ -357,12 +364,18 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-compilation-commons</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>pmml-engine-compilation-commons</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
             </dependency>
             <!-- Evaluator -->
             <dependency>

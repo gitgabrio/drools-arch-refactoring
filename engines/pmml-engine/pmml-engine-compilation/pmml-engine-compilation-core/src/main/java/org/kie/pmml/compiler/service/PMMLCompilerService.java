@@ -15,7 +15,6 @@
  */
 package org.kie.pmml.compiler.service;
 
-import org.drools.util.PortablePath;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.utils.StringUtils;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
@@ -81,50 +80,50 @@ public class PMMLCompilerService {
      * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
      * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
      */
-    public static List<KiePMMLModel> getKiePMMLModelsFromResourcesWithConfigurationsWithSources(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
+    static List<KiePMMLModel> getKiePMMLModelsFromResourcesWithConfigurationsWithSources(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
         return resources.stream()
                 .flatMap(resource -> getKiePMMLModelsFromResourceWithSources(hasClassLoader, resource).stream())
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param hasClassLoader
-     * @param resources
-     * @return
-     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
-     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
-     */
-    public static List<KiePMMLModel> getKiePMMLModelsCompiledFromResourcesWithConfigurations(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
-        return resources.stream()
-                .flatMap(resource -> getKiePMMLModelsCompiledFromResource(hasClassLoader, resource).stream())
-                .collect(Collectors.toList());
-    }
+//    /**
+//     * @param hasClassLoader
+//     * @param resources
+//     * @return
+//     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
+//     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
+//     */
+//    static List<KiePMMLModel> getKiePMMLModelsCompiledFromResourcesWithConfigurations(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
+//        return resources.stream()
+//                .flatMap(resource -> getKiePMMLModelsCompiledFromResource(hasClassLoader, resource).stream())
+//                .collect(Collectors.toList());
+//    }
+
+//    /**
+//     * @param hasClassLoader
+//     * @param resource
+//     * @return
+//     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
+//     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
+//     */
+//    static List<KiePMMLModel> getKiePMMLModelsCompiledFromResource(final HasClassLoader hasClassLoader,
+//                                                                          DARFileResource resource) {
+//        try {
+//            String packageName = getFactoryClassNamePackageName(resource)[1];
+//            return PMML_COMPILER.getKiePMMLModels(packageName, resource.getInputStream(),
+//                    getFileName(resource.getSourcePath()),
+//                    hasClassLoader);
+//        } catch (IOException e) {
+//            throw new ExternalException("ExternalException", e);
+//        }
+//    }
 
     /**
      * @param hasClassLoader
      * @param resource
      * @return
-     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
-     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
      */
-    public static List<KiePMMLModel> getKiePMMLModelsCompiledFromResource(final HasClassLoader hasClassLoader,
-                                                                          DARFileResource resource) {
-        try {
-            String packageName = getFactoryClassNamePackageName(resource)[1];
-            return PMML_COMPILER.getKiePMMLModels(packageName, resource.getInputStream(),
-                    getFileName(resource.getSourcePath()),
-                    hasClassLoader);
-        } catch (IOException e) {
-            throw new ExternalException("ExternalException", e);
-        }
-    }
-
-    /**
-     * @param hasClassLoader
-     * @param resource
-     * @return
-     */
-    public static List<KiePMMLModel> getKiePMMLModelsFromResourceWithSources(HasClassLoader hasClassLoader,
+    static List<KiePMMLModel> getKiePMMLModelsFromResourceWithSources(HasClassLoader hasClassLoader,
                                                                              DARFileResource resource) {
         String[] classNamePackageName = getFactoryClassNamePackageName(resource);
         String factoryClassName = classNamePackageName[0];
@@ -166,56 +165,4 @@ public class PMMLCompilerService {
         return KieMemoryCompiler.compileNoLoad(sourcesMap, memoryClassLoader, JavaConfiguration.CompilerType.NATIVE);
     }
 
-//    static void populateWithPMMLRuleMappers(final List<KiePMMLModel> toReturn, final Resource resource) {
-//        for (KiePMMLModel kiePMMLModel : toReturn) {
-//            final List<String> generatedRuleMappers = new ArrayList<>();
-//            addPMMLRuleMapper(kiePMMLModel, generatedRuleMappers, resource.getSourcePath());
-//            addPMMLRuleMappers(kiePMMLModel, generatedRuleMappers, resource.getSourcePath());
-//        }
-//    }
-
-//    static void addPMMLRuleMapper(final KiePMMLModel kiePMMLModel, final List<String> generatedRuleMappers,
-//                                  final String sourcePath) {
-//        if (!(kiePMMLModel instanceof HasSourcesMap)) {
-//            String errorMessage = String.format("Expecting HasSourcesMap instance, retrieved %s inside %s",
-//                    kiePMMLModel.getClass().getName(),
-//                    sourcePath);
-//            throw new KiePMMLException(errorMessage);
-//        }
-//        if (kiePMMLModel instanceof HasRule) {
-//            String pkgUUID = ((HasRule) kiePMMLModel).getPkgUUID();
-//            String rulesFileName = kiePMMLModel.getKModulePackageName() + "." + RULES_FILE_NAME + pkgUUID;
-//            String pmmlRuleMapper = kiePMMLModel.getKModulePackageName() + "." + KIE_PMML_RULE_MAPPER_CLASS_NAME;
-//            String ruleMapperSource = PMMLRuleMapperFactory.getPMMLRuleMapperSource(rulesFileName);
-//            ((HasRule) kiePMMLModel).addSourceMap(pmmlRuleMapper, ruleMapperSource);
-//            generatedRuleMappers.add(pmmlRuleMapper);
-//        }
-//        if (kiePMMLModel instanceof HasNestedModels) {
-//            for (KiePMMLModel nestedModel : ((HasNestedModels) kiePMMLModel).getNestedModels()) {
-//                addPMMLRuleMapper(nestedModel, generatedRuleMappers, sourcePath);
-//            }
-//        }
-//    }
-
-//    static void addPMMLRuleMappers(final KiePMMLModel kiePMMLModel, final List<String> generatedRuleMappers,
-//                                   final String sourcePath) {
-//        if (!(kiePMMLModel instanceof HasSourcesMap)) {
-//            String errorMessage = String.format("Expecting HasSourcesMap instance, retrieved %s inside %s",
-//                    kiePMMLModel.getClass().getName(),
-//                    sourcePath);
-//            throw new KiePMMLException(errorMessage);
-//        }
-//        if (generatedRuleMappers.isEmpty()) {
-//            return;
-//        }
-//        String predictionRuleMapper = kiePMMLModel.getKModulePackageName() + "." + KIE_PMML_RULE_MAPPERS_CLASS_NAME;
-//        String ruleMapperSource =
-//                PMMLRuleMappersFactory.getPMMLRuleMappersSource(kiePMMLModel.getKModulePackageName(),
-//                        generatedRuleMappers);
-//        ((HasSourcesMap) kiePMMLModel).addSourceMap(predictionRuleMapper, ruleMapperSource);
-//    }
-
-//    static String getFileName(final String fullPath) {
-//        return PortablePath.of(fullPath).getFileName();
-//    }
 }
