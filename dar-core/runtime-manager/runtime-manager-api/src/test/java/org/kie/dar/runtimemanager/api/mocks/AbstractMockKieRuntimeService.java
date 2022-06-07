@@ -19,7 +19,7 @@ import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-public abstract class AbstractMockKieRuntimeService<T extends AbstractMockDARInput> implements KieRuntimeService<String, T, MockDAROutput> {
+public abstract class AbstractMockKieRuntimeService<T extends AbstractMockDARInput> implements KieRuntimeService<String, String, T, MockDAROutput> {
 
     @Override
     public MockDAROutput evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {

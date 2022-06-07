@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.*;
 
-public class KieRuntimeServiceFoo implements KieRuntimeService<String, DARInputFoo, DAROutputFoo> {
+public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, DARInputFoo, DAROutputFoo> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceFoo.class.getName());
 

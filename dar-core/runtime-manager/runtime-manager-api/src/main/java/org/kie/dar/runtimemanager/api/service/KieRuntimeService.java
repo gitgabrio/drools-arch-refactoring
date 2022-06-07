@@ -27,7 +27,7 @@ import java.io.Serializable;
  * It will be looked for with SPI, so each engine should declare that implementation inside
  * <code>src/main/resources/META-INF/services/org.kie.dar.runtimemanager.api.service.KieRuntimeService</code> file
  */
-public interface KieRuntimeService<K, T extends DARInput<K>, E extends DAROutput> {
+public interface KieRuntimeService<S, U, T extends DARInput<S>, E extends DAROutput<U>> {
 
 
     /**

@@ -19,14 +19,14 @@ package org.kie.dar.runtimemanager.api.mocks;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
-public class MockDAROutput extends AbstractDAROutput {
+public class MockDAROutput extends AbstractDAROutput<String> {
 
     public MockDAROutput() {
         super(new FRI(MockDAROutput.class.getCanonicalName().replace('.', '/'), "mock"));
     }
 
     @Override
-    public Object getOutputData() {
+    public String getOutputData() {
         return null;
     }
 }

@@ -17,7 +17,7 @@ package org.kie.dar.runtimemanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
-public abstract class AbstractDAROutput implements DAROutput {
+public abstract class AbstractDAROutput<T> implements DAROutput<T> {
 
     private final FRI fri;
 

@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 
 import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.*;
 
-public class KieRuntimeServiceBar implements KieRuntimeService<String, DARInputBar, DAROutputBar> {
+public class KieRuntimeServiceBar implements KieRuntimeService<String, String, DARInputBar, DAROutputBar> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceBar.class.getName());
 
