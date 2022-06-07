@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.commons.testingutility;
 
-import java.util.List;
-import java.util.Map;
-
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.KiePMMLModel;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <b>Fake</b> model used for testing. It is mapped to <code>PMML_MODEL.TEST_MODEL</code>
@@ -41,7 +41,7 @@ public class KiePMMLTestingModel extends KiePMMLModel {
     }
 
     @Override
-    public Object evaluate(final Object knowledgeBase, final Map<String, Object> requestData,
+    public Object evaluate(final Map<String, Object> requestData,
                            final PMMLContext context) {
         return context;
     }

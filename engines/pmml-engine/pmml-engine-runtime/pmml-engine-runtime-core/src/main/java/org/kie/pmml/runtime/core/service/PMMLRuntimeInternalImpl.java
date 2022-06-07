@@ -15,15 +15,55 @@
  */
 package org.kie.pmml.runtime.core.service;
 
+import org.kie.api.pmml.PMML4Result;
+import org.kie.dar.common.api.model.FRI;
+import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.pmml.api.models.PMMLModel;
+import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.runtime.api.executor.PMMLRuntimeInternal;
+import org.kie.pmml.runtime.core.model.DARInputPMML;
+import org.kie.pmml.runtime.core.model.DAROutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.canManage;
+import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.execute;
 
 public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
 
     private static final Logger logger = LoggerFactory.getLogger(PMMLRuntimeInternalImpl.class);
 
-//    private final PMMLModelEvaluatorFinderImpl pmmlModelExecutorFinder;
+    private final KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+    public PMMLRuntimeInternalImpl(KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        this.memoryCompilerClassLoader = memoryCompilerClassLoader;
+    }
+
+    @Override
+    public PMML4Result evaluate(String modelName, PMMLContext context) {
+        FRI fri = new FRI(modelName, "pmml");
+        if (!canManage(fri)) {
+            return null;
+        }
+        DARInputPMML darInputPMML = new DARInputPMML(fri, context.getRequestData());
+        Optional<DAROutputPMML> retrieved = execute(darInputPMML, memoryCompilerClassLoader);
+        return retrieved.map(DAROutputPMML::getOutputData).orElse(null);
+    }
+
+    @Override
+    public List<PMMLModel> getPMMLModels() {
+        return null;
+    }
+
+    @Override
+    public Optional<PMMLModel> getPMMLModel(String modelName) {
+        return Optional.empty();
+    }
+
+    //    private final PMMLModelEvaluatorFinderImpl pmmlModelExecutorFinder;
 //    private final Set<PMMLListener> pmmlListeners = new HashSet<>();
 //
 //    public PMMLRuntimeInternalImpl(final RuntimePackageContainer knowledgeBase, final PMMLModelEvaluatorFinderImpl pmmlModelExecutorFinder) {

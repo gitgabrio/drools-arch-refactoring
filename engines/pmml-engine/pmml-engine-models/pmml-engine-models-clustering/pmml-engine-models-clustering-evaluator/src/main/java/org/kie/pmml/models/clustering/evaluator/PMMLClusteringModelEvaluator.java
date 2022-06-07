@@ -21,7 +21,7 @@ import org.kie.api.KieBase;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.runtime.PMMLContext;
-import org.kie.pmml.evaluator.core.executor.PMMLModelEvaluator;
+import import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
 
 import static org.kie.pmml.api.enums.ResultCode.OK;

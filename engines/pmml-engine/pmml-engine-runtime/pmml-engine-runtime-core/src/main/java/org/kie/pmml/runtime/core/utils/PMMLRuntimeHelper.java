@@ -86,7 +86,7 @@ public class PMMLRuntimeHelper {
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     PMMLRuntimeHelper.class.getName(),
-                    toEvaluate.getFRI()));
+                    toEvaluate.getFRI()), e);
         }
     }
 
@@ -106,7 +106,6 @@ public class PMMLRuntimeHelper {
         }
         return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
                 .map(o -> new DAROutputPMML(toEvaluate.getFRI(), null)); // TODO fix for drools models));
-
     }
 
     static KiePMMLModelFactory loadKiePMMLModelFactory(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {

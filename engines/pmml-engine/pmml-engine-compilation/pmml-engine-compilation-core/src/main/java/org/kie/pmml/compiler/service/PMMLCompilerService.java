@@ -23,9 +23,7 @@ import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.exceptions.ExternalException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.kie.pmml.commons.model.HasClassLoader;
-import org.kie.pmml.commons.model.KiePMMLModel;
-import org.kie.pmml.commons.model.KiePMMLModelWithSources;
+import org.kie.pmml.commons.model.*;
 import org.kie.pmml.compiler.executor.PMMLCompiler;
 import org.kie.pmml.compiler.executor.PMMLCompilerImpl;
 import org.kie.pmml.compiler.impl.HasClassloaderImpl;
@@ -58,17 +56,26 @@ public class PMMLCompilerService {
     }
 
     static DARFinalOutputPMML getDARFinalOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        Map<String, String> sourcesMap = new HashMap<>();
         List<KiePMMLModelWithSources> kiePmmlModels = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource))
                 .stream()
                 .filter(KiePMMLModelWithSources.class::isInstance)
                 .map(KiePMMLModelWithSources.class::cast)
                 .collect(Collectors.toList());
-        Map<String, String> sourcesMap = new HashMap<>();
         kiePmmlModels.forEach(kiePmmlModel -> sourcesMap.putAll(kiePmmlModel.getSourcesMap()));
-        String fileName = ((File) resource.getContent()).getName().toLowerCase();
+        KiePMMLFactoryModel kiePMMLFactoryModel = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource))
+                .stream()
+                .filter(KiePMMLFactoryModel.class::isInstance)
+                .map(KiePMMLFactoryModel.class::cast)
+                .findFirst()
+                .orElseThrow(() -> new KiePMMLException("Failed to find KiePMMLModelFactory for " + resource.getSourcePath()));
+        sourcesMap.putAll(kiePMMLFactoryModel.getSourcesMap());
+
+        String fullResourceClassName = kiePMMLFactoryModel.getSourcesMap().keySet().iterator().next();
+
+        String fileName = ((File) resource.getContent()).getName();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI(basePath, "pmml");
-        String fullResourceClassName = "TODO";
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
         return new DARFinalOutputPMML(fri, fullResourceClassName, compiledClasses);
     }

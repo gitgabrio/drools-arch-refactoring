@@ -69,11 +69,6 @@ class RuntimeBarTest {
         DAROutput retrieved = retrievedOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
-        // TODO
-//        Map<String, byte[]> compiledClasses = ((DARFinalOutputClassesContainer) retrieved.get()).getCompiledClassesMap();
-//        compiledClasses.forEach(memoryCompilerClassLoader::addCode);
-//        darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-//        assertTrue(darOutput.isPresent());
     }
 
     @Test

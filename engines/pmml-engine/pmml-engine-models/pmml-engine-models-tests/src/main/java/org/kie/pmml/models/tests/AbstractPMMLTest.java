@@ -15,32 +15,44 @@
  */
 package org.kie.pmml.models.tests;
 
+import org.kie.api.pmml.PMML4Result;
+import org.kie.api.pmml.PMMLRequestData;
+import org.kie.dar.common.api.io.IndexFile;
+import org.kie.dar.compilationmanager.api.model.DARFileResource;
+import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.service.CompilationManager;
+import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.pmml.api.models.PMMLStep;
+import org.kie.pmml.api.runtime.PMMLListener;
+import org.kie.pmml.api.runtime.PMMLRuntime;
+import org.kie.pmml.runtime.core.PMMLContextImpl;
+import org.kie.pmml.runtime.core.service.PMMLRuntimeInternalImpl;
+import org.kie.pmml.runtime.core.utils.PMMLRequestDataBuilder;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.kie.api.pmml.PMML4Result;
-import org.kie.api.pmml.PMMLRequestData;
-import org.kie.pmml.api.PMMLRuntimeFactory;
-import org.kie.pmml.api.models.PMMLStep;
-import org.kie.pmml.api.runtime.PMMLListener;
-import org.kie.pmml.api.runtime.PMMLRuntime;
-import org.kie.pmml.evaluator.assembler.factories.PMMLRuntimeFactoryImpl;
-import org.kie.pmml.evaluator.core.PMMLContextImpl;
-import org.kie.pmml.evaluator.core.utils.PMMLRequestDataBuilder;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.dar.common.api.utils.FileUtils.getFile;
 
 public class AbstractPMMLTest {
 
-    private static final PMMLRuntimeFactory PMML_RUNTIME_FACTORY = new PMMLRuntimeFactoryImpl();
+    private static CompilationManager compilationManager = new CompilationManagerImpl();
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+
 
     protected static PMMLRuntime getPMMLRuntime(String fileName) {
+        compilationManager = new CompilationManagerImpl();
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         File pmmlFile = getFile(fileName);
-        return PMML_RUNTIME_FACTORY.getPMMLRuntimeFromFile(pmmlFile);
+        DARResource darResourceBar = new DARFileResource(pmmlFile);
+        List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        return new PMMLRuntimeInternalImpl(memoryCompilerClassLoader);
     }
 
     protected static PMMLRequestData getPMMLRequestData(String modelName, Map<String, Object> parameters) {

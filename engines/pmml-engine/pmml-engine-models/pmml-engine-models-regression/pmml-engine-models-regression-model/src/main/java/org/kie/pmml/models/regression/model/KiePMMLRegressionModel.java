@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.models.regression.model;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.IsInterpreted;
 import org.kie.pmml.commons.model.KiePMMLModel;
+
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/Regression.html>Regression</a>
@@ -41,7 +41,7 @@ public class KiePMMLRegressionModel extends KiePMMLModel implements IsInterprete
     }
 
     @Override
-    public Object evaluate(final Object knowledgeBase, final Map<String, Object> requestData,
+    public Object evaluate(final Map<String, Object> requestData,
                            final PMMLContext context) {
         return regressionTable.evaluateRegression(requestData, context);
     }

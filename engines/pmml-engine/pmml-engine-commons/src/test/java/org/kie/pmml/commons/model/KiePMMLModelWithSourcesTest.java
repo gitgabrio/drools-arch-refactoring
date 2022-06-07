@@ -50,7 +50,7 @@ public class KiePMMLModelWithSourcesTest {
     @Test
     void evaluate() {
         assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
-            kiePMMLModelWithSources.evaluate("KB", Collections.EMPTY_MAP, new PMMLContextTest());
+            kiePMMLModelWithSources.evaluate( Collections.EMPTY_MAP, new PMMLContextTest());
         });
     }
 

@@ -25,7 +25,7 @@
         <module>pmml-engine-commons</module>
         <module>pmml-engine-compilation</module>
         <module>pmml-engine-runtime</module>
-<!--        <module>pmml-engine-models</module>-->
+        <module>pmml-engine-models</module>
         <module>pmml-engine-dependencies</module>
         <module>pmml-engine-api</module>
         <!--        <module>pmml-engine-benchmarks</module>-->
@@ -69,11 +69,6 @@
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-runtime-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-runtime-assembler</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Kie dep -->
@@ -211,12 +206,6 @@
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-runtime-core</artifactId>
-                <version>${project.version}</version>
-                <classifier>sources</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-runtime-assembler</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>

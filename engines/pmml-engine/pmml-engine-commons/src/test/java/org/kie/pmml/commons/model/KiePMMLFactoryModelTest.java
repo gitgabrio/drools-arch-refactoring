@@ -59,7 +59,7 @@ public class KiePMMLFactoryModelTest {
     @Test
     void evaluate() {
         assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
-            kiePMMLFactoryModel.evaluate("", Collections.emptyMap(), new PMMLContextTest());
+            kiePMMLFactoryModel.evaluate(Collections.emptyMap(), new PMMLContextTest());
         });
     }
 

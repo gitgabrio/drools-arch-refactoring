@@ -35,10 +35,6 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-runtime-assembler</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
       <artifactId>pmml-engine-models-regression-model</artifactId>
     </dependency>
     <dependency>

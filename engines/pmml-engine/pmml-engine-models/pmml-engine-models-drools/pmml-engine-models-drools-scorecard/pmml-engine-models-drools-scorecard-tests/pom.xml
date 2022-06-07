@@ -37,11 +37,6 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-runtime-assembler</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
       <artifactId>pmml-engine-commons</artifactId>
       <classifier>tests</classifier>
       <scope>test</scope>

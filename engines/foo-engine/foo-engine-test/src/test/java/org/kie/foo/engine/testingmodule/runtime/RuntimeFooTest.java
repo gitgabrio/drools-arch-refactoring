@@ -69,13 +69,7 @@ class RuntimeFooTest {
         IndexFile retrieved = indexFiles.get(0);
         assertThat(retrieved.exists()).isTrue();
         GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved);
-        System.out.println(generatedResources);
         retrieved.delete();
-        // TODO
-//        Map<String, byte[]> compiledClasses = ((DARFinalOutputFoo) darProcessed.get()).getCompiledClassesMap();
-//        compiledClasses.forEach(memoryCompilerClassLoader::addCode);
-//        darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-//        assertTrue(darOutput.isPresent());
     }
 
     @Test
