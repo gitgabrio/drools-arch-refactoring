@@ -16,6 +16,7 @@
 package org.kie.pmml.runtime.core.utils;
 
 import org.kie.api.pmml.PMML4Result;
+import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -33,6 +34,7 @@ import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.KiePMMLModelFactory;
 import org.kie.pmml.commons.model.ProcessingDTO;
+import org.kie.pmml.runtime.core.PMMLContextImpl;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinder;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinderImpl;
@@ -69,7 +71,7 @@ public class PMMLRuntimeHelper {
                 .anyMatch(Optional::isPresent);
     }
 
-    public static Optional<DAROutputPMML> execute(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<DAROutputPMML> execute(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KiePMMLModelFactory kiePMMLModelFactory;
         try {
             kiePMMLModelFactory = loadKiePMMLModelFactory(toEvaluate.getFRI(), memoryCompilerClassLoader);
@@ -80,7 +82,7 @@ public class PMMLRuntimeHelper {
             return Optional.empty();
         }
         try {
-            return Optional.of(getDAROutput(kiePMMLModelFactory, (DARInputPMML) toEvaluate));
+            return Optional.of(getDAROutput(kiePMMLModelFactory, toEvaluate));
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     PMMLRuntimeHelper.class.getName(),
@@ -88,14 +90,14 @@ public class PMMLRuntimeHelper {
         }
     }
 
-    public static Optional<DAROutputPMML> redirect(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<DAROutputPMML> redirect(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI()).orElse(null);
         if (redirectResource == null) {
             logger.warn("{} can not redirect {}", PMMLRuntimeHelper.class.getName(), toEvaluate.getFRI());
             return Optional.empty();
         }
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInput redirectInput = new DARInputPMML(targetFri, (PMMLContext) toEvaluate.getInputData()); // TODO fix
+        DARInput redirectInput = new DARInputPMML(targetFri, toEvaluate.getInputData()); // TODO fix
 
         Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
@@ -122,16 +124,18 @@ public class PMMLRuntimeHelper {
 
     static DAROutputPMML getDAROutput(KiePMMLModelFactory kiePMMLModelFactory, DARInputPMML darInputPMML) {
         List<KiePMMLModel> kiePMMLModels = kiePMMLModelFactory.getKiePMMLModels();
-        PMML4Result result = evaluate(kiePMMLModels, darInputPMML.getFRI().toString(), (PMMLContext) darInputPMML.getInputData());
+        PMML4Result result = evaluate(kiePMMLModels, darInputPMML.getInputData());
         return new DAROutputPMML(darInputPMML.getFRI(), result);
     }
 
-    static PMML4Result evaluate(final List<KiePMMLModel> kiePMMLModels, final String modelName, final PMMLContext context) {
+    static PMML4Result evaluate(final List<KiePMMLModel> kiePMMLModels, final PMMLRequestData pmmlRequestData) {
         if (logger.isDebugEnabled()) {
-            logger.debug("evaluate {} {}", modelName, context);
+            logger.debug("evaluate {}", pmmlRequestData);
         }
+        String modelName = pmmlRequestData.getModelName();
         KiePMMLModel toEvaluate = getModel(kiePMMLModels, modelName).orElseThrow(() -> new KiePMMLException("Failed to retrieve model with name " + modelName));
-        return evaluate(toEvaluate, context);
+        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData);
+        return evaluate(toEvaluate, pmmlContext);
     }
 
     static PMML4Result evaluate(final KiePMMLModel model, final PMMLContext context) {

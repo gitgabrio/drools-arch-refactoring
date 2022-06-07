@@ -19,7 +19,7 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
-public class DAROutputPMML extends AbstractDAROutput {
+public class DAROutputPMML extends AbstractDAROutput<PMML4Result> {
     private final PMML4Result outputData;
 
     public DAROutputPMML(FRI fri, PMML4Result outputData) {
@@ -28,7 +28,7 @@ public class DAROutputPMML extends AbstractDAROutput {
     }
 
     @Override
-    public Object getOutputData() {
+    public PMML4Result getOutputData() {
         return outputData;
     }
 }

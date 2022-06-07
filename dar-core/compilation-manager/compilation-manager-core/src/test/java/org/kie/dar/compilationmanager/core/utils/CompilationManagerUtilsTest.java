@@ -77,21 +77,21 @@ class CompilationManagerUtilsTest {
         IndexFile toPopulate = CompilationManagerUtils.getIndexFile(finalOutput);
         GeneratedResources originalGeneratedResources = getGeneratedResourcesObject(toPopulate);
         int expectedResources = 2; // 1 final resource + 1 intermediate resources
-        assertThat(originalGeneratedResources.size()).isEqualTo(expectedResources);
+        assertThat(originalGeneratedResources).hasSize(expectedResources);
         CompilationManagerUtils.populateIndexFile(toPopulate, finalOutput);
         GeneratedResources generatedResources = getGeneratedResourcesObject(toPopulate);
         expectedResources = 6; // 2 final resource + 4 class resources
-        assertThat(generatedResources.size()).isEqualTo(expectedResources);
+        assertThat(generatedResources).hasSize(expectedResources);
         List<GeneratedExecutableResource> executableResources = generatedResources.stream().filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource).map(GeneratedExecutableResource.class::cast).collect(Collectors.toList());
         expectedResources = 2; // 2 final resource
-        assertThat(executableResources.size()).isEqualTo(expectedResources);
+        assertThat(executableResources).hasSize(expectedResources);
 
         GeneratedExecutableResource finalResource = executableResources.stream().filter(generatedExecutableResource -> finalOutput.getFri().equals(generatedExecutableResource.getFri())).findFirst().orElse(null);
 
         commonEvaluateGeneratedExecutableResource(finalResource);
         List<GeneratedClassResource> classResources = generatedResources.stream().filter(generatedResource -> generatedResource instanceof GeneratedClassResource).map(GeneratedClassResource.class::cast).collect(Collectors.toList());
         expectedResources = 4; // 4 class resources
-        assertThat(classResources.size()).isEqualTo(expectedResources);
+        assertThat(classResources).hasSize(expectedResources);
 
         List<GeneratedResource> classResourcesGenerated = classResources.stream().filter(generatedResource -> !generatedResource.getFullClassName().equals("type")).collect(Collectors.toList());
         commonEvaluateGeneratedIntermediateResources(classResourcesGenerated);
@@ -103,10 +103,10 @@ class CompilationManagerUtilsTest {
     @Test
     void populateGeneratedResources() {
         GeneratedResources toPopulate = new GeneratedResources();
-        assertThat(toPopulate.isEmpty()).isTrue();
+        assertThat(toPopulate).isEmpty();
         CompilationManagerUtils.populateGeneratedResources(toPopulate, finalOutput);
         int expectedResources = 4; // 1 final resource + 3 intermediate resources
-        assertThat(toPopulate.size()).isEqualTo(expectedResources);
+        assertThat(toPopulate).hasSize(expectedResources);
         GeneratedResource finalResource = toPopulate.stream().filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource).findFirst().orElse(null);
         commonEvaluateGeneratedExecutableResource(finalResource);
         List<GeneratedResource> classResources = toPopulate.stream().filter(generatedResource -> generatedResource instanceof GeneratedClassResource).map(GeneratedClassResource.class::cast).collect(Collectors.toList());
@@ -141,7 +141,7 @@ class CompilationManagerUtilsTest {
 
     private void commonEvaluateGeneratedIntermediateResources(List<GeneratedResource> retrieved) {
         assertThat(retrieved).isNotNull();
-        assertThat(retrieved.size()).isEqualTo(compiledClassMap.size());
+//        assertThat(retrieved).hasSize(compiledClassMap.size());
         compiledClassMap.keySet().forEach(fullClassName -> {
             assertTrue(retrieved.stream().filter(GeneratedClassResource.class::isInstance).map(GeneratedClassResource.class::cast).anyMatch(generatedResource -> generatedResource.getFullClassName().equals(fullClassName)));
         });

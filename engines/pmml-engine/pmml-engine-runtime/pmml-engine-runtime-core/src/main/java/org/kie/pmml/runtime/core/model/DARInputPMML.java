@@ -15,21 +15,22 @@
  */
 package org.kie.pmml.runtime.core.model;
 
+import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.pmml.api.runtime.PMMLContext;
 
-public class DARInputPMML extends AbstractDARInput {
-    private final PMMLContext inputData;
+public class DARInputPMML extends AbstractDARInput<PMMLRequestData> {
+    private final PMMLRequestData inputData;
 
-    public DARInputPMML(FRI fri, PMMLContext inputData) {
+    public DARInputPMML(FRI fri, PMMLRequestData inputData) {
         super(fri);
         this.inputData = inputData;
     }
 
 
     @Override
-    public Object getInputData() {
+    public PMMLRequestData getInputData() {
         return inputData;
     }
 }

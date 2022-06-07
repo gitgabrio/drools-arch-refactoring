@@ -15,12 +15,14 @@
  */
 package org.kie.pmml.runtime.core.service;
 
+import org.kie.api.pmml.PMML4Result;
+import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.pmml.runtime.core.model.DARInputPMML;
+import org.kie.pmml.runtime.core.model.DAROutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,7 @@ import java.util.stream.Stream;
 
 import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.*;
 
-public class KieRuntimeServicePMML implements KieRuntimeService {
+public class KieRuntimeServicePMML implements KieRuntimeService<PMMLRequestData, PMML4Result, DARInputPMML, DAROutputPMML> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServicePMML.class.getName());
 
@@ -40,9 +42,8 @@ public class KieRuntimeServicePMML implements KieRuntimeService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return (E) Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
+    public DAROutputPMML evaluateInput(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
                         redirect(toEvaluate, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)

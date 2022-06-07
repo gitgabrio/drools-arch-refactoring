@@ -20,6 +20,7 @@ import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLListener;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,6 +31,8 @@ public class PMMLContextImpl implements PMMLContext {
     public static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     private final String name;
+
+    private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final Map<String, Object> missingValueReplacedMap = new HashMap<>();
     private final Map<String, Object> commonTransformationMap = new HashMap<>();
     private final Map<String, Object> localTransformationMap = new HashMap<>();
@@ -58,22 +61,29 @@ public class PMMLContextImpl implements PMMLContext {
 
     @Override
     public Object get(String identifier) {
-        return null;
+        if(identifier == null || identifier.equals("")){
+            return null;
+        }
+
+        Object object = null;
+        if ( map.containsKey(identifier) ) {
+            object = map.get( identifier );
+        }
+        return object;
     }
 
     @Override
     public void set(String identifier, Object value) {
-
+        map.put( identifier, value );
     }
 
     @Override
     public void remove(String identifier) {
-
+        map.remove( identifier );
     }
 
-    @Override
     public boolean has(String identifier) {
-        return false;
+        return map.containsKey( identifier );
     }
 
     @Override

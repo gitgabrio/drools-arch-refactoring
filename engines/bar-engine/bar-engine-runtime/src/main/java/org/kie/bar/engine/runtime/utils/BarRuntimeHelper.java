@@ -18,6 +18,7 @@ package org.kie.bar.engine.runtime.utils;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
+import org.kie.bar.engine.runtime.service.KieRuntimeServiceBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -88,8 +89,8 @@ public class BarRuntimeHelper {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return Optional.empty();
         }
-        return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
-                .map(o -> new DAROutputBar(toEvaluate.getFRI(), o));
+        KieRuntimeServiceBar service = (KieRuntimeServiceBar)targetService.get();
+        return Optional.of(service.evaluateInput(redirectInput, memoryCompilerClassLoader));
 
     }
 
