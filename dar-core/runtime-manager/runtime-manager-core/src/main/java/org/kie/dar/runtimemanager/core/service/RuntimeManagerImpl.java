@@ -33,15 +33,19 @@ public class RuntimeManagerImpl implements RuntimeManager {
     private static final Logger logger = LoggerFactory.getLogger(RuntimeManagerImpl.class.getName());
 
     @Override
+    @SuppressWarnings({"unchecked", "raw"})
     public Optional<DAROutput> evaluateInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFRI(), true, memoryCompilerClassLoader);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
+            return Optional.empty();
         }
-        return retrieved.map(service -> service.evaluateInput(toEvaluate, memoryCompilerClassLoader));
+        KieRuntimeService kieRuntimeService = retrieved.get();
+        return kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
     }
 
     @Override
+    @SuppressWarnings({"unchecked", "raw"})
     public List<DAROutput> evaluateInputs(List<DARInput> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return toEvaluate.stream().map(darInput -> evaluateInput(darInput, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)

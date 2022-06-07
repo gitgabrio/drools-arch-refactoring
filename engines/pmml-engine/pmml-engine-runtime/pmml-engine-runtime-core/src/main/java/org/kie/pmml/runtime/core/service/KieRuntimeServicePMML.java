@@ -42,15 +42,12 @@ public class KieRuntimeServicePMML implements KieRuntimeService<PMMLRequestData,
     }
 
     @Override
-    public DAROutputPMML evaluateInput(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<DAROutputPMML> evaluateInput(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
                         redirect(toEvaluate, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .findFirst()
-                .orElseThrow(() -> new KieRuntimeServiceException(String.format("%s can not evaluate %s",
-                        this.getClass().getName(),
-                        toEvaluate.getFRI())));
+                .findFirst();
 
     }
 }

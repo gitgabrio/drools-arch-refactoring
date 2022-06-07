@@ -65,7 +65,7 @@ import static com.github.javaparser.StaticJavaParser.parseBlock;
 import static com.github.javaparser.StaticJavaParser.parseClassOrInterfaceType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonValidateCompilation;
 import static org.kie.pmml.compiler.commons.utils.CommonCodegenUtils.LAMBDA_PARAMETER_NAME;
 import static org.kie.pmml.compiler.commons.utils.CommonCodegenUtils.OPTIONAL_FILTERED_KIEPMMLNAMEVALUE_NAME;
@@ -338,7 +338,7 @@ public class CommonCodegenUtilsTest {
 
     @Test
     void setAssignExpressionValueNoMatch() {
-        assertThrows(KiePMMLException.class, () -> {
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             final BlockStmt body = new BlockStmt();
             AssignExpr assignExpr = new AssignExpr();
             assignExpr.setTarget(new NameExpr("MATCH"));
@@ -349,7 +349,7 @@ public class CommonCodegenUtilsTest {
 
     @Test
     void setAssignExpressionValueNoAssignExpressions() {
-        assertThrows(KiePMMLException.class, () -> {
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             final BlockStmt body = new BlockStmt();
             CommonCodegenUtils.setAssignExpressionValue(body, "NOMATCH", new DoubleLiteralExpr(24.22));
         });
@@ -403,7 +403,7 @@ public class CommonCodegenUtilsTest {
 
     @Test
     void setExplicitConstructorInvocationStmtArgumentNoParameter() {
-        assertThrows(KiePMMLException.class, () -> {
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             final String parameterName = "PARAMETER_NAME";
             final ExplicitConstructorInvocationStmt explicitConstructorInvocationStmt = new ExplicitConstructorInvocationStmt();
             explicitConstructorInvocationStmt.setArguments(NodeList.nodeList(new NameExpr("NOT_PARAMETER")));

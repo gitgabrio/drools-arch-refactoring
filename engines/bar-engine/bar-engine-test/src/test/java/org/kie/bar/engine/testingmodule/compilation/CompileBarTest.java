@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class CompileBarTest {
@@ -102,7 +103,7 @@ class CompileBarTest {
                 Class<?> loadedClass = memoryCompilerClassLoader.loadClass(generatedClass);
                 System.out.println(loadedClass);
             } catch (Exception e) {
-                org.assertj.core.api.Assertions.fail("", "Failed to load " + generatedClass);
+                fail("", "Failed to load " + generatedClass);
             }
         }
     }

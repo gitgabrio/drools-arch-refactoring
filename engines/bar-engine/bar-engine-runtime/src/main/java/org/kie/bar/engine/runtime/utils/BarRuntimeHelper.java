@@ -26,6 +26,7 @@ import org.kie.dar.common.api.model.GeneratedExecutableResource;
 import org.kie.dar.common.api.model.GeneratedRedirectResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
@@ -75,6 +76,13 @@ public class BarRuntimeHelper {
         }
     }
 
+    /**
+     *
+     * @param toEvaluate
+     * @param memoryCompilerClassLoader
+     * @return
+     */
+    @SuppressWarnings({"unchecked", "raw"})
     public static Optional<DAROutputBar> redirect(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI()).orElse(null);
         if (redirectResource == null) {
@@ -82,16 +90,20 @@ public class BarRuntimeHelper {
             return Optional.empty();
         }
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInputBar redirectInput = new DARInputBar(targetFri, toEvaluate.getInputData());
+        DARInput<String> redirectInput = new AbstractDARInput<String>(targetFri, toEvaluate.getInputData()) {
+
+        };
 
         Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return Optional.empty();
         }
-        KieRuntimeServiceBar service = (KieRuntimeServiceBar)targetService.get();
-        return Optional.of(service.evaluateInput(redirectInput, memoryCompilerClassLoader));
 
+        return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput )o).getOutputData().toString()));
     }
 
     static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
@@ -109,14 +121,6 @@ public class BarRuntimeHelper {
 
     static DAROutputBar getDAROutput(BarResources barResources, DARInputBar darInputBar) {
         return new DAROutputBar(darInputBar.getFRI(), darInputBar.getInputData());
-    }
-
-    static Optional<DAROutput> evaluateRedirectInput(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFRI(), true, memoryCompilerClassLoader);
-        if (retrieved.isEmpty()) {
-            logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
-        }
-        return retrieved.map(service -> service.evaluateInput(toEvaluate, memoryCompilerClassLoader));
     }
 
     static Optional<IndexFile> getIndexFile() {

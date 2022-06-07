@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public class JavaParserUtilsTest {
 
@@ -42,14 +42,14 @@ public class JavaParserUtilsTest {
 
     @Test
     void getFromFileNameNotParsable() {
-        assertThrows(KiePMMLInternalException.class, () -> {
+        assertThatExceptionOfType(KiePMMLInternalException.class).isThrownBy(() -> {
             JavaParserUtils.getFromFileName(NOT_PARSABLE_FILE);
         });
     }
 
     @Test
     void getFromFileNameNotExisting() {
-        assertThrows(AssertionError.class, () -> {
+        assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> {
             JavaParserUtils.getFromFileName("not_existing");
         });
     }

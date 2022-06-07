@@ -97,7 +97,7 @@ public class PMMLRuntimeHelper {
             return Optional.empty();
         }
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInput redirectInput = new DARInputPMML(targetFri, toEvaluate.getInputData()); // TODO fix
+        DARInput redirectInput = new DARInputPMML(targetFri, toEvaluate.getInputData()); // TODO fix for drools models
 
         Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
@@ -105,7 +105,7 @@ public class PMMLRuntimeHelper {
             return Optional.empty();
         }
         return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
-                .map(o -> new DAROutputPMML(toEvaluate.getFRI(), null)); // TODO o));
+                .map(o -> new DAROutputPMML(toEvaluate.getFRI(), null)); // TODO fix for drools models));
 
     }
 
@@ -162,14 +162,6 @@ public class PMMLRuntimeHelper {
                 .stream()
                 .filter(model -> Objects.equals(modelName, model.getName()))
                 .findFirst();
-    }
-
-    static Optional<DAROutput> evaluateRedirectInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFRI(), true, memoryCompilerClassLoader);
-        if (retrieved.isEmpty()) {
-            logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
-        }
-        return retrieved.map(service -> service.evaluateInput(toEvaluate, memoryCompilerClassLoader));
     }
 
     static Optional<IndexFile> getIndexFile() {

@@ -25,10 +25,10 @@ import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
-import org.kie.foo.engine.runtime.model.DAROutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class RuntimeBarTest {
 
@@ -57,14 +58,14 @@ class RuntimeBarTest {
         FRI fri = new FRI("darbar", "bar");
         DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
         Optional<DAROutput> retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(retrievedOutput.isEmpty()).isTrue();
+        assertThat(retrievedOutput).isEmpty();
         File barFile = getFileFromFileName("DarBar.bar");
         DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertThat(indexFiles).isNotNull();
-        assertThat(indexFiles.size()).isEqualTo(1);
+        assertThat(indexFiles).hasSize(1);
         retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(retrievedOutput.isPresent()).isTrue();
+        assertThat(retrievedOutput).isPresent();
         DAROutput retrieved = retrievedOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
@@ -80,25 +81,24 @@ class RuntimeBarTest {
         FRI fri = new FRI("redirectbar", "bar");
         DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(darOutput.isEmpty()).isTrue();
+        assertThat(darOutput).isNotNull().isNotPresent();
         File barFile = getFileFromFileName("RedirectBar.bar");
-        DARResource darResourceBar = new DARFileResource( barFile);
+        DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        assertThat(indexFiles).isNotNull();
-        assertThat(indexFiles.size()).isEqualTo(2);
+        assertThat(indexFiles).isNotNull().hasSize(2);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(darOutput.isEmpty()).isFalse();
+        assertThat(darOutput).isNotEmpty();
         DAROutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
-        assertThat(retrieved.getOutputData() instanceof DAROutputFoo).isTrue();
-        assertThat(((DAROutputFoo) retrieved.getOutputData()).getOutputData()).isEqualTo(toEvaluate.getInputData());
+        assertThat(retrieved.getOutputData()).isInstanceOf(String.class);
+        assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
 
     @Test
     void evaluateExecutableBarStaticCompilation() {
         DARInputBar toEvaluate = new DARInputBar(new FRI("staticdar", "bar"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(darOutput.isPresent()).isTrue();
+        assertThat(darOutput).isPresent();
         DAROutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
@@ -108,11 +108,10 @@ class RuntimeBarTest {
     void evaluateRedirectBarStaticCompilation() {
         DARInputBar toEvaluate = new DARInputBar(new FRI("this/is/fri", "bar"), "InputData");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(darOutput.isPresent()).isTrue();
+        assertThat(darOutput).isPresent();
         DAROutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
-        assertThat(retrieved.getOutputData() instanceof DAROutputFoo).isTrue();
-        assertThat(((DAROutputFoo) retrieved.getOutputData()).getOutputData()).isEqualTo(toEvaluate.getInputData());
+        assertThat(retrieved.getOutputData()).isInstanceOf(String.class).isEqualTo(toEvaluate.getInputData());
     }
 
     public static File getFileFromFileName(String fileName) {

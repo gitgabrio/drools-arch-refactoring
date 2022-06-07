@@ -21,6 +21,7 @@ import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * The compilation-related interface to be implemented by engine-plugin.
@@ -46,6 +47,6 @@ public interface KieRuntimeService<S, U, T extends DARInput<S>, E extends DAROut
      * @param memoryCompilerClassLoader
      * @return
      */
-    E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    Optional<E> evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 }

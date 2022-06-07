@@ -244,14 +244,13 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- NEEDED BY OPENREWTITE FOR MIGRATION TO JUNIT5 -->
+        <!-- NEEDED BY OPENREWRITE FOR MIGRATION TO JUNIT5 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 
@@ -298,10 +297,10 @@
                 <artifactId>rewrite-maven-plugin</artifactId>
                 <configuration>
                     <activeRecipes>
-                        <recipe>org.openrewrite.java.testing.assertj.JUnitToAssertj</recipe>
-                        <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
-                        <recipe>org.openrewrite.java.testing.junit5.StaticImports</recipe>
                         <recipe>org.openrewrite.java.testing.junit5.JUnit4to5Migration</recipe>
+                        <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+                        <recipe>org.openrewrite.java.testing.assertj.JUnitToAssertj</recipe>
+                        <recipe>org.openrewrite.java.testing.junit5.StaticImports</recipe>
                     </activeRecipes>
                 </configuration>
                 <dependencies>

@@ -1,4 +1,4 @@
-package org.kie.bar.engine.runtime.service;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@ package org.kie.bar.engine.runtime.service;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.kie.bar.engine.runtime.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -46,22 +49,19 @@ class KieRuntimeServiceBarTest {
     @Test
     void evaluateInputExistingBarResources() {
         DARInputBar toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
-        DAROutputBar retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
-        assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
+        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isPresent();
+        DAROutputBar darOutputBar = retrieved.get();
+        assertThat(darOutputBar.getFRI()).isEqualTo(toEvaluate.getFRI());
+        assertThat(darOutputBar.getOutputData()).isEqualTo(toEvaluate.getInputData());
 
     }
 
     @Test
     void evaluateInputNotExistingBarResources() {
-        try {
-            DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
-            kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-            fail("Expecting KieRuntimeServiceException");
-        } catch (Exception e) {
-            assertThat(e instanceof KieRuntimeServiceException).isTrue();
-        }
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
+        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isNotNull().isNotPresent();
     }
 
 }

@@ -17,6 +17,7 @@ package org.kie.foo.engine.runtime.service;
 
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.foo.engine.api.model.FooResources;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
@@ -25,9 +26,11 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.*;
 
-public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, DARInputFoo, DAROutputFoo> {
+public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, DARInput<String>, DAROutputFoo> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceFoo.class.getName());
 
@@ -38,15 +41,16 @@ public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, D
     }
 
     @Override
-    public DAROutputFoo evaluateInput(DARInputFoo toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<DAROutputFoo> evaluateInput(DARInput<String> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
             FooResources fooResources = loadFooResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
             DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFRI(), toEvaluate.getInputData());
-            return getDAROutput(fooResources, darInputFoo);
+            return Optional.of(getDAROutput(fooResources, darInputFoo));
         } catch (Exception e) {
-            throw new KieRuntimeServiceException(String.format("%s can not evaluate %s",
+            logger.warn("{} can not evaluate {}",
                     this.getClass().getName(),
-                    toEvaluate.getFRI()));
+                    toEvaluate.getFRI());
+            return Optional.empty();
         }
     }
 

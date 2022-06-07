@@ -17,13 +17,13 @@ package org.kie.foo.engine.runtime.service;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.foo.engine.runtime.model.DAROutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 class KieRuntimeServiceFooTest {
 
@@ -45,21 +45,18 @@ class KieRuntimeServiceFooTest {
     @Test
     void evaluateInputExistingFooResources() {
         DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
-        DAROutputFoo retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
-        assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
+        Optional<DAROutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isPresent();
+        DAROutputFoo darOutputFoo = retrieved.get();
+        assertThat(darOutputFoo.getFRI()).isEqualTo(toEvaluate.getFRI());
+        assertThat(darOutputFoo.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
 
     @Test
     void evaluateInputNotExistingFooResources() {
-        try {
-            DARInputFoo toEvaluate = new DARInputFoo(new FRI("DarFoo", "notfoo"), "InputData");
-            kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-            fail("Expecting KieRuntimeServiceException");
-        } catch (Exception e) {
-            assertThat(e instanceof KieRuntimeServiceException).isTrue();
-        }
+        DARInputFoo toEvaluate = new DARInputFoo(new FRI("DarFoo", "notfoo"), "InputData");
+        Optional<DAROutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isNotNull().isNotPresent();
     }
 
 }

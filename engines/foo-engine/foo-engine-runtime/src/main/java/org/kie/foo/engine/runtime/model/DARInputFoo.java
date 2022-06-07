@@ -20,16 +20,8 @@ import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 
 public class DARInputFoo extends AbstractDARInput<String> {
 
-
-    private final String inputData;
-
     public DARInputFoo(FRI fri, String inputData) {
-        super(fri);
-        this.inputData = inputData;
+        super(fri, inputData);
     }
 
-    @Override
-    public String getInputData() {
-        return inputData;
-    }
 }

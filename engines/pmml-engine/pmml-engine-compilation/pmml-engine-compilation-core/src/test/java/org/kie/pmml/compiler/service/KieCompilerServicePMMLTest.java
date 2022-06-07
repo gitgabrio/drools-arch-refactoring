@@ -27,7 +27,6 @@ import org.kie.pmml.compiler.model.DARFinalOutputPMML;
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 

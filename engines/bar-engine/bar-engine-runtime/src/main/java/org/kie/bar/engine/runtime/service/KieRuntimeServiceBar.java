@@ -40,14 +40,11 @@ public class KieRuntimeServiceBar implements KieRuntimeService<String, String, D
     }
 
     @Override
-    public DAROutputBar evaluateInput(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<DAROutputBar> evaluateInput(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
                         redirect(toEvaluate, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .findFirst()
-                .orElseThrow(() -> new KieRuntimeServiceException(String.format("%s can not evaluate %s",
-                        this.getClass().getName(),
-                        toEvaluate.getFRI())));
+                .findFirst();
     }
 }
