@@ -38,7 +38,6 @@ public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, D
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public DAROutputFoo evaluateInput(DARInputFoo toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
             FooResources fooResources = loadFooResources(toEvaluate.getFRI(), memoryCompilerClassLoader);

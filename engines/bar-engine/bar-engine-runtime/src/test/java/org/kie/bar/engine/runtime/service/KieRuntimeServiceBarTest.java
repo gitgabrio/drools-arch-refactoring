@@ -17,11 +17,9 @@ package org.kie.bar.engine.runtime.service;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.runtime.model.DARInputBar;
+import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +27,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 class KieRuntimeServiceBarTest {
 
-    private static KieRuntimeService kieRuntimeService;
+    private static KieRuntimeServiceBar kieRuntimeService;
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     @BeforeAll
@@ -47,8 +45,8 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void evaluateInputExistingBarResources() {
-        DARInput toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
-        DAROutput retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
+        DAROutputBar retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
@@ -58,7 +56,7 @@ class KieRuntimeServiceBarTest {
     @Test
     void evaluateInputNotExistingBarResources() {
         try {
-            DARInput toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
+            DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
             kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
