@@ -20,7 +20,7 @@ import org.kie.dar.common.api.model.FRI;
 /**
  * A generic <i>input</i> to be consumed
  */
-public interface DARInput {
+public interface DARInput<T> {
 
     /**
      * The unique, full identifier of a given model' resource
@@ -29,5 +29,5 @@ public interface DARInput {
      */
     FRI getFRI();
 
-    Object getInputData();
+    T getInputData();
 }

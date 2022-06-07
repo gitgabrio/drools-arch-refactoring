@@ -18,18 +18,18 @@ package org.kie.foo.engine.runtime.model;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 
-public class DARInputFoo extends AbstractDARInput {
+public class DARInputFoo extends AbstractDARInput<String> {
 
 
-    private final Object inputData;
+    private final String inputData;
 
-    public DARInputFoo(FRI fri, Object inputData) {
+    public DARInputFoo(FRI fri, String inputData) {
         super(fri);
         this.inputData = inputData;
     }
 
     @Override
-    public Object getInputData() {
+    public String getInputData() {
         return inputData;
     }
 }

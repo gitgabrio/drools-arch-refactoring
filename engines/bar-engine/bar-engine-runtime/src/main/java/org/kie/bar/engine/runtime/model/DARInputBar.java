@@ -18,17 +18,17 @@ package org.kie.bar.engine.runtime.model;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 
-public class DARInputBar extends AbstractDARInput {
-    private final Object inputData;
+public class DARInputBar extends AbstractDARInput<String> {
+    private final String inputData;
 
-    public DARInputBar(FRI fri, Object inputData) {
+    public DARInputBar(FRI fri, String inputData) {
         super(fri);
         this.inputData = inputData;
     }
 
 
     @Override
-    public Object getInputData() {
+    public String getInputData() {
         return inputData;
     }
 }

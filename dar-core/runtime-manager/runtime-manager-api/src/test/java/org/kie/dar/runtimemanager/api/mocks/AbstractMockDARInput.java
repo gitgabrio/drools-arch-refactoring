@@ -19,7 +19,7 @@ package org.kie.dar.runtimemanager.api.mocks;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 
-public abstract class AbstractMockDARInput implements DARInput {
+public abstract class AbstractMockDARInput implements DARInput<String> {
 
     private final FRI fri = new FRI(this.getClass().getPackageName(), this.getClass().getSimpleName());
 
@@ -29,7 +29,7 @@ public abstract class AbstractMockDARInput implements DARInput {
     }
 
     @Override
-    public Object getInputData() {
+    public String getInputData() {
         return null;
     }
 }

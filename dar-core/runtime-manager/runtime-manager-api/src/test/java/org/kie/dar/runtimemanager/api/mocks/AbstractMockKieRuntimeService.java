@@ -16,20 +16,17 @@
 package org.kie.dar.runtimemanager.api.mocks;
 
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-public abstract class AbstractMockKieRuntimeService implements KieRuntimeService {
+public abstract class AbstractMockKieRuntimeService<T extends AbstractMockDARInput> implements KieRuntimeService<String, T, MockDAROutput> {
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public MockDAROutput evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageInput(toEvaluate.getFRI(), memoryCompilerClassLoader)) {
             throw new KieRuntimeServiceException(String.format("Unmanaged input %s", toEvaluate.getFRI()));
         }
-        return (E) new MockDAROutput();
+        return new MockDAROutput();
     }
 
 }
