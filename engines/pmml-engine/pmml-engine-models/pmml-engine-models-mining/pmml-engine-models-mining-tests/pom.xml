@@ -14,11 +14,6 @@
   <dependencies>
     <!-- TEST -->
     <!-- PMML -->
-<!--    <dependency>-->
-<!--      <groupId>org.drools</groupId>-->
-<!--      <artifactId>drools-wiring-dynamic</artifactId>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>pmml-engine-models-mining-model</artifactId>
@@ -26,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-mining-compiler</artifactId>
+      <artifactId>pmml-engine-models-mining-compilation</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -41,7 +36,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-regression-compiler</artifactId>
+      <artifactId>pmml-engine-models-regression-compilation</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -56,10 +51,6 @@
       <scope>test</scope>
     </dependency>
     <!-- KIE -->
-<!--    <dependency>-->
-<!--      <groupId>org.drools</groupId>-->
-<!--      <artifactId>drools-ecj</artifactId>-->
-<!--    </dependency>-->
     <!-- EXTERNAL -->
     <dependency>
       <groupId>org.jpmml</groupId>

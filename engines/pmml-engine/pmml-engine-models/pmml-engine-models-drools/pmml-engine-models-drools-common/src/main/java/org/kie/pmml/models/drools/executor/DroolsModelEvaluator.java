@@ -8,7 +8,7 @@ import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.models.drools.commons.model.KiePMMLDroolsModel;
 
-import static org.kie.pmml.evaluator.core.utils.Converter.getUnwrappedParametersMap;
+import static org.kie.pmml.runtime.core.utils.Converter.getUnwrappedParametersMap;
 
 public abstract class DroolsModelEvaluator implements PMMLModelEvaluator<KiePMMLDroolsModel> {
 

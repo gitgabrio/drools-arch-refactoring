@@ -15,8 +15,6 @@
 */
 package org.kie.pmml.models.clustering.compilation.executor;
 
-import java.util.Map;
-
 import org.dmg.pmml.clustering.ClusteringModel;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -27,6 +25,8 @@ import org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringMod
 import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * Default <code>ModelImplementationProvider</code> for <b>Clustering</b>
@@ -45,12 +45,6 @@ private static final Logger logger = LoggerFactory.getLogger(ClusteringModelImpl
     @Override
     public Class<KiePMMLClusteringModel> getKiePMMLModelClass() {
         return KiePMMLClusteringModel.class;
-    }
-
-    @Override
-    public KiePMMLClusteringModel getKiePMMLModel(final CompilationDTO<ClusteringModel> compilationDTO) {
-        logger.trace("getKiePMMLModel {}", compilationDTO);
-        return KiePMMLClusteringModelFactory.getKiePMMLClusteringModel(ClusteringCompilationDTO.fromCompilationDTO(compilationDTO));
     }
 
     @Override

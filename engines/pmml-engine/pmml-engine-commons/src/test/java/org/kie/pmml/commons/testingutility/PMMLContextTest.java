@@ -30,6 +30,11 @@ public class PMMLContextTest implements PMMLContext {
     private LinkedHashMap<String, Double> probabilityResultMap;
 
     @Override
+    public String getFileName() {
+        return null;
+    }
+
+    @Override
     public PMMLRequestData getRequestData() {
         return null;
     }

@@ -1,4 +1,4 @@
-package org.kie.pmml.runtime.core.utils;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@ package org.kie.pmml.runtime.core.utils;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.kie.pmml.runtime.core.utils;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -58,7 +59,7 @@ class PMMLRuntimeHelperTest {
     @Test
     void execute() {
         FRI fri = new FRI("testmod", "pmml");
-        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLRequestData("TestMod"));
+        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         Optional<DAROutputPMML> retrieved = PMMLRuntimeHelper.execute(darInputPMML, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
         commonEvaluateDAROutputPMML(retrieved.get(), darInputPMML);
@@ -91,7 +92,7 @@ class PMMLRuntimeHelperTest {
     void getDAROutput() {
         FRI fri = new FRI("testmod", "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
-        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLRequestData("TestMod"));
+        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         DAROutputPMML retrieved = PMMLRuntimeHelper.getDAROutput(kiePmmlModelFactory, darInputPMML);
         commonEvaluateDAROutputPMML(retrieved, darInputPMML);
     }
@@ -101,9 +102,9 @@ class PMMLRuntimeHelperTest {
         FRI fri = new FRI("testmod", "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         List<KiePMMLModel> kiePMMLModels = kiePmmlModelFactory.getKiePMMLModels();
-        PMMLRequestData pmmlRequestData = getPMMLRequestData("TestMod");
-        PMML4Result retrieved = PMMLRuntimeHelper.evaluate(kiePMMLModels, pmmlRequestData);
-        commonEvaluatePMML4Result(retrieved, pmmlRequestData);
+        PMMLContext pmmlContext = getPMMLContext("fileName", "TestMod");
+        PMML4Result retrieved = PMMLRuntimeHelper.evaluate(kiePMMLModels, pmmlContext);
+        commonEvaluatePMML4Result(retrieved, pmmlContext.getRequestData());
     }
 
     @Test
@@ -111,7 +112,7 @@ class PMMLRuntimeHelperTest {
         FRI fri = new FRI("testmod", "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         KiePMMLModel kiePMMLModel = kiePmmlModelFactory.getKiePMMLModels().get(0);
-        PMMLContext pmmlContext = getPMMLContext("TestMod");
+        PMMLContext pmmlContext = getPMMLContext("fileName", "TestMod");
         PMML4Result retrieved = PMMLRuntimeHelper.evaluate(kiePMMLModel, pmmlContext);
         commonEvaluatePMML4Result(retrieved, pmmlContext.getRequestData());
     }
@@ -155,7 +156,7 @@ class PMMLRuntimeHelperTest {
     private void commonEvaluateDAROutputPMML(DAROutputPMML toEvaluate, DARInputPMML darInputPMML) {
         assertThat(toEvaluate).isNotNull();
         assertThat(toEvaluate.getFRI()).isEqualTo(darInputPMML.getFRI());
-        commonEvaluatePMML4Result(toEvaluate.getOutputData(), darInputPMML.getInputData());
+        commonEvaluatePMML4Result(toEvaluate.getOutputData(), darInputPMML.getInputData().getRequestData());
     }
 
     private void commonEvaluatePMML4Result(PMML4Result toEvaluate, PMMLRequestData pmmlRequestData) {
@@ -164,8 +165,8 @@ class PMMLRuntimeHelperTest {
         assertThat(toEvaluate.getCorrelationId()).isEqualTo(pmmlRequestData.getCorrelationId());
     }
 
-    private PMMLContext getPMMLContext(String modelName) {
-        return new PMMLContextImpl(getPMMLRequestData(modelName));
+    private PMMLContext getPMMLContext(String fileName, String modelName) {
+        return new PMMLContextImpl(getPMMLRequestData(modelName), fileName);
     }
 
     private PMMLRequestData getPMMLRequestData(String modelName) {

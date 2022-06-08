@@ -32,6 +32,8 @@ public class PMMLContextImpl implements PMMLContext {
 
     private final String name;
 
+    private final String fileName;
+
     private final Map<String, Object> map = new ConcurrentHashMap<>();
     private final Map<String, Object> missingValueReplacedMap = new HashMap<>();
     private final Map<String, Object> commonTransformationMap = new HashMap<>();
@@ -44,13 +46,14 @@ public class PMMLContextImpl implements PMMLContext {
     private Object affinity;
     private LinkedHashMap<String, Double> probabilityResultMap;
 
-    public PMMLContextImpl(final PMMLRequestData pmmlRequestData) {
+    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName) {
         name = "Context_" + ID_GENERATOR.incrementAndGet();
         set(PMML_REQUEST_DATA, pmmlRequestData);
+        this.fileName = fileName;
     }
 
-    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, final Set<PMMLListener> pmmlListeners) {
-        this(pmmlRequestData);
+    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName, final Set<PMMLListener> pmmlListeners) {
+        this(pmmlRequestData, fileName);
         this.pmmlListeners.addAll(pmmlListeners);
     }
 
@@ -60,30 +63,35 @@ public class PMMLContextImpl implements PMMLContext {
     }
 
     @Override
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Override
     public Object get(String identifier) {
-        if(identifier == null || identifier.equals("")){
+        if (identifier == null || identifier.equals("")) {
             return null;
         }
 
         Object object = null;
-        if ( map.containsKey(identifier) ) {
-            object = map.get( identifier );
+        if (map.containsKey(identifier)) {
+            object = map.get(identifier);
         }
         return object;
     }
 
     @Override
     public void set(String identifier, Object value) {
-        map.put( identifier, value );
+        map.put(identifier, value);
     }
 
     @Override
     public void remove(String identifier) {
-        map.remove( identifier );
+        map.remove(identifier);
     }
 
     public boolean has(String identifier) {
-        return map.containsKey( identifier );
+        return map.containsKey(identifier);
     }
 
     @Override

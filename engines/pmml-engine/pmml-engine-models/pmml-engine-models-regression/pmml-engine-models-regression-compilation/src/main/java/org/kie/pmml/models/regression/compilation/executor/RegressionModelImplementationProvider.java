@@ -15,12 +15,6 @@
  */
 package org.kie.pmml.models.regression.compilation.executor;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.MiningFunction;
@@ -37,6 +31,12 @@ import org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionMod
 import org.kie.pmml.models.regression.model.KiePMMLRegressionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getOpType;
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getTargetFields;
@@ -62,25 +62,11 @@ public class RegressionModelImplementationProvider implements ModelImplementatio
     }
 
     @Override
-    public KiePMMLRegressionModel getKiePMMLModel(final CompilationDTO<RegressionModel> compilationDTO) {
-        logger.trace("getKiePMMLModel {} {} {} {}", compilationDTO.getPackageName(),
-                     compilationDTO.getFields(),
-                     compilationDTO.getModel(),
-                     compilationDTO.getHasClassloader());
-        validate(compilationDTO.getFields(), compilationDTO.getModel());
-        try {
-            return KiePMMLRegressionModelFactory.getKiePMMLRegressionModelClasses(RegressionCompilationDTO.fromCompilationDTO(compilationDTO));
-        } catch (IOException | IllegalAccessException | InstantiationException e) {
-            throw new KiePMMLException(e.getMessage(), e);
-        }
-    }
-
-    @Override
     public Map<String, String> getSourcesMap(final CompilationDTO<RegressionModel> compilationDTO) {
         logger.trace("getKiePMMLModelWithSources {} {} {} {}", compilationDTO.getPackageName(),
-                     compilationDTO.getFields(),
-                     compilationDTO.getModel(),
-                     compilationDTO.getHasClassloader());
+                compilationDTO.getFields(),
+                compilationDTO.getModel(),
+                compilationDTO.getHasClassloader());
         try {
             return KiePMMLRegressionModelFactory.getKiePMMLRegressionModelSourcesMap(RegressionCompilationDTO.fromCompilationDTO(compilationDTO));
         } catch (IOException e) {
@@ -206,7 +192,7 @@ public class RegressionModelImplementationProvider implements ModelImplementatio
             throw new KiePMMLException("Expected one target field, retrieved " + targetFields.size());
         }
         if (toValidate.getTargetField() != null && !(Objects.equals(toValidate.getTargetField().getValue(),
-                                                                    targetFields.get(0).getName()))) {
+                targetFields.get(0).getName()))) {
             throw new KiePMMLException(String.format("Not-matching target fields: %s %s", toValidate.getTargetField()
                     , targetFields.get(0).getName()));
         }
@@ -234,7 +220,7 @@ public class RegressionModelImplementationProvider implements ModelImplementatio
                 targetFields.stream().filter(targetField -> categoricalFields.contains(targetField.getName())).collect(Collectors.toList());
         if (categoricalNameTypes.size() != 1) {
             throw new KiePMMLException(String.format("Expected exactly one categorical targets, found %s",
-                                                     categoricalNameTypes.size()));
+                    categoricalNameTypes.size()));
         }
         return categoricalNameTypes.get(0).getName();
     }

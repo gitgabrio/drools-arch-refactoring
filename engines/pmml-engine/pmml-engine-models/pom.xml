@@ -17,7 +17,7 @@
     <modules>
         <module>pmml-engine-models-regression</module>
         <!--    <module>pmml-engine-models-drools</module>-->
-        <!--    <module>pmml-engine-models-mining</module>-->
+        <module>pmml-engine-models-mining</module>
         <module>pmml-engine-models-clustering</module>
         <module>pmml-engine-models-tests</module>
     </modules>

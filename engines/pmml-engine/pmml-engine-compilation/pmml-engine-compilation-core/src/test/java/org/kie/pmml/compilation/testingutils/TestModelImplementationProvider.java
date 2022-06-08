@@ -37,11 +37,6 @@ public class TestModelImplementationProvider implements ModelImplementationProvi
     }
 
     @Override
-    public KiePMMLTestingModel getKiePMMLModel(final CompilationDTO<TestingModel> compilationDTO) {
-        return new KiePMMLTestingModel(compilationDTO.getModelName(), Collections.emptyList());
-    }
-
-    @Override
     public Map<String, String> getSourcesMap(final CompilationDTO<TestingModel> compilationDTO) {
         return Collections.emptyMap();
     }

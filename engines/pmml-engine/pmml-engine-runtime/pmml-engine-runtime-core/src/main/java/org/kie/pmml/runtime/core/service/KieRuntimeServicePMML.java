@@ -16,11 +16,10 @@
 package org.kie.pmml.runtime.core.service;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
+import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.runtime.core.model.DARInputPMML;
 import org.kie.pmml.runtime.core.model.DAROutputPMML;
 import org.slf4j.Logger;
@@ -31,7 +30,7 @@ import java.util.stream.Stream;
 
 import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.*;
 
-public class KieRuntimeServicePMML implements KieRuntimeService<PMMLRequestData, PMML4Result, DARInputPMML, DAROutputPMML> {
+public class KieRuntimeServicePMML implements KieRuntimeService<PMMLContext, PMML4Result, DARInputPMML, DAROutputPMML> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServicePMML.class.getName());
 

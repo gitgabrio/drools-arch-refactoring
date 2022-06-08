@@ -15,17 +15,17 @@
  */
 package org.kie.pmml.compilation.commons.mocks;
 
-import java.util.Map;
-
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.commons.model.HasClassLoader;
+
+import java.util.Map;
 
 public class HasClassLoaderMock implements HasClassLoader {
 
     private final ClassLoader classLoader;
 
     public HasClassLoaderMock() {
-        this.classLoader = Thread.currentThread().getContextClassLoader();
+        this.classLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     @Override
@@ -34,7 +34,7 @@ public class HasClassLoaderMock implements HasClassLoader {
     }
 
     @Override
-    public Map<String, byte[]>  compileClasses(Map<String, String> sourcesMap, String fullClassName) {
+    public Map<String, byte[]> compileClasses(Map<String, String> sourcesMap, String fullClassName) {
         return KieMemoryCompiler.compileNoLoad(sourcesMap, classLoader);
     }
 }

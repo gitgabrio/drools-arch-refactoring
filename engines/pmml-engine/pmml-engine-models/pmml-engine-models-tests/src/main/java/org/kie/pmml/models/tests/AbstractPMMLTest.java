@@ -45,7 +45,6 @@ public class AbstractPMMLTest {
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
 
-
     protected static PMMLRuntime getPMMLRuntime(String fileName) {
         compilationManager = new CompilationManagerImpl();
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
@@ -71,7 +70,7 @@ public class AbstractPMMLTest {
                                    final String fileName,
                                    final String modelName) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(fileName,modelName, new PMMLContextImpl(pmmlRequestData));
+        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName));
     }
 
     protected PMML4Result evaluate(final PMMLRuntime pmmlRuntime,
@@ -80,7 +79,7 @@ public class AbstractPMMLTest {
                                    final String modelName,
                                    final Set<PMMLListener> pmmlListeners) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(fileName, modelName, new PMMLContextImpl(pmmlRequestData, pmmlListeners));
+        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName, pmmlListeners));
     }
 
     protected PMMLListenerTest getPMMLListener() {

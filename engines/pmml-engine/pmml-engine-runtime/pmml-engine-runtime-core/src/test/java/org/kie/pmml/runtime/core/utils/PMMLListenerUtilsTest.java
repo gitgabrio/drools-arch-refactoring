@@ -1,4 +1,4 @@
-package org.kie.pmml.runtime.core.utils;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +13,7 @@ package org.kie.pmml.runtime.core.utils;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.IntStream;
+package org.kie.pmml.runtime.core.utils;
 
 import org.junit.jupiter.api.Test;
 import org.kie.api.pmml.PMMLRequestData;
@@ -25,6 +21,11 @@ import org.kie.pmml.api.models.PMMLStep;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLListener;
 import org.kie.pmml.runtime.core.PMMLContextImpl;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,14 +46,14 @@ public class PMMLListenerUtilsTest {
 
     @Test
     void stepNotExecuted() {
-        PMMLContext pmmlContext = new PMMLContextImpl(new PMMLRequestData());
+        PMMLContext pmmlContext = new PMMLContextImpl(new PMMLRequestData(), "filename");
         AtomicBoolean invoked = new AtomicBoolean(false);
         PMMLListenerUtils.stepExecuted(() -> new PMMLStepTest(invoked), pmmlContext);
         assertThat(invoked).isFalse();
     }
 
     private PMMLContext getPMMLContext(int size, Map<Integer, PMMLStep> listenerFeedback) {
-        PMMLContext toReturn = new PMMLContextImpl(new PMMLRequestData());
+        PMMLContext toReturn = new PMMLContextImpl(new PMMLRequestData(), "filename");
         IntStream.range(0, size).forEach(i -> toReturn.addPMMLListener(getPMMLListener(i, listenerFeedback)));
         return toReturn;
     }

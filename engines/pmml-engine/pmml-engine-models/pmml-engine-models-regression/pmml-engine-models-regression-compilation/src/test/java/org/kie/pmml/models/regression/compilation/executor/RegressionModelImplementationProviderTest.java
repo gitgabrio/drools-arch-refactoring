@@ -16,11 +16,6 @@
 
 package org.kie.pmml.models.regression.compilation.executor;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.regression.RegressionModel;
@@ -32,24 +27,20 @@ import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.api.testutils.TestUtils;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;
-import org.kie.pmml.models.regression.model.KiePMMLRegressionModel;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.CAUCHIT;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.CLOGLOG;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.EXP;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.LOGIT;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.LOGLOG;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.NONE;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.PROBIT;
-import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.SOFTMAX;
+import static org.dmg.pmml.regression.RegressionModel.NormalizationMethod.*;
 import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;
 
 public class RegressionModelImplementationProviderTest {
 
     private static final RegressionModelImplementationProvider PROVIDER = new RegressionModelImplementationProvider();
-    private static final String RELEASE_ID = "org.drools:kie-pmml-models-testing:1.0";
     private static final String SOURCE_1 = "LinearRegressionSample.pmml";
     private static final String SOURCE_2 = "test_regression.pmml";
     private static final String SOURCE_3 = "test_regression_clax.pmml";
@@ -66,23 +57,6 @@ public class RegressionModelImplementationProviderTest {
     @Test
     void getPMMLModelType() {
         assertThat(PROVIDER.getPMMLModelType()).isEqualTo(PMML_MODEL.REGRESSION_MODEL);
-    }
-
-    @Test
-    void getKiePMMLModel() throws Exception {
-        final PMML pmml = TestUtils.loadFromFile(SOURCE_1);
-        assertThat(pmml).isNotNull();
-        assertThat(pmml.getModels()).hasSize(1);
-        assertThat(pmml.getModels().get(0)).isInstanceOf(RegressionModel.class);
-        RegressionModel regressionModel = (RegressionModel) pmml.getModels().get(0);
-        final CommonCompilationDTO<RegressionModel> compilationDTO =
-                CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                        pmml,
-                        regressionModel,
-                        new HasClassLoaderMock());
-        final KiePMMLRegressionModel retrieved = PROVIDER.getKiePMMLModel(compilationDTO);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved).isInstanceOf(Serializable.class);
     }
 
     @Test

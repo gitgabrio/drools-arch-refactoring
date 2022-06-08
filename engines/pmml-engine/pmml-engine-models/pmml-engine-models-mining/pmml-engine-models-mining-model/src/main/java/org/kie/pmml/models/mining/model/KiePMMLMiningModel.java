@@ -15,11 +15,6 @@
  */
 package org.kie.pmml.models.mining.model;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -29,6 +24,11 @@ import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.models.mining.model.segmentation.KiePMMLSegment;
 import org.kie.pmml.models.mining.model.segmentation.KiePMMLSegmentation;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-3/MultipleModels.html>MiningModel</a>
@@ -51,8 +51,7 @@ public class KiePMMLMiningModel extends KiePMMLModel implements HasNestedModels 
     }
 
     @Override
-    public Object evaluate(final Object knowledgeBase, final Map<String, Object> requestData,
-                           final PMMLContext pmmlContext) {
+    public Object evaluate(final Map<String, Object> requestData, final PMMLContext pmmlContext) {
         throw new KiePMMLException("KiePMMLMiningModel is not meant to be used for actual evaluation");
     }
 
@@ -75,16 +74,7 @@ public class KiePMMLMiningModel extends KiePMMLModel implements HasNestedModels 
 
     @Override
     public String toString() {
-        return "KiePMMLMiningModel{" +
-                "miningFunction=" + miningFunction +
-                ", algorithmName='" + algorithmName + '\'' +
-                ", scorable=" + scorable +
-                ", segmentation=" + segmentation +
-                ", pmmlMODEL=" + pmmlMODEL +
-                ", name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", parentId='" + parentId + '\'' +
-                '}';
+        return "KiePMMLMiningModel{" + "miningFunction=" + miningFunction + ", algorithmName='" + algorithmName + '\'' + ", scorable=" + scorable + ", segmentation=" + segmentation + ", pmmlMODEL=" + pmmlMODEL + ", name='" + name + '\'' + ", id='" + id + '\'' + ", parentId='" + parentId + '\'' + '}';
     }
 
     @Override

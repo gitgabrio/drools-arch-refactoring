@@ -15,12 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.implementations;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.Model;
 import org.kie.pmml.api.enums.PMML_MODEL;
@@ -32,6 +26,12 @@ import org.kie.pmml.compilation.api.provider.ModelImplementationProviderFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
 public class KiePMMLModelRetriever {
 
     private static final Logger logger = LoggerFactory.getLogger(KiePMMLModelRetriever.class.getName());
@@ -40,20 +40,6 @@ public class KiePMMLModelRetriever {
 
     private KiePMMLModelRetriever() {
     }
-
-    /**
-     * Read the given <code>CompilationDTO</code> to return an <code>Optional&lt;
-     * KiePMMLModel&gt;</code>
-     * @param compilationDTO * @return
-     * @throws KiePMMLException if any <code>KiePMMLInternalException</code> has been thrown during execution
-     */
-    public static Optional<KiePMMLModel> getFromCommonDataAndTransformationDictionaryAndModel(final CompilationDTO compilationDTO) {
-        logger.trace("getFromCommonDataAndTransformationDictionaryAndModel {}", compilationDTO);
-        return getModelImplementationProviderStream(compilationDTO.getPMML_MODEL())
-                .map(implementation -> implementation.getKiePMMLModel((CompilationDTO<Model>) compilationDTO))
-                .findFirst();
-    }
-
 
     public static Optional<Map<String, String>> getSourcesMapFromCommonDataAndTransformationDictionaryAndModel(final CompilationDTO compilationDTO) {
         logger.trace("getSourcesMapFromCommonDataAndTransformationDictionaryAndModel {}", compilationDTO);
@@ -65,6 +51,7 @@ public class KiePMMLModelRetriever {
     /**
      * Read the given <code>CompilationDTO</code> to return an <code>Optional&lt;
      * KiePMMLModel&gt;</code>
+     *
      * @param compilationDTO
      * @return
      * @throws KiePMMLException if any <code>KiePMMLInternalException</code> has been thrown during execution
@@ -74,14 +61,15 @@ public class KiePMMLModelRetriever {
         final Function<ModelImplementationProvider<Model, KiePMMLModel>, KiePMMLModel> modelFunction =
                 implementation -> implementation.getKiePMMLModelWithSources(compilationDTO);
         return getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCommon(compilationDTO.getFields(),
-                                                                                     compilationDTO.getModel(),
-                                                                                     modelFunction);
+                compilationDTO.getModel(),
+                modelFunction);
     }
 
     /**
      * Read the given <code>CompilationDTO</code> to return an <code>Optional&lt;
      * KiePMMLModel&gt;</code>
      * Method provided only to have <b>drools</b> models working when invoked by a <code>KiePMMLMiningModel</code>
+     *
      * @param compilationDTO
      * @return
      * @throws KiePMMLException if any <code>KiePMMLInternalException</code> has been thrown during execution
@@ -91,8 +79,8 @@ public class KiePMMLModelRetriever {
         final Function<ModelImplementationProvider<Model, KiePMMLModel>, KiePMMLModel> modelFunction =
                 implementation -> implementation.getKiePMMLModelWithSourcesCompiled(compilationDTO);
         return getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCommon(compilationDTO.getFields(),
-                                                                                     compilationDTO.getModel(),
-                                                                                     modelFunction);
+                compilationDTO.getModel(),
+                modelFunction);
     }
 
     static Optional<KiePMMLModel> getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCommon(final List<Field<?>> fields,
@@ -109,6 +97,7 @@ public class KiePMMLModelRetriever {
     /**
      * Returns a <code>Stream</code> with <code>ModelImplementationProvider</code> targeting the given
      * <code>PMML_MODEL</code>
+     *
      * @param pmmlMODEL
      * @return
      */

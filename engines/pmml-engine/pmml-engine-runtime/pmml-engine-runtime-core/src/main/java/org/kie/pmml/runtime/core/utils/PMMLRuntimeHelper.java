@@ -16,7 +16,6 @@
 package org.kie.pmml.runtime.core.utils;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -25,7 +24,6 @@ import org.kie.dar.common.api.model.GeneratedRedirectResource;
 import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.PMML_MODEL;
@@ -34,7 +32,6 @@ import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.KiePMMLModelFactory;
 import org.kie.pmml.commons.model.ProcessingDTO;
-import org.kie.pmml.runtime.core.PMMLContextImpl;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinder;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinderImpl;
@@ -127,13 +124,12 @@ public class PMMLRuntimeHelper {
         return new DAROutputPMML(darInputPMML.getFRI(), result);
     }
 
-    static PMML4Result evaluate(final List<KiePMMLModel> kiePMMLModels, final PMMLRequestData pmmlRequestData) {
+    static PMML4Result evaluate(final List<KiePMMLModel> kiePMMLModels, final PMMLContext pmmlContext) {
         if (logger.isDebugEnabled()) {
-            logger.debug("evaluate {}", pmmlRequestData);
+            logger.debug("evaluate {}", pmmlContext);
         }
-        String modelName = pmmlRequestData.getModelName();
+        String modelName = pmmlContext.getRequestData().getModelName();
         KiePMMLModel toEvaluate = getModel(kiePMMLModels, modelName).orElseThrow(() -> new KiePMMLException("Failed to retrieve model with name " + modelName));
-        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData);
         return evaluate(toEvaluate, pmmlContext);
     }
 

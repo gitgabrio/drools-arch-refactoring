@@ -72,18 +72,18 @@
       <artifactId>pmml-engine-models-regression-runtime</artifactId>
     </dependency>
 <!--    Mining -->
-<!--    <dependency>-->
-<!--      <groupId>org.kie</groupId>-->
-<!--      <artifactId>pmml-engine-models-mining-model</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.kie</groupId>-->
-<!--      <artifactId>pmml-engine-models-mining-compilation</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.kie</groupId>-->
-<!--      <artifactId>pmml-engine-models-mining-runtime</artifactId>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>pmml-engine-models-mining-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>pmml-engine-models-mining-compilation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>pmml-engine-models-mining-runtime</artifactId>
+    </dependency>
 <!--     Clustering -->
     <dependency>
       <groupId>org.kie</groupId>

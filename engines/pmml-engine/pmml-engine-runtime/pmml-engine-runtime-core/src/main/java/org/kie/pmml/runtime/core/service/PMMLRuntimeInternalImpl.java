@@ -44,13 +44,13 @@ public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
     }
 
     @Override
-    public PMML4Result evaluate(final String fileName, String modelName, PMMLContext context) {
-        String basePath = fileName + SLASH + modelName;
+    public PMML4Result evaluate(String modelName, PMMLContext context) {
+        String basePath = context.getFileName() + SLASH + modelName;
         FRI fri = new FRI(basePath, "pmml");
         if (!canManage(fri)) {
             return null;
         }
-        DARInputPMML darInputPMML = new DARInputPMML(fri, context.getRequestData());
+        DARInputPMML darInputPMML = new DARInputPMML(fri, context);
         Optional<DAROutputPMML> retrieved = execute(darInputPMML, memoryCompilerClassLoader);
         return retrieved.map(DAROutputPMML::getOutputData).orElse(null);
     }

@@ -15,14 +15,9 @@
  */
 package org.kie.pmml.compilation.commons.mocks;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
-import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
@@ -31,6 +26,9 @@ import org.kie.pmml.compilation.api.dto.CompilationDTO;
 import org.kie.pmml.compilation.api.mocks.TestModel;
 import org.kie.pmml.compilation.api.provider.ModelImplementationProvider;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.kie.pmml.commons.Constants.MISSING_DEFAULT_CONSTRUCTOR;
 import static org.kie.pmml.commons.testingutility.KiePMMLTestingModel.PMML_MODEL_TYPE;
@@ -59,14 +57,6 @@ public class TestingModelImplementationProvider implements ModelImplementationPr
     }
 
     @Override
-    public KiePMMLTestingModel getKiePMMLModel(final CompilationDTO<TestModel> compilationDTO) {
-        return KiePMMLTestingModel.builder("TEST_MODEL",
-                                           Collections.emptyList(),
-                                           MINING_FUNCTION.REGRESSION)
-                .build();
-    }
-
-    @Override
     public Map<String, String> getSourcesMap(CompilationDTO<TestModel> compilationDTO) {
         return getKiePMMLTestModelSourcesMap(compilationDTO);
     }
@@ -75,9 +65,9 @@ public class TestingModelImplementationProvider implements ModelImplementationPr
 
         String className = compilationDTO.getSimpleClassName();
         CompilationUnit cloneCU = JavaParserUtils.getKiePMMLModelCompilationUnit(className,
-                                                                                 compilationDTO.getPackageName(),
-                                                                                 KIE_PMML_TEST_MODEL_TEMPLATE_JAVA,
-                                                                                 KIE_PMML_TEST_MODEL_TEMPLATE);
+                compilationDTO.getPackageName(),
+                KIE_PMML_TEST_MODEL_TEMPLATE_JAVA,
+                KIE_PMML_TEST_MODEL_TEMPLATE);
         ClassOrInterfaceDeclaration modelTemplate = cloneCU.getClassByName(className)
                 .orElseThrow(() -> new KiePMMLException(MAIN_CLASS_NOT_FOUND + ": " + className));
         String modelName = compilationDTO.getModelName();

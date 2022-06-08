@@ -36,13 +36,13 @@ public interface ModelImplementationProvider<T extends Model, E extends KiePMMLM
 
     Class<E> getKiePMMLModelClass();
 
-    /**
-     * Method to be called for a <b>runtime</b> compilation
-     * @param compilationDTO
-     * @return
-     * @throws KiePMMLInternalException
-     */
-    E getKiePMMLModel(final CompilationDTO<T> compilationDTO);
+//    /**
+//     * Method to be called for a <b>runtime</b> compilation
+//     * @param compilationDTO
+//     * @return
+//     * @throws KiePMMLInternalException
+//     */
+//    E getKiePMMLModel(final CompilationDTO<T> compilationDTO);
 
     /**
      * Method to be called following a <b>kie-maven-plugin</b> invocation
