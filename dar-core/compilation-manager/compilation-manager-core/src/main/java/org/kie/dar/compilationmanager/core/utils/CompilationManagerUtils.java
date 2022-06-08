@@ -51,6 +51,7 @@ public class CompilationManagerUtils {
         Optional<KieCompilerService> retrieved = getKieCompilerService(toProcess, true);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
+            return;
         }
         Optional<List<DARCompilationOutput>> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
         darCompilationOutputOptional.ifPresent(darCompilationOutputs -> {

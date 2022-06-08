@@ -72,42 +72,10 @@ public class PMMLCompilerImpl implements PMMLCompiler {
         try {
             PMML commonPMMLModel = KiePMMLUtil.load(inputStream, fileName);
             List<Model> models = commonPMMLModel.getModels();
-//            Set<String> expectedClasses = commonPMMLModel.getModels()
-//                    .stream()
-//                    .map(model -> {
-//                        String modelPackageName = getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE,
-//                                packageName,
-//                                model.getModelName()));
-//                        return modelPackageName + "." + getSanitizedClassName(model.getModelName());
-//                    })
-//                    .collect(Collectors.toSet());
             final List<KiePMMLModel> toReturn = getModelsWithSources(packageName, commonPMMLModel, hasClassLoader);
             final List<KiePMMLFactoryModel> toAdd = toReturn.stream()
                     .map(kiePMMLModel -> getKiePMMLFactoryModel(kiePMMLModel, models, packageName)).collect(Collectors.toList());
             toReturn.addAll(toAdd);
-//
-//
-//            final Set<String> generatedClasses = new HashSet<>();
-//            Map<String, Boolean> expectedClassModelTypeMap =
-//                    expectedClasses
-//                            .stream()
-//                            .collect(Collectors.toMap(expectedClass -> expectedClass,
-//                                    expectedClass -> {
-//                                        HasSourcesMap retrieved = getHasSourceMap(toReturn,
-//                                                expectedClass);
-//                                        generatedClasses.addAll(retrieved.getSourcesMap().keySet());
-//                                        return retrieved.isInterpreted();
-//                                    }));
-//            if (!generatedClasses.containsAll(expectedClasses)) {
-//                expectedClasses.removeAll(generatedClasses);
-//                String missingClasses = String.join(", ", expectedClasses);
-//                throw new KiePMMLException("Expected generated class " + missingClasses + " not found");
-//            }
-//
-//            Map<String, String> factorySourceMap = getFactorySourceCode(factoryClassName, packageName, expectedClassModelTypeMap);
-//            KiePMMLFactoryModel kiePMMLFactoryModel = new KiePMMLFactoryModel(factoryClassName, packageName,
-//                    factorySourceMap);
-//            toReturn.add(kiePMMLFactoryModel);
             return toReturn;
         } catch (KiePMMLInternalException e) {
             throw new KiePMMLException("KiePMMLInternalException", e);

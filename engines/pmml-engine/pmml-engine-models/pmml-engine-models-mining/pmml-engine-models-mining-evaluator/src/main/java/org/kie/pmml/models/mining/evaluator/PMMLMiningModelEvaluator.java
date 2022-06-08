@@ -47,7 +47,7 @@ import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 import org.kie.pmml.commons.model.tuples.KiePMMLValueWeight;
 import org.kie.pmml.runtime.api.exceptions.KiePMMLModelException;
-import import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
+import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.models.mining.model.KiePMMLMiningModel;
 import org.kie.pmml.models.mining.model.enums.MULTIPLE_MODEL_METHOD;
 import org.kie.pmml.models.mining.model.segmentation.KiePMMLSegment;
