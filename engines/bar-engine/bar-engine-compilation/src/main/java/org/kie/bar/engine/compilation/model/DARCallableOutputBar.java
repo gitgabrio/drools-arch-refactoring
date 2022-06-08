@@ -16,14 +16,14 @@
 package org.kie.bar.engine.compilation.model;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+import org.kie.dar.compilationmanager.api.model.DARCallableOutputClassesContainer;
 
 import java.util.Map;
 
-public class DARFinalOutputBar extends DARFinalOutputClassesContainer {
+public class DARCallableOutputBar extends DARCallableOutputClassesContainer {
 
 
-    public DARFinalOutputBar(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    public DARCallableOutputBar(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, fullClassName, compiledClassMap);
     }
 

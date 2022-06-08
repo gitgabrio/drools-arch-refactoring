@@ -13,23 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutput;
 
-public class MockDARFinalOutput implements DARFinalOutput {
+public abstract class AbstractDARCallableCompilationOutput implements DARCallableOutput {
 
-    private FRI fri = new FRI( "mock/dar/output/module", "mock");
+    private final FRI fri;
+    private final String fullClassName;
 
+    protected AbstractDARCallableCompilationOutput(FRI fri, String fullClassName) {
+        this.fri = fri;
+        this.fullClassName = fullClassName;
+    }
+
+    /**
+     * Returns the <b>full resource identifier</b> to be invoked for execution
+     *
+     * @return
+     */
     @Override
     public FRI getFri() {
         return fri;
     }
 
-    @Override
+    /**
+     * Returns the <b>full class name</b> to be instantiated for execution
+     *
+     * @return
+     */
     public String getFullClassName() {
-        return "mock.dar.output.Module";
+        return fullClassName;
     }
-
 }

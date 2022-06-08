@@ -19,9 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
+import org.kie.foo.engine.compilation.model.DARCallableOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,14 +53,16 @@ class KieCompilerServiceFooTest {
     @Test
     void processResource() {
         DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
-        DARFinalOutputFoo retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotNull();
+        List<DARCallableOutputFoo> listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        assertThat(listRetrieved).isNotNull().hasSize(1);
+        DARCallableOutputFoo retrieved = listRetrieved.get(0);
         Map<String, byte[]> retrievedByteCode1 = retrieved.getCompiledClassesMap();
         retrievedByteCode1.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode1, fullClassName, memoryCompilerClassLoader));
 
         toProcess = getDARResourceIntermediate();
-        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotNull();
+        listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        assertThat(listRetrieved).isNotNull().hasSize(1);
+        retrieved = listRetrieved.get(0);
         Map<String, byte[]> retrievedByteCode2 = retrieved.getCompiledClassesMap();
         retrievedByteCode2.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode2, fullClassName, memoryCompilerClassLoader));
 

@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.api.model;
+package org.kie.foo.engine.compilation.model;
 
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.compilationmanager.api.model.DARCallableOutputClassesContainer;
 
-public abstract class AbstractDARFinalCompilationOutput extends AbstractDARCompilationOutput implements DARFinalOutput {
+import java.util.Map;
 
-    private final String fullClassName;
+public class DARCallableOutputFoo extends DARCallableOutputClassesContainer {
 
-    protected AbstractDARFinalCompilationOutput(FRI fri, String fullClassName) {
-        super(fri);
-        this.fullClassName = fullClassName;
+    public DARCallableOutputFoo(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+        super(fri, fullClassName, compiledClassMap);
     }
 
-
-    @Override
-    public String getFullClassName() {
-        return fullClassName;
-    }
 }

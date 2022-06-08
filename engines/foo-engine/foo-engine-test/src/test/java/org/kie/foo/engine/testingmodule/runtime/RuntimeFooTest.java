@@ -21,7 +21,6 @@ import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedResources;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
@@ -29,7 +28,6 @@ import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
-import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
 import org.kie.foo.engine.runtime.model.DARInputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -38,7 +36,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

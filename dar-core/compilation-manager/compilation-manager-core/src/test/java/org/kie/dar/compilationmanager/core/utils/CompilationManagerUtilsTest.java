@@ -17,7 +17,7 @@ package org.kie.dar.compilationmanager.core.utils;/*
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.*;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+import org.kie.dar.compilationmanager.api.model.DARCallableOutputClassesContainer;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +36,7 @@ class CompilationManagerUtilsTest {
     private final static FRI fri = new FRI("this/is/fri", modelType);
     private final static FRI notExistingfri = new FRI("this/is/fri", "notexisting");
     private final static Map<String, byte[]> compiledClassMap = IntStream.range(0, 3).boxed().collect(Collectors.toMap(integer -> "class_" + integer, integer -> new byte[0]));
-    private final static DARFinalOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(fri);
+    private final static DARCallableOutputClassesContainer finalOutput = getDARFinalOutputClassesContainer(fri);
 
 //    @BeforeEach
 //    public void init() {
@@ -65,7 +65,7 @@ class CompilationManagerUtilsTest {
 
     @Test
     void getIndexFileNotExisting() {
-        DARFinalOutputClassesContainer notExistingOutput = getDARFinalOutputClassesContainer(notExistingfri);
+        DARCallableOutputClassesContainer notExistingOutput = getDARFinalOutputClassesContainer(notExistingfri);
         IndexFile retrieved = CompilationManagerUtils.getIndexFile(notExistingOutput);
         assertThat(retrieved).isNotNull();
         String expectedName = "IndexFile.notexisting_json";
@@ -147,8 +147,8 @@ class CompilationManagerUtilsTest {
         });
     }
 
-    private static DARFinalOutputClassesContainer getDARFinalOutputClassesContainer(FRI usedFri) {
-        return new DARFinalOutputClassesContainer(usedFri, usedFri.getModel() +"Resources", compiledClassMap) {
+    private static DARCallableOutputClassesContainer getDARFinalOutputClassesContainer(FRI usedFri) {
+        return new DARCallableOutputClassesContainer(usedFri, usedFri.getModel() +"Resources", compiledClassMap) {
         };
     }
 }

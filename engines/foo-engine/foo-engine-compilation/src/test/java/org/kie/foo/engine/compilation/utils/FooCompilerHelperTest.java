@@ -18,7 +18,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.foo.engine.compilation.model.DARFinalOutputFoo;
+import org.kie.foo.engine.compilation.model.DARCallableOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.HashMap;
@@ -43,7 +43,7 @@ class FooCompilerHelperTest {
     @Test
     void getDARProcessedFoo() {
         DARResource darResourceFoo = getDARFileResource(getFileFromFileName("DarFoo.foo"));
-        DARFinalOutputFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
+        DARCallableOutputFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         retrievedByteCode.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader));

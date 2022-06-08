@@ -17,18 +17,21 @@ package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
-public abstract class AbstractDARCompilationOutput implements DARCompilationOutput {
+import java.util.Map;
 
-    private final FRI fri;
+/**
+ * A <code>DARClassesContainer</code> containing compiled classes
+ */
+public class DAROutputClassesContainer implements DARClassesContainer {
 
-    protected AbstractDARCompilationOutput(FRI fri) {
-        this.fri = fri;
+    private final Map<String, byte[]> compiledClassMap;
+
+    public DAROutputClassesContainer(Map<String, byte[]> compiledClassMap) {
+        this.compiledClassMap = compiledClassMap;
     }
 
     @Override
-    public FRI getFri() {
-        return fri;
+    public Map<String, byte[]> getCompiledClassesMap() {
+        return compiledClassMap;
     }
-
-
 }

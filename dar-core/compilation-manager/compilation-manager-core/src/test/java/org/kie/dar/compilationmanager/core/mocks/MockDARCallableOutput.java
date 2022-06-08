@@ -13,17 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.foo.engine.compilation.model;
+package org.kie.dar.compilationmanager.core.mocks;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+import org.kie.dar.compilationmanager.api.model.DARCallableOutput;
 
-import java.util.Map;
+public class MockDARCallableOutput implements DARCallableOutput {
 
-public class DARFinalOutputFoo extends DARFinalOutputClassesContainer {
+    private FRI fri = new FRI( "mock/dar/output/module", "mock");
 
-    public DARFinalOutputFoo(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
-        super(fri, fullClassName, compiledClassMap);
+    @Override
+    public FRI getFri() {
+        return fri;
+    }
+
+    @Override
+    public String getFullClassName() {
+        return "mock.dar.output.Module";
     }
 
 }

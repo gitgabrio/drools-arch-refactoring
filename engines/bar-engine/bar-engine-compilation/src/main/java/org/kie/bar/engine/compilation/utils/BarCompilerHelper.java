@@ -23,7 +23,7 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
-import org.kie.bar.engine.compilation.model.DARFinalOutputBar;
+import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
 import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.utils.JavaParserUtils;
@@ -35,7 +35,6 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,7 +63,7 @@ public class BarCompilerHelper {
         }
     }
 
-    static DARFinalOutputBar getDARFinalOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static DARCallableOutputBar getDARFinalOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         String fileName = ((File) resource.getContent()).getName().toLowerCase();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI (basePath, "bar");
@@ -80,7 +79,7 @@ public class BarCompilerHelper {
         String fullResourceClassName = getFullClassName(barResourcesSourceCompilationUnit);
         sourcesMap.put(fullResourceClassName, barResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputBar(fri, fullResourceClassName, compiledClasses);
+        return new DARCallableOutputBar(fri, fullResourceClassName, compiledClasses);
     }
 
     static DARRedirectOutputBar getDARRedirectOutputBar(DARFileResource resource) {

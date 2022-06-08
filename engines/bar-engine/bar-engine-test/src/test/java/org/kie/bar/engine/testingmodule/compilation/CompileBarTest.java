@@ -80,7 +80,7 @@ class CompileBarTest {
         // TODO
 //        assertTrue(darCompilationOutput.isPresent());
 //        DARCompilationOutput retrieved = darCompilationOutput.get();
-//        assertTrue(retrieved instanceof DARFinalOutputFoo);
+//        assertTrue(retrieved instanceof DARCallableOutputFoo);
     }
 
     @Test

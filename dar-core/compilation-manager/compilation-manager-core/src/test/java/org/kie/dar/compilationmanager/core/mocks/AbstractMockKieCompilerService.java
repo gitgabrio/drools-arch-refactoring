@@ -21,15 +21,18 @@ import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractMockKieCompilerService implements KieCompilerService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARCompilationOutput> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public <T extends DARResource, E extends DARCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("Unmanaged resource %s", toProcess.getClass()));
         }
-        return (E) new MockDARFinalOutput();
+        return (List<E>) Collections.singletonList(new MockDARCallableOutput());
     }
 
 }

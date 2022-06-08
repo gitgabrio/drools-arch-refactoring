@@ -25,7 +25,6 @@ import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
@@ -62,8 +61,7 @@ class RuntimeBarTest {
         File barFile = getFileFromFileName("DarBar.bar");
         DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
-        assertThat(indexFiles).isNotNull();
-        assertThat(indexFiles).hasSize(1);
+        assertThat(indexFiles).isNotNull().hasSize(1);
         retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrievedOutput).isPresent();
         DAROutput retrieved = retrievedOutput.get();

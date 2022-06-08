@@ -20,13 +20,13 @@ import org.kie.dar.common.api.model.FRI;
 import java.util.Map;
 
 /**
- * A <code>DARFinalOutput</code> containing compiled classes
+ * A <code>DARCallableOutput</code> containing compiled classes
  */
-public abstract class DARFinalOutputClassesContainer extends AbstractDARFinalCompilationOutput implements DARClassesContainer {
+public abstract class DARCallableOutputClassesContainer extends AbstractDARCallableCompilationOutput implements DARClassesContainer {
 
     private final Map<String, byte[]> compiledClassMap;
 
-    protected DARFinalOutputClassesContainer(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    protected DARCallableOutputClassesContainer(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, fullClassName);
         this.compiledClassMap = compiledClassMap;
     }

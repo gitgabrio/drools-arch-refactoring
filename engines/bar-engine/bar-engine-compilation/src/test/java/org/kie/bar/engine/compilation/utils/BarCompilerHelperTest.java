@@ -16,7 +16,7 @@ package org.kie.bar.engine.compilation.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARFinalOutputBar;
+import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
 import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -39,7 +39,7 @@ class BarCompilerHelperTest {
     void getDARFinalOutputBar() {
         File barFile = getFileFromFileName("RedirectBar.bar");
         DARFileResource darResourceBar = new DARFileResource(barFile);
-        DARFinalOutputBar retrieved = BarCompilerHelper.getDARFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
+        DARCallableOutputBar retrieved = BarCompilerHelper.getDARFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
 
     }
