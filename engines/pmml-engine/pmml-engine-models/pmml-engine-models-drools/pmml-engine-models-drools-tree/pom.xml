@@ -16,7 +16,7 @@
   <modules>
     <module>pmml-engine-models-drools-tree-model</module>
     <module>pmml-engine-models-drools-tree-compiler</module>
-    <module>pmml-engine-models-drools-tree-evaluator</module>
+    <module>pmml-engine-models-drools-tree-runtime</module>
     <module>pmml-engine-models-drools-tree-tests</module>
   </modules>
 

@@ -1,2 +1,2 @@
 # SPI implementations
-org.kie.pmml.compiler.service.KieCompilerServicePMML
+org.kie.pmml.compilation.service.KieCompilerServicePMML

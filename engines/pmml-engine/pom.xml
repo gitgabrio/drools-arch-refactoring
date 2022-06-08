@@ -60,7 +60,7 @@
                 <artifactId>pmml-engine-compilation-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- Evaluator -->
+            <!-- Runtime -->
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-runtime-api</artifactId>
@@ -91,12 +91,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <artifactId>pmml-engine-models-regression-compilation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <artifactId>pmml-engine-models-regression-runtime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Tree -->
@@ -107,12 +107,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-compilation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-runtime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Scorecard -->
@@ -123,12 +123,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-compilation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-runtime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Mining -->
@@ -139,12 +139,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <artifactId>pmml-engine-models-mining-compilation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <artifactId>pmml-engine-models-mining-runtime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Clustering -->
@@ -155,12 +155,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <artifactId>pmml-engine-models-clustering-compilation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <artifactId>pmml-engine-models-clustering-runtime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- SOURCES -->
@@ -196,7 +196,7 @@
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
-            <!-- Evaluator -->
+            <!-- Runtime -->
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-runtime-api</artifactId>
@@ -232,13 +232,13 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <artifactId>pmml-engine-models-regression-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <artifactId>pmml-engine-models-regression-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
@@ -251,13 +251,13 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
@@ -270,13 +270,13 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
@@ -289,13 +289,13 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <artifactId>pmml-engine-models-mining-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <artifactId>pmml-engine-models-mining-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
@@ -308,13 +308,13 @@
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <artifactId>pmml-engine-models-clustering-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <artifactId>pmml-engine-models-clustering-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
@@ -366,7 +366,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            <!-- Evaluator -->
+            <!-- Runtime -->
             <dependency>
                 <groupId>org.kie</groupId>
                 <artifactId>pmml-engine-runtime-core</artifactId>
@@ -382,26 +382,26 @@
             <!-- Regression -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-compiler</artifactId>
+                <artifactId>pmml-engine-models-regression-compilation</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+                <artifactId>pmml-engine-models-regression-runtime</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <!-- Tree Codegen -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-tree-compiler</artifactId>
+                <artifactId>pmml-engine-models-tree-compilation</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-tree-evaluator</artifactId>
+                <artifactId>pmml-engine-models-tree-runtime</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
@@ -415,65 +415,65 @@
             <!-- Tree -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-compilation</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-tree-runtime</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <!-- Scorecard -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-compilation</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
+                <artifactId>pmml-engine-models-drools-scorecard-runtime</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <!-- Scorecard codegen -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-scorecard-compiler</artifactId>
+                <artifactId>pmml-engine-models-scorecard-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>tests</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-scorecard-evaluator</artifactId>
+                <artifactId>pmml-engine-models-scorecard-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>tests</classifier>
             </dependency>
             <!-- Mining -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-compiler</artifactId>
+                <artifactId>pmml-engine-models-mining-compilation</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+                <artifactId>pmml-engine-models-mining-runtime</artifactId>
                 <classifier>tests</classifier>
                 <version>${project.version}</version>
             </dependency>
             <!-- Clustering -->
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+                <artifactId>pmml-engine-models-clustering-compilation</artifactId>
                 <version>${project.version}</version>
                 <classifier>tests</classifier>
             </dependency>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+                <artifactId>pmml-engine-models-clustering-runtime</artifactId>
                 <version>${project.version}</version>
                 <classifier>tests</classifier>
             </dependency>

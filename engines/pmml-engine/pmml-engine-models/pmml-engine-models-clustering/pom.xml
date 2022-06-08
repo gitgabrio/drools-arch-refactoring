@@ -15,8 +15,8 @@
 
   <modules>
     <module>pmml-engine-models-clustering-model</module>
-    <module>pmml-engine-models-clustering-compiler</module>
-    <module>pmml-engine-models-clustering-evaluator</module>
+    <module>pmml-engine-models-clustering-compilation</module>
+    <module>pmml-engine-models-clustering-runtime</module>
     <module>pmml-engine-models-clustering-tests</module>
   </modules>
 

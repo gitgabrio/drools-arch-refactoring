@@ -307,7 +307,7 @@ public class PMMLMiningModelEvaluator implements PMMLModelEvaluator<KiePMMLMinin
 
     /**
      * Evaluate the model contained in the <code>KiePMMLSegment</code>, indirectly invoking
-     * the model-specific evaluator (through <code>PMMLRuntime</code> container)
+     * the model-specific runtime (through <code>PMMLRuntime</code> container)
      * @param toEvaluate
      * @param pmmlContext
      * @param knowledgeBase

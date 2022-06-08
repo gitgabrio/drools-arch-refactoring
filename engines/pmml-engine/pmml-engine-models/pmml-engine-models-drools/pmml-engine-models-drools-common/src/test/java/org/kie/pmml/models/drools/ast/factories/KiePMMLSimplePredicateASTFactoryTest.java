@@ -27,7 +27,7 @@ import org.dmg.pmml.SimplePredicate;
 import org.junit.Test;
 import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.api.enums.ResultCode;
-import org.kie.pmml.compiler.api.testutils.PMMLModelTestUtils;
+import org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsRule;
 import org.kie.pmml.models.drools.ast.KiePMMLFieldOperatorValue;
 import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;

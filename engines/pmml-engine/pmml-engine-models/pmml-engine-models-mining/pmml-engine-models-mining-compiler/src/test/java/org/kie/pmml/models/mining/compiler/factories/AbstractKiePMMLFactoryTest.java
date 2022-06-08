@@ -31,7 +31,7 @@ import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
 import org.drools.compiler.builder.impl.KnowledgeBuilderImpl;
 import org.junit.Before;
-import org.kie.pmml.compiler.commons.utils.KiePMMLUtil;
+import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
 import org.kie.dar.common.api.utils.FileUtils;
 import org.xml.sax.SAXException;
 
@@ -40,10 +40,10 @@ import static org.kie.pmml.commons.Constants.PACKAGE_CLASS_TEMPLATE;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedPackageName;
-import static org.kie.pmml.compiler.api.utils.ModelUtils.getDerivedFields;
-import static org.kie.pmml.compiler.api.utils.ModelUtils.getFieldsFromDataDictionaryAndTransformationDictionary;
-import static org.kie.pmml.compiler.api.utils.ModelUtils.getTargetFieldName;
-import static org.kie.pmml.compiler.commons.utils.KiePMMLUtil.SEGMENTID_TEMPLATE;
+import static org.kie.pmml.compilation.api.utils.ModelUtils.getDerivedFields;
+import static org.kie.pmml.compilation.api.utils.ModelUtils.getFieldsFromDataDictionaryAndTransformationDictionary;
+import static org.kie.pmml.compilation.api.utils.ModelUtils.getTargetFieldName;
+import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.SEGMENTID_TEMPLATE;
 import static org.kie.pmml.models.mining.compiler.dto.MiningModelCompilationDTO.SEGMENTATIONNAME_TEMPLATE;
 
 public abstract class AbstractKiePMMLFactoryTest {

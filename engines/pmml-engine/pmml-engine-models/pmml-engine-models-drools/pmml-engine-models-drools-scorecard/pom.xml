@@ -16,7 +16,7 @@
   <modules>
     <module>pmml-engine-models-drools-scorecard-model</module>
     <module>pmml-engine-models-drools-scorecard-compiler</module>
-    <module>pmml-engine-models-drools-scorecard-evaluator</module>
+    <module>pmml-engine-models-drools-scorecard-runtime</module>
     <module>pmml-engine-models-drools-scorecard-tests</module>
   </modules>
 

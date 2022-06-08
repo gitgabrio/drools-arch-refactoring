@@ -27,7 +27,7 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
-import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
+import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
 public class PMMLRuleMappersFactory {
 

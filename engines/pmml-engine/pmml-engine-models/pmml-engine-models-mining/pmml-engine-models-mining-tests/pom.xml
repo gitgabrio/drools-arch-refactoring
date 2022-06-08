@@ -31,7 +31,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-mining-evaluator</artifactId>
+      <artifactId>pmml-engine-models-mining-runtime</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -46,7 +46,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+      <artifactId>pmml-engine-models-regression-runtime</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

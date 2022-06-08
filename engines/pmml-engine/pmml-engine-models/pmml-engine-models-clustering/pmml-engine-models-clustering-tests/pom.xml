@@ -23,12 +23,12 @@
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>pmml-engine-models-clustering-compiler</artifactId>
+            <artifactId>pmml-engine-models-clustering-compilation</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>pmml-engine-models-clustering-evaluator</artifactId>
+            <artifactId>pmml-engine-models-clustering-runtime</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

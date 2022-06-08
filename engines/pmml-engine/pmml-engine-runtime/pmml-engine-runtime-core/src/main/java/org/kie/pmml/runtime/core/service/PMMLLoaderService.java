@@ -17,7 +17,7 @@ package org.kie.pmml.runtime.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import static org.kie.pmml.evaluator.assembler.service.PMMLAssemblerService.getFactoryClassNamePackageName;
+//import static org.kie.pmml.runtime.assembler.service.PMMLAssemblerService.getFactoryClassNamePackageName;
 
 /**
  * Class meant to <b>load</b> resources

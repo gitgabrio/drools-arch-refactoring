@@ -54,17 +54,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
-import org.kie.pmml.compiler.api.dto.CommonCompilationDTO;
-import org.kie.pmml.compiler.commons.mocks.HasClassLoaderMock;
+import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
+import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;
 import org.kie.pmml.models.drools.dto.DroolsCompilationDTO;
 import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedPackageName;
-import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonEvaluateAssignExpr;
-import static org.kie.pmml.compiler.commons.testutils.CodegenTestUtils.commonEvaluateConstructor;
-import static org.kie.pmml.compiler.commons.utils.JavaParserUtils.getFromFileName;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonEvaluateAssignExpr;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonEvaluateConstructor;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
 
 public class KiePMMLDroolsModelFactoryUtilsTest {
 

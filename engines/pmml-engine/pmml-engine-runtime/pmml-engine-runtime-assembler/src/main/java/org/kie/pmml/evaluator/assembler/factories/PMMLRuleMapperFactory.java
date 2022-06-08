@@ -20,7 +20,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
-import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
+import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
 public class PMMLRuleMapperFactory {
 

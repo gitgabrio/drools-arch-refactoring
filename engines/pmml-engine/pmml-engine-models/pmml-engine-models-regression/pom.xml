@@ -17,8 +17,8 @@
 
   <modules>
     <module>pmml-engine-models-regression-model</module>
-    <module>pmml-engine-models-regression-compiler</module>
-    <module>pmml-engine-models-regression-evaluator</module>
+    <module>pmml-engine-models-regression-compilation</module>
+    <module>pmml-engine-models-regression-runtime</module>
     <module>pmml-engine-models-regression-tests</module>
   </modules>
 

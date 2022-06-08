@@ -24,13 +24,13 @@ import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
 import org.junit.Before;
 import org.junit.Test;
-import org.kie.pmml.compiler.api.testutils.TestUtils;
+import org.kie.pmml.compilation.api.testutils.TestUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsAST;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsType;
 import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compiler.api.CommonTestingUtils.getFieldsFromDataDictionary;
+import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;
 import static org.kie.pmml.models.drools.utils.KiePMMLASTTestUtils.getFieldTypeMap;
 
 public class KiePMMLScorecardModelASTFactoryTest {

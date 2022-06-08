@@ -7,9 +7,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>pmml-engine-models-mining-evaluator</artifactId>
-  <name>PMML :: ENGINE :: Models :: Mining :: Evaluator</name>
-  <description>PMML Mining Evaluator</description>
+  <artifactId>pmml-engine-models-mining-runtime</artifactId>
+  <name>PMML :: ENGINE :: Models :: Mining :: Runtime</name>
+  <description>PMML Mining Runtime</description>
 
   <dependencies>
     <!-- PMML -->
@@ -35,7 +35,7 @@
     </dependency>
 <!--    <dependency>-->
 <!--      <groupId>org.drools</groupId>-->
-<!--      <artifactId>drools-compiler</artifactId>-->
+<!--      <artifactId>drools-compilation</artifactId>-->
 <!--      <scope>test</scope>-->
 <!--    </dependency>-->
 <!--    <dependency>-->

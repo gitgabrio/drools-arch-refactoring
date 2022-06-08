@@ -7,9 +7,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>pmml-engine-models-drools-scorecard-evaluator</artifactId>
-  <name>PMML :: ENGINE :: Models :: Drools :: Scorecard :: Evaluator</name>
-  <description>PMML Scorecard Evaluator</description>
+  <artifactId>pmml-engine-models-drools-scorecard-runtime</artifactId>
+  <name>PMML :: ENGINE :: Models :: Drools :: Scorecard :: Runtime</name>
+  <description>PMML Scorecard Runtime</description>
 
   <dependencies>
     <!-- PMML -->

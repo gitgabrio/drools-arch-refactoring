@@ -28,9 +28,9 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.commons.model.KiePMMLModel;
-import org.kie.pmml.compiler.commons.codegenfactories.KiePMMLModelFactoryUtils;
-import org.kie.pmml.compiler.commons.utils.CommonCodegenUtils;
-import org.kie.pmml.compiler.commons.utils.JavaParserUtils;
+import org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils;
+import org.kie.pmml.compilation.commons.utils.CommonCodegenUtils;
+import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 import org.kie.pmml.models.mining.compiler.dto.MiningModelCompilationDTO;
 import org.kie.pmml.models.mining.model.KiePMMLMiningModel;
 import org.slf4j.Logger;
@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
 
 import static com.github.javaparser.StaticJavaParser.parseClassOrInterfaceType;
 import static org.kie.pmml.commons.Constants.MISSING_DEFAULT_CONSTRUCTOR;
-import static org.kie.pmml.compiler.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
-import static org.kie.pmml.compiler.commons.utils.JavaParserUtils.getFullClassName;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFullClassName;
 import static org.kie.pmml.models.mining.compiler.factories.KiePMMLSegmentationFactory.getSegmentationSourcesMap;
 import static org.kie.pmml.models.mining.compiler.factories.KiePMMLSegmentationFactory.getSegmentationSourcesMapCompiled;
 

@@ -31,14 +31,14 @@ import org.dmg.pmml.tree.TreeModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.compiler.api.testutils.TestUtils;
+import org.kie.pmml.compilation.api.testutils.TestUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsRule;
 import org.kie.pmml.models.drools.ast.factories.KiePMMLDataDictionaryASTFactory;
 import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compiler.api.CommonTestingUtils.getFieldsFromDataDictionary;
-import static org.kie.pmml.compiler.api.utils.ModelUtils.getTargetFieldType;
+import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;
+import static org.kie.pmml.compilation.api.utils.ModelUtils.getTargetFieldType;
 
 public class KiePMMLTreeModelNodeASTFactoryTest {
 

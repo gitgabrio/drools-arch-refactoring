@@ -16,7 +16,7 @@
   <modules>
     <module>pmml-engine-models-mining-model</module>
     <module>pmml-engine-models-mining-compiler</module>
-    <module>pmml-engine-models-mining-evaluator</module>
+    <module>pmml-engine-models-mining-runtime</module>
     <module>pmml-engine-models-mining-tests</module>
   </modules>
 

@@ -21,8 +21,8 @@ import java.util.List;
 import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
 import org.dmg.pmml.mining.Segmentation;
-import org.kie.pmml.compiler.commons.dto.AbstractSpecificCompilationDTO;
-import org.kie.pmml.compiler.api.dto.CompilationDTO;
+import org.kie.pmml.compilation.commons.dto.AbstractSpecificCompilationDTO;
+import org.kie.pmml.compilation.api.dto.CompilationDTO;
 
 import static org.kie.pmml.commons.Constants.PACKAGE_CLASS_TEMPLATE;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;

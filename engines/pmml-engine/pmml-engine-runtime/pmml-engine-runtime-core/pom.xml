@@ -12,7 +12,7 @@
   <artifactId>pmml-engine-runtime-core</artifactId>
 
   <name>PMML :: ENGINE :: Runtime :: Core</name>
-  <description>PMML Evaluator Core</description>
+  <description>PMML Runtime Core</description>
 
   <dependencies>
     <!-- PMML -->

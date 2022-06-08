@@ -24,7 +24,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.scorecard.Scorecard;
 import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.kie.pmml.compiler.commons.codegenfactories.KiePMMLModelFactoryUtils;
+import org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsAST;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsType;
 import org.kie.pmml.models.drools.dto.DroolsCompilationDTO;
@@ -33,7 +33,7 @@ import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.pmml.compiler.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 import static org.kie.pmml.models.drools.utils.KiePMMLDroolsModelFactoryUtils.getKiePMMLModelCompilationUnit;
 
 /**

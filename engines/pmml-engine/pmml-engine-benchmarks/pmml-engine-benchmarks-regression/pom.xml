@@ -43,7 +43,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-regression-evaluator</artifactId>
+      <artifactId>pmml-engine-models-regression-runtime</artifactId>
     </dependency>
     <!-- KIE -->
     <dependency>

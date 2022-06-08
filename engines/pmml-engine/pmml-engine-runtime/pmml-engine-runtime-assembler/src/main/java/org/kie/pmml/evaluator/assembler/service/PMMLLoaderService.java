@@ -33,14 +33,14 @@ import org.kie.pmml.api.exceptions.ExternalException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.model.HasNestedModels;
 import org.kie.pmml.commons.model.KiePMMLModel;
-import org.kie.pmml.compiler.commons.factories.KiePMMLModelFactory;
+import org.kie.pmml.compilation.commons.factories.KiePMMLModelFactory;
 import org.kie.pmml.evaluator.assembler.rulemapping.PMMLRuleMapper;
 import org.kie.pmml.evaluator.assembler.rulemapping.PMMLRuleMappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.kie.pmml.evaluator.assembler.factories.PMMLRuleMappersFactory.KIE_PMML_RULE_MAPPERS_CLASS_NAME;
-//import static org.kie.pmml.evaluator.assembler.service.PMMLAssemblerService.getFactoryClassNamePackageName;
+//import static org.kie.pmml.runtime.assembler.service.PMMLAssemblerService.getFactoryClassNamePackageName;
 
 /**
  * Class meant to <b>load</b> resources

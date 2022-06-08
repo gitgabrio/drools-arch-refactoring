@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.api.enums.OPERATOR;
 import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.kie.pmml.compiler.api.testutils.PMMLModelTestUtils;
+import org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLFieldOperatorValue;
 import org.kie.pmml.models.drools.tuples.KiePMMLOperatorValue;
 import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
@@ -41,8 +41,8 @@ import org.kie.pmml.models.drools.tuples.KiePMMLOriginalTypeGeneratedType;
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
-import static org.kie.pmml.compiler.api.testutils.PMMLModelTestUtils.getRandomObject;
-import static org.kie.pmml.compiler.api.testutils.PMMLModelTestUtils.getRandomSimplePredicateOperator;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomObject;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomSimplePredicateOperator;
 
 public class KiePMMLASTFactoryUtilsTest {
 

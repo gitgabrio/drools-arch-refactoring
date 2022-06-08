@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.testingutility.KiePMMLTestingModel;
-import org.kie.pmml.compiler.commons.factories.KiePMMLModelFactory;
+import org.kie.pmml.compilation.commons.factories.KiePMMLModelFactory;
 import org.kie.pmml.evaluator.assembler.rulemapping.PMMLRuleMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;

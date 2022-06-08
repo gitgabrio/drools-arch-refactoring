@@ -27,7 +27,7 @@
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>pmml-engine-models-drools-tree-evaluator</artifactId>
+      <artifactId>pmml-engine-models-drools-tree-runtime</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
