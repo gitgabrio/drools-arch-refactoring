@@ -91,7 +91,7 @@ public class CompoundPredicateScorecardTest extends AbstractPMMLTest {
         inputData.put("input2", input2);
         inputData.put("input3", input3);
         inputData.put("input4", input4);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(score);

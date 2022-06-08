@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
+import static org.kie.dar.common.api.model.FRI.SLASH;
 import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.canManage;
 import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.execute;
 
@@ -43,8 +44,9 @@ public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
     }
 
     @Override
-    public PMML4Result evaluate(String modelName, PMMLContext context) {
-        FRI fri = new FRI(modelName, "pmml");
+    public PMML4Result evaluate(final String fileName, String modelName, PMMLContext context) {
+        String basePath = fileName + SLASH + modelName;
+        FRI fri = new FRI(basePath, "pmml");
         if (!canManage(fri)) {
             return null;
         }

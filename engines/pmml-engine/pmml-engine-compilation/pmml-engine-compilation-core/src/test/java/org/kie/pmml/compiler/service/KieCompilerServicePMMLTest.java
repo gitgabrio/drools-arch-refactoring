@@ -16,18 +16,14 @@ package org.kie.pmml.compiler.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
-import org.kie.pmml.compiler.model.DARFinalOutputPMML;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 
 class KieCompilerServicePMMLTest {
@@ -56,7 +52,7 @@ class KieCompilerServicePMMLTest {
 //        File pmmlFile = getFileFromFileName("TestingSample.pmml");
 //        DARResource toProcess = new DARFileResource(pmmlFile);
 //        DARCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-//        assertThat(retrieved).isNotNull().isInstanceOf(DARFinalOutputPMML.class);
+//        assertThat(retrieved).isNotNull().isInstanceOf(DARCallableOutputPMML.class);
 
         // TODO after enabling drools models
 //        pmmlFile = getFileFromFileName("SimpleSetPredicateTree.pmml");

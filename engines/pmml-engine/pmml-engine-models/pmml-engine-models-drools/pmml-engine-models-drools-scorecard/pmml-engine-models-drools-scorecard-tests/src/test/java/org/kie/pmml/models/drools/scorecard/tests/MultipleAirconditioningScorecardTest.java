@@ -73,7 +73,7 @@ public class MultipleAirconditioningScorecardTest extends AbstractPMMLTest {
         inputData.put("worldcontinent", worldContinent);
         inputData.put("precipitation", precipitation);
         inputData.put("humidity", humidity);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat((double) (pmml4Result.getResultVariables().get(TARGET_FIELD)))

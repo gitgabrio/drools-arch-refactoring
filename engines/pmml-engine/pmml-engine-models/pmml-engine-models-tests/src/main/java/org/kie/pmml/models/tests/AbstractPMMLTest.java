@@ -68,17 +68,19 @@ public class AbstractPMMLTest {
 
     protected PMML4Result evaluate(final PMMLRuntime pmmlRuntime,
                                    final Map<String, Object> inputData,
+                                   final String fileName,
                                    final String modelName) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData));
+        return pmmlRuntime.evaluate(fileName,modelName, new PMMLContextImpl(pmmlRequestData));
     }
 
     protected PMML4Result evaluate(final PMMLRuntime pmmlRuntime,
                                    final Map<String, Object> inputData,
+                                   final String fileName,
                                    final String modelName,
                                    final Set<PMMLListener> pmmlListeners) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, pmmlListeners));
+        return pmmlRuntime.evaluate(fileName, modelName, new PMMLContextImpl(pmmlRequestData, pmmlListeners));
     }
 
     protected PMMLListenerTest getPMMLListener() {

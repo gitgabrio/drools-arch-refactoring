@@ -15,6 +15,7 @@
  */
 package org.kie.pmml.compiler.executor;
 
+import org.dmg.pmml.Model;
 import org.dmg.pmml.PMML;
 import org.kie.pmml.api.exceptions.ExternalException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -62,45 +63,51 @@ public class PMMLCompilerImpl implements PMMLCompiler {
     }
 
     @Override
-    public List<KiePMMLModel> getKiePMMLModelsWithSources(final String factoryClassName,
-                                                          final String packageName,
-                                                          final InputStream inputStream,
-                                                          final String fileName,
-                                                          final HasClassLoader hasClassLoader) {
+    public List<KiePMMLModel> getKiePMMLModelsWithSources(/*final String factoryClassName,*/
+            final String packageName,
+            final InputStream inputStream,
+            final String fileName,
+            final HasClassLoader hasClassLoader) {
         logger.trace("getModels {} {}", inputStream, hasClassLoader);
         try {
             PMML commonPMMLModel = KiePMMLUtil.load(inputStream, fileName);
-            Set<String> expectedClasses = commonPMMLModel.getModels()
-                    .stream()
-                    .map(model -> {
-                        String modelPackageName = getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE,
-                                packageName,
-                                model.getModelName()));
-                        return modelPackageName + "." + getSanitizedClassName(model.getModelName());
-                    })
-                    .collect(Collectors.toSet());
+            List<Model> models = commonPMMLModel.getModels();
+//            Set<String> expectedClasses = commonPMMLModel.getModels()
+//                    .stream()
+//                    .map(model -> {
+//                        String modelPackageName = getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE,
+//                                packageName,
+//                                model.getModelName()));
+//                        return modelPackageName + "." + getSanitizedClassName(model.getModelName());
+//                    })
+//                    .collect(Collectors.toSet());
             final List<KiePMMLModel> toReturn = getModelsWithSources(packageName, commonPMMLModel, hasClassLoader);
-            final Set<String> generatedClasses = new HashSet<>();
-            Map<String, Boolean> expectedClassModelTypeMap =
-                    expectedClasses
-                            .stream()
-                            .collect(Collectors.toMap(expectedClass -> expectedClass,
-                                    expectedClass -> {
-                                        HasSourcesMap retrieved = getHasSourceMap(toReturn,
-                                                expectedClass);
-                                        generatedClasses.addAll(retrieved.getSourcesMap().keySet());
-                                        return retrieved.isInterpreted();
-                                    }));
-            if (!generatedClasses.containsAll(expectedClasses)) {
-                expectedClasses.removeAll(generatedClasses);
-                String missingClasses = String.join(", ", expectedClasses);
-                throw new KiePMMLException("Expected generated class " + missingClasses + " not found");
-            }
-
-            Map<String, String> factorySourceMap = getFactorySourceCode(factoryClassName, packageName, expectedClassModelTypeMap);
-            KiePMMLFactoryModel kiePMMLFactoryModel = new KiePMMLFactoryModel(factoryClassName, packageName,
-                    factorySourceMap);
-            toReturn.add(kiePMMLFactoryModel);
+            final List<KiePMMLFactoryModel> toAdd = toReturn.stream()
+                    .map(kiePMMLModel -> getKiePMMLFactoryModel(kiePMMLModel, models, packageName)).collect(Collectors.toList());
+            toReturn.addAll(toAdd);
+//
+//
+//            final Set<String> generatedClasses = new HashSet<>();
+//            Map<String, Boolean> expectedClassModelTypeMap =
+//                    expectedClasses
+//                            .stream()
+//                            .collect(Collectors.toMap(expectedClass -> expectedClass,
+//                                    expectedClass -> {
+//                                        HasSourcesMap retrieved = getHasSourceMap(toReturn,
+//                                                expectedClass);
+//                                        generatedClasses.addAll(retrieved.getSourcesMap().keySet());
+//                                        return retrieved.isInterpreted();
+//                                    }));
+//            if (!generatedClasses.containsAll(expectedClasses)) {
+//                expectedClasses.removeAll(generatedClasses);
+//                String missingClasses = String.join(", ", expectedClasses);
+//                throw new KiePMMLException("Expected generated class " + missingClasses + " not found");
+//            }
+//
+//            Map<String, String> factorySourceMap = getFactorySourceCode(factoryClassName, packageName, expectedClassModelTypeMap);
+//            KiePMMLFactoryModel kiePMMLFactoryModel = new KiePMMLFactoryModel(factoryClassName, packageName,
+//                    factorySourceMap);
+//            toReturn.add(kiePMMLFactoryModel);
             return toReturn;
         } catch (KiePMMLInternalException e) {
             throw new KiePMMLException("KiePMMLInternalException", e);
@@ -109,6 +116,39 @@ public class PMMLCompilerImpl implements PMMLCompiler {
         } catch (Exception e) {
             throw new ExternalException("ExternalException", e);
         }
+    }
+
+    private KiePMMLFactoryModel getKiePMMLFactoryModel(KiePMMLModel kiePMMLModel, List<Model> models, String packageName) {
+        Set<String> expectedClasses = models
+                .stream()
+                .filter(model -> kiePMMLModel.getName().equals(model.getModelName()))
+                .map(model -> {
+                    String modelPackageName = getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE,
+                            packageName,
+                            model.getModelName()));
+                    return modelPackageName + "." + getSanitizedClassName(model.getModelName());
+                })
+                .collect(Collectors.toSet());
+        final Set<String> generatedClasses = new HashSet<>();
+        Map<String, Boolean> expectedClassModelTypeMap =
+                expectedClasses
+                        .stream()
+                        .collect(Collectors.toMap(expectedClass -> expectedClass,
+                                expectedClass -> {
+                                    HasSourcesMap retrieved = getHasSourceMap(kiePMMLModel,
+                                            expectedClass);
+                                    generatedClasses.addAll(retrieved.getSourcesMap().keySet());
+                                    return retrieved.isInterpreted();
+                                }));
+        if (!generatedClasses.containsAll(expectedClasses)) {
+            expectedClasses.removeAll(generatedClasses);
+            String missingClasses = String.join(", ", expectedClasses);
+            throw new KiePMMLException("Expected generated class " + missingClasses + " not found");
+        }
+        String factoryClassName = kiePMMLModel.getName() + "Factory";
+        Map<String, String> factorySourceMap = getFactorySourceCode(factoryClassName, packageName, expectedClassModelTypeMap);
+        return new KiePMMLFactoryModel(factoryClassName, packageName,
+                factorySourceMap);
     }
 
     /**
@@ -189,22 +229,40 @@ public class PMMLCompilerImpl implements PMMLCompiler {
                 .collect(Collectors.toList());
     }
 
-    private HasSourcesMap getHasSourceMap(final List<KiePMMLModel> toReturn, final String expectedClass) {
-        KiePMMLModel retrieved =
-                toReturn.stream().filter(kiePMMLModel -> {
-                            String fullSourceName =
-                                    String.format(PACKAGE_CLASS_TEMPLATE,
-                                            kiePMMLModel.getKModulePackageName(),
-                                            getSanitizedClassName(kiePMMLModel.getName()));
-                            return expectedClass.equals(fullSourceName);
-                        })
-                        .findFirst()
-                        .orElseThrow(() -> new KiePMMLException(String.format("Expected KiePMMLModel %s not found",
-                                expectedClass)));
-        if (!(retrieved instanceof HasSourcesMap)) {
-            throw new KiePMMLException(String.format("Expecting %s at this phase",
-                    HasSourcesMap.class.getCanonicalName()));
+    private HasSourcesMap getHasSourceMap(final KiePMMLModel kiePMMLModel, final String expectedClass) {
+        String fullSourceName =
+                String.format(PACKAGE_CLASS_TEMPLATE,
+                        kiePMMLModel.getKModulePackageName(),
+                        getSanitizedClassName(kiePMMLModel.getName()));
+        if (expectedClass.equals(fullSourceName)) {
+            if (!(kiePMMLModel instanceof HasSourcesMap)) {
+                throw new KiePMMLException(String.format("Expecting %s at this phase",
+                        HasSourcesMap.class.getCanonicalName()));
+            }
+            return (HasSourcesMap) kiePMMLModel;
+//        } else {
+//            throw new KiePMMLException(String.format("Expecting %s at this phase",
+//                    HasSourcesMap.class.getCanonicalName()));
+        } else {
+            return null;
         }
-        return (HasSourcesMap) retrieved;
     }
+//
+//        KiePMMLModel retrieved =
+//                toReturn.stream().filter(kiePMMLModel -> {
+//                            String fullSourceName =
+//                                    String.format(PACKAGE_CLASS_TEMPLATE,
+//                                            kiePMMLModel.getKModulePackageName(),
+//                                            getSanitizedClassName(kiePMMLModel.getName()));
+//                            return expectedClass.equals(fullSourceName);
+//                        })
+//                        .findFirst()
+//                        .orElseThrow(() -> new KiePMMLException(String.format("Expected KiePMMLModel %s not found",
+//                                expectedClass)));
+//        if (!(retrieved instanceof HasSourcesMap)) {
+//            throw new KiePMMLException(String.format("Expecting %s at this phase",
+//                    HasSourcesMap.class.getCanonicalName()));
+//        }
+//        return (HasSourcesMap) retrieved;
+//    }
 }

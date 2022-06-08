@@ -76,7 +76,7 @@ public class PlanActivityTreeTest extends AbstractPMMLTest {
         inputData.put("weather", this.weather);
         inputData.put("friendsAvailable", this.friendsAvailable);
 
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         Object result = pmml4Result.getResultVariables().get(TARGET_FIELD);
 

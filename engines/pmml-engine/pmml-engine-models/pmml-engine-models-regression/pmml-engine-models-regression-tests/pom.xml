@@ -16,11 +16,6 @@
     <dependencies>
         <!-- TEST -->
         <!-- PMML -->
-        <!--    <dependency>-->
-        <!--      <groupId>org.drools</groupId>-->
-        <!--      <artifactId>drools-wiring-dynamic</artifactId>-->
-        <!--      <scope>test</scope>-->
-        <!--    </dependency>-->
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>pmml-engine-models-regression-model</artifactId>

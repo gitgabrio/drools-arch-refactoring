@@ -16,13 +16,13 @@
 package org.kie.pmml.compiler.model;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFinalOutputClassesContainer;
+import org.kie.dar.compilationmanager.api.model.DARCallableOutputClassesContainer;
 
 import java.util.Map;
 
-public class DARFinalOutputPMML extends DARFinalOutputClassesContainer  {
+public class DARCallableOutputPMMLClassesContainer extends DARCallableOutputClassesContainer {
 
-    public DARFinalOutputPMML(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
+    public DARCallableOutputPMMLClassesContainer(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, fullClassName, compiledClassMap);
     }
 }

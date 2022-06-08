@@ -105,7 +105,7 @@ public class SingleIrisKMeansClusteringTest extends AbstractPMMLTest {
         inputData.put("petal_length", petalLength);
         inputData.put("petal_width", petalWidth);
 
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(irisClass);

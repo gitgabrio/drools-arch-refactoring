@@ -87,7 +87,7 @@ public class MiningModelChainTest extends AbstractPMMLTest {
         inputData.put(RESIDENCESTATE, residenceState);
         inputData.put(VALIDLICENSE, validLicense);
 
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(expectedResult);

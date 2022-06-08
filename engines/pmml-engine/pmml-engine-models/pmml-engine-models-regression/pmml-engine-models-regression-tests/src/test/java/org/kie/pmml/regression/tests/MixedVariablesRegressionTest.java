@@ -32,7 +32,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MixedVariablesRegressionTest extends AbstractPMMLTest {
 
-    private static final String FILE_NAME = "MixedVariablesRegression.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "MixedVariablesRegression";
+    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "MixedVariablesRegression";
     private static final String TARGET_FIELD = "result";
     private static PMMLRuntime pmmlRuntime;
@@ -73,7 +74,7 @@ public class MixedVariablesRegressionTest extends AbstractPMMLTest {
         final Map<String, Object> inputData = new HashMap<>();
         inputData.put("x", x);
         inputData.put("y", y);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result).isNotNull();
         assertThat(pmml4Result.getResultVariables()).containsKey(TARGET_FIELD);

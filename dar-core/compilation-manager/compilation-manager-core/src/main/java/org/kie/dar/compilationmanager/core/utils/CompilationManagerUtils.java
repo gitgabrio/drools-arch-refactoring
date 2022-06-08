@@ -76,27 +76,7 @@ public class CompilationManagerUtils {
                 .map(DARCallableOutput.class::cast)
                 .map(CompilationManagerUtils::getIndexFile)
                 .findFirst();
-
-
-//        IndexFile toReturn = getIndexFile(compilationOutput);
-//        if (compilationOutput instanceof DARCallableOutputWithMultipleOutputs) {
-//            ((DARCallableOutputWithMultipleOutputs) compilationOutput).getMultipleCompilationOutputs()
-//                    .forEach(finalOutput -> populateIndexFile(toReturn, finalOutput));
-//        } else {
-//            populateIndexFile(toReturn, compilationOutput);
-//        }
-//        return toReturn;
     }
-
-//    static IndexFile getIndexFileFromCompilationOutput(IndexFile toReturn, DARCompilationOutput compilationOutput) {
-//        if (compilationOutput instanceof DARCallableOutputWithMultipleOutputs) {
-//            ((DARCallableOutputWithMultipleOutputs) compilationOutput).getMultipleCompilationOutputs()
-//                    .forEach(finalOutput -> populateIndexFile(toReturn, finalOutput));
-//        } else {
-//            populateIndexFile(toReturn, compilationOutput);
-//        }
-//        return toReturn;
-//    }
 
     static IndexFile getIndexFile(DARCallableOutput compilationOutput) {
         String parentPath = System.getProperty(INDEXFILE_DIRECTORY_PROPERTY, DEFAULT_INDEXFILE_DIRECTORY);

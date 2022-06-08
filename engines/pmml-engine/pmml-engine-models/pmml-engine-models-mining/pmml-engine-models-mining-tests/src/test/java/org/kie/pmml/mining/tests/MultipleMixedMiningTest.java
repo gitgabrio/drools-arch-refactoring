@@ -90,7 +90,7 @@ public class MultipleMixedMiningTest extends AbstractPMMLTest {
         inputData.put("occupation", occupation);
         inputData.put("residenceState", residenceState);
         inputData.put("validLicense", validLicense);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(expectedResult);

@@ -33,7 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogisticRegressionTest extends AbstractPMMLTest {
 
-    private static final String FILE_NAME = "LogisticRegression.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "LogisticRegression";
+    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "LogisticRegression";
     private static final String TARGET_FIELD = "class";
     private static final String PROBABILITY_AUTHENTIC = "probability(Authentic)";
@@ -87,7 +88,7 @@ public class LogisticRegressionTest extends AbstractPMMLTest {
         inputData.put("skewness", skewness);
         inputData.put("curtosis", curtosis);
         inputData.put("entropy", entropy);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(expectedResult);

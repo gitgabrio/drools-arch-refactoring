@@ -23,18 +23,23 @@ import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.exceptions.ExternalException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.kie.pmml.commons.model.*;
+import org.kie.pmml.commons.model.HasClassLoader;
+import org.kie.pmml.commons.model.KiePMMLFactoryModel;
+import org.kie.pmml.commons.model.KiePMMLModel;
+import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import org.kie.pmml.compiler.executor.PMMLCompiler;
 import org.kie.pmml.compiler.executor.PMMLCompilerImpl;
 import org.kie.pmml.compiler.impl.HasClassloaderImpl;
-import org.kie.pmml.compiler.model.DARFinalOutputPMML;
+import org.kie.pmml.compiler.model.DARCallableOutputPMMLClassesContainer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.kie.dar.common.api.model.FRI.SLASH;
 import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
+import static org.kie.dar.common.api.utils.FileNameUtils.removeSuffix;
 
 
 /**
@@ -51,33 +56,39 @@ public class PMMLCompilerService {
     }
 
 
-    public static DARCompilationOutput getDARCompilationOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    public static List<DARCompilationOutput> getDARCompilationOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         return getDARFinalOutputPMML(resource, memoryClassLoader);
     }
 
-    static DARFinalOutputPMML getDARFinalOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        Map<String, String> sourcesMap = new HashMap<>();
-        List<KiePMMLModelWithSources> kiePmmlModels = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource))
+    static List<DARCompilationOutput> getDARFinalOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        List<DARCompilationOutput> toReturn = new ArrayList<>();
+        List<KiePMMLModel> kiePmmlModels = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource));
+        List<KiePMMLModelWithSources> kiePmmlModelsWithSources = kiePmmlModels
                 .stream()
                 .filter(KiePMMLModelWithSources.class::isInstance)
                 .map(KiePMMLModelWithSources.class::cast)
                 .collect(Collectors.toList());
-        kiePmmlModels.forEach(kiePmmlModel -> sourcesMap.putAll(kiePmmlModel.getSourcesMap()));
-        KiePMMLFactoryModel kiePMMLFactoryModel = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource))
+        String fileName = removeSuffix(((File) resource.getContent()).getName());
+        Map<String, String> allSourcesMap = new HashMap<>();
+        kiePmmlModelsWithSources.forEach(kiePMMLModelWithSources -> {
+            Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
+            allSourcesMap.putAll(sourcesMap);
+        });
+        List<KiePMMLFactoryModel>  kiePMMLFactoryModels = kiePmmlModels
                 .stream()
                 .filter(KiePMMLFactoryModel.class::isInstance)
                 .map(KiePMMLFactoryModel.class::cast)
-                .findFirst()
-                .orElseThrow(() -> new KiePMMLException("Failed to find KiePMMLModelFactory for " + resource.getSourcePath()));
-        sourcesMap.putAll(kiePMMLFactoryModel.getSourcesMap());
-
-        String fullResourceClassName = kiePMMLFactoryModel.getSourcesMap().keySet().iterator().next();
-
-        String fileName = ((File) resource.getContent()).getName();
-        String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
-        FRI fri = new FRI(basePath, "pmml");
-        final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARFinalOutputPMML(fri, fullResourceClassName, compiledClasses);
+                .collect(Collectors.toList());
+        kiePMMLFactoryModels.forEach(kiePMMLFactoryModel -> allSourcesMap.putAll(kiePMMLFactoryModel.getSourcesMap()));
+        Map<String, byte[]> compiledClasses = compileClasses(allSourcesMap, memoryClassLoader);
+        kiePMMLFactoryModels.forEach(kiePMMLFactoryModel -> {
+            String modelName = kiePMMLFactoryModel.getName().substring(0, kiePMMLFactoryModel.getName().lastIndexOf("Factory"));
+            String basePath = fileName + SLASH + modelName;
+            FRI fri = new FRI(basePath, "pmml");
+            String fullResourceClassName = kiePMMLFactoryModel.getSourcesMap().keySet().iterator().next();
+            toReturn.add(new DARCallableOutputPMMLClassesContainer(fri, fullResourceClassName, compiledClasses));
+        });
+        return toReturn;
     }
 
     /**
@@ -93,38 +104,6 @@ public class PMMLCompilerService {
                 .collect(Collectors.toList());
     }
 
-//    /**
-//     * @param hasClassLoader
-//     * @param resources
-//     * @return
-//     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
-//     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
-//     */
-//    static List<KiePMMLModel> getKiePMMLModelsCompiledFromResourcesWithConfigurations(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
-//        return resources.stream()
-//                .flatMap(resource -> getKiePMMLModelsCompiledFromResource(hasClassLoader, resource).stream())
-//                .collect(Collectors.toList());
-//    }
-
-//    /**
-//     * @param hasClassLoader
-//     * @param resource
-//     * @return
-//     * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
-//     * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
-//     */
-//    static List<KiePMMLModel> getKiePMMLModelsCompiledFromResource(final HasClassLoader hasClassLoader,
-//                                                                          DARFileResource resource) {
-//        try {
-//            String packageName = getFactoryClassNamePackageName(resource)[1];
-//            return PMML_COMPILER.getKiePMMLModels(packageName, resource.getInputStream(),
-//                    getFileName(resource.getSourcePath()),
-//                    hasClassLoader);
-//        } catch (IOException e) {
-//            throw new ExternalException("ExternalException", e);
-//        }
-//    }
-
     /**
      * @param hasClassLoader
      * @param resource
@@ -133,10 +112,9 @@ public class PMMLCompilerService {
     static List<KiePMMLModel> getKiePMMLModelsFromResourceWithSources(HasClassLoader hasClassLoader,
                                                                              DARFileResource resource) {
         String[] classNamePackageName = getFactoryClassNamePackageName(resource);
-        String factoryClassName = classNamePackageName[0];
         String packageName = classNamePackageName[1];
         try {
-            final List<KiePMMLModel> toReturn = PMML_COMPILER.getKiePMMLModelsWithSources(factoryClassName, packageName,
+            final List<KiePMMLModel> toReturn = PMML_COMPILER.getKiePMMLModelsWithSources(/*factoryClassName, */packageName,
                     resource.getInputStream(),
                     getFileName(resource.getSourcePath()),
                     hasClassLoader);
@@ -171,5 +149,6 @@ public class PMMLCompilerService {
     static Map<String, byte[]> compileClasses(Map<String, String> sourcesMap, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         return KieMemoryCompiler.compileNoLoad(sourcesMap, memoryClassLoader, JavaConfiguration.CompilerType.NATIVE);
     }
+
 
 }

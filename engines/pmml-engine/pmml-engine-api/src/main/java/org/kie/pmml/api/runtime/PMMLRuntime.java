@@ -26,11 +26,12 @@ public interface PMMLRuntime {
     /**
      * Evaluate the model, given the context
      *
+     * @param fileName the name of the file (without suffix) containing the model
      * @param modelName the name of the model to evaluate
      * @param context   the context with all the input variables
      * @return the result of the evaluation
      */
-    PMML4Result evaluate(final String modelName, final PMMLContext context);
+    PMML4Result evaluate(final String fileName, final String modelName, final PMMLContext context);
 
     /**
      * Returns a list of all models available to this runtime

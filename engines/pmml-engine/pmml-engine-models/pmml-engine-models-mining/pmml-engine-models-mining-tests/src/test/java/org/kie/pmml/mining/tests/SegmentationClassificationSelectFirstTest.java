@@ -78,7 +78,7 @@ public class SegmentationClassificationSelectFirstTest extends AbstractPMMLTest 
         inputData.put("input1", input1);
         inputData.put("input2", input2);
         inputData.put("input3", input3);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
         assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(result);

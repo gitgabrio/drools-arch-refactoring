@@ -97,7 +97,7 @@ public class PredicatesMiningTest extends AbstractPMMLTest {
         inputData.put("categoricalX", categoricalX);
         inputData.put("variable", variable);
         inputData.put("age", age);
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
 
         if (expectedResult != null) {
             assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();

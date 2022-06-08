@@ -60,7 +60,7 @@ public class EuclideanDistanceTest extends AbstractPMMLTest {
         inputData.put("Dimension1", dimension1);
         inputData.put("Dimension2", dimension2);
 
-        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
         assertThat(pmml4Result.getResultVariables().get(CLUSTER_ID_FIELD)).isEqualTo(classId);
         assertThat(pmml4Result.getResultVariables().get(AFFINITY_FIELD))
                 .asInstanceOf(InstanceOfAssertFactories.DOUBLE)
