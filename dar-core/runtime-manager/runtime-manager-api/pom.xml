@@ -22,6 +22,12 @@
             <groupId>org.kie</groupId>
             <artifactId>kie-memory-compiler</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>8.23.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

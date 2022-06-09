@@ -21,6 +21,6 @@ import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 public class MockDARRedirectOutputA extends DARRedirectOutput {
 
     public MockDARRedirectOutputA() {
-        super( new FRI("this/is/mock/friA", "mock"),"notmock", "MockDARRedirectOutputA");
+        super(new FRI("this/is/mock/friA", "mock"), "notmock", "MockDARRedirectOutputA");
     }
 }

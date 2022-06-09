@@ -17,16 +17,23 @@ package org.kie.dar.runtimemanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
-public abstract class AbstractDARInput implements DARInput  {
+public abstract class AbstractDARInput<T> implements DARInput<T> {
 
     private final FRI fri;
+    private final T inputData;
 
-    protected AbstractDARInput(FRI fri) {
+    protected AbstractDARInput(FRI fri, T inpuData) {
         this.fri = fri;
+        this.inputData = inpuData;
     }
 
     @Override
     public FRI getFRI() {
         return fri;
+    }
+
+    @Override
+    public T getInputData() {
+        return inputData;
     }
 }

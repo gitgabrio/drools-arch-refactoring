@@ -18,17 +18,17 @@ package org.kie.foo.engine.runtime.model;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
-public class DAROutputFoo extends AbstractDAROutput {
+public class DAROutputFoo extends AbstractDAROutput<String> {
 
-    private final Object outputData;
+    private final String outputData;
 
-    public DAROutputFoo(FRI fri, Object outputData) {
+    public DAROutputFoo(FRI fri, String outputData) {
         super(fri);
         this.outputData = outputData;
     }
 
     @Override
-    public Object getOutputData() {
+    public String getOutputData() {
         return outputData;
     }
 }

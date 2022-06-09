@@ -19,16 +19,18 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputC;
 import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputA;
 import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputB;
+import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputC;
 import org.kie.dar.compilationmanager.core.mocks.MockDARRedirectOutputD;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class TestCompilationManagerImpl {
 
@@ -57,7 +59,7 @@ class TestCompilationManagerImpl {
             }
         });
         List<IndexFile> retrieved = compilationManager.processResource(new MockDARRedirectOutputD(), memoryCompilerClassLoader);
-        assertTrue(retrieved.isEmpty());
+        assertThat(retrieved.isEmpty()).isTrue();
     }
 
     // TODO restore

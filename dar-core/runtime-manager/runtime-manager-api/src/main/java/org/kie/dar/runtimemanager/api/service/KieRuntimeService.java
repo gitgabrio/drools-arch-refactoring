@@ -20,12 +20,14 @@ import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.Optional;
+
 /**
  * The compilation-related interface to be implemented by engine-plugin.
  * It will be looked for with SPI, so each engine should declare that implementation inside
  * <code>src/main/resources/META-INF/services/org.kie.dar.runtimemanager.api.service.KieRuntimeService</code> file
  */
-public interface KieRuntimeService {
+public interface KieRuntimeService<S, U, T extends DARInput<S>, E extends DAROutput<U>> {
 
 
     /**
@@ -44,6 +46,6 @@ public interface KieRuntimeService {
      * @param memoryCompilerClassLoader
      * @return
      */
-    <T extends DARInput, E extends DAROutput> E evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    Optional<E> evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 }

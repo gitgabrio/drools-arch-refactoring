@@ -19,6 +19,8 @@ import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.List;
+
 /**
  * The compilation-related interface to be implemented by engine-plugin.
  * It will be looked for with SPI, so each engine should declare that implementation inside
@@ -40,6 +42,6 @@ public interface KieCompilerService {
      * @param memoryCompilerClassLoader
      * @return
      */
-    <T extends DARResource, E extends DARCompilationOutput> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    <T extends DARResource, E extends DARCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 }

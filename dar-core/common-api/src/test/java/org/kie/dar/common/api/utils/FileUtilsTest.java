@@ -16,12 +16,12 @@ package org.kie.dar.common.api.utils;/*
 
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.utils.FileUtils;
 
 import java.io.File;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class FileUtilsTest {
 
@@ -31,7 +31,7 @@ class FileUtilsTest {
     @Test
     void getInputStreamFromFileNameExisting() {
         InputStream retrieved = FileUtils.getInputStreamFromFileName(TEST_FILE);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
     }
 
     @Test
@@ -40,22 +40,23 @@ class FileUtilsTest {
             FileUtils.getInputStreamFromFileName(NOT_EXISTING_FILE);
             fail("Expecting KieDARCommonException thrown");
         } catch (Exception e) {
-         assertTrue(e instanceof KieDARCommonException);
+            assertThat(e instanceof KieDARCommonException).isTrue();
         }
     }
 
     @Test
     void getFileFromFileNameExisting() {
         File retrieved = FileUtils.getFileFromFileName(TEST_FILE);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
     }
+
     @Test
     void getFileFromFileNameNotExisting() {
         try {
             FileUtils.getFileFromFileName(NOT_EXISTING_FILE);
             fail("Expecting KieDARCommonException thrown");
         } catch (Exception e) {
-            assertTrue(e instanceof KieDARCommonException);
+            assertThat(e instanceof KieDARCommonException).isTrue();
         }
     }
 

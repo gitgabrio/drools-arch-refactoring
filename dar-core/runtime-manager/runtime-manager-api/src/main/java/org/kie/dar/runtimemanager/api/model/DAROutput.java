@@ -20,7 +20,7 @@ import org.kie.dar.common.api.model.FRI;
 /**
  * A generic <i>result</i> of evaluation
  */
-public interface DAROutput {
+public interface DAROutput<T> {
 
     /**
      * The unique, full identifier of a given model' resource
@@ -29,5 +29,5 @@ public interface DAROutput {
      */
     FRI getFRI();
 
-    Object getOutputData();
+    T getOutputData();
 }

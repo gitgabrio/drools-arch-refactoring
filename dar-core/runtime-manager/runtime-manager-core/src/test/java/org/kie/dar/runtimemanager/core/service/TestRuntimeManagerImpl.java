@@ -16,13 +16,13 @@ package org.kie.dar.runtimemanager.core.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.api.mocks.MockDARInputA;
 import org.kie.dar.runtimemanager.api.mocks.MockDARInputB;
 import org.kie.dar.runtimemanager.api.mocks.MockDARInputC;
 import org.kie.dar.runtimemanager.api.mocks.MockDARInputD;
+import org.kie.dar.runtimemanager.api.model.DARInput;
+import org.kie.dar.runtimemanager.api.model.DAROutput;
+import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.ArrayList;
@@ -30,7 +30,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class TestRuntimeManagerImpl {
 
@@ -60,7 +62,7 @@ class TestRuntimeManagerImpl {
             }
         });
         Optional<DAROutput> retrieved = runtimeManager.evaluateInput(new MockDARInputD(), memoryCompilerClassLoader);
-        assertTrue(retrieved.isEmpty());
+        assertThat(retrieved.isEmpty()).isTrue();
     }
 
     @Test
@@ -76,7 +78,7 @@ class TestRuntimeManagerImpl {
         });
         toProcess.add(new MockDARInputD());
         List<DAROutput> retrieved = runtimeManager.evaluateInputs(toProcess, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(MANAGED_DAR_INPUTS.size(), retrieved.size());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.size()).isEqualTo(MANAGED_DAR_INPUTS.size());
     }
 }

@@ -1,4 +1,4 @@
-package org.kie.bar.engine.runtime.service;/*
+/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,22 +13,22 @@ package org.kie.bar.engine.runtime.service;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.kie.bar.engine.runtime.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.runtime.model.DARInputBar;
+import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class KieRuntimeServiceBarTest {
 
-    private static KieRuntimeService kieRuntimeService;
+    private static KieRuntimeServiceBar kieRuntimeService;
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     @BeforeAll
@@ -39,30 +39,27 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        assertTrue(kieRuntimeService.canManageInput(new FRI("/bar/dar", "bar"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("/bar/dar", "notbar"), memoryCompilerClassLoader));
-        assertFalse(kieRuntimeService.canManageInput(new FRI("darfoo", "bar"), memoryCompilerClassLoader));
+        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "bar"), memoryCompilerClassLoader)).isTrue();
+        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "notbar"), memoryCompilerClassLoader)).isFalse();
+        assertThat(kieRuntimeService.canManageInput(new FRI("darfoo", "bar"), memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInputExistingBarResources() {
-        DARInput toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
-        DAROutput retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(toEvaluate.getFRI(), retrieved.getFRI());
-        assertEquals(toEvaluate.getInputData(), retrieved.getOutputData());
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
+        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isPresent();
+        DAROutputBar darOutputBar = retrieved.get();
+        assertThat(darOutputBar.getFRI()).isEqualTo(toEvaluate.getFRI());
+        assertThat(darOutputBar.getOutputData()).isEqualTo(toEvaluate.getInputData());
 
     }
 
     @Test
     void evaluateInputNotExistingBarResources() {
-        try {
-            DARInput toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
-            kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-            fail("Expecting KieRuntimeServiceException");
-        } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
-        }
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
+        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(retrieved).isNotNull().isNotPresent();
     }
 
 }

@@ -16,7 +16,6 @@
 package org.kie.dar.compilationmanager.api.service;
 
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -25,7 +24,7 @@ import java.util.List;
 public interface CompilationManager {
 
     /**
-     * Produce one <code>DARFinalOutput</code> from the given <code>DARRedirectOutput</code>.
+     * Produce one <code>DARCallableOutput</code> from the given <code>DARRedirectOutput</code>.
      * The return is <code>Optional</code> because the engine required to process given <code>DARRedirectOutput</code>
      * may not be found
      *
@@ -35,7 +34,7 @@ public interface CompilationManager {
     List<IndexFile> processResource(DARResource toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
 //    /**
-//     * Produce a <code>List&lt;DARFinalOutput&gt;</code> from the given <code>List&lt;DARRedirectOutput&gt;</code>
+//     * Produce a <code>List&lt;DARCallableOutput&gt;</code> from the given <code>List&lt;DARRedirectOutput&gt;</code>
 //     *
 //     * @param toProcess
 //     * @return

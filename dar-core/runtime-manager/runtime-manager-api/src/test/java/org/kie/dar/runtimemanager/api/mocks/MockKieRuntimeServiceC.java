@@ -21,6 +21,7 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 public class MockKieRuntimeServiceC extends AbstractMockKieRuntimeService {
 
     private final static FRI friC = new FRI(MockDARInputC.class.getPackageName(), MockDARInputC.class.getSimpleName());
+
     @Override
     public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return fri.equals(friC);

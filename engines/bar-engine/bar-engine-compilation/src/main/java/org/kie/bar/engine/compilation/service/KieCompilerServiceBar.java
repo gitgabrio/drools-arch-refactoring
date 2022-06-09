@@ -22,6 +22,9 @@ import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getDARCompilationOutputBar;
 
 public class KieCompilerServiceBar implements KieCompilerService {
@@ -33,12 +36,12 @@ public class KieCompilerServiceBar implements KieCompilerService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARCompilationOutput> E processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public <T extends DARResource, E extends DARCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("%s can not process %s",
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (E) getDARCompilationOutputBar((DARFileResource) toProcess, memoryCompilerClassLoader);
+        return (List<E>) Collections.singletonList(getDARCompilationOutputBar((DARFileResource) toProcess, memoryCompilerClassLoader));
     }
 }

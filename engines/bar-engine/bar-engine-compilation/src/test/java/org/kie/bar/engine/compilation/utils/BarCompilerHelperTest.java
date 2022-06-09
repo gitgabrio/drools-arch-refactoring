@@ -16,15 +16,14 @@ package org.kie.bar.engine.compilation.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARFinalOutputBar;
+import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
 import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.bar.engine.compilation.TestingUtils.getFileFromFileName;
 
 class BarCompilerHelperTest {
@@ -40,8 +39,8 @@ class BarCompilerHelperTest {
     void getDARFinalOutputBar() {
         File barFile = getFileFromFileName("RedirectBar.bar");
         DARFileResource darResourceBar = new DARFileResource(barFile);
-        DARFinalOutputBar retrieved = BarCompilerHelper.getDARFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        DARCallableOutputBar retrieved = BarCompilerHelper.getDARFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
+        assertThat(retrieved).isNotNull();
 
     }
 
@@ -50,8 +49,8 @@ class BarCompilerHelperTest {
         File fooFile = getFileFromFileName("DarBar.bar");
         DARFileResource darResourceBar = new DARFileResource(fooFile);
         DARRedirectOutputBar retrieved = BarCompilerHelper.getDARRedirectOutputBar(darResourceBar);
-        assertNotNull(retrieved);
-        assertEquals("foo", retrieved.getTargetEngine());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getTargetEngine()).isEqualTo("foo");
     }
 
 

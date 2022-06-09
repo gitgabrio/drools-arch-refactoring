@@ -18,12 +18,66 @@ package org.kie.dar.common.api.utils;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileUtils {
 
     private FileUtils() {
+    }
+
+
+    /**
+     * Retrieve the <code>File</code> of the given <b>file</b>
+     *
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public static File getFile(String fileName) {
+        String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        File toReturn = ResourceHelper.getResourcesByExtension(extension)
+                .filter(file -> file.getName().equals(fileName))
+                .findFirst()
+                .orElse(null);
+        if (toReturn == null) {
+            throw new KieDARCommonException(String.format("Failed to find %s due to", fileName));
+        }
+        return toReturn;
+    }
+
+    /**
+     * Retrieve the <code>FileInputStream</code> of the given <b>file</b>
+     *
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public static FileInputStream getFileInputStream(String fileName) throws IOException {
+        File sourceFile = getFile(fileName);
+        return new FileInputStream(sourceFile);
+    }
+
+    /**
+     * Retrieve the <b>content</b> of the given <b>file</b>
+     *
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public static String getFileContent(String fileName) throws IOException {
+        File file = getFile(fileName);
+        Path path = file.toPath();
+        Stream<String> lines = Files.lines(path);
+        String toReturn = lines.collect(Collectors.joining("\n"));
+        lines.close();
+        return toReturn;
     }
 
     public static InputStream getInputStreamFromFileName(String fileName) {

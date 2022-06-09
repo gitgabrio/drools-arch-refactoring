@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class TestSPIUtils {
 
@@ -31,22 +31,22 @@ class TestSPIUtils {
     @Test
     void getKieCompilerService() {
         Optional<KieCompilerService> retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputA(), true);
-        assertTrue(retrieved.isPresent());
-        assertTrue(retrieved.get() instanceof MockKieCompilerServiceAB);
+        assertThat(retrieved.isPresent()).isTrue();
+        assertThat(retrieved.get() instanceof MockKieCompilerServiceAB).isTrue();
         retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputB(), true);
-        assertTrue(retrieved.isPresent());
-        assertTrue(retrieved.get() instanceof MockKieCompilerServiceAB);
+        assertThat(retrieved.isPresent()).isTrue();
+        assertThat(retrieved.get() instanceof MockKieCompilerServiceAB).isTrue();
         retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputC(), true);
-        assertTrue(retrieved.isPresent());
-        assertTrue(retrieved.get() instanceof MockKieCompilerServiceC);
+        assertThat(retrieved.isPresent()).isTrue();
+        assertThat(retrieved.get() instanceof MockKieCompilerServiceC).isTrue();
         retrieved = SPIUtils.getKieCompilerService(new MockDARRedirectOutputD(), true);
-        assertTrue(retrieved.isEmpty());
+        assertThat(retrieved.isEmpty()).isTrue();
     }
 
     @Test
     void getKieCompilerServices() {
         List<KieCompilerService> retrieved = SPIUtils.getKieCompilerServices(true);
-        assertNotNull(retrieved);
-        assertEquals(KIE_COMPILER_SERVICES.size(), retrieved.size());
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.size()).isEqualTo(KIE_COMPILER_SERVICES.size());
     }
 }

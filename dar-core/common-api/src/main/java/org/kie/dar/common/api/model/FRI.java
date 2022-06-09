@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 public class FRI implements Serializable {
 
-    static final String SLASH = "/";
+    public static final String SLASH = "/";
 
     private static final long serialVersionUID = 8729837870805955341L;
     private final String basePath;
@@ -85,7 +85,7 @@ public class FRI implements Serializable {
             toReturn = SLASH + toReturn;
         }
         if (toReturn.startsWith(modelPrefix)) {
-            toReturn =  toReturn.substring(modelPrefix.length() -1) ;
+            toReturn = toReturn.substring(modelPrefix.length() - 1);
         }
         return toReturn;
     }

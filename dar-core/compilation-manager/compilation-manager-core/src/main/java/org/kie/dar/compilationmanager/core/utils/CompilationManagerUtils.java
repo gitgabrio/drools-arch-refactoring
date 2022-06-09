@@ -51,26 +51,35 @@ public class CompilationManagerUtils {
         Optional<KieCompilerService> retrieved = getKieCompilerService(toProcess, true);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieCompilerService for {}", toProcess.getClass());
+            return;
         }
-        Optional<DARCompilationOutput> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
-        darCompilationOutputOptional.ifPresent(darCompilationOutput -> {
-            toPopulate.add(getIndexFileFromCompilationOutput(darCompilationOutput));
-            if (darCompilationOutput instanceof DARFinalOutputClassesContainer) {
-                loadClasses(((DARFinalOutputClassesContainer) darCompilationOutput).getCompiledClassesMap(), memoryCompilerClassLoader);
-            }
-            if (darCompilationOutput instanceof DARRedirectOutput) {
-                populateIndexFilesWithProcessedResource(toPopulate, (DARRedirectOutput) darCompilationOutput, memoryCompilerClassLoader);
-            }
+        Optional<List<DARCompilationOutput>> darCompilationOutputOptional = retrieved.map(service -> service.processResource(toProcess, memoryCompilerClassLoader));
+        darCompilationOutputOptional.ifPresent(darCompilationOutputs -> {
+            Optional<IndexFile> indexFileOptional = getIndexFileFromCompilationOutputs(darCompilationOutputs);
+            indexFileOptional.ifPresent(indexFile -> {
+                toPopulate.add(indexFile);
+                darCompilationOutputs.forEach(darCompilationOutput -> {
+                    populateIndexFile(indexFile, darCompilationOutput);
+                    if (darCompilationOutput instanceof DARCallableOutputClassesContainer) {
+                        loadClasses(((DARCallableOutputClassesContainer) darCompilationOutput).getCompiledClassesMap(), memoryCompilerClassLoader);
+                    }
+                    if (darCompilationOutput instanceof DARRedirectOutput) {
+                        populateIndexFilesWithProcessedResource(toPopulate, (DARRedirectOutput) darCompilationOutput, memoryCompilerClassLoader);
+                    }
+                });
+            });
         });
     }
 
-    static IndexFile getIndexFileFromCompilationOutput(DARCompilationOutput compilationOutput) {
-        IndexFile toReturn = getIndexFile(compilationOutput);
-        populateIndexFile(toReturn, compilationOutput);
-        return toReturn;
+    static Optional<IndexFile> getIndexFileFromCompilationOutputs(List<DARCompilationOutput> compilationOutputs) {
+        return compilationOutputs.stream()
+                .filter(DARCallableOutput.class::isInstance)
+                .map(DARCallableOutput.class::cast)
+                .map(CompilationManagerUtils::getIndexFile)
+                .findFirst();
     }
 
-    static IndexFile getIndexFile(DARCompilationOutput compilationOutput) {
+    static IndexFile getIndexFile(DARCallableOutput compilationOutput) {
         String parentPath = System.getProperty(INDEXFILE_DIRECTORY_PROPERTY, DEFAULT_INDEXFILE_DIRECTORY);
         IndexFile toReturn = new IndexFile(parentPath, compilationOutput.getFri().getModel());
         File existingFile;
@@ -115,10 +124,10 @@ public class CompilationManagerUtils {
     }
 
     static GeneratedResource getGeneratedResource(DARCompilationOutput compilationOutput) {
-        if (compilationOutput instanceof DARFinalOutput) {
-            return new GeneratedExecutableResource(compilationOutput.getFri(), ((DARFinalOutput)compilationOutput).getFullClassName());
-        } else if (compilationOutput instanceof DARRedirectOutput) {
-            return new GeneratedRedirectResource(compilationOutput.getFri(), ((DARRedirectOutput) compilationOutput).getTargetEngine());
+        if (compilationOutput instanceof DARRedirectOutput) {
+            return new GeneratedRedirectResource(((DARRedirectOutput) compilationOutput).getFri(), ((DARRedirectOutput) compilationOutput).getTargetEngine());
+        } else if (compilationOutput instanceof DARCallableOutput) {
+            return new GeneratedExecutableResource(((DARCallableOutput) compilationOutput).getFri(), ((DARCallableOutput) compilationOutput).getFullClassName());
         } else {
             throw new KieCompilerServiceException("Unmanaged type " + compilationOutput.getClass().getName());
         }

@@ -29,4 +29,8 @@ public class FileNameUtils {
     public static String getSuffix(String fileName) {
         return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
+
+    public static String removeSuffix(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf('.'));
+    }
 }

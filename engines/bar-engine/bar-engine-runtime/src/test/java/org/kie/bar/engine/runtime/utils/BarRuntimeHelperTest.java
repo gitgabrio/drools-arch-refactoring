@@ -23,7 +23,8 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class BarRuntimeHelperTest {
 
@@ -35,12 +36,19 @@ class BarRuntimeHelperTest {
     }
 
     @Test
+    void canManage() {
+        assertThat(BarRuntimeHelper.canManage(new FRI("/bar/dar", "bar"))).isTrue();
+        assertThat(BarRuntimeHelper.canManage(new FRI("/bar/dar", "notbar"))).isFalse();
+        assertThat(BarRuntimeHelper.canManage(new FRI("darfoo", "bar"))).isFalse();
+    }
+
+    @Test
     void loadExistingBarResources() {
         BarResources retrieved = BarRuntimeHelper.loadBarResources(new FRI("dar", "bar"), memoryCompilerClassLoader);
-        assertNotNull(retrieved);
-        assertEquals(2, retrieved.getManagedResources().size());
-        assertTrue(retrieved.getManagedResources().contains("BarResOne"));
-        assertTrue(retrieved.getManagedResources().contains("BarResTwo"));
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getManagedResources().size()).isEqualTo(2);
+        assertThat(retrieved.getManagedResources().contains("BarResOne")).isTrue();
+        assertThat(retrieved.getManagedResources().contains("BarResTwo")).isTrue();
     }
 
     @Test
@@ -49,18 +57,18 @@ class BarRuntimeHelperTest {
             BarRuntimeHelper.loadBarResources(new FRI("dar", "notbar"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
-            assertTrue(e instanceof KieRuntimeServiceException);
+            assertThat(e).isInstanceOf(KieRuntimeServiceException.class);
         }
     }
 
     @Test
     void getDAROutput() {
         FRI fri = new FRI("dar", "bar");
-        BarResources fooResources = BarRuntimeHelper.loadBarResources(fri, memoryCompilerClassLoader);
+        BarResources barResources = BarRuntimeHelper.loadBarResources(fri, memoryCompilerClassLoader);
         DARInputBar darInputBar = new DARInputBar(fri, "InputData");
-        DAROutputBar retrieved = BarRuntimeHelper.getDAROutput(fooResources, darInputBar);
-        assertNotNull(retrieved);
-        assertEquals(darInputBar.getFRI(), retrieved.getFRI());
-        assertEquals(darInputBar.getInputData(), retrieved.getOutputData());
+        DAROutputBar retrieved = BarRuntimeHelper.getDAROutput(barResources, darInputBar);
+        assertThat(retrieved).isNotNull();
+        assertThat(retrieved.getFRI()).isEqualTo(darInputBar.getFRI());
+        assertThat(retrieved.getOutputData()).isEqualTo(darInputBar.getInputData());
     }
 }
