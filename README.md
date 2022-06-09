@@ -36,4 +36,13 @@ impact on the all `drools` codebase; everyone may be interested will be warmly w
 criticism, contribution.
 
 
+ArchUnit
+========
+
+ArchUnit has been introduced to enforce (as much as possible) some general architectural and design guidelines.
+
+See [official documentation](https://www.archunit.org/userguide/html/000_Index.html) and [maven plugin information](https://github.com/societe-generale/arch-unit-maven-plugin) for further details.
+
+
+
 
