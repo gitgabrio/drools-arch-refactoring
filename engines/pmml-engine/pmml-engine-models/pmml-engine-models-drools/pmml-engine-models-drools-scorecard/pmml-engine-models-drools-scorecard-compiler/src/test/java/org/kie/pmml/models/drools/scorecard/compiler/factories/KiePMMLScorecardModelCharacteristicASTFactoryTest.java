@@ -113,19 +113,19 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                 boolean isLastCharacteristic = (i == characteristicList.size() - 1);
                 String statusToSet = isLastCharacteristic ? DONE : String.format(PATH_PATTERN, parentPath, characteristicList.get(i + 1).getName());
                 commonValidateRule(rule,
-                                   attribute,
-                                   statusToSet,
-                                   parentPath + "_" + characteristic.getName(),
-                                   j,
-                                   isLastCharacteristic,
-                                   expectedAndConstraints,
-                                   expectedInConstraints,
-                                   expectedOperator,
-                                   null,
-                                   expectedOperatorValuesSize);
+                        attribute,
+                        statusToSet,
+                        parentPath + "_" + characteristic.getName(),
+                        j,
+                        isLastCharacteristic,
+                        expectedAndConstraints,
+                        expectedInConstraints,
+                        expectedOperator,
+                        null,
+                        expectedOperatorValuesSize);
             }
         }
-        assertThat(attributes).hasSize(retrieved.size() -1);
+        assertThat(attributes).hasSize(retrieved.size() - 1);
     }
 
     @Test
@@ -139,23 +139,23 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         int[] expectedOperatorValuesSizes = {1, 2};
         getKiePMMLScorecardModelCharacteristicASTFactory()
                 .declareRuleFromCharacteristic(characteristic,
-                                               parentPath,
-                                               rules,
-                                               statusToSet,
-                                               isLastCharacteristic);
+                        parentPath,
+                        rules,
+                        statusToSet,
+                        isLastCharacteristic);
         assertThat(rules).hasSameSizeAs(characteristic.getAttributes());
         for (int i = 0; i < rules.size(); i++) {
             commonValidateRule(rules.get(i),
-                               characteristic.getAttributes().get(i),
-                               statusToSet,
-                               parentPath + "_AgeScore",
-                               i,
-                               isLastCharacteristic,
-                               1,
-                               null,
-                               BOOLEAN_OPERATOR.AND,
-                               expectedConstraints[i],
-                               expectedOperatorValuesSizes[i]
+                    characteristic.getAttributes().get(i),
+                    statusToSet,
+                    parentPath + "_AgeScore",
+                    i,
+                    isLastCharacteristic,
+                    1,
+                    null,
+                    BOOLEAN_OPERATOR.AND,
+                    expectedConstraints[i],
+                    expectedOperatorValuesSizes[i]
             );
         }
     }
@@ -174,16 +174,16 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                 .declareRuleFromAttribute(attribute, parentPath, attributeIndex, rules, statusToSet, characteristicReasonCode, characteristicBaselineScore, isLastCharacteristic);
         assertThat(rules).hasSize(1);
         commonValidateRule(rules.get(0),
-                           attribute,
-                           statusToSet,
-                           parentPath,
-                           attributeIndex,
-                           isLastCharacteristic,
-                           1,
-                           null,
-                           BOOLEAN_OPERATOR.AND,
-                           "value <= 5.0",
-                           1);
+                attribute,
+                statusToSet,
+                parentPath,
+                attributeIndex,
+                isLastCharacteristic,
+                1,
+                null,
+                BOOLEAN_OPERATOR.AND,
+                "value <= 5.0",
+                1);
     }
 
     @Test
@@ -202,16 +202,16 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         assertThat(rules).hasSize(1);
         KiePMMLDroolsRule toValidate = rules.get(0);
         commonValidateRule(toValidate,
-                           attribute,
-                           statusToSet,
-                           parentPath,
-                           attributeIndex,
-                           isLastCharacteristic,
-                           1,
-                           null,
-                           BOOLEAN_OPERATOR.AND,
-                           "value <= 5.0",
-                           1);
+                attribute,
+                statusToSet,
+                parentPath,
+                attributeIndex,
+                isLastCharacteristic,
+                1,
+                null,
+                BOOLEAN_OPERATOR.AND,
+                "value <= 5.0",
+                1);
         KiePMMLReasonCodeAndValue retrieved = toValidate.getReasonCodeAndValue();
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getReasonCode()).isEqualTo(characteristicReasonCode);
@@ -233,16 +233,16 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                 .declareRuleFromAttribute(attribute, parentPath, attributeIndex, rules, statusToSet, characteristicReasonCode, characteristicBaselineScore, isLastCharacteristic);
         assertThat(rules).hasSize(1);
         commonValidateRule(rules.get(0),
-                           attribute,
-                           statusToSet,
-                           parentPath,
-                           attributeIndex,
-                           isLastCharacteristic,
-                           1,
-                           null,
-                           BOOLEAN_OPERATOR.AND,
-                           "value <= 5.0",
-                           1);
+                attribute,
+                statusToSet,
+                parentPath,
+                attributeIndex,
+                isLastCharacteristic,
+                1,
+                null,
+                BOOLEAN_OPERATOR.AND,
+                "value <= 5.0",
+                1);
     }
 
     @Test
@@ -259,16 +259,16 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                 .declareRuleFromAttribute(attribute, parentPath, attributeIndex, rules, statusToSet, characteristicReasonCode, characteristicBaselineScore, isLastCharacteristic);
         assertThat(rules).hasSize(1);
         commonValidateRule(rules.get(0),
-                           attribute,
-                           statusToSet,
-                           parentPath,
-                           attributeIndex,
-                           isLastCharacteristic,
-                           1,
-                           null,
-                           BOOLEAN_OPERATOR.AND,
-                           "value >= 5.0 && value < 12.0",
-                           2);
+                attribute,
+                statusToSet,
+                parentPath,
+                attributeIndex,
+                isLastCharacteristic,
+                1,
+                null,
+                BOOLEAN_OPERATOR.AND,
+                "value >= 5.0 && value < 12.0",
+                2);
     }
 
     @Test
@@ -285,16 +285,16 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                 .declareRuleFromAttribute(attribute, parentPath, attributeIndex, rules, statusToSet, characteristicReasonCode, characteristicBaselineScore, isLastCharacteristic);
         assertThat(rules).hasSize(1);
         commonValidateRule(rules.get(0),
-                           attribute,
-                           statusToSet,
-                           parentPath,
-                           attributeIndex,
-                           isLastCharacteristic,
-                           null,
-                           1,
-                           null,
-                           null,
-                           null);
+                attribute,
+                statusToSet,
+                parentPath,
+                attributeIndex,
+                isLastCharacteristic,
+                null,
+                1,
+                null,
+                null,
+                null);
     }
 
     private void commonValidateRule(KiePMMLDroolsRule toValidate,
@@ -343,7 +343,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         assertThat(operatorValues).hasSize(expectedOperatorValuesSize);
         if (attribute.getPredicate() instanceof SimplePredicate) {
             commonValidateKiePMMLOperatorValue(operatorValues.get(0),
-                                               (SimplePredicate) attribute.getPredicate());
+                    (SimplePredicate) attribute.getPredicate());
         } else if (attribute.getPredicate() instanceof CompoundPredicate) {
             commonValidateKiePMMLOperatorValues(operatorValues, (CompoundPredicate) attribute.getPredicate());
         }
@@ -383,7 +383,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         assertThat(compoundPredicate.getPredicates()).hasSameSizeAs(toValidate);
         for (int i = 0; i < toValidate.size(); i++) {
             commonValidateKiePMMLOperatorValue(toValidate.get(i),
-                                               (SimplePredicate) compoundPredicate.getPredicates().get(i));
+                    (SimplePredicate) compoundPredicate.getPredicates().get(i));
         }
     }
 
@@ -399,10 +399,10 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         Attribute toReturn = new Attribute();
         toReturn.setPartialScore(partialScore);
         toReturn.setPredicate(getSimplePredicate(fieldName,
-                                                 DataType.DOUBLE,
-                                                 5.0,
-                                                 SimplePredicate.Operator.LESS_OR_EQUAL,
-                                                 new HashMap<>()));
+                DataType.DOUBLE,
+                5.0,
+                SimplePredicate.Operator.LESS_OR_EQUAL,
+                new HashMap<>()));
         return toReturn;
     }
 
@@ -419,10 +419,10 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         Attribute toReturn = new Attribute();
         toReturn.setPartialScore(partialScore);
         toReturn.setPredicate(getSimpleSetPredicate("occupation",
-                                                    Array.Type.STRING,
-                                                    Arrays.asList("SKYDIVER", "ASTRONAUT"),
-                                                    SimpleSetPredicate.BooleanOperator.IS_IN,
-                                                    new HashMap<>()));
+                Array.Type.STRING,
+                Arrays.asList("SKYDIVER", "ASTRONAUT"),
+                SimpleSetPredicate.BooleanOperator.IS_IN,
+                new HashMap<>()));
         return toReturn;
     }
 
@@ -431,22 +431,22 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         toReturn.setBooleanOperator(CompoundPredicate.BooleanOperator.AND);
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         toReturn.addPredicates(getSimplePredicate(fieldName,
-                                                  DataType.DOUBLE,
-                                                  5.0,
-                                                  SimplePredicate.Operator.GREATER_OR_EQUAL,
-                                                  fieldTypeMap),
-                               getSimplePredicate(fieldName,
-                                                  DataType.DOUBLE,
-                                                  12.0,
-                                                  SimplePredicate.Operator.LESS_THAN,
-                                                  fieldTypeMap));
+                        DataType.DOUBLE,
+                        5.0,
+                        SimplePredicate.Operator.GREATER_OR_EQUAL,
+                        fieldTypeMap),
+                getSimplePredicate(fieldName,
+                        DataType.DOUBLE,
+                        12.0,
+                        SimplePredicate.Operator.LESS_THAN,
+                        fieldTypeMap));
         return toReturn;
     }
 
     @Test
     public void getKiePMMLReasonCodeAndValueUseReasonCodesFalse() {
         assertThat(getKiePMMLScorecardModelCharacteristicASTFactory().getKiePMMLReasonCodeAndValue(new Attribute(),
-                                                                                                   "", 0)).isNull();
+                "", 0)).isNull();
     }
 
     @Test(expected = KiePMMLException.class)
@@ -454,7 +454,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(null, null)
                 .getKiePMMLReasonCodeAndValue(new Attribute(),
-                                              "", null);
+                        "", null);
     }
 
     @Test(expected = KiePMMLException.class)
@@ -462,7 +462,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(null, null)
                 .getKiePMMLReasonCodeAndValue(new Attribute(),
-                                              "", 12);
+                        "", 12);
     }
 
     @Test(expected = KiePMMLException.class)
@@ -470,7 +470,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(null, REASONCODE_ALGORITHM.POINTS_ABOVE)
                 .getKiePMMLReasonCodeAndValue(new Attribute(),
-                                              "", 12);
+                        "", 12);
     }
 
     @Test
@@ -485,7 +485,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         KiePMMLReasonCodeAndValue retrieved = getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(baselineScore, REASONCODE_ALGORITHM.POINTS_ABOVE)
                 .getKiePMMLReasonCodeAndValue(attribute,
-                                              characteristicReasonCode, null);
+                        characteristicReasonCode, null);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getReasonCode()).isEqualTo(characteristicReasonCode);
         double expected = attributePartialScore - baselineScore;
@@ -493,7 +493,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         retrieved = getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(baselineScore, REASONCODE_ALGORITHM.POINTS_ABOVE)
                 .getKiePMMLReasonCodeAndValue(attribute,
-                                              characteristicReasonCode, characteristicBaselineScore);
+                        characteristicReasonCode, characteristicBaselineScore);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getReasonCode()).isEqualTo(characteristicReasonCode);
         expected = attributePartialScore - characteristicBaselineScore;
@@ -502,7 +502,7 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
         retrieved = getKiePMMLScorecardModelCharacteristicASTFactory()
                 .withReasonCodes(baselineScore, REASONCODE_ALGORITHM.POINTS_ABOVE)
                 .getKiePMMLReasonCodeAndValue(attribute,
-                                              characteristicReasonCode, characteristicBaselineScore);
+                        characteristicReasonCode, characteristicBaselineScore);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getReasonCode()).isEqualTo(attributeReasonCode);
         assertThat(retrieved.getValue()).isCloseTo(expected, Offset.offset(0.0));
@@ -523,11 +523,11 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                                                final SimplePredicate.Operator operator,
                                                final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap) {
         fieldTypeMap.put(predicateName,
-                         new KiePMMLOriginalTypeGeneratedType(dataType.value(),
-                                                              getSanitizedClassName(predicateName.toUpperCase())));
+                new KiePMMLOriginalTypeGeneratedType(dataType.value(),
+                        getSanitizedClassName(predicateName.toUpperCase())));
         return PMMLModelTestUtils.getSimplePredicate(predicateName,
-                                                     value,
-                                                     operator);
+                value,
+                operator);
     }
 
     private SimpleSetPredicate getSimpleSetPredicate(final String predicateName,
@@ -536,11 +536,11 @@ public class KiePMMLScorecardModelCharacteristicASTFactoryTest {
                                                      final SimpleSetPredicate.BooleanOperator booleanOperator,
                                                      final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap) {
         fieldTypeMap.put(predicateName,
-                         new KiePMMLOriginalTypeGeneratedType(arrayType.value(),
-                                                              getSanitizedClassName(predicateName.toUpperCase())));
+                new KiePMMLOriginalTypeGeneratedType(arrayType.value(),
+                        getSanitizedClassName(predicateName.toUpperCase())));
         return PMMLModelTestUtils.getSimpleSetPredicate(predicateName,
-                                                        arrayType,
-                                                        values,
-                                                        booleanOperator);
+                arrayType,
+                values,
+                booleanOperator);
     }
 }

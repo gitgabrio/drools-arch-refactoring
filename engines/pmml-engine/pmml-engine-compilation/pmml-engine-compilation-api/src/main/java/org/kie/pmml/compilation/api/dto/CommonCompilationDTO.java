@@ -15,28 +15,13 @@
  */
 package org.kie.pmml.compilation.api.dto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.Targets;
-import org.dmg.pmml.TransformationDictionary;
+import org.dmg.pmml.*;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.commons.model.HasClassLoader;
 import org.kie.pmml.compilation.api.utils.ModelUtils;
+
+import java.util.*;
 
 import static org.kie.pmml.commons.Constants.PACKAGE_CLASS_TEMPLATE;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
@@ -68,6 +53,7 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
     /**
      * Private constructor that preserve given <b>packageName</b>
      * <code>CompilationDTO</code>
+     *
      * @param pmml
      * @param model
      * @param hasClassloader
@@ -78,13 +64,14 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
                                  final HasClassLoader hasClassloader,
                                  final String packageName) {
         this(pmml, model, hasClassloader, packageName,
-             ModelUtils.getFieldsFromDataDictionaryTransformationDictionaryAndModel(pmml.getDataDictionary(),
-                                                                                    pmml.getTransformationDictionary(),
-                                                                                    model));
+                ModelUtils.getFieldsFromDataDictionaryTransformationDictionaryAndModel(pmml.getDataDictionary(),
+                        pmml.getTransformationDictionary(),
+                        model));
     }
 
     /**
      * Private constructor that preserve given <b>packageName</b> and <b>fields</b>
+     *
      * @param pmml
      * @param model
      * @param hasClassloader
@@ -121,6 +108,7 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
     /**
      * Private constructor that create the <b>packageName</b> name from the given one and retrieve <b>fields</b>
      * from <b>pmml</b> and <b>model</b>
+     *
      * @param pmml
      * @param model
      * @param hasClassloader
@@ -131,12 +119,13 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
                                  final T model,
                                  final HasClassLoader hasClassloader) {
         this(pmml, model, hasClassloader, getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE, packageName,
-                                                                                model.getModelName())));
+                model.getModelName())));
     }
 
     /**
      * Builder that create the <b>packageName</b> name from the given one and retrieve <b>fields</b>
      * from <b>pmml</b> and <b>model</b>
+     *
      * @param pmml
      * @param model
      * @param hasClassloader
@@ -147,14 +136,15 @@ public class CommonCompilationDTO<T extends Model> implements CompilationDTO<T> 
                                                                                               final T model,
                                                                                               final HasClassLoader hasClassloader) {
         return new CommonCompilationDTO(packageName,
-                                        pmml,
-                                        model,
-                                        hasClassloader);
+                pmml,
+                model,
+                hasClassloader);
     }
 
     /**
      * Builder that preserve given <b>packageName</b> and <b>fields</b>
      * <code>CompilationDTO</code>
+     *
      * @param pmml
      * @param model
      * @param hasClassloader

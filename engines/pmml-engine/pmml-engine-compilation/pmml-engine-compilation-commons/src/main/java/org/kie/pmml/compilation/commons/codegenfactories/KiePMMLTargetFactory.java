@@ -27,9 +27,7 @@ import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.TargetFieldFactory.getTargetFieldVariableInitializer;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -67,7 +65,7 @@ public class KiePMMLTargetFactory {
         variableDeclarator.setName(targetField.getName());
         final MethodCallExpr toReturn = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, TARGET,
-                                                                      targetBody)))
+                        targetBody)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", toReturn);
         final StringLiteralExpr nameExpr = new StringLiteralExpr(targetField.getName());

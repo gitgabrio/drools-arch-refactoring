@@ -16,16 +16,16 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.CLOSURE;
+
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KiePMMLDiscretizeBinTest {
-    
+
     private static final String NAME = "name";
     private static final String BINVALUE = "binValue";
 
@@ -164,7 +164,7 @@ public class KiePMMLDiscretizeBinTest {
         retrieved = kiePMMLDiscretizeBin.evaluate(50);
         assertThat(retrieved).isNotPresent();
     }
-    
+
     private KiePMMLDiscretizeBin getKiePMMLDiscretizeBin(KiePMMLInterval interval) {
         return new KiePMMLDiscretizeBin(NAME, Collections.emptyList(), BINVALUE, interval);
     }

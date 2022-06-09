@@ -16,10 +16,6 @@
 
 package org.kie.pmml.commons.transformations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
@@ -27,6 +23,10 @@ import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -66,7 +66,7 @@ public class KiePMMLDefineFunctionTest {
             final KiePMMLParameterField parameterField2 = KiePMMLParameterField.builder(PARAM_2, Collections.emptyList
                     ()).build();
             final KiePMMLDefineFunction defineFunction = new KiePMMLDefineFunction(CUSTOM_FUNCTION, Collections
-                            .emptyList(),
+                    .emptyList(),
                     null,
                     OP_TYPE.CONTINUOUS,
                     Arrays.asList(parameterField1,

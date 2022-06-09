@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.commons.model.predicates;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/TreeModel.html#xsdElement_True>True</a>
@@ -39,6 +39,7 @@ public class KiePMMLTruePredicate extends KiePMMLPredicate {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(List<KiePMMLExtension> extensions) {

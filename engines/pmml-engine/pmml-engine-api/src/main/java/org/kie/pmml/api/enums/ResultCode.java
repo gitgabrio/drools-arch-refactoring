@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.api.enums;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+
 import java.util.Arrays;
 import java.util.Objects;
-
-import org.kie.pmml.api.exceptions.KieEnumException;
 
 /**
  * Indicates the possible end-result of a model evaluation

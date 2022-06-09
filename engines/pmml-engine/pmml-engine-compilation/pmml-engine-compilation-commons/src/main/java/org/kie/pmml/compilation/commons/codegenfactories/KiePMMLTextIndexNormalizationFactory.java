@@ -19,25 +19,16 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.BooleanLiteralExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.apache.commons.text.StringEscapeUtils;
 import org.dmg.pmml.TextIndexNormalization;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLInlineTableFactory.getInlineTableVariableDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -78,29 +69,29 @@ public class KiePMMLTextIndexNormalizationFactory {
         String inlineTableVariableName = String.format("%s_InlineTable", variableName);
         final BlockStmt toReturn = new BlockStmt();
         BlockStmt toAdd = getInlineTableVariableDeclaration(inlineTableVariableName,
-                                                            textIndexNormalization.getInlineTable());
+                textIndexNormalization.getInlineTable());
         toAdd.getStatements().forEach(toReturn::addStatement);
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      TEXTINDEXNORMALIZATION, textIndexNormalizationBody)))
+                        TEXTINDEXNORMALIZATION, textIndexNormalizationBody)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", initializer);
         final StringLiteralExpr nameExpr = new StringLiteralExpr(variableName);
         builder.setArgument(0, nameExpr);
         getChainedMethodCallExprFrom("withInField", initializer).setArgument(0,
-                                                                             getExpressionForObject(textIndexNormalization.getInField()));
+                getExpressionForObject(textIndexNormalization.getInField()));
         getChainedMethodCallExprFrom("withOutField", initializer).setArgument(0,
-                                                                              getExpressionForObject(textIndexNormalization.getOutField()));
+                getExpressionForObject(textIndexNormalization.getOutField()));
         getChainedMethodCallExprFrom("withKiePMMLInlineTable", initializer).setArgument(0,
-                                                                                        new NameExpr(inlineTableVariableName));
+                new NameExpr(inlineTableVariableName));
         getChainedMethodCallExprFrom("withRegexField", initializer).setArgument(0,
-                                                                              getExpressionForObject(textIndexNormalization.getRegexField()));
+                getExpressionForObject(textIndexNormalization.getRegexField()));
         getChainedMethodCallExprFrom("withRecursive", initializer).setArgument(0,
-                                                                                getExpressionForObject(textIndexNormalization.isRecursive()));
+                getExpressionForObject(textIndexNormalization.isRecursive()));
         BooleanLiteralExpr isCaseSensitiveExpression = textIndexNormalization.isCaseSensitive() != null ? (BooleanLiteralExpr) getExpressionForObject(textIndexNormalization.isCaseSensitive()) : new BooleanLiteralExpr(false);
         getChainedMethodCallExprFrom("withIsCaseSensitive", initializer).setArgument(0, isCaseSensitiveExpression);
         getChainedMethodCallExprFrom("withMaxLevenshteinDistance", initializer).setArgument(0,
-                                                                               getExpressionForObject(textIndexNormalization.getMaxLevenshteinDistance()));
+                getExpressionForObject(textIndexNormalization.getMaxLevenshteinDistance()));
         Expression wordSeparatorCharacterREExpression;
         if (textIndexNormalization.getWordSeparatorCharacterRE() != null) {
             String wordSeparatorCharacterRE = StringEscapeUtils.escapeJava(textIndexNormalization.getWordSeparatorCharacterRE());

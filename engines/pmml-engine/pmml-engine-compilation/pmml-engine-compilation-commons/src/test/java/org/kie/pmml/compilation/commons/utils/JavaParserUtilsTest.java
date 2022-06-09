@@ -58,7 +58,7 @@ public class JavaParserUtilsTest {
     void getKiePMMLModelCompilationUnitWithPackage() {
         String className = "ClassName";
         String packageName = "apackage";
-        CompilationUnit retrieved = JavaParserUtils.getKiePMMLModelCompilationUnit(className, packageName,  TEMPLATE_FILE, TEMPLATE_CLASS);
+        CompilationUnit retrieved = JavaParserUtils.getKiePMMLModelCompilationUnit(className, packageName, TEMPLATE_FILE, TEMPLATE_CLASS);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getPackageDeclaration()).isPresent();
         assertThat(retrieved.getPackageDeclaration().get().getName().asString()).isEqualTo(packageName);
@@ -69,7 +69,7 @@ public class JavaParserUtilsTest {
     @Test
     void getKiePMMLModelCompilationUnitWithoutPackage() {
         String className = "ClassName";
-        CompilationUnit retrieved = JavaParserUtils.getKiePMMLModelCompilationUnit(className, null,  TEMPLATE_FILE, TEMPLATE_CLASS);
+        CompilationUnit retrieved = JavaParserUtils.getKiePMMLModelCompilationUnit(className, null, TEMPLATE_FILE, TEMPLATE_CLASS);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getPackageDeclaration()).isNotPresent();
         assertThat(retrieved.getClassByName(TEMPLATE_CLASS)).isNotPresent();

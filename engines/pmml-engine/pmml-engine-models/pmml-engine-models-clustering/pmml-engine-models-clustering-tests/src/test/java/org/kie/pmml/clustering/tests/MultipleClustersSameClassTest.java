@@ -1,10 +1,5 @@
 package org.kie.pmml.clustering.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,6 +9,11 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MultipleClustersSameClassTest extends AbstractPMMLTest {
@@ -21,7 +21,7 @@ public class MultipleClustersSameClassTest extends AbstractPMMLTest {
     private static final double DOUBLE_VALID_PERCENTAGE = 0.99999;
 
     private static final String FILE_NAME_NO_SUFFIX = "multipleClustersSameClass";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "multipleClusterSameClassModel";
     private static final String AFFINITY_FIELD = "predictedAffinity";
     private static final String CLUSTER_AFFINITY_FIELD = "predictedClusterAffinity";

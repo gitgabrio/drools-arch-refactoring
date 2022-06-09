@@ -15,21 +15,17 @@
  */
 package org.kie.pmml.api.enums.builtinfunctions;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
 import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
 import org.kie.pmml.api.exceptions.KieEnumException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.models.Interval;
 import org.kie.pmml.api.models.MiningField;
 
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkBooleans;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkLength;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkMinimumLength;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkNumbers;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkRangeLength;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.*;
 
 /**
  * @see <a http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html>Built-in functions</a>

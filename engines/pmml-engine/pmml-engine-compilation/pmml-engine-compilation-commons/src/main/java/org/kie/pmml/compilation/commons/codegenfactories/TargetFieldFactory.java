@@ -32,9 +32,7 @@ import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.api.models.TargetValue;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.TargetValueFactory.getTargetValueVariableInitializer;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -72,8 +70,8 @@ public class TargetFieldFactory {
         variableDeclarator.setName(targetField.getName());
         final ObjectCreationExpr toReturn = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      TARGET_FIELD,
-                                                                      targetBody)))
+                        TARGET_FIELD,
+                        targetBody)))
                 .asObjectCreationExpr();
         final NodeList<Expression> arguments = new NodeList<>();
         if (targetField.getTargetValues() != null) {

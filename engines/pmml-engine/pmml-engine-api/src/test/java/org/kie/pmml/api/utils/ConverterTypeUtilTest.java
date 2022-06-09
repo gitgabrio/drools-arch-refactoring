@@ -16,11 +16,11 @@
 
 package org.kie.pmml.api.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.exceptions.KiePMMLException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

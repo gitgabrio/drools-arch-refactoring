@@ -15,17 +15,13 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.kie.pmml.api.enums.CAST_INTEGER;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Targets.html#xsdElement_Target>Target</a>
@@ -44,7 +40,7 @@ public class KiePMMLTarget extends AbstractKiePMMLComponent {
             targetValues = targetField.getTargetValues()
                     .stream()
                     .map(targetValue -> KiePMMLTargetValue.builder(UUID.randomUUID().toString(),
-                                                                   Collections.emptyList(), targetValue)
+                                    Collections.emptyList(), targetValue)
                             .build())
                     .collect(Collectors.toList());
         } else {
@@ -64,9 +60,9 @@ public class KiePMMLTarget extends AbstractKiePMMLComponent {
         double predictionDouble = (double) prediction;
         Number toReturn = applyMin(predictionDouble);
         toReturn = applyMax((double) toReturn);
-        toReturn = applyRescaleFactor((double)toReturn);
-        toReturn = applyRescaleConstant((double)toReturn);
-        toReturn = applyCastInteger((double)toReturn);
+        toReturn = applyRescaleFactor((double) toReturn);
+        toReturn = applyRescaleConstant((double) toReturn);
+        toReturn = applyCastInteger((double) toReturn);
         // TODO DROOLS-6345 TargetValue currently unimplemented
         return toReturn;
     }

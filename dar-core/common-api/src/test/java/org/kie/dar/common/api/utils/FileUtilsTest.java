@@ -49,6 +49,7 @@ class FileUtilsTest {
         File retrieved = FileUtils.getFileFromFileName(TEST_FILE);
         assertThat(retrieved).isNotNull();
     }
+
     @Test
     void getFileFromFileNameNotExisting() {
         try {

@@ -15,13 +15,6 @@
  */
 package org.kie.pmml.runtime.core.utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.api.pmml.ParameterInfo;
 import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
@@ -37,6 +30,9 @@ import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * Class meant to provide static methods related to <b>pre-process</b> manipulation
  */
@@ -50,6 +46,7 @@ public class PreProcess {
 
     /**
      * Method to create a <code>ProcessingDTO</code> with <b>fix</b> values from the given <code>KiePMMLModel</code>
+     *
      * @param model
      * @param context
      * @return
@@ -71,6 +68,7 @@ public class PreProcess {
     /**
      * Try to convert input data to expected data-type, throwing exception when data are not
      * convertible
+     *
      * @param notTargetMiningFields
      * @param requestData
      */
@@ -108,10 +106,10 @@ public class PreProcess {
      * value specified by attribute invalidValueReplacement which must be present in this case,
      * or the PMML is invalid.
      * </p>
+     *
      * @param notTargetMiningFields
      * @param requestData
-     * @see
-     * <a href="http://dmg.org/pmml/v4-4/MiningSchema.html#xsdType_INVALID-VALUE-TREATMENT-METHOD">INVALID-VALUE-TREATMENT-METHOD</a>
+     * @see <a href="http://dmg.org/pmml/v4-4/MiningSchema.html#xsdType_INVALID-VALUE-TREATMENT-METHOD">INVALID-VALUE-TREATMENT-METHOD</a>
      */
     static void verifyFixInvalidValues(final List<KiePMMLMiningField> notTargetMiningFields,
                                        final PMMLRequestData requestData) {
@@ -141,10 +139,10 @@ public class PreProcess {
      * unless the value is returnInvalid, in which case if a missing value is encountered
      * in the given field, the model should return a value indicating an invalid result;
      * </p>
+     *
      * @param notTargetMiningFields
      * @param requestData
-     * @see
-     * <a href="http://dmg.org/pmml/v4-4/MiningSchema.html#xsdType_MISSING-VALUE-TREATMENT-METHOD">MISSING-VALUE-TREATMENT-METHOD</a>
+     * @see <a href="http://dmg.org/pmml/v4-4/MiningSchema.html#xsdType_MISSING-VALUE-TREATMENT-METHOD">MISSING-VALUE-TREATMENT-METHOD</a>
      */
     static void verifyAddMissingValues(final List<KiePMMLMiningField> notTargetMiningFields,
                                        final PMMLRequestData requestData) {
@@ -171,11 +169,11 @@ public class PreProcess {
 
     /**
      * Execute <b>transformations</b> on input data.
+     *
      * @param processingDTO
      * @param requestData
      * @see <a href="http://dmg.org/pmml/v4-4/Transformations.html">Transformations</a>
-     * @see
-     * <a href="http://dmg.org/pmml/v4-4/Transformations.html#xsdElement_LocalTransformations">LocalTransformations</a>
+     * @see <a href="http://dmg.org/pmml/v4-4/Transformations.html#xsdElement_LocalTransformations">LocalTransformations</a>
      */
     static void executeTransformations(final ProcessingDTO processingDTO,
                                        final PMMLRequestData requestData) {
@@ -201,6 +199,7 @@ public class PreProcess {
      * <code>INVALID_VALUE_TREATMENT_METHOD</code>
      * of the given <code>MiningField</code>, <b>eventually adding the ParameterInfo to the list of the ones to be
      * removed from input data</b>
+     *
      * @param miningField
      * @param parameterInfo
      * @param toRemove
@@ -239,6 +238,7 @@ public class PreProcess {
     /**
      * Manage the <b>missing value</b> depending on the <code>INVALID_VALUE_TREATMENT_METHOD</code>
      * of the given <code>MiningField</code>, <b>eventually adding default ont to input data</b>
+     *
      * @param miningField
      * @param requestData
      */
@@ -269,6 +269,7 @@ public class PreProcess {
 
     /**
      * Verify if the value of the given <code>ParameterInfo</code> is allowed for the given <code>MiningField</code>
+     *
      * @param parameterInfo
      * @param miningField
      * @return

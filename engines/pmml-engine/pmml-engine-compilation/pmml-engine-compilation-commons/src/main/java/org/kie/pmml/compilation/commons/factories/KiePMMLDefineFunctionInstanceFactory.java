@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.DefineFunction;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLParameterField;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExpressionInstanceFactory.getKiePMMLExpression;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
@@ -52,10 +52,10 @@ public class KiePMMLDefineFunctionInstanceFactory {
                 DATA_TYPE.byName(defineFunction.getDataType().value()) : null;
         OP_TYPE opType = defineFunction.getOpType() != null ? OP_TYPE.byName(defineFunction.getOpType().value()) : null;
         return new KiePMMLDefineFunction(defineFunction.getName(),
-                                         getKiePMMLExtensions(defineFunction.getExtensions()),
-                                         dataType,
-                                         opType,
-                                         kiePMMLParameterFields,
-                                         getKiePMMLExpression(defineFunction.getExpression()));
+                getKiePMMLExtensions(defineFunction.getExtensions()),
+                dataType,
+                opType,
+                kiePMMLParameterFields,
+                getKiePMMLExpression(defineFunction.getExpression()));
     }
 }

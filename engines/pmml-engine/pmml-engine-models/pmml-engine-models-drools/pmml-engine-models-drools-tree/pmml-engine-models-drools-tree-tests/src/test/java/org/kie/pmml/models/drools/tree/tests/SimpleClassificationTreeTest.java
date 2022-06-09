@@ -51,7 +51,7 @@ public class SimpleClassificationTreeTest extends AbstractPMMLTest {
         this.expectedResult = expectedResult;
     }
 
-  @BeforeClass
+    @BeforeClass
     public static void setupClass() {
         pmmlRuntime = getPMMLRuntime(FILE_NAME);
     }

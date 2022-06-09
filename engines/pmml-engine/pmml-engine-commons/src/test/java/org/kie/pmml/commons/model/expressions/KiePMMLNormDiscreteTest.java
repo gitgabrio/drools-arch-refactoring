@@ -16,11 +16,11 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.CommonTestingUtility.getProcessingDTO;

@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.runtime.core.implementations;
 
+import org.kie.pmml.api.models.PMMLStep;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.kie.pmml.api.models.PMMLStep;
 
 /**
  * Common abstract implementation of <code>PMMLStep</code>
@@ -37,6 +37,7 @@ public class AbstractPMMLStep implements PMMLStep {
 
     /**
      * Returns an <b>unmodifiable map</b> of <code>info</code>
+     *
      * @return
      */
     @Override

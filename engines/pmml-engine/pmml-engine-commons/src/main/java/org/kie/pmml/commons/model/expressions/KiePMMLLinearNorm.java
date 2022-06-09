@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.List;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.List;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Transformations.html#xsdElement_LinearNorm>LinearNorm</a>

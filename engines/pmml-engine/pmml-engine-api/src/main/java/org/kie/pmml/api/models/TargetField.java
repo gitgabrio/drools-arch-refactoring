@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.api.models;
 
+import org.kie.pmml.api.enums.CAST_INTEGER;
+import org.kie.pmml.api.enums.OP_TYPE;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
-import org.kie.pmml.api.enums.CAST_INTEGER;
-import org.kie.pmml.api.enums.OP_TYPE;
 
 /**
  * User-friendly representation of a <b>TargetField</b>
@@ -110,7 +110,7 @@ public class TargetField implements Serializable {
         }
         TargetField that = (TargetField) o;
         return Double.compare(that.rescaleConstant, rescaleConstant) == 0 && Double.compare(that.rescaleFactor,
-                                                                                            rescaleFactor) == 0 && Objects.equals(name, that.name) && Objects.equals(targetValues, that.targetValues) && opType == that.opType && Objects.equals(field, that.field) && castInteger == that.castInteger && Objects.equals(min, that.min) && Objects.equals(max, that.max);
+                rescaleFactor) == 0 && Objects.equals(name, that.name) && Objects.equals(targetValues, that.targetValues) && opType == that.opType && Objects.equals(field, that.field) && castInteger == that.castInteger && Objects.equals(min, that.min) && Objects.equals(max, that.max);
     }
 
     @Override

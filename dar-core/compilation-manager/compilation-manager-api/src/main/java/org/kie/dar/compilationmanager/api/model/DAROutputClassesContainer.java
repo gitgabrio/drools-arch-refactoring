@@ -15,8 +15,6 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.common.api.model.FRI;
-
 import java.util.Map;
 
 /**

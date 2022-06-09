@@ -20,11 +20,7 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.apache.commons.text.StringEscapeUtils;
 import org.dmg.pmml.TextIndex;
@@ -34,15 +30,10 @@ import org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLExpressionFactory.getKiePMMLExpressionBlockStmt;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLTextIndexNormalizationFactory.getTextIndexNormalizationVariableDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -79,7 +70,7 @@ public class KiePMMLTextIndexFactory {
         final BlockStmt toReturn = new BlockStmt();
         String expressionVariableName = String.format("%s_Expression", variableName);
         final BlockStmt expressionBlockStatement = getKiePMMLExpressionBlockStmt(expressionVariableName,
-                                                                                 textIndex.getExpression());
+                textIndex.getExpression());
         expressionBlockStatement.getStatements().forEach(toReturn::addStatement);
         int counter = 0;
         final NodeList<Expression> arguments = new NodeList<>();
@@ -88,14 +79,14 @@ public class KiePMMLTextIndexFactory {
                 String nestedVariableName = String.format(VARIABLE_NAME_TEMPLATE, variableName, counter);
                 arguments.add(new NameExpr(nestedVariableName));
                 BlockStmt toAdd = getTextIndexNormalizationVariableDeclaration(nestedVariableName,
-                                                                               textIndexNormalization);
+                        textIndexNormalization);
                 toAdd.getStatements().forEach(toReturn::addStatement);
                 counter++;
             }
         }
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                TEXTINDEX, toReturn)))
+                        TEXTINDEX, toReturn)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", initializer);
         final StringLiteralExpr nameExpr = new StringLiteralExpr(textIndex.getTextField().getValue());
@@ -104,7 +95,7 @@ public class KiePMMLTextIndexFactory {
         builder.setArgument(2, expressionExpr);
         Expression localTermWeightsExpression;
         if (textIndex.getLocalTermWeights() != null) {
-            final LOCAL_TERM_WEIGHTS localTermWeights =  LOCAL_TERM_WEIGHTS.byName(textIndex.getLocalTermWeights().value());
+            final LOCAL_TERM_WEIGHTS localTermWeights = LOCAL_TERM_WEIGHTS.byName(textIndex.getLocalTermWeights().value());
             localTermWeightsExpression = new NameExpr(LOCAL_TERM_WEIGHTS.class.getName() + "." + localTermWeights.name());
         } else {
             localTermWeightsExpression = new NullLiteralExpr();
@@ -112,10 +103,10 @@ public class KiePMMLTextIndexFactory {
         getChainedMethodCallExprFrom("withLocalTermWeights", initializer).setArgument(0, localTermWeightsExpression);
         getChainedMethodCallExprFrom("withIsCaseSensitive", initializer).setArgument(0, getExpressionForObject(textIndex.isCaseSensitive()));
         getChainedMethodCallExprFrom("withMaxLevenshteinDistance", initializer).setArgument(0,
-                                                                                            getExpressionForObject(textIndex.getMaxLevenshteinDistance()));
+                getExpressionForObject(textIndex.getMaxLevenshteinDistance()));
         Expression countHitsExpression;
         if (textIndex.getCountHits() != null) {
-            final COUNT_HITS countHits =  COUNT_HITS.byName(textIndex.getCountHits().value());
+            final COUNT_HITS countHits = COUNT_HITS.byName(textIndex.getCountHits().value());
             countHitsExpression = new NameExpr(COUNT_HITS.class.getName() + "." + countHits.name());
         } else {
             countHitsExpression = new NullLiteralExpr();

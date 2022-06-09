@@ -30,16 +30,10 @@ import org.dmg.pmml.MapValues;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLFieldColumnPairFactory.getFieldColumnPairVariableDeclaration;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLInlineTableFactory.getInlineTableVariableDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForDataType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -93,7 +87,7 @@ public class KiePMMLMapValuesFactory {
         toAdd.getStatements().forEach(toReturn::addStatement);
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                MAPVALUES, toReturn)))
+                        MAPVALUES, toReturn)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", initializer);
         final StringLiteralExpr nameExpr = new StringLiteralExpr(variableName);
@@ -102,12 +96,12 @@ public class KiePMMLMapValuesFactory {
         builder.setArgument(2, outputColumnExpr);
         final Expression dataTypeExpression = getExpressionForDataType(mapValues.getDataType());
         getChainedMethodCallExprFrom("withDefaultValue", initializer).setArgument(0, getExpressionForObject
-        (mapValues.getDefaultValue()));
+                (mapValues.getDefaultValue()));
         getChainedMethodCallExprFrom("withMapMissingTo", initializer).setArgument(0, getExpressionForObject
                 (mapValues.getMapMissingTo()));
         getChainedMethodCallExprFrom("withDataType", initializer).setArgument(0, dataTypeExpression);
         getChainedMethodCallExprFrom("withKiePMMLInlineTable", initializer).setArgument(0,
-        new NameExpr(inlineTableVariableName));
+                new NameExpr(inlineTableVariableName));
         getChainedMethodCallExprFrom("asList", initializer).setArguments(arguments);
         mapValuesBody.getStatements().forEach(toReturn::addStatement);
         return toReturn;

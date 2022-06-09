@@ -15,10 +15,9 @@
  */
 package org.kie.dar.runtimemanager.api.model;
 
-import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.model.FRI;
 
-public abstract class AbstractDARInput<T> implements DARInput<T>  {
+public abstract class AbstractDARInput<T> implements DARInput<T> {
 
     private final FRI fri;
     private final T inputData;

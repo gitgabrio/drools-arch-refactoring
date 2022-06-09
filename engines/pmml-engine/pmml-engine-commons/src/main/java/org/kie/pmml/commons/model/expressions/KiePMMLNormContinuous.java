@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.kie.pmml.api.enums.OUTLIER_TREATMENT_METHOD;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPossibleSources;
 
@@ -39,10 +39,10 @@ public class KiePMMLNormContinuous extends AbstractKiePMMLComponent implements K
     private final Number mapMissingTo;
 
     public KiePMMLNormContinuous(final String name,
-                                    final List<KiePMMLExtension> extensions,
-                                    final List<KiePMMLLinearNorm> linearNorms,
-                                    final OUTLIER_TREATMENT_METHOD outlierTreatmentMethod,
-                                    final Number mapMissingTo) {
+                                 final List<KiePMMLExtension> extensions,
+                                 final List<KiePMMLLinearNorm> linearNorms,
+                                 final OUTLIER_TREATMENT_METHOD outlierTreatmentMethod,
+                                 final Number mapMissingTo) {
         super(name, extensions);
         sortLinearNorms(linearNorms);
         this.linearNorms = linearNorms;
@@ -98,7 +98,7 @@ public class KiePMMLNormContinuous extends AbstractKiePMMLComponent implements K
                 if (input.doubleValue() < firstLinearNorm.getOrig()) {
                     limitLinearNorms = linearNorms.subList(0, 2).toArray(new KiePMMLLinearNorm[0]);
                 } else {
-                    limitLinearNorms = linearNorms.subList(linearNorms.size() -2, linearNorms.size()).toArray(new KiePMMLLinearNorm[0]);
+                    limitLinearNorms = linearNorms.subList(linearNorms.size() - 2, linearNorms.size()).toArray(new KiePMMLLinearNorm[0]);
                 }
                 return evaluate(input, limitLinearNorms);
             case AS_MISSING_VALUES:
@@ -114,18 +114,18 @@ public class KiePMMLNormContinuous extends AbstractKiePMMLComponent implements K
         int counter = 0;
         KiePMMLLinearNorm linearNorm = linearNorms.get(counter);
         KiePMMLLinearNorm startLinearNorm = null;
-        while (linearNorm.getOrig() <= input.doubleValue() && counter < linearNorms.size() -1) {
+        while (linearNorm.getOrig() <= input.doubleValue() && counter < linearNorms.size() - 1) {
             startLinearNorm = linearNorm;
-            counter ++;
+            counter++;
             linearNorm = linearNorms.get(counter);
         }
         int startIndex = linearNorms.indexOf(startLinearNorm);
-        counter = linearNorms.size() -1;
+        counter = linearNorms.size() - 1;
         linearNorm = linearNorms.get(counter);
         KiePMMLLinearNorm endLinearNorm = null;
         while (linearNorm.getOrig() >= input.doubleValue() && counter > startIndex) {
             endLinearNorm = linearNorm;
-            counter --;
+            counter--;
             linearNorm = linearNorms.get(counter);
         }
         return new KiePMMLLinearNorm[]{startLinearNorm, endLinearNorm};

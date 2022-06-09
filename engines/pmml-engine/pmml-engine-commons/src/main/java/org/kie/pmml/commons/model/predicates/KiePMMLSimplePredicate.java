@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.commons.model.predicates;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import org.kie.pmml.api.enums.OPERATOR;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static org.kie.pmml.api.enums.BOOLEAN_OPERATOR.SURROGATE;
 
@@ -45,6 +45,7 @@ public class KiePMMLSimplePredicate extends KiePMMLPredicate {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(String name, List<KiePMMLExtension> extensions, OPERATOR operator) {

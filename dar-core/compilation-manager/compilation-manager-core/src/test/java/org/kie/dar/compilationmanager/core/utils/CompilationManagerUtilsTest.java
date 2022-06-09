@@ -148,7 +148,7 @@ class CompilationManagerUtilsTest {
     }
 
     private static DARCallableOutputClassesContainer getDARFinalOutputClassesContainer(FRI usedFri) {
-        return new DARCallableOutputClassesContainer(usedFri, usedFri.getModel() +"Resources", compiledClassMap) {
+        return new DARCallableOutputClassesContainer(usedFri, usedFri.getModel() + "Resources", compiledClassMap) {
         };
     }
 }

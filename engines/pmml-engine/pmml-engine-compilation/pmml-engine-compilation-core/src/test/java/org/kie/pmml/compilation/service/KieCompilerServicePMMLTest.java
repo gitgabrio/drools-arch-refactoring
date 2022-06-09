@@ -54,7 +54,7 @@ class KieCompilerServicePMMLTest {
 //        DARCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
 //        assertThat(retrieved).isNotNull().isInstanceOf(DARCallableOutputPMML.class);
 
-        // TODO after enabling drools models
+    // TODO after enabling drools models
 //        pmmlFile = getFileFromFileName("SimpleSetPredicateTree.pmml");
 //        toProcess = new DARFileResource(pmmlFile);
 //        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);

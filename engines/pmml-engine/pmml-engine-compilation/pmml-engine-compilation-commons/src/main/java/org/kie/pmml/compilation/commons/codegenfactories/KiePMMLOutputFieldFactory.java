@@ -19,25 +19,16 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.dmg.pmml.OutputField;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLExpressionFactory.getKiePMMLExpressionBlockStmt;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForDataType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 public class KiePMMLOutputFieldFactory {
@@ -62,7 +53,7 @@ public class KiePMMLOutputFieldFactory {
     static BlockStmt getOutputFieldVariableDeclaration(final String variableName, final OutputField outputField) {
         final MethodDeclaration methodDeclaration = OUTPUTFIELD_TEMPLATE.getMethodsByName(GETKIEPMMLOUTPUTFIELD).get(0).clone();
         final BlockStmt outputFieldBody = methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE, methodDeclaration)));
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(outputFieldBody, OUTPUTFIELD) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, OUTPUTFIELD, outputFieldBody)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(outputFieldBody, OUTPUTFIELD).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, OUTPUTFIELD, outputFieldBody)));
         variableDeclarator.setName(variableName);
         final BlockStmt toReturn = new BlockStmt();
         final Expression expressionExpr;

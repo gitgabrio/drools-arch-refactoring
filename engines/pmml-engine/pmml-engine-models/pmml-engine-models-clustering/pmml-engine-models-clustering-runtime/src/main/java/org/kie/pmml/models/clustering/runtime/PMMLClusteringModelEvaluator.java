@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package  org.kie.pmml.models.clustering.runtime;
-
-import java.util.Map;
+package org.kie.pmml.models.clustering.runtime;
 
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.runtime.PMMLContext;
-import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
+import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
+
+import java.util.Map;
 
 import static org.kie.pmml.api.enums.ResultCode.OK;
 import static org.kie.pmml.runtime.core.utils.Converter.getUnwrappedParametersMap;
@@ -32,7 +32,7 @@ import static org.kie.pmml.runtime.core.utils.Converter.getUnwrappedParametersMa
 public class PMMLClusteringModelEvaluator implements PMMLModelEvaluator<KiePMMLClusteringModel> {
 
     @Override
-    public PMML_MODEL getPMMLModelType(){
+    public PMML_MODEL getPMMLModelType() {
         return PMML_MODEL.CLUSTERING_MODEL;
     }
 

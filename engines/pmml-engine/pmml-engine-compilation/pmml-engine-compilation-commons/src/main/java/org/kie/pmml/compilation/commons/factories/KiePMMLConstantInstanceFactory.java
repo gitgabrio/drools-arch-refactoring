@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.UUID;
-
 import org.dmg.pmml.Constant;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
+
+import java.util.Collections;
+import java.util.UUID;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLConstant</code> code-generators

@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.Row;
+import org.kie.pmml.commons.model.expressions.KiePMMLRow;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.dmg.pmml.Row;
-import org.kie.pmml.commons.model.expressions.KiePMMLRow;
 
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getRowDataMap;
 

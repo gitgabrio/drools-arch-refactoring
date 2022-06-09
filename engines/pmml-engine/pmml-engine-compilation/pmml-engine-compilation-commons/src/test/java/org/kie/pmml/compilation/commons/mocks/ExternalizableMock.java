@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.compilation.commons.mocks;
 
+import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 
 public class ExternalizableMock implements Externalizable {
 

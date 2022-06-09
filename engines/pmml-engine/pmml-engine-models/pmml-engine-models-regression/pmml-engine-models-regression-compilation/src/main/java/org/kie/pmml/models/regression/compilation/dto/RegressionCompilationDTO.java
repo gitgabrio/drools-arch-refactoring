@@ -15,9 +15,6 @@
  */
 package org.kie.pmml.models.regression.compilation.dto;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.MiningFunction;
 import org.dmg.pmml.OpType;
@@ -28,6 +25,9 @@ import org.kie.pmml.compilation.api.dto.CompilationDTO;
 import org.kie.pmml.compilation.commons.dto.AbstractSpecificCompilationDTO;
 import org.kie.pmml.models.regression.model.enums.REGRESSION_NORMALIZATION_METHOD;
 
+import java.util.List;
+import java.util.Objects;
+
 public class RegressionCompilationDTO extends AbstractSpecificCompilationDTO<RegressionModel> {
 
     private static final long serialVersionUID = 640809755551594031L;
@@ -37,10 +37,11 @@ public class RegressionCompilationDTO extends AbstractSpecificCompilationDTO<Reg
 
     /**
      * Private constructor that preserve given <b>regressionTables</b> and <b>defaultNormalizationMethod</b>
+     *
      * @param source
      * @param regressionTables
      * @param defaultNormalizationMethod This is used by <code>KiePMMLRegressionTableRegressionFactory</code> when it
-     * has to been provided with <code>RegressionModel.NormalizationMethod.NONE</code>
+     *                                   has to been provided with <code>RegressionModel.NormalizationMethod.NONE</code>
      */
     private RegressionCompilationDTO(final CompilationDTO<RegressionModel> source,
                                      final List<RegressionTable> regressionTables,
@@ -54,6 +55,7 @@ public class RegressionCompilationDTO extends AbstractSpecificCompilationDTO<Reg
     /**
      * Private constructor that use <b>regressionTables</b> and <b>defaultNormalizationMethod</b> from the given
      * <b>source</b>
+     *
      * @param source
      */
     private RegressionCompilationDTO(final CompilationDTO<RegressionModel> source) {
@@ -65,6 +67,7 @@ public class RegressionCompilationDTO extends AbstractSpecificCompilationDTO<Reg
      * <p>
      * This is used by <code>KiePMMLRegressionTableRegressionFactory</code> when it
      * has to been provided with <code>RegressionModel.NormalizationMethod.NONE</code>
+     *
      * @param source
      * @param regressionTables
      * @param defaultNormalizationMethod
@@ -79,6 +82,7 @@ public class RegressionCompilationDTO extends AbstractSpecificCompilationDTO<Reg
     /**
      * Builder that that use <b>regressionTables</b> and <b>defaultNormalizationMethod</b> from the given
      * <b>source</b>
+     *
      * @param source
      * @return
      */

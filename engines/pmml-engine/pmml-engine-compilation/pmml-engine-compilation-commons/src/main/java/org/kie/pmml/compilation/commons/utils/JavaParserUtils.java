@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.utils;
 
-import java.io.InputStream;
-
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -33,6 +31,8 @@ import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
 
 /**
  * Class to provide shared, helper methods to be invoked by model-specific
@@ -52,7 +52,7 @@ public class JavaParserUtils {
             return StaticJavaParser.parse(resource);
         } catch (ParseProblemException e) {
             throw new KiePMMLInternalException(String.format("Failed to parse %s due to %s", fileName,
-                                                             e.getMessage()), e);
+                    e.getMessage()), e);
         } catch (Exception e) {
             throw new ExternalException(String.format("Failed to read %s due to %s", fileName, e.getMessage()), e);
         }
@@ -63,7 +63,7 @@ public class JavaParserUtils {
             return StaticJavaParser.parse(source);
         } catch (ParseProblemException e) {
             throw new KiePMMLInternalException(String.format("Failed to parse\r\n%s\r\ndue to %s", source,
-                                                             e.getMessage()), e);
+                    e.getMessage()), e);
         } catch (Exception e) {
             throw new ExternalException(String.format("Failed to parse\r\n%s\r\ndue to %s", source, e.getMessage()), e);
         }
@@ -72,7 +72,7 @@ public class JavaParserUtils {
     /**
      * @param className
      * @param packageName
-     * @param javaTemplate the name of the <b>file</b> to be used as template source
+     * @param javaTemplate   the name of the <b>file</b> to be used as template source
      * @param modelClassName the name of the class used in the provided template
      * @return
      */
@@ -95,6 +95,7 @@ public class JavaParserUtils {
     /**
      * Return the fully qualified name of the generated class.
      * It throws <code>KiePMMLException</code> if the package name is missing
+     *
      * @param cu
      * @return
      */

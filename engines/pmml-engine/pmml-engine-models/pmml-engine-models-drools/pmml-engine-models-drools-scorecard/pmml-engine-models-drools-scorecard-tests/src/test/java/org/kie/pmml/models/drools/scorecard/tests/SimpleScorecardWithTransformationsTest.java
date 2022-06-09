@@ -66,7 +66,7 @@ public class SimpleScorecardWithTransformationsTest extends AbstractPMMLTest {
         this.reasonCode2 = reasonCode2;
     }
 
-  @BeforeClass
+    @BeforeClass
     public static void setupClass() {
         pmmlRuntime = getPMMLRuntime(FILE_NAME);
     }

@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.api.enums.builtinfunctions;
 
-import java.util.Arrays;
-
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.special.Erf;
 import org.kie.pmml.api.exceptions.KieEnumException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
+
+import java.util.Arrays;
 
 import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkNumbers;
 

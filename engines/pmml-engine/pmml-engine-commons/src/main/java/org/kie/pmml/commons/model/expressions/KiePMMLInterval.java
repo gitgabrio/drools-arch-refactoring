@@ -15,9 +15,9 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.io.Serializable;
-
 import org.kie.pmml.api.enums.CLOSURE;
+
+import java.io.Serializable;
 
 /**
  * KiePMML representation of an <b>Interval</b>
@@ -63,13 +63,13 @@ public class KiePMMLInterval implements Serializable {
     }
 
     boolean isInsideOpenOpen(Number toEvaluate) {
-            if (leftMargin == null) {
-                return toEvaluate.doubleValue() < rightMargin.doubleValue();
-            } else if (rightMargin == null) {
-                return toEvaluate.doubleValue() > leftMargin.doubleValue();
-            } else {
-                return toEvaluate.doubleValue() > leftMargin.doubleValue() && toEvaluate.doubleValue() < rightMargin.doubleValue();
-            }
+        if (leftMargin == null) {
+            return toEvaluate.doubleValue() < rightMargin.doubleValue();
+        } else if (rightMargin == null) {
+            return toEvaluate.doubleValue() > leftMargin.doubleValue();
+        } else {
+            return toEvaluate.doubleValue() > leftMargin.doubleValue() && toEvaluate.doubleValue() < rightMargin.doubleValue();
+        }
     }
 
     boolean isInsideOpenClosed(Number toEvaluate) {

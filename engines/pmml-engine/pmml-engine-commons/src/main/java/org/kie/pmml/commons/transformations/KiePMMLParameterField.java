@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.commons.transformations;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Functions.html#xsdElement_ParameterField>ParameterField</a>

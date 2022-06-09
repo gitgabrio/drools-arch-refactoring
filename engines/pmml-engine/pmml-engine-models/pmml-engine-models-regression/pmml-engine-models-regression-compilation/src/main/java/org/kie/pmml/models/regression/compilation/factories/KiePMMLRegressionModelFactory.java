@@ -15,13 +15,6 @@
  */
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
@@ -42,13 +35,15 @@ import org.kie.pmml.models.regression.model.tuples.KiePMMLTableSourceCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.pmml.commons.Constants.GET_MODEL;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.TO_RETURN;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getMethodDeclarationBlockStmt;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.kie.pmml.commons.Constants.*;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFullClassName;
 import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.GETKIEPMML_TABLE;
@@ -72,7 +67,7 @@ public class KiePMMLRegressionModelFactory {
                     regressionTablesMap.values().stream().filter(KiePMMLClassificationTable.class::isInstance)
                             .findFirst()
                             .orElseThrow(() -> new KiePMMLException("Failed to find expected " +
-                                                                            KiePMMLClassificationTable.class.getSimpleName()));
+                                    KiePMMLClassificationTable.class.getSimpleName()));
 
             return KiePMMLRegressionModel.builder(compilationDTO.getModelName(), compilationDTO.getMINING_FUNCTION())
                     .withAbstractKiePMMLTable(nestedTable)
@@ -94,12 +89,12 @@ public class KiePMMLRegressionModelFactory {
 
     public static Map<String, String> getKiePMMLRegressionModelSourcesMap(final RegressionCompilationDTO compilationDTO) throws IOException {
         logger.trace("getKiePMMLRegressionModelSourcesMap {} {} {}", compilationDTO.getFields(),
-                     compilationDTO.getModel(),
-                     compilationDTO.getPackageName());
+                compilationDTO.getModel(),
+                compilationDTO.getPackageName());
         String className = compilationDTO.getSimpleClassName();
         CompilationUnit cloneCU = JavaParserUtils.getKiePMMLModelCompilationUnit(className,
-                                                                                 compilationDTO.getPackageName(),
-                                                                                 KIE_PMML_REGRESSION_MODEL_TEMPLATE_JAVA, KIE_PMML_REGRESSION_MODEL_TEMPLATE);
+                compilationDTO.getPackageName(),
+                KIE_PMML_REGRESSION_MODEL_TEMPLATE_JAVA, KIE_PMML_REGRESSION_MODEL_TEMPLATE);
         ClassOrInterfaceDeclaration modelTemplate = cloneCU.getClassByName(className)
                 .orElseThrow(() -> new KiePMMLException(MAIN_CLASS_NOT_FOUND + ": " + className));
         Map<String, KiePMMLTableSourceCategory> tablesSourceMap = getRegressionTablesMap(compilationDTO);
@@ -108,13 +103,13 @@ public class KiePMMLRegressionModelFactory {
                         .keySet()
                         .stream()
                         .filter(tableName -> tableName.startsWith(compilationDTO.getPackageName() +
-                                                                          ".KiePMMLClassificationTable"))
+                                ".KiePMMLClassificationTable"))
                         .findFirst()
                         .orElseThrow(() -> new KiePMMLException("Failed to find expected " +
-                                                                        "KiePMMLClassificationTable"));
+                                "KiePMMLClassificationTable"));
         setStaticGetter(compilationDTO,
-                        modelTemplate,
-                        nestedTable);
+                modelTemplate,
+                nestedTable);
         Map<String, String> toReturn = tablesSourceMap.entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getSource()));
@@ -125,21 +120,21 @@ public class KiePMMLRegressionModelFactory {
     //  not-public KiePMMLRegressionModel instantiation
 
     static Map<String, AbstractKiePMMLTable> getRegressionTables(final RegressionCompilationDTO compilationDTO) {
-        Map<String, AbstractKiePMMLTable>  toReturn = new HashMap<>();
+        Map<String, AbstractKiePMMLTable> toReturn = new HashMap<>();
         if (compilationDTO.isRegression()) {
             final List<RegressionTable> regressionTables =
                     Collections.singletonList(compilationDTO.getModel().getRegressionTables().get(0));
             final RegressionCompilationDTO regressionCompilationDTO =
                     RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(compilationDTO,
-                                                                                                      regressionTables,
-                                                                                                      compilationDTO.getModel().getNormalizationMethod());
+                            regressionTables,
+                            compilationDTO.getModel().getNormalizationMethod());
             toReturn.putAll(KiePMMLRegressionTableFactory.getRegressionTables(regressionCompilationDTO));
         } else {
             final List<RegressionTable> regressionTables = compilationDTO.getModel().getRegressionTables();
             final RegressionCompilationDTO regressionCompilationDTO =
                     RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(compilationDTO,
-                                                                                                      regressionTables,
-                                                                                                      RegressionModel.NormalizationMethod.NONE);
+                            regressionTables,
+                            RegressionModel.NormalizationMethod.NONE);
             KiePMMLClassificationTable kiePMMLClassificationTable = KiePMMLClassificationTableFactory.getClassificationTable(regressionCompilationDTO);
             toReturn.put(kiePMMLClassificationTable.getName(), kiePMMLClassificationTable);
         }
@@ -155,16 +150,16 @@ public class KiePMMLRegressionModelFactory {
                     Collections.singletonList(compilationDTO.getModel().getRegressionTables().get(0));
             final RegressionCompilationDTO regressionCompilationDTO =
                     RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(compilationDTO,
-                                                                                                      regressionTables,
-                                                                                                      compilationDTO.getModel().getNormalizationMethod());
+                            regressionTables,
+                            compilationDTO.getModel().getNormalizationMethod());
             toReturn =
                     KiePMMLRegressionTableFactory.getRegressionTableBuilders(regressionCompilationDTO);
         } else {
             final List<RegressionTable> regressionTables = compilationDTO.getModel().getRegressionTables();
             final RegressionCompilationDTO regressionCompilationDTO =
                     RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(compilationDTO,
-                                                                                                      regressionTables,
-                                                                                                      RegressionModel.NormalizationMethod.NONE);
+                            regressionTables,
+                            RegressionModel.NormalizationMethod.NONE);
             toReturn = KiePMMLClassificationTableFactory.getClassificationTableBuilders(regressionCompilationDTO);
         }
         return toReturn;
@@ -175,14 +170,14 @@ public class KiePMMLRegressionModelFactory {
                                 final String nestedTable) {
 
         KiePMMLModelFactoryUtils.initStaticGetter(compilationDTO,
-                                                  modelTemplate);
+                modelTemplate);
         final BlockStmt body = getMethodDeclarationBlockStmt(modelTemplate, GET_MODEL);
         final VariableDeclarator variableDeclarator =
                 getVariableDeclarator(body, TO_RETURN).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, TO_RETURN, body)));
 
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      TO_RETURN, body)))
+                        TO_RETURN, body)))
                 .asMethodCallExpr();
 
         MethodCallExpr methodCallExpr = new MethodCallExpr();

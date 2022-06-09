@@ -18,7 +18,6 @@ package org.kie.bar.engine.runtime.utils;
 import org.kie.bar.engine.api.model.BarResources;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
-import org.kie.bar.engine.runtime.service.KieRuntimeServiceBar;
 import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
@@ -77,7 +76,6 @@ public class BarRuntimeHelper {
     }
 
     /**
-     *
      * @param toEvaluate
      * @param memoryCompilerClassLoader
      * @return
@@ -103,7 +101,7 @@ public class BarRuntimeHelper {
         return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput )o).getOutputData().toString()));
+                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput) o).getOutputData().toString()));
     }
 
     static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {

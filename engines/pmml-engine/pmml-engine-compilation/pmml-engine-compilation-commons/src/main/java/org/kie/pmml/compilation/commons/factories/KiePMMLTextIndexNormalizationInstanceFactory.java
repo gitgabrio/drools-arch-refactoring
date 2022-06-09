@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.dmg.pmml.TextIndexNormalization;
+import org.kie.pmml.commons.model.expressions.KiePMMLTextIndexNormalization;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.apache.commons.text.StringEscapeUtils;
-import org.dmg.pmml.TextIndexNormalization;
-import org.kie.pmml.commons.model.expressions.KiePMMLTextIndexNormalization;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLInlineTableInstanceFactory.getKiePMMLInlineTable;
@@ -50,7 +50,7 @@ public class KiePMMLTextIndexNormalizationInstanceFactory {
         boolean isTokenize = textIndexNormalization.isTokenize() != null ? textIndexNormalization.isTokenize() : false;
 
         return KiePMMLTextIndexNormalization.builder(UUID.randomUUID().toString(),
-                                                     getKiePMMLExtensions(textIndexNormalization.getExtensions()))
+                        getKiePMMLExtensions(textIndexNormalization.getExtensions()))
                 .withKiePMMLInlineTable(getKiePMMLInlineTable(textIndexNormalization.getInlineTable()))
                 .withInField(textIndexNormalization.getInField())
                 .withOutField(textIndexNormalization.getOutField())

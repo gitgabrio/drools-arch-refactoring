@@ -15,37 +15,27 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.DataType;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.MiningField;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.FIELD_USAGE_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
+import org.kie.pmml.api.enums.*;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLIntervalFactory.getIntervalVariableDeclaration;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -82,7 +72,7 @@ public class KiePMMLMiningFieldFactory {
         final BlockStmt toReturn = new BlockStmt();
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      MININGFIELD, toReturn)))
+                        MININGFIELD, toReturn)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", initializer);
         final StringLiteralExpr nameExpr = new StringLiteralExpr(miningField.getName().getValue());
@@ -146,13 +136,13 @@ public class KiePMMLMiningFieldFactory {
         getChainedMethodCallExprFrom("withOpType", initializer).setArgument(0, opTypeExpr);
         getChainedMethodCallExprFrom("withDataType", initializer).setArgument(0, dataTypeExpr);
         getChainedMethodCallExprFrom("withMissingValueTreatmentMethod", initializer).setArgument(0,
-                                                                                                 missingValueTreatmentMethodExpr);
+                missingValueTreatmentMethodExpr);
         getChainedMethodCallExprFrom("withInvalidValueTreatmentMethod", initializer).setArgument(0,
-                                                                                                 invalidValueTreatmentMethodExpr);
+                invalidValueTreatmentMethodExpr);
         getChainedMethodCallExprFrom("withMissingValueReplacement", initializer).setArgument(0,
-                                                                                             missingValueReplacementExpr);
+                missingValueReplacementExpr);
         getChainedMethodCallExprFrom("withInvalidValueReplacement", initializer).setArgument(0,
-                                                                                             invalidValueReplacementExpr);
+                invalidValueReplacementExpr);
         getChainedMethodCallExprFrom("withAllowedValues", initializer).getArgument(0).asMethodCallExpr().setArguments(allowedValuesExpressions);
         getChainedMethodCallExprFrom("withIntervals", initializer).getArgument(0).asMethodCallExpr().setArguments(intervalsExpressions);
 
@@ -162,6 +152,7 @@ public class KiePMMLMiningFieldFactory {
 
     /**
      * Returns a list of <code>Field</code>s filtered by field name
+     *
      * @param fields
      * @param fieldName
      * @return
@@ -176,6 +167,7 @@ public class KiePMMLMiningFieldFactory {
     /**
      * Returns a DataField
      * Expect a list of <code>Field</code>s filtered by field name
+     *
      * @param fields List of <code>Field</code>s filtered by field name
      * @return
      */
@@ -189,7 +181,8 @@ public class KiePMMLMiningFieldFactory {
 
     /**
      * Expect a list of <code>Field</code>s filtered by field name
-     * @param fields List of <code>Field</code>s filtered by field name
+     *
+     * @param fields    List of <code>Field</code>s filtered by field name
      * @param fieldName
      * @return
      */
@@ -199,8 +192,8 @@ public class KiePMMLMiningFieldFactory {
                 .map(Field::getDataType)
                 .findFirst()
                 .orElseThrow(() -> new KiePMMLInternalException(String.format("Failed to find DataType for " +
-                                                                                      "field %s",
-                                                                              fieldName)));
+                                "field %s",
+                        fieldName)));
     }
 
     private static NodeList<Expression> getAllowedValuesExpressions(final DataField dataField) {
@@ -223,9 +216,9 @@ public class KiePMMLMiningFieldFactory {
                         .getVariable(0)
                         .getInitializer()
                         .orElseThrow(() -> new KiePMMLInternalException(String.format("Failed to create initializer " +
-                                                                                              "for " +
-                                                                                              "Interval %s",
-                                                                                      interval)));
+                                        "for " +
+                                        "Interval %s",
+                                interval)));
                 toReturn.add(toAdd);
             });
         }

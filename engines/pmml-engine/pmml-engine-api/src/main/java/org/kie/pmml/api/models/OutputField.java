@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.api.models;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * User-friendly representation of an <b>OutputField</b>

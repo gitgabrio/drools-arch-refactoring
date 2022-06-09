@@ -16,11 +16,6 @@
 
 package org.kie.pmml.regression.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,12 +24,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogisticRegressionNoneNormalizationTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "LogisticRegressionNoneNormalization";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "LogisticRegressionNoneNormalization";
     private static final String TARGET_FIELD = "Species";
     private static final String PROBABILITY_SETOSA_FIELD = "Probability_setosa";
@@ -54,9 +54,9 @@ public class LogisticRegressionNoneNormalizationTest extends AbstractPMMLTest {
     private double expectedVirginicaProbability;
 
     public void initLogisticRegressionNoneNormalizationTest(double sepalLength, double sepalWidth, double petalLength,
-                                                   double petalWidth, String expectedResult, double expectedSetosaProbability,
-                                                   double expectedVersicolorProbability,
-                                                   double expectedVirginicaProbability) {
+                                                            double petalWidth, String expectedResult, double expectedSetosaProbability,
+                                                            double expectedVersicolorProbability,
+                                                            double expectedVirginicaProbability) {
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;

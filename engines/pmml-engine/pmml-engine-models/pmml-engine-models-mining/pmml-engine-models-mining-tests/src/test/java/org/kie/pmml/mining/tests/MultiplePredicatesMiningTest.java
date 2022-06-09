@@ -16,26 +16,28 @@
 
 package org.kie.pmml.mining.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.api.enums.ResultCode.FAIL;
 import static org.kie.pmml.api.enums.ResultCode.OK;
 
+@Disabled // TODO after rules models
 public class MultiplePredicatesMiningTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MultipleMining";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "PredicatesMining";
     private static final String TARGET_FIELD = "categoricalResult";
     private static PMMLRuntime pmmlRuntime;
@@ -50,13 +52,13 @@ public class MultiplePredicatesMiningTest extends AbstractPMMLTest {
     private Double expectedResult;
 
     public void initMultiplePredicatesMiningTest(String residenceState,
-                                        boolean validLicense,
-                                        String occupation,
-                                        String categoricalY,
-                                        String categoricalX,
-                                        double variable,
-                                        double age,
-                                        Double expectedResult) {
+                                                 boolean validLicense,
+                                                 String occupation,
+                                                 String categoricalY,
+                                                 String categoricalX,
+                                                 double variable,
+                                                 double age,
+                                                 Double expectedResult) {
         this.residenceState = residenceState;
         this.validLicense = validLicense;
         this.occupation = occupation;

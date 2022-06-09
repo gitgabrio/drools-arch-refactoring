@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.List;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -33,10 +31,9 @@ import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import java.util.List;
+
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLPredicateFactory.getKiePMMLPredicate;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -83,7 +80,7 @@ public class KiePMMLCompoundPredicateFactory {
             arguments.add(new NameExpr(nestedVariableName));
             BlockStmt toAdd = getKiePMMLPredicate(nestedVariableName, predicate, fields);
             toAdd.getStatements().forEach(toReturn::addStatement);
-            counter ++;
+            counter++;
         }
         final BOOLEAN_OPERATOR booleanOperator = BOOLEAN_OPERATOR.byName(compoundPredicate.getBooleanOperator().value());
         final NameExpr booleanOperatorExpr = new NameExpr(BOOLEAN_OPERATOR.class.getName() + "." + booleanOperator.name());

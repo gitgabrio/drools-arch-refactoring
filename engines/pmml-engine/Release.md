@@ -39,7 +39,6 @@ Currently known limitations:
 
 1. Only _Aggregation_ and _Lag_ not implemented
 
-
 rel 7.41.0
 ----------
 Implemented basic functionality
@@ -48,7 +47,6 @@ Currently known limitations:
 
 1. Only _Constant_, _FieldRef_ and _Apply_ expressions implemented
 2. Default functions not implemented
-
 
 Scorecard model implementation status
 =====================================

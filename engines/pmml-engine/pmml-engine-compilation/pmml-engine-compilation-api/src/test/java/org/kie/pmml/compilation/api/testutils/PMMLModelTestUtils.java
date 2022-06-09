@@ -15,83 +15,23 @@
  */
 package org.kie.pmml.compilation.api.testutils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.apache.commons.lang3.RandomStringUtils;
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Array;
-import org.dmg.pmml.CompareFunction;
-import org.dmg.pmml.ComparisonMeasure;
-import org.dmg.pmml.CompoundPredicate;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.DefineFunction;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.Discretize;
-import org.dmg.pmml.DiscretizeBin;
-import org.dmg.pmml.Euclidean;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.FieldColumnPair;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.InlineTable;
-import org.dmg.pmml.Interval;
-import org.dmg.pmml.InvalidValueTreatmentMethod;
-import org.dmg.pmml.LinearNorm;
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.MapValues;
-import org.dmg.pmml.Measure;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.MissingValueTreatmentMethod;
-import org.dmg.pmml.NormContinuous;
-import org.dmg.pmml.NormDiscrete;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.OutlierTreatmentMethod;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.ParameterField;
-import org.dmg.pmml.ResultFeature;
-import org.dmg.pmml.Row;
-import org.dmg.pmml.ScoreDistribution;
-import org.dmg.pmml.SimplePredicate;
-import org.dmg.pmml.SimpleSetPredicate;
-import org.dmg.pmml.TableLocator;
-import org.dmg.pmml.Target;
-import org.dmg.pmml.TargetValue;
-import org.dmg.pmml.TextIndex;
-import org.dmg.pmml.TextIndexNormalization;
-import org.dmg.pmml.TransformationDictionary;
-import org.dmg.pmml.Value;
-import org.dmg.pmml.clustering.Cluster;
-import org.dmg.pmml.clustering.ClusteringField;
-import org.dmg.pmml.clustering.ClusteringModel;
-import org.dmg.pmml.clustering.Comparisons;
-import org.dmg.pmml.clustering.MissingValueWeights;
+import org.dmg.pmml.*;
+import org.dmg.pmml.clustering.*;
 import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
 import org.dmg.pmml.mining.Segmentation;
-import org.dmg.pmml.regression.CategoricalPredictor;
-import org.dmg.pmml.regression.NumericPredictor;
-import org.dmg.pmml.regression.PredictorTerm;
-import org.dmg.pmml.regression.RegressionModel;
-import org.dmg.pmml.regression.RegressionTable;
+import org.dmg.pmml.regression.*;
 import org.jpmml.model.inlinetable.InputCell;
 import org.jpmml.model.inlinetable.OutputCell;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.Named;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
 import org.kie.pmml.compilation.api.mocks.TestModel;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Helper methods related to <b>PMML</b> original model
@@ -167,7 +107,7 @@ public class PMMLModelTestUtils {
 
     public static Output getRandomOutput() {
         Output toReturn = new Output();
-        IntStream.range(0, new Random().nextInt(3)+ 2)
+        IntStream.range(0, new Random().nextInt(3) + 2)
                 .forEach(i -> toReturn.addOutputFields(getRandomOutputField()));
         return toReturn;
     }
@@ -176,7 +116,7 @@ public class PMMLModelTestUtils {
         TestModel toReturn = new TestModel();
         List<DataField> dataFields = dataDictionary.getDataFields();
         MiningSchema miningSchema = new MiningSchema();
-        IntStream.range(0, dataFields.size() -1)
+        IntStream.range(0, dataFields.size() - 1)
                 .forEach(i -> {
                     DataField dataField = dataFields.get(i);
                     MiningField miningField = new MiningField();
@@ -184,7 +124,7 @@ public class PMMLModelTestUtils {
                     miningField.setUsageType(MiningField.UsageType.ACTIVE);
                     miningSchema.addMiningFields(miningField);
                 });
-        DataField lastDataField = dataFields.get(dataFields.size()-1);
+        DataField lastDataField = dataFields.get(dataFields.size() - 1);
         MiningField predictedMiningField = new MiningField();
         predictedMiningField.setName(lastDataField.getName());
         predictedMiningField.setUsageType(MiningField.UsageType.PREDICTED);
@@ -204,15 +144,15 @@ public class PMMLModelTestUtils {
         MiningModel toReturn = new MiningModel();
         List<DataField> dataFields = dataDictionary.getDataFields();
         MiningSchema miningSchema = new MiningSchema();
-        IntStream.range(0, dataFields.size() -1)
+        IntStream.range(0, dataFields.size() - 1)
                 .forEach(i -> {
-                            DataField dataField = dataFields.get(i);
-                            MiningField miningField = new MiningField();
-                            miningField.setName(dataField.getName());
-                            miningField.setUsageType(MiningField.UsageType.ACTIVE);
-                            miningSchema.addMiningFields(miningField);
-                          });
-        DataField lastDataField = dataFields.get(dataFields.size()-1);
+                    DataField dataField = dataFields.get(i);
+                    MiningField miningField = new MiningField();
+                    miningField.setName(dataField.getName());
+                    miningField.setUsageType(MiningField.UsageType.ACTIVE);
+                    miningSchema.addMiningFields(miningField);
+                });
+        DataField lastDataField = dataFields.get(dataFields.size() - 1);
         MiningField predictedMiningField = new MiningField();
         predictedMiningField.setName(lastDataField.getName());
         predictedMiningField.setUsageType(MiningField.UsageType.PREDICTED);
@@ -813,7 +753,7 @@ public class PMMLModelTestUtils {
         return getRandomEnum(InvalidValueTreatmentMethod.values());
     }
 
-    public static  ComparisonMeasure.Kind getRandomKind(){
+    public static ComparisonMeasure.Kind getRandomKind() {
         return getRandomEnum(ComparisonMeasure.Kind.values());
     }
 

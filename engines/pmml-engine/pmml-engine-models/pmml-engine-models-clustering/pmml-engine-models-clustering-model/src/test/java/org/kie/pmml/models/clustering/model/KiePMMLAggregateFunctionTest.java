@@ -16,26 +16,16 @@
 
 package org.kie.pmml.models.clustering.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.kie.pmml.api.utils.EnumUtils.enumByName;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.BINARY_SIMILARITY;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.CHEBYCHEV;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.CITY_BLOCK;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.EUCLIDEAN;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.JACCARD;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.MINKOWSKI;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.SIMPLE_MATCHING;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.SQUARED_EUCLIDEAN;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.TANIMOTO;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.euclidean;
-import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.squaredEuclidean;
+import static org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction.*;
 
 public class KiePMMLAggregateFunctionTest {
 

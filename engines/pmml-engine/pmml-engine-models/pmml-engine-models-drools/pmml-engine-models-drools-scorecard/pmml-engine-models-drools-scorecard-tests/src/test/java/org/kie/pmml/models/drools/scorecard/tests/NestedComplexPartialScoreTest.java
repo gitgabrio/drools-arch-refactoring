@@ -49,7 +49,7 @@ public class NestedComplexPartialScoreTest extends AbstractPMMLTest {
     private String reasonCode2;
 
     public NestedComplexPartialScoreTest(double input1, double input2, double score,
-                                        String reasonCode1, String reasonCode2) {
+                                         String reasonCode1, String reasonCode2) {
         this.input1 = input1;
         this.input2 = input2;
         this.score = score;
@@ -57,7 +57,7 @@ public class NestedComplexPartialScoreTest extends AbstractPMMLTest {
         this.reasonCode2 = reasonCode2;
     }
 
-  @BeforeClass
+    @BeforeClass
     public static void setupClass() {
         pmmlRuntime = getPMMLRuntime(FILE_NAME);
     }
@@ -65,11 +65,11 @@ public class NestedComplexPartialScoreTest extends AbstractPMMLTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                { -1005.5, 10200, -15, "characteristic2ReasonCode", null },
-                { -1001, 4, -3969, "characteristic2ReasonCode", null },
-                { 2, 1002, 959, "characteristic2ReasonCode", null },
-                { 10, 20, 235, null, null },
-                { -2, 3, 0, "characteristic1ReasonCode", "characteristic2ReasonCode" },
+                {-1005.5, 10200, -15, "characteristic2ReasonCode", null},
+                {-1001, 4, -3969, "characteristic2ReasonCode", null},
+                {2, 1002, 959, "characteristic2ReasonCode", null},
+                {10, 20, 235, null, null},
+                {-2, 3, 0, "characteristic1ReasonCode", "characteristic2ReasonCode"},
         });
     }
 

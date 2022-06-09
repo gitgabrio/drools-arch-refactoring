@@ -37,9 +37,9 @@ public class KiePMMLFieldOperatorValue {
     private final String constraintsString;
 
     /**
-     * @param name The name of the type
-     * @param operator the operator to use to join multiple <code>KiePMMLOperatorValue</code>s (if provided)
-     * @param kiePMMLOperatorValues the inner <code>List&lt;KiePMMLOperatorValue&gt;</code>
+     * @param name                             The name of the type
+     * @param operator                         the operator to use to join multiple <code>KiePMMLOperatorValue</code>s (if provided)
+     * @param kiePMMLOperatorValues            the inner <code>List&lt;KiePMMLOperatorValue&gt;</code>
      * @param nestedKiePMMLFieldOperatorValues the nested <code>List&lt;KiePMMLFieldOperatorValue&gt;</code>s
      */
     public KiePMMLFieldOperatorValue(final String name, final BOOLEAN_OPERATOR operator, final List<KiePMMLOperatorValue> kiePMMLOperatorValues, final List<KiePMMLFieldOperatorValue> nestedKiePMMLFieldOperatorValues) {

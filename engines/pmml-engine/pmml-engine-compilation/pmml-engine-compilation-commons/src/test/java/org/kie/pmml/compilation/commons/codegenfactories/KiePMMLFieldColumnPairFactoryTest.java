@@ -16,11 +16,6 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import org.dmg.pmml.FieldColumnPair;
@@ -29,9 +24,14 @@ import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldColumnPair;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 
 public class KiePMMLFieldColumnPairFactoryTest {
 
@@ -50,7 +50,7 @@ public class KiePMMLFieldColumnPairFactoryTest {
                 fieldColumnPair);
         String text = getFileContent(TEST_01_SOURCE);
         Statement expected = JavaParserUtils.parseBlock(String.format(text, variableName, fieldName, column));
-        assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
+        assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(Collections.class, KiePMMLFieldColumnPair.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }

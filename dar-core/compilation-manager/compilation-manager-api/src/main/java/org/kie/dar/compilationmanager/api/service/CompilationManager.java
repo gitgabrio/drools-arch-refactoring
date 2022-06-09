@@ -16,7 +16,6 @@
 package org.kie.dar.compilationmanager.api.service;
 
 import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 

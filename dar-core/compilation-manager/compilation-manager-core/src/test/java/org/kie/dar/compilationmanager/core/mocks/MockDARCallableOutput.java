@@ -20,7 +20,7 @@ import org.kie.dar.compilationmanager.api.model.DARCallableOutput;
 
 public class MockDARCallableOutput implements DARCallableOutput {
 
-    private FRI fri = new FRI( "mock/dar/output/module", "mock");
+    private FRI fri = new FRI("mock/dar/output/module", "mock");
 
     @Override
     public FRI getFri() {

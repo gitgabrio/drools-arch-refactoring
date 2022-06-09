@@ -15,18 +15,14 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.FIELD_USAGE_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
+import org.kie.pmml.api.enums.*;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @see <a http://dmg.org/pmml/v4-4-1/MiningSchema.html>Mining Schema</a>

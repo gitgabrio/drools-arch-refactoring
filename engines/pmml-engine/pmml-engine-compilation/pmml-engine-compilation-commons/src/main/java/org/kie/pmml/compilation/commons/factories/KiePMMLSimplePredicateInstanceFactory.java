@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-
 import org.dmg.pmml.DataType;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.SimplePredicate;
@@ -24,6 +22,8 @@ import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OPERATOR;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.predicates.KiePMMLSimplePredicate;
+
+import java.util.List;
 
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getDataType;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
@@ -44,8 +44,8 @@ public class KiePMMLSimplePredicateInstanceFactory {
         DataType dataType = getDataType(fields, simplePredicate.getField().getValue());
         Object value = DATA_TYPE.byName(dataType.value()).getActualValue(simplePredicate.getValue());
         return KiePMMLSimplePredicate.builder(simplePredicate.getField().getValue(),
-                                              kiePMMLExtensions,
-                                              OPERATOR.byName(simplePredicate.getOperator().value()))
+                        kiePMMLExtensions,
+                        OPERATOR.byName(simplePredicate.getOperator().value()))
                 .withValue(value)
                 .build();
     }

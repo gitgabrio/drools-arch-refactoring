@@ -15,19 +15,13 @@
  */
 package org.kie.pmml.compilation.api;
 
+import org.dmg.pmml.*;
+import org.kie.pmml.api.enums.DATA_TYPE;
+import org.kie.pmml.api.enums.OP_TYPE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.TransformationDictionary;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.OP_TYPE;
 
 public class CommonTestingUtils {
 

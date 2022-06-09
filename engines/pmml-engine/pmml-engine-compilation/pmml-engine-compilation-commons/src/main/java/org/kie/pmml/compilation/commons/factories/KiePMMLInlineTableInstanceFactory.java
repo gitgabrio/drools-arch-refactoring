@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.UUID;
-
 import org.dmg.pmml.InlineTable;
 import org.kie.pmml.commons.model.expressions.KiePMMLInlineTable;
+
+import java.util.UUID;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLRowInstanceFactory.getKiePMMLRows;
@@ -35,7 +35,7 @@ public class KiePMMLInlineTableInstanceFactory {
 
     static KiePMMLInlineTable getKiePMMLInlineTable(final InlineTable inlineTable) {
         return new KiePMMLInlineTable(UUID.randomUUID().toString(),
-                                      getKiePMMLExtensions(inlineTable.getExtensions()),
-                                      getKiePMMLRows(inlineTable.getRows()));
+                getKiePMMLExtensions(inlineTable.getExtensions()),
+                getKiePMMLRows(inlineTable.getRows()));
     }
 }

@@ -28,9 +28,7 @@ import org.dmg.pmml.DiscretizeBin;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLIntervalFactory.getIntervalVariableDeclaration;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -60,7 +58,7 @@ public class KiePMMLDiscretizeBinFactory {
     }
 
     static BlockStmt getDiscretizeBinVariableDeclaration(final String variableName,
-                                                        final DiscretizeBin discretizeBin) {
+                                                         final DiscretizeBin discretizeBin) {
         final MethodDeclaration methodDeclaration =
                 DISCRETIZE_BIN_TEMPLATE.getMethodsByName(GETKIEPMMLDISCRETIZE_BIN).get(0).clone();
         final BlockStmt discretizeBinBody =
@@ -77,7 +75,7 @@ public class KiePMMLDiscretizeBinFactory {
 
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      DISCRETIZE_BIN, discretizeBinBody)))
+                        DISCRETIZE_BIN, discretizeBinBody)))
                 .asObjectCreationExpr();
 
         final Expression nameExpr = new StringLiteralExpr(variableName);

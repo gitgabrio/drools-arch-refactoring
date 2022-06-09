@@ -15,53 +15,20 @@
  */
 package org.kie.pmml.compilation.api.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.xml.namespace.QName;
-
-import org.dmg.pmml.Array;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.Interval;
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.ParameterField;
-import org.dmg.pmml.Row;
-import org.dmg.pmml.Target;
-import org.dmg.pmml.TargetValue;
-import org.dmg.pmml.Targets;
-import org.dmg.pmml.TransformationDictionary;
-import org.dmg.pmml.Value;
+import org.dmg.pmml.*;
 import org.jpmml.model.inlinetable.InputCell;
 import org.jpmml.model.inlinetable.OutputCell;
-import org.kie.pmml.api.enums.CAST_INTEGER;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.FIELD_USAGE_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
-import org.kie.pmml.api.enums.RESULT_FEATURE;
+import org.kie.pmml.api.enums.*;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameOpType;
 import org.w3c.dom.Element;
+
+import javax.xml.namespace.QName;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.kie.pmml.api.utils.PrimitiveBoxedUtils.getKiePMMLPrimitiveBoxed;
 
@@ -82,6 +49,7 @@ public class ModelUtils {
      * only one target.
      * <p>
      * (see https://github.com/jpmml/jpmml-evaluator/issues/64 discussion)
+     *
      * @param fields
      * @param model
      * @return
@@ -99,6 +67,7 @@ public class ModelUtils {
      * only one target.
      * <p>
      * (see https://github.com/jpmml/jpmml-evaluator/issues/64 discussion)
+     *
      * @param fields
      * @param model
      * @return
@@ -111,6 +80,7 @@ public class ModelUtils {
      * Return a <code>List&lt;KiePMMLNameOpType&gt;</code> of target fields
      * Please note that only <b>predicted/target</b>
      * <code>MiningField</code> are considered.
+     *
      * @param fields
      * @param model
      * @return
@@ -133,6 +103,7 @@ public class ModelUtils {
      * and the value is the <b>type</b> of the field
      * Please note that only <b>predicted/target</b>
      * <code>MiningField</code> are considered.
+     *
      * @param fields
      * @param model
      * @return
@@ -143,7 +114,7 @@ public class ModelUtils {
             for (MiningField miningField : model.getMiningSchema().getMiningFields()) {
                 if (MiningField.UsageType.TARGET.equals(miningField.getUsageType()) || MiningField.UsageType.PREDICTED.equals(miningField.getUsageType())) {
                     toReturn.put(miningField.getName().getValue(), getDATA_TYPE(fields,
-                                                                                miningField.getName().getValue()));
+                            miningField.getName().getValue()));
                 }
             }
         }
@@ -153,6 +124,7 @@ public class ModelUtils {
     /**
      * <code>OP_TYPE</code> may be defined inside <code>DataField</code>, <code>MiningField</code> or both.
      * In the latter case, <code>MiningField</code> override <code>DataField</code> definition
+     *
      * @param fields
      * @param model
      * @param targetFieldName
@@ -160,17 +132,18 @@ public class ModelUtils {
      */
     public static OP_TYPE getOpType(final List<Field<?>> fields, final Model model, final String targetFieldName) {
         return Stream.of(getOpTypeFromTargets(model.getTargets(), targetFieldName),
-                         getOpTypeFromMiningFields(model.getMiningSchema(), targetFieldName),
-                         getOpTypeFromFields(fields, targetFieldName))
+                        getOpTypeFromMiningFields(model.getMiningSchema(), targetFieldName),
+                        getOpTypeFromFields(fields, targetFieldName))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst()
                 .orElseThrow(() -> new KiePMMLInternalException(String.format("Failed to find OpType for field" +
-                                                                                      " %s", targetFieldName)));
+                        " %s", targetFieldName)));
     }
 
     /**
      * Return <code>Optional&lt;OP_TYPE&gt;</code> of field with given <b>fieldName</b> from <code>DataDictionary</code>
+     *
      * @param fields
      * @param fieldName
      * @return
@@ -186,6 +159,7 @@ public class ModelUtils {
 
     /**
      * Return <code>Optional&lt;OP_TYPE&gt;</code> of field with given <b>fieldName</b> from <code>MiningSchema</code>
+     *
      * @param miningSchema
      * @param fieldName
      * @return
@@ -203,6 +177,7 @@ public class ModelUtils {
 
     /**
      * Return <code>Optional&lt;OP_TYPE&gt;</code> of field with given <b>fieldName</b> from <code>Targets</code>
+     *
      * @param targets
      * @param fieldName
      * @return
@@ -221,6 +196,7 @@ public class ModelUtils {
     /**
      * <code>DataType</code> of the given <b>field</b>, first looked upon <b>derivedFields</b> and then in
      * <b>dataDictionary</b>
+     *
      * @param fields
      * @param fieldName
      * @return
@@ -232,12 +208,13 @@ public class ModelUtils {
                 .map(Field::getDataType)
                 .findFirst()
                 .orElseThrow(() -> new KiePMMLInternalException(String.format("Failed to find DataType for " +
-                                                                                      "field %s",
-                                                                              fieldName)));
+                                "field %s",
+                        fieldName)));
     }
 
     /**
      * <code>DATA_TYPE</code> of the given <b>field</b>
+     *
      * @param fields
      * @param fieldName
      * @return
@@ -248,13 +225,14 @@ public class ModelUtils {
                 .findFirst()
                 .map(dataField -> DATA_TYPE.byName(dataField.getDataType().value()));
         return toReturn.orElseThrow(() -> new KiePMMLInternalException(String.format("Failed to find DATA_TYPE for " +
-                                                                                             "field %s",
-                                                                                     fieldName)));
+                        "field %s",
+                fieldName)));
     }
 
     /**
      * Return <code>List&lt;DerivedField&gt;</code>s from the given <code>TransformationDictionary</code> and
      * <code>LocalTransformations</code>
+     *
      * @param transformationDictionary
      * @param localTransformations
      * @return
@@ -297,6 +275,7 @@ public class ModelUtils {
     /**
      * Return a <code>List&lt;org.kie.pmml.api.models.MiningField&glt;</code> out of a <code>org.dmg.pmml
      * .MiningSchema</code> one
+     *
      * @param toConvert
      * @param fields
      * @return
@@ -313,7 +292,7 @@ public class ModelUtils {
                             .filter(fld -> fld.getName().equals(miningField.getName()))
                             .findFirst()
                             .orElseThrow(() -> new KiePMMLException("Cannot find " + miningField.getName() + " in " +
-                                                                            "DataDictionary"));
+                                    "DataDictionary"));
                     return convertToKieMiningField(miningField, field);
                 })
                 .collect(Collectors.toList());
@@ -322,6 +301,7 @@ public class ModelUtils {
     /**
      * Return a <code>org.kie.pmml.api.models.MiningField</code> out of a <code>org.dmg.pmml.MiningField</code> and
      * relative <code>org.dmg.pmml.DataField</code> ones
+     *
      * @param toConvert
      * @param field
      * @return
@@ -350,21 +330,22 @@ public class ModelUtils {
                 convertDataFieldIntervals(((DataField) field).getIntervals()) : Collections.emptyList();
 
         return new org.kie.pmml.api.models.MiningField(name,
-                                                       fieldUsageType,
-                                                       opType,
-                                                       dataType,
-                                                       missingValueTreatmentMethod,
-                                                       invalidValueTreatmentMethod,
-                                                       missingValueReplacement,
-                                                       invalidValueReplacement,
-                                                       allowedValues,
-                                                       intervals);
+                fieldUsageType,
+                opType,
+                dataType,
+                missingValueTreatmentMethod,
+                invalidValueTreatmentMethod,
+                missingValueReplacement,
+                invalidValueReplacement,
+                allowedValues,
+                intervals);
     }
 
 
     /**
      * Return a <code>List&lt;org.kie.pmml.api.models.OutputField&gt;</code> out of a <code>org.dmg.pmml
      * .Output</code> one
+     *
      * @param toConvert
      * @return
      */
@@ -379,6 +360,7 @@ public class ModelUtils {
     /**
      * Return a <code>List&lt;org.kie.pmml.api.models.OutputField&gt;</code> out of a <codeList&lt;org.dmg.pmml
      * .OutputField&gt;</code> one
+     *
      * @param toConvert
      * @return
      */
@@ -400,8 +382,9 @@ public class ModelUtils {
 
     /**
      * Return a <code>org.kie.pmml.api.models.OutputField</code> out of a <code>org.dmg.pmml.OutputField</code> one
+     *
      * @param toConvert
-     * @param field - this may be <code>null</code>
+     * @param field     - this may be <code>null</code>
      * @return
      */
     public static org.kie.pmml.api.models.OutputField convertToKieOutputField(final OutputField toConvert,
@@ -418,16 +401,17 @@ public class ModelUtils {
         final List<String> allowedValues = field instanceof DataField ?
                 convertDataFieldValues(((DataField) field).getValues()) : null;
         return new org.kie.pmml.api.models.OutputField(name,
-                                                       opType,
-                                                       dataType,
-                                                       targetField,
-                                                       resultFeature,
-                                                       allowedValues);
+                opType,
+                dataType,
+                targetField,
+                resultFeature,
+                allowedValues);
     }
 
     /**
      * Return a <code>List&lt;org.kie.pmml.api.models.TargetField&gt;</code> out of a <code>org.dmg.pmml
      * .Targets</code>
+     *
      * @param toConvert
      * @return
      */
@@ -443,6 +427,7 @@ public class ModelUtils {
 
     /**
      * Return a <code>org.kie.pmml.api.models.TargetField</code> out of a <code>org.dmg.pmml.Target</code>
+     *
      * @param toConvert
      * @return
      */
@@ -457,18 +442,19 @@ public class ModelUtils {
                 toConvert.getRescaleConstant().doubleValue() : null;
         final Double rescaleFactor = toConvert.getRescaleFactor() != null ? toConvert.getRescaleFactor().doubleValue() : null;
         return new TargetField(targetValues,
-                               opType,
-                               toConvert.getField().getValue(),
-                               castInteger,
-                               min,
-                               max,
-                               rescaleConstant,
-                               rescaleFactor);
+                opType,
+                toConvert.getField().getValue(),
+                castInteger,
+                min,
+                max,
+                rescaleConstant,
+                rescaleFactor);
     }
 
     /**
      * Return a <code>List&lt;org.kie.pmml.api.models.TargetValue&gt;</code> out of a
      * <code>List&lt;org.dmg.pmml.TargetValue&gt;</code>
+     *
      * @param toConvert
      * @return
      */
@@ -485,6 +471,7 @@ public class ModelUtils {
     /**
      * Return a <code>org.kie.pmml.api.models.TargetValue</code> out of a <code>org.dmg.pmml
      * .TargetValue</code>
+     *
      * @param toConvert
      * @return
      */
@@ -492,14 +479,15 @@ public class ModelUtils {
         final String value = toConvert.getValue() != null ? toConvert.getValue().toString() : null;
         final String displayValue = toConvert.getDisplayValue() != null ? toConvert.getDisplayValue() : null;
         return new org.kie.pmml.api.models.TargetValue(value, displayValue,
-                                                       toConvert.getPriorProbability().doubleValue(),
-                                                       toConvert.getDefaultValue().doubleValue());
+                toConvert.getPriorProbability().doubleValue(),
+                toConvert.getDefaultValue().doubleValue());
     }
 
     /**
      * Retrieve the <b>mapped</b> class name of the given <code>ParameterField</code>, <b>eventually</b> boxed (for
      * primitive ones)
      * It returns <b>Object</b> <code>ParameterField.getDataType()</code> is null
+     *
      * @param parameterField
      * @return
      */
@@ -512,6 +500,7 @@ public class ModelUtils {
      * Retrieve the <b>mapped</b> class name of the given <code>DataType</code>, <b>eventually</b> boxed (for
      * primitive ones).
      * It returns <b>Object</b> if null
+     *
      * @param dataType
      * @return
      */
@@ -560,7 +549,7 @@ public class ModelUtils {
     public static List<org.kie.pmml.api.models.Interval> convertDataFieldIntervals(List<Interval> toConvert) {
         return toConvert != null ? toConvert.stream()
                 .map(interval -> new org.kie.pmml.api.models.Interval(interval.getLeftMargin(),
-                                                                      interval.getRightMargin()))
+                        interval.getRightMargin()))
                 .collect(Collectors.toList()) : null;
     }
 

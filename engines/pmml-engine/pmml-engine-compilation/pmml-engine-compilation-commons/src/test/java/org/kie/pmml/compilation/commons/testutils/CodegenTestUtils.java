@@ -15,13 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.testutils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.BiConsumer;
-
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
@@ -39,6 +32,9 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.compilation.commons.utils.CommonCodegenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
+import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -63,7 +59,7 @@ public class CodegenTestUtils {
         compilationUnit.setPackageDeclaration("org.kie.pmml.compilation.commons.utils");
         compilationUnit.addType(classOrInterfaceType);
         Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils.CommCodeTest",
-                                                                  compilationUnit.toString());
+                compilationUnit.toString());
         try {
             KieMemoryCompiler.compile(sourcesMap, Thread.currentThread().getContextClassLoader());
         } catch (Exception e) {
@@ -91,7 +87,7 @@ public class CodegenTestUtils {
         compilationUnit.setPackageDeclaration("org.kie.pmml.compilation.commons.utils");
         compilationUnit.addType(classOrInterfaceType);
         Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils.CommCodeTest",
-                                                                  compilationUnit.toString());
+                compilationUnit.toString());
         try {
             KieMemoryCompiler.compile(sourcesMap, Thread.currentThread().getContextClassLoader());
         } catch (Exception e) {
@@ -107,7 +103,7 @@ public class CodegenTestUtils {
         compilationUnit.setPackageDeclaration("org.kie.pmml.compilation.commons.utils");
         compilationUnit.addType(classOrInterfaceType);
         Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils.CommCodeTest",
-                                                                  compilationUnit.toString());
+                compilationUnit.toString());
         try {
             KieMemoryCompiler.compile(sourcesMap, Thread.currentThread().getContextClassLoader());
         } catch (Exception e) {
@@ -124,7 +120,7 @@ public class CodegenTestUtils {
         compilationUnit.setPackageDeclaration("org.kie.pmml.compilation.commons.utils");
         compilationUnit.addType(classOrInterfaceType);
         Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils.CommCodeTest",
-                                                                  compilationUnit.toString());
+                compilationUnit.toString());
         try {
             KieMemoryCompiler.compile(sourcesMap, Thread.currentThread().getContextClassLoader());
         } catch (Exception e) {
@@ -137,8 +133,8 @@ public class CodegenTestUtils {
         imports.forEach(compilationUnit::addImport);
         compilationUnit.setPackageDeclaration("org.kie.pmml.compilation.commons.utils");
         compilationUnit.addType(classOrInterfaceType);
-        Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils."+classOrInterfaceType.getName().asString(),
-                                                                  compilationUnit.toString());
+        Map<String, String> sourcesMap = Collections.singletonMap("org.kie.pmml.compilation.commons.utils." + classOrInterfaceType.getName().asString(),
+                compilationUnit.toString());
         try {
             KieMemoryCompiler.compile(sourcesMap, Thread.currentThread().getContextClassLoader());
         } catch (Exception e) {
@@ -155,17 +151,17 @@ public class CodegenTestUtils {
     }
 
     public static boolean commonEvaluateConstructor(ConstructorDeclaration constructorDeclaration,
-                                                 String generatedClassName,
-                                                 Map<Integer, Expression> superInvocationExpressionsMap,
-                                                 Map<String, Expression> assignExpressionsMap) {
+                                                    String generatedClassName,
+                                                    Map<Integer, Expression> superInvocationExpressionsMap,
+                                                    Map<String, Expression> assignExpressionsMap) {
         assertThat(constructorDeclaration.getName()).isEqualTo(new SimpleName(generatedClassName));
         final BlockStmt body = constructorDeclaration.getBody();
         return commonEvaluateSuperInvocationExpr(body, superInvocationExpressionsMap) &&
-        commonEvaluateAssignExpr(body, assignExpressionsMap);
+                commonEvaluateAssignExpr(body, assignExpressionsMap);
     }
 
     public static boolean commonEvaluateSuperInvocationExpr(BlockStmt body,
-                                                         Map<Integer, Expression> superInvocationExpressionsMap) {
+                                                            Map<Integer, Expression> superInvocationExpressionsMap) {
         Optional<ExplicitConstructorInvocationStmt> retrieved =
                 CommonCodegenUtils.getExplicitConstructorInvocationStmt(body);
         final List<AssertionError> errors = new ArrayList<>();
@@ -193,8 +189,8 @@ public class CodegenTestUtils {
         for (Map.Entry<String, Expression> entry : assignExpressionMap.entrySet()) {
             try {
                 assertThat(retrieved.stream()
-                                   .filter(assignExpr -> assignExpr.getTarget().asNameExpr().equals(new NameExpr(entry.getKey())))
-                                   .anyMatch(assignExpr -> assignExpr.getValue().equals(entry.getValue()))).isTrue();
+                        .filter(assignExpr -> assignExpr.getTarget().asNameExpr().equals(new NameExpr(entry.getKey())))
+                        .anyMatch(assignExpr -> assignExpr.getValue().equals(entry.getValue()))).isTrue();
             } catch (AssertionError e) {
                 if (e.getMessage() != null && !e.getMessage().isEmpty()) {
                     LOGGER.error(e.getMessage());

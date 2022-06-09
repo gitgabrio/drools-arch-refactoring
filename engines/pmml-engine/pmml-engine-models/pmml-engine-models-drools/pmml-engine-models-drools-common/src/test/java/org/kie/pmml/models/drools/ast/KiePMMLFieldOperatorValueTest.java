@@ -58,7 +58,7 @@ public class KiePMMLFieldOperatorValueTest {
 
     private KiePMMLFieldOperatorValue getKiePMMLFieldOperatorValueWithName() {
         List<KiePMMLOperatorValue> kiePMMLOperatorValues = Arrays.asList(new KiePMMLOperatorValue(OPERATOR.LESS_THAN, 35),
-                                                                         new KiePMMLOperatorValue(OPERATOR.GREATER_THAN, 85));
+                new KiePMMLOperatorValue(OPERATOR.GREATER_THAN, 85));
         return new KiePMMLFieldOperatorValue(NAME, BOOLEANOPERATOR, kiePMMLOperatorValues, Collections.emptyList());
     }
 
@@ -68,7 +68,7 @@ public class KiePMMLFieldOperatorValueTest {
                 .asList(new KiePMMLFieldOperatorValue(humidityField, BOOLEAN_OPERATOR.OR, Collections.singletonList(new KiePMMLOperatorValue(OPERATOR.LESS_THAN, 56)), null),
                         new KiePMMLFieldOperatorValue(humidityField, BOOLEAN_OPERATOR.OR, Collections.singletonList(new KiePMMLOperatorValue(OPERATOR.GREATER_THAN, 91)), null));
         List<KiePMMLOperatorValue> kiePMMLOperatorValues = Arrays.asList(new KiePMMLOperatorValue(OPERATOR.LESS_THAN, 35),
-                                                                         new KiePMMLOperatorValue(OPERATOR.GREATER_THAN, 85));
+                new KiePMMLOperatorValue(OPERATOR.GREATER_THAN, 85));
 
         return new KiePMMLFieldOperatorValue(null, BOOLEANOPERATOR, kiePMMLOperatorValues, nestedKiePMMLFieldOperatorValues);
     }

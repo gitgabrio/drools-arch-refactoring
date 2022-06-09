@@ -16,13 +16,13 @@
 
 package org.kie.pmml.commons.model.expressions;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,10 +32,10 @@ public class KiePMMLRowTest {
     private static final String REGEX_FIELD = "regexField";
 
     static {
-        COLUMN_VALUES =  IntStream.range(0,4)
+        COLUMN_VALUES = IntStream.range(0, 4)
                 .boxed()
                 .collect(Collectors.toMap(i -> "KEY-" + i,
-                                          integer -> integer));
+                        integer -> integer));
         COLUMN_VALUES.put(REGEX_FIELD, true);
     }
 

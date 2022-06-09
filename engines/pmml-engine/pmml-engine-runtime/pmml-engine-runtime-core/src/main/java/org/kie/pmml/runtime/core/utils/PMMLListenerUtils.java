@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.runtime.core.utils;
 
-import java.util.function.Supplier;
-
 import org.kie.pmml.api.models.PMMLStep;
 import org.kie.pmml.api.runtime.PMMLContext;
+
+import java.util.function.Supplier;
 
 /**
  * Common utility methods related to <code>PMMLListener</code>
@@ -27,6 +27,7 @@ public class PMMLListenerUtils {
 
     /**
      * Send the <code>PMMLStep</code> to all registered <code>PMMLListener</code>s
+     *
      * @param stepSupplier
      * @param context
      */

@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.models.mining.compilation.dto;
 
-import java.util.List;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.Model;
 import org.dmg.pmml.Predicate;
 import org.dmg.pmml.mining.Segment;
 import org.kie.pmml.compilation.commons.dto.AbstractSpecificCompilationDTO;
+
+import java.util.List;
 
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedPackageName;
 
@@ -36,14 +36,15 @@ public class SegmentCompilationDTO<T extends Model> extends AbstractSpecificComp
      * source' <b>segmentationPackageName</b> and segment'
      * <b>id</b>, preserving given <b>fields</b>
      * <code>CompilationDTO</code>
+     *
      * @param source
      * @param segment
      * @param fields
      */
     private SegmentCompilationDTO(MiningModelCompilationDTO source, Segment segment, List<Field<?>> fields) {
         super(source.getPmml(), (T) segment.getModel(), source.getHasClassloader(),
-              getSanitizedPackageName(source.getSegmentationPackageName() + "." + segment.getId()),
-              fields);
+                getSanitizedPackageName(source.getSegmentationPackageName() + "." + segment.getId()),
+                fields);
         this.segment = segment;
     }
 
@@ -52,6 +53,7 @@ public class SegmentCompilationDTO<T extends Model> extends AbstractSpecificComp
      * <b>segmentationPackageName</b> and segment' <b>id</b>,
      * preserving given <b>fields</b>
      * <code>CompilationDTO</code>
+     *
      * @param source
      * @param segment
      * @param fields

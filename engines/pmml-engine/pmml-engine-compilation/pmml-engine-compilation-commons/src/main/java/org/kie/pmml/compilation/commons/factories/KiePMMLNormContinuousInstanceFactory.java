@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.dmg.pmml.NormContinuous;
 import org.kie.pmml.api.enums.OUTLIER_TREATMENT_METHOD;
 import org.kie.pmml.commons.model.expressions.KiePMMLLinearNorm;
 import org.kie.pmml.commons.model.expressions.KiePMMLNormContinuous;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLLinearNormInstanceFactory.getKiePMMLLinearNorms;

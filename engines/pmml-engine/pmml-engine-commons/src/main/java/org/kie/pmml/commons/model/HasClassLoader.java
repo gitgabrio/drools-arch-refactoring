@@ -27,6 +27,7 @@ public interface HasClassLoader {
     /**
      * Compile the given sources
      * Returns the <code>Classes</code> with the given <b>fullClassName</b>
+     *
      * @param sourcesMap
      * @param fullClassName
      * @return

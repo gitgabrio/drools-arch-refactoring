@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.List;
+import java.util.Objects;
 
 import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPossibleSources;
 

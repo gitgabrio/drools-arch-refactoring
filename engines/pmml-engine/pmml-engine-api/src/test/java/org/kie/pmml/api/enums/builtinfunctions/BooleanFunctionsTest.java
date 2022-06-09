@@ -16,15 +16,15 @@
 
 package org.kie.pmml.api.enums.builtinfunctions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
 import org.kie.pmml.api.models.Interval;
 import org.kie.pmml.api.models.MiningField;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -34,15 +34,15 @@ public class BooleanFunctionsTest {
     public final static List<BooleanFunctions> supportedBooleanFunctions;
     public final static List<BooleanFunctions> unsupportedBooleanFunctions;
     private final static MiningField EMPTY_MINING_FIELD = new MiningField("TEST",
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null,
-                                                                          null);
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
 
     static {
         supportedBooleanFunctions = new ArrayList<>();
@@ -551,14 +551,14 @@ public class BooleanFunctionsTest {
     private MiningField getReferredByFieldRef(INVALID_VALUE_TREATMENT_METHOD invalidValueTreatmentMethod,
                                               List<String> allowedValues, List<Interval> intervals) {
         return new MiningField("TEST",
-                               null,
-                               null,
-                               null,
-                               null,
-                               invalidValueTreatmentMethod,
-                               null,
-                               null,
-                               allowedValues,
-                               intervals);
+                null,
+                null,
+                null,
+                null,
+                invalidValueTreatmentMethod,
+                null,
+                null,
+                allowedValues,
+                intervals);
     }
 }

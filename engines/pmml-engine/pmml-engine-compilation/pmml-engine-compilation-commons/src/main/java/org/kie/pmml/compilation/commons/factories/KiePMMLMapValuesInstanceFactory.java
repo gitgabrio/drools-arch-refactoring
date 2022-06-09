@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.UUID;
-
 import org.dmg.pmml.MapValues;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.expressions.KiePMMLMapValues;
+
+import java.util.UUID;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLFieldColumnPairInstanceFactory.getKiePMMLFieldColumnPairs;
@@ -38,8 +38,8 @@ public class KiePMMLMapValuesInstanceFactory {
     static KiePMMLMapValues getKiePMMLMapValues(final MapValues mapValues) {
         DATA_TYPE dataType = mapValues.getDataType() != null ? DATA_TYPE.byName(mapValues.getDataType().value()) : null;
         KiePMMLMapValues.Builder builder = KiePMMLMapValues.builder(UUID.randomUUID().toString(),
-                                                                    getKiePMMLExtensions(mapValues.getExtensions()),
-                                                                    mapValues.getOutputColumn())
+                        getKiePMMLExtensions(mapValues.getExtensions()),
+                        mapValues.getOutputColumn())
                 .withKiePMMLInlineTable(getKiePMMLInlineTable(mapValues.getInlineTable()))
                 .withDataType(dataType);
         if (mapValues.getDefaultValue() != null) {

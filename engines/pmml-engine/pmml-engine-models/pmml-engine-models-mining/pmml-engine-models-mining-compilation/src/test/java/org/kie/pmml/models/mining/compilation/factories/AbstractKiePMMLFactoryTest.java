@@ -61,7 +61,7 @@ public abstract class AbstractKiePMMLFactoryTest {
         assertThat(MINING_MODEL).isNotNull();
         populateMissingIds(MINING_MODEL);
         DERIVED_FIELDS = getDerivedFields(TRANSFORMATION_DICTIONARY,
-                                          MINING_MODEL.getLocalTransformations());
+                MINING_MODEL.getLocalTransformations());
         List<Field<?>> fields =
                 getFieldsFromDataDictionaryAndTransformationDictionary(DATA_DICTIONARY, TRANSFORMATION_DICTIONARY);
         targetFieldName = getTargetFieldName(fields, MINING_MODEL).get();
@@ -69,7 +69,7 @@ public abstract class AbstractKiePMMLFactoryTest {
 
     protected String getExpectedNestedModelClass(final Segment segment) {
         final String basePackage = getSanitizedPackageName(String.format(PACKAGE_CLASS_TEMPLATE, PACKAGE_NAME,
-                                                                         MINING_MODEL.getModelName()));
+                MINING_MODEL.getModelName()));
         final String segmentationName = String.format(SEGMENTATIONNAME_TEMPLATE, MINING_MODEL.getModelName());
         final String segmentationPackageName = getSanitizedPackageName(basePackage + "." + segmentationName);
         final String segmentModelPackageName = getSanitizedPackageName(segmentationPackageName + "." + segment.getId());

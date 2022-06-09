@@ -16,11 +16,6 @@
 
 package org.kie.pmml.regression.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,12 +24,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogisticRegressionTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "LogisticRegression";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "LogisticRegression";
     private static final String TARGET_FIELD = "class";
     private static final String PROBABILITY_AUTHENTIC = "probability(Authentic)";
@@ -52,9 +52,9 @@ public class LogisticRegressionTest extends AbstractPMMLTest {
     private double expectedProbCounterfeit;
 
     public void initLogisticRegressionTest(double variance, double skewness, double curtosis,
-                                  double entropy, String expectedResult,
-                                  double expectedProbAuthentic,
-                                  double expectedProbCounterfeit) {
+                                           double entropy, String expectedResult,
+                                           double expectedProbAuthentic,
+                                           double expectedProbCounterfeit) {
         this.variance = variance;
         this.skewness = skewness;
         this.curtosis = curtosis;

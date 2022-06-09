@@ -15,17 +15,17 @@
  */
 package org.kie.pmml.compilation.commons.implementations;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
-
 import org.dmg.pmml.Model;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.compilation.api.provider.ModelImplementationProvider;
 import org.kie.pmml.compilation.api.provider.ModelImplementationProviderFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ServiceLoader;
 
 /**
  * Default <code>ModelImplementationProviderFinder</code> using Java SPI

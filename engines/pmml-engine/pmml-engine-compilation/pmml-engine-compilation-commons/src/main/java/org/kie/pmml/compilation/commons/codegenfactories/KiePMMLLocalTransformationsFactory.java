@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.List;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -31,13 +29,11 @@ import org.dmg.pmml.LocalTransformations;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import java.util.List;
+
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLDerivedFieldFactory.getDerivedFieldVariableDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getArraysAsListInvocation;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -72,8 +68,8 @@ public class KiePMMLLocalTransformationsFactory {
                 LOCAL_TRANSFORMATIONS_TEMPLATE.getMethodsByName(GETKIEPMMLLOCALTRANSFORMATIONS).get(0).clone();
         final BlockStmt transformationDictionaryBody =
                 methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE,
-                                                                                        methodDeclaration)));
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(transformationDictionaryBody, LOCAL_TRANSFORMATIONS) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, LOCAL_TRANSFORMATIONS, transformationDictionaryBody)));
+                        methodDeclaration)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(transformationDictionaryBody, LOCAL_TRANSFORMATIONS).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, LOCAL_TRANSFORMATIONS, transformationDictionaryBody)));
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, LOCAL_TRANSFORMATIONS, methodDeclaration)))
                 .asMethodCallExpr();
@@ -94,7 +90,7 @@ public class KiePMMLLocalTransformationsFactory {
             arguments.add(new NameExpr(nestedVariableName));
             BlockStmt toAdd = getDerivedFieldVariableDeclaration(nestedVariableName, derivedField);
             toAdd.getStatements().forEach(body::addStatement);
-            counter ++;
+            counter++;
         }
         return getArraysAsListInvocation(arguments);
     }

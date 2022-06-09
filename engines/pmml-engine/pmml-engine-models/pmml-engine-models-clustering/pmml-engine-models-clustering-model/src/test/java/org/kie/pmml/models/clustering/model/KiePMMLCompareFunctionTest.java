@@ -22,15 +22,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.kie.pmml.api.utils.EnumUtils.enumByName;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.ABS_DIFF;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.DELTA;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.EQUAL;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.GAUSS_SIM;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.TABLE;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.absDiff;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.delta;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.equal;
-import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.gaussSim;
+import static org.kie.pmml.models.clustering.model.KiePMMLCompareFunction.*;
 
 public class KiePMMLCompareFunctionTest {
 

@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.api.provider;
 
-import java.util.Map;
-
 import org.dmg.pmml.Model;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -26,6 +24,8 @@ import org.kie.pmml.commons.model.IsInterpreted;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import org.kie.pmml.compilation.api.dto.CompilationDTO;
+
+import java.util.Map;
 
 /**
  * API for actual PMML model implementations
@@ -46,6 +46,7 @@ public interface ModelImplementationProvider<T extends Model, E extends KiePMMLM
 
     /**
      * Method to be called following a <b>kie-maven-plugin</b> invocation
+     *
      * @param compilationDTO
      * @return
      * @throws KiePMMLInternalException
@@ -54,12 +55,12 @@ public interface ModelImplementationProvider<T extends Model, E extends KiePMMLM
         final Map<String, String> sourcesMap = getSourcesMap(compilationDTO);
         boolean isInterpreted = IsInterpreted.class.isAssignableFrom(getKiePMMLModelClass());
         return new KiePMMLModelWithSources(compilationDTO.getModelName(),
-                                           compilationDTO.getPackageName(),
-                                           compilationDTO.getKieMiningFields(),
-                                           compilationDTO.getKieOutputFields(),
-                                           compilationDTO.getKieTargetFields(),
-                                           sourcesMap,
-                                           isInterpreted);
+                compilationDTO.getPackageName(),
+                compilationDTO.getKieMiningFields(),
+                compilationDTO.getKieOutputFields(),
+                compilationDTO.getKieTargetFields(),
+                sourcesMap,
+                isInterpreted);
     }
 
     Map<String, String> getSourcesMap(final CompilationDTO<T> compilationDTO);
@@ -67,6 +68,7 @@ public interface ModelImplementationProvider<T extends Model, E extends KiePMMLM
     /**
      * Method provided only to have <b>drools</b> models working when invoked by a <code>MiningModel</code>
      * Default implementation provided for <b>not-drools</b> models.
+     *
      * @param compilationDTO
      * @return
      * @throws KiePMMLInternalException

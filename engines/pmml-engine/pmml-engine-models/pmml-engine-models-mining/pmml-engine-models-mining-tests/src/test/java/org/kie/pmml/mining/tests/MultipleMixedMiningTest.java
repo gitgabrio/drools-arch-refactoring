@@ -16,24 +16,26 @@
 
 package org.kie.pmml.mining.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled // TODO after rules models
 public class MultipleMixedMiningTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MultipleMining";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "MixedMining";
     private static final String TARGET_FIELD = "categoricalResult";
     private static PMMLRuntime pmmlRuntime;
@@ -47,12 +49,12 @@ public class MultipleMixedMiningTest extends AbstractPMMLTest {
     private double expectedResult;
 
     public void initMultipleMixedMiningTest(String categoricalX,
-                                   String categoricalY,
-                                   double age,
-                                   String occupation,
-                                   String residenceState,
-                                   boolean validLicense,
-                                   double expectedResult) {
+                                            String categoricalY,
+                                            double age,
+                                            String occupation,
+                                            String residenceState,
+                                            boolean validLicense,
+                                            double expectedResult) {
         this.categoricalX = categoricalX;
         this.categoricalY = categoricalY;
         this.age = age;

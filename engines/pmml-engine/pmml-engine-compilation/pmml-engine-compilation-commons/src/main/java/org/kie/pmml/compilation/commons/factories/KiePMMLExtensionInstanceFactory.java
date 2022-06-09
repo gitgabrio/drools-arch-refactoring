@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.Extension;
+import org.kie.pmml.commons.model.KiePMMLExtension;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.dmg.pmml.Extension;
-import org.kie.pmml.commons.model.KiePMMLExtension;
 
 public class KiePMMLExtensionInstanceFactory {
 

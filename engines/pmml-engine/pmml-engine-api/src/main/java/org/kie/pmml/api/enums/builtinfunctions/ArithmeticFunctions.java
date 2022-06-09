@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.api.enums.builtinfunctions;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.api.exceptions.KiePMMLException;
+
 import java.util.Arrays;
 import java.util.OptionalDouble;
 import java.util.stream.DoubleStream;
-
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.api.exceptions.KiePMMLException;
 
 import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkNumbers;
 

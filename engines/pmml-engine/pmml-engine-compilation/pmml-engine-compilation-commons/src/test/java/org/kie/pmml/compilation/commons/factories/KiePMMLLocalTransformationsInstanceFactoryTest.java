@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.dmg.pmml.DerivedField;
 import org.dmg.pmml.LocalTransformations;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLLocalTransformations;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomLocalTransformations;

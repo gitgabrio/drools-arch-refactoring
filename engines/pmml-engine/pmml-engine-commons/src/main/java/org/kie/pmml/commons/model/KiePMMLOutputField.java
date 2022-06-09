@@ -15,12 +15,6 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.StringJoiner;
-
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
@@ -29,6 +23,8 @@ import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.commonEvaluate;
 
@@ -124,7 +120,7 @@ public class KiePMMLOutputField extends AbstractKiePMMLComponent {
 
     public Object evaluatePredictedValue(final ProcessingDTO processingDTO) {
         return commonEvaluate(getValueFromKiePMMLNameValuesByVariableName(targetField, processingDTO.getKiePMMLNameValues())
-                                      .orElse(null), dataType);
+                .orElse(null), dataType);
     }
 
     public Object evaluateProbabilityValue(final ProcessingDTO processingDTO) {

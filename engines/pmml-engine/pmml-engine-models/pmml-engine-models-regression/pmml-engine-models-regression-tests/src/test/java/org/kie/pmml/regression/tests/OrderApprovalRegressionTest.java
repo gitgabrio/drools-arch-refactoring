@@ -16,11 +16,6 @@
 
 package org.kie.pmml.regression.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,12 +24,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderApprovalRegressionTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "OrderApproval";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "OrderApprovalRegression";
     private static final String TARGET_FIELD = "approval";
     private static final String PROBABILITY_FALSE = "probability(false)";
@@ -52,9 +52,9 @@ public class OrderApprovalRegressionTest extends AbstractPMMLTest {
     private double expectedProbFalse;
 
     public void initOrderApprovalRegressionTest(double category, double urgency, double targetPrice,
-                                       double price, String expectedResult,
-                                       double expectedProbTrue,
-                                       double expectedProbFalse) {
+                                                double price, String expectedResult,
+                                                double expectedProbTrue,
+                                                double expectedProbFalse) {
         this.category = category;
         this.urgency = urgency;
         this.targetPrice = targetPrice;

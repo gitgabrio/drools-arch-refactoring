@@ -16,17 +16,17 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.CLOSURE;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.CommonTestingUtility.getProcessingDTO;
@@ -48,18 +48,18 @@ public class KiePMMLDiscretizeTest {
     @BeforeAll
     public static void setup() {
         kiePMMLDiscretizeBin1 = getKiePMMLDiscretizeBin("kiePMMLDiscretizeBin1", new KiePMMLInterval(null, 20,
-                                                                                                     CLOSURE.OPEN_OPEN), "kiePMMLDiscretizeBin1");
+                CLOSURE.OPEN_OPEN), "kiePMMLDiscretizeBin1");
         kiePMMLDiscretizeBin2 = getKiePMMLDiscretizeBin("kiePMMLDiscretizeBin2", new KiePMMLInterval(21, 30,
-                                                                                                     CLOSURE.OPEN_CLOSED), "kiePMMLDiscretizeBin2");
+                CLOSURE.OPEN_CLOSED), "kiePMMLDiscretizeBin2");
         kiePMMLDiscretizeBin3 = getKiePMMLDiscretizeBin("kiePMMLDiscretizeBin3", new KiePMMLInterval(31, 40,
-                                                                                                     CLOSURE.CLOSED_OPEN), "kiePMMLDiscretizeBin3");
+                CLOSURE.CLOSED_OPEN), "kiePMMLDiscretizeBin3");
         kiePMMLDiscretizeBin4 = getKiePMMLDiscretizeBin("kiePMMLDiscretizeBin4", new KiePMMLInterval(41, 50,
-                                                                                                     CLOSURE.CLOSED_CLOSED), "kiePMMLDiscretizeBin4");
+                CLOSURE.CLOSED_CLOSED), "kiePMMLDiscretizeBin4");
         kiePMMLDiscretizeBin5 = getKiePMMLDiscretizeBin("kiePMMLDiscretizeBin5", new KiePMMLInterval(51, null,
-                                                                                                     CLOSURE.CLOSED_CLOSED), "kiePMMLDiscretizeBin5");
+                CLOSURE.CLOSED_CLOSED), "kiePMMLDiscretizeBin5");
         discretizeBins = Arrays.asList(kiePMMLDiscretizeBin1, kiePMMLDiscretizeBin2,
-                                                                  kiePMMLDiscretizeBin3, kiePMMLDiscretizeBin4,
-                                                                  kiePMMLDiscretizeBin5);
+                kiePMMLDiscretizeBin3, kiePMMLDiscretizeBin4,
+                kiePMMLDiscretizeBin5);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class KiePMMLDiscretizeTest {
         assertThat(retrieved).isPresent();
         assertThat(retrieved.get()).isEqualTo(kiePMMLDiscretizeBin5.getBinValue());
     }
-    
+
     private KiePMMLDiscretize getKiePMMLDiscretize(String mapMissingTo, String defaultValue) {
         Collections.shuffle(discretizeBins);
         return new KiePMMLDiscretize(NAME, Collections.emptyList(), discretizeBins, mapMissingTo, defaultValue, DATATYPE);

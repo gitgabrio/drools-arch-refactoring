@@ -15,21 +15,15 @@
  */
 package org.kie.pmml.api.enums.builtinfunctions;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.api.exceptions.KiePMMLException;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.api.exceptions.KiePMMLException;
-
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkDate;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkInteger;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkLength;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkMinimumLength;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkNumber;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkString;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkStrings;
+import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.*;
 
 /**
  * @see <a http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html>Built-in functions</a>
@@ -116,7 +110,7 @@ public enum StringFunctions {
         checkString(inputData[0]);
         checkInteger(inputData[1]);
         checkInteger(inputData[2]);
-        int startPos = ((int) inputData[1]) -1;
+        int startPos = ((int) inputData[1]) - 1;
         int length = (int) inputData[2];
         int endPos = startPos + length;
         return ((String) inputData[0]).substring(startPos, endPos);

@@ -7,6 +7,7 @@ rel 7.52.0
 ----------
 
 Implemented models:
+
 1) Regression model
 2) Tree model
 3) Scorecard model
@@ -15,11 +16,13 @@ Implemented models:
 
 Overall limitations
 ===================
+
 1. only one "target field" managed
 2. Extension unimplemented
 
 MiningSchema/MiningField
 ------------------------
+
 1. only predicted/target/active usageType implemented
 2. importance unimplemented
 3. outliers unimplemented
@@ -30,13 +33,13 @@ MiningSchema/MiningField
 8. invalidValueTreatment unimplemented
 9. invalidValueReplacement unimplemented
 
-
 Output/OutputField
 ------------------
+
 1. Decisions unimplemented
 2. Value unimplemented
 3. only predictedValue/probability result feature implemented
-4. Rule feature unimplemented   
+4. Rule feature unimplemented
 5. algorithm unimplemented
 6. isMultiValued unimplemented
 7. segmentId unimplemented
@@ -44,6 +47,7 @@ Output/OutputField
 
 TransformationDictionary/LocalTransformation
 --------------------------------------------
+
 1. Only _Constant_, _FieldRef_ and _Apply_ expressions implemented
 2. Default functions unimplemented
 
@@ -60,12 +64,14 @@ Models limitations
 
 Regression model
 ----------------
+
 1. ModelStats unimplemented
 2. ModelExplanation unimplemented
 3. ModelVerification unimplemented
 
 Tree model
 ----------
+
 1. verification unimplemented
 2. ModelStats unimplemented
 3. ModelExplanation unimplemented
@@ -82,24 +88,26 @@ Tree model
 
 Scorecard model
 ---------------
+
 1. verification unimplemented
 2. ModelStats unimplemented
 3. ModelExplanation unimplemented
 4. ModelVerification unimplemented
 5. see Tree model about predicates
 
-
 Mining model
 ------------
+
 1. verification unimplemented
 2. ModelStats unimplemented
 3. ModelExplanation unimplemented
 4. ModelVerification unimplemented
-5. VariableWeight unimplemented   
+5. VariableWeight unimplemented
 5. see Tree model about predicates
 
 Clustering model
 ----------------
+
 1. _distributionBased_ models not implemented
 2. _table_ compare function not implemented
 3. Only _euclidean_ and _squaredEuclidean_ aggregation functions are implemented

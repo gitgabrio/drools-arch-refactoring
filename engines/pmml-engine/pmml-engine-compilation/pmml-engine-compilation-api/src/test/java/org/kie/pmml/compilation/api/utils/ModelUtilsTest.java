@@ -16,34 +16,7 @@
 
 package org.kie.pmml.compilation.api.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import org.dmg.pmml.Array;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.ParameterField;
-import org.dmg.pmml.Row;
-import org.dmg.pmml.Target;
-import org.dmg.pmml.Targets;
+import org.dmg.pmml.*;
 import org.dmg.pmml.regression.RegressionModel;
 import org.jpmml.model.inlinetable.InputCell;
 import org.jpmml.model.inlinetable.OutputCell;
@@ -55,21 +28,14 @@ import org.kie.pmml.api.enums.RESULT_FEATURE;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameOpType;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getArray;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataTypes;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getMiningField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getParameterFields;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDataType;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomMiningField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomOutputField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomRowWithCells;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomTarget;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getTarget;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getPrefixedName;
 
 public class ModelUtilsTest {

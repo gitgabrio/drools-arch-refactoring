@@ -16,11 +16,6 @@
 
 package org.kie.pmml.regression.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +23,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,9 +52,9 @@ public class MultipleLogisticRegressionTest extends AbstractPMMLTest {
     private double expectedProbCounterfeit;
 
     public void initMultipleLogisticRegressionTest(double variance, double skewness, double curtosis,
-                                          double entropy, String expectedResult,
-                                          double expectedProbAuthentic,
-                                          double expectedProbCounterfeit) {
+                                                   double entropy, String expectedResult,
+                                                   double expectedProbAuthentic,
+                                                   double expectedProbCounterfeit) {
         this.variance = variance;
         this.skewness = skewness;
         this.curtosis = curtosis;

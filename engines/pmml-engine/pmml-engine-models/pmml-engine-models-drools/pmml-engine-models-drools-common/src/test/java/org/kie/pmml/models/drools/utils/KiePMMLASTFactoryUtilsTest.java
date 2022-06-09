@@ -64,15 +64,15 @@ public class KiePMMLASTFactoryUtilsTest {
                 .stream()
                 .map(entry -> {
                     fieldTypeMap.put(entry.getKey(),
-                                     new KiePMMLOriginalTypeGeneratedType(entry.getValue().value(),
-                                                                          getSanitizedClassName(entry.getKey().toUpperCase())));
+                            new KiePMMLOriginalTypeGeneratedType(entry.getValue().value(),
+                                    getSanitizedClassName(entry.getKey().toUpperCase())));
                     return PMMLModelTestUtils.getSimplePredicate(entry.getKey(),
-                                                                 getRandomObject(entry.getValue()),
-                                                                 getRandomSimplePredicateOperator());
+                            getRandomObject(entry.getValue()),
+                            getRandomSimplePredicateOperator());
                 })
                 .collect(Collectors.toList());
         compoundPredicates = IntStream.range(0, 4)
-                .mapToObj( index -> PMMLModelTestUtils.getCompoundPredicate(simplePredicates, index))
+                .mapToObj(index -> PMMLModelTestUtils.getCompoundPredicate(simplePredicates, index))
                 .collect(Collectors.toList());
     }
 
@@ -112,8 +112,8 @@ public class KiePMMLASTFactoryUtilsTest {
         List<SimplePredicate> simplePredicates = IntStream.range(0, 2)
                 .mapToObj(index -> {
                     fieldTypeMap.put(fieldName,
-                                     new KiePMMLOriginalTypeGeneratedType(DataType.STRING.value(),
-                                                                          getSanitizedClassName(fieldName.toUpperCase())));
+                            new KiePMMLOriginalTypeGeneratedType(DataType.STRING.value(),
+                                    getSanitizedClassName(fieldName.toUpperCase())));
                     return PMMLModelTestUtils
                             .getSimplePredicate(fieldName, "VALUE-" + index, SimplePredicate.Operator.LESS_THAN);
                 })
@@ -151,32 +151,32 @@ public class KiePMMLASTFactoryUtilsTest {
     @Test
     public void populateKiePMMLFieldOperatorValueListWithSimplePredicatesWithAnd() {
         commonPopulateKiePMMLFieldOperatorValueListWithSimplePredicates(CompoundPredicate.BooleanOperator.AND,
-                                                                        BOOLEAN_OPERATOR.AND);
+                BOOLEAN_OPERATOR.AND);
     }
 
     @Test
     public void populateKiePMMLFieldOperatorValueListWithSimplePredicatesWithOr() {
         commonPopulateKiePMMLFieldOperatorValueListWithSimplePredicates(CompoundPredicate.BooleanOperator.OR,
-                                                                        BOOLEAN_OPERATOR.OR);
+                BOOLEAN_OPERATOR.OR);
     }
 
     @Test
     public void populateKiePMMLFieldOperatorValueListWithCompoundPredicates() {
         final List<KiePMMLFieldOperatorValue> toPopulate = new ArrayList<>();
         KiePMMLASTFactoryUtils.populateKiePMMLFieldOperatorValueListWithCompoundPredicates(toPopulate,
-                                                                                           compoundPredicates,
-                                                                                           fieldTypeMap);
+                compoundPredicates,
+                fieldTypeMap);
         assertThat(toPopulate).isNotEmpty();
         assertThat(toPopulate).hasSize(2); // one entry is for "AND" compounds and the other is for "OR" ones
         final Map<CompoundPredicate.BooleanOperator, List<CompoundPredicate>> partitionedCompoundPredicates =
                 compoundPredicates.stream()
-                .collect(Collectors.groupingBy(CompoundPredicate::getBooleanOperator));
+                        .collect(Collectors.groupingBy(CompoundPredicate::getBooleanOperator));
         partitionedCompoundPredicates.forEach((booleanOperator, compoundPredicates) -> {
             final KiePMMLFieldOperatorValue operatorValue = toPopulate.stream()
                     .filter(kiePMMLFieldOperatorValue -> kiePMMLFieldOperatorValue.getOperator().equals(BOOLEAN_OPERATOR.byName(booleanOperator.value())))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Failed toRetrieve KiePMMLFieldOperatorValue for " +
-                                                                    "BooleanOperator " + booleanOperator));
+                            "BooleanOperator " + booleanOperator));
             final List<KiePMMLFieldOperatorValue> nestedKiePMMLFieldOperatorValues =
                     operatorValue.getNestedKiePMMLFieldOperatorValues();
             final List<Predicate> nestedPredicates =
@@ -206,9 +206,9 @@ public class KiePMMLASTFactoryUtilsTest {
                 .collect(groupingBy(child -> fieldTypeMap.get(child.getField().getValue()).getGeneratedType()));
         final List<KiePMMLFieldOperatorValue> toPopulate = new ArrayList<>();
         KiePMMLASTFactoryUtils.populateKiePMMLFieldOperatorValueListWithSimplePredicates(toPopulate,
-                                                                                         compoundBooleanOperator,
-                                                                                         predicatesByField,
-                                                                                         fieldTypeMap);
+                compoundBooleanOperator,
+                predicatesByField,
+                fieldTypeMap);
         assertThat(toPopulate).hasSameSizeAs(simplePredicates);
         commonVerifyKiePMMLFieldOperatorValueList(toPopulate, booleanOperator);
     }

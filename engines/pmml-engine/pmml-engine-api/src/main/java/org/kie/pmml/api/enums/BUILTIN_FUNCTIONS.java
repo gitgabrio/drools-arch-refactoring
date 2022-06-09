@@ -15,18 +15,13 @@
  */
 package org.kie.pmml.api.enums;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import org.kie.pmml.api.enums.builtinfunctions.ArithmeticFunctions;
-import org.kie.pmml.api.enums.builtinfunctions.BooleanFunctions;
-import org.kie.pmml.api.enums.builtinfunctions.DateFunctions;
-import org.kie.pmml.api.enums.builtinfunctions.DistributionFunctions;
-import org.kie.pmml.api.enums.builtinfunctions.MathematicalFunctions;
-import org.kie.pmml.api.enums.builtinfunctions.StringFunctions;
+import org.kie.pmml.api.enums.builtinfunctions.*;
 import org.kie.pmml.api.exceptions.KieEnumException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.models.MiningField;
+
+import java.util.Arrays;
+import java.util.Date;
 
 import static org.kie.pmml.api.enums.builtinfunctions.ArithmeticFunctions.isArithmeticFunctions;
 import static org.kie.pmml.api.enums.builtinfunctions.BooleanFunctions.isBooleanFunctions;

@@ -43,6 +43,7 @@ public class KiePMMLASTFactoryUtils {
 
     /**
      * Method to be invoked when <b>compoundPredicate.getBooleanOperator()</b> is <code>AND</code> or <code>OR</code>. Throws exception otherwise
+     *
      * @param compoundPredicate
      * @param fieldTypeMap
      * @return
@@ -68,6 +69,7 @@ public class KiePMMLASTFactoryUtils {
 
     /**
      * Method to be invoked when <b>compoundPredicate.getBooleanOperator()</b> is <code>XOR</code>. Throws exception otherwise
+     *
      * @param compoundPredicate
      * @param fieldTypeMap
      * @return
@@ -90,6 +92,7 @@ public class KiePMMLASTFactoryUtils {
 
     /**
      * This method should be invoked with a <code>List&lt;SimplePredicate&gt;</code> where each <code>SimplePredicate</code> is referring to the same field
+     *
      * @param fieldName
      * @param containerOperator
      * @param simplePredicates
@@ -103,7 +106,7 @@ public class KiePMMLASTFactoryUtils {
         List<KiePMMLOperatorValue> kiePMMLOperatorValues = simplePredicates
                 .stream()
                 .map(simplePredicate -> new KiePMMLOperatorValue(OPERATOR.byName(simplePredicate.getOperator().value()),
-                                                                 getCorrectlyFormattedObject(simplePredicate, fieldTypeMap)))
+                        getCorrectlyFormattedObject(simplePredicate, fieldTypeMap)))
                 .collect(Collectors.toList());
         return new KiePMMLFieldOperatorValue(fieldName, containerOperator, kiePMMLOperatorValues, null);
     }
@@ -127,6 +130,7 @@ public class KiePMMLASTFactoryUtils {
 
     /**
      * Populate the given <code>List&lt;KiePMMLFieldOperatorValue&gt;</code> with <code>KiePMMLFieldOperatorValue</code>s generated from the given <b>predicatesByField</b>
+     *
      * @param toPopulate
      * @param booleanOperator
      * @param predicatesByField
@@ -150,6 +154,7 @@ public class KiePMMLASTFactoryUtils {
 
     /**
      * Populate the given <code>List&lt;KiePMMLFieldOperatorValue&gt;</code> with <code>KiePMMLFieldOperatorValue</code>s generated from the given <b>compoundPredicates</b>
+     *
      * @param toPopulate
      * @param compoundPredicates
      * @param fieldTypeMap

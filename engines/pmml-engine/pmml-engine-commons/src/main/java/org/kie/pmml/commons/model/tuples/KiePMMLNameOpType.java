@@ -1,8 +1,8 @@
 package org.kie.pmml.commons.model.tuples;
 
-import java.util.Objects;
-
 import org.kie.pmml.api.enums.OP_TYPE;
+
+import java.util.Objects;
 
 /**
  * Class to represent a <b>name/operation type</b> tuple

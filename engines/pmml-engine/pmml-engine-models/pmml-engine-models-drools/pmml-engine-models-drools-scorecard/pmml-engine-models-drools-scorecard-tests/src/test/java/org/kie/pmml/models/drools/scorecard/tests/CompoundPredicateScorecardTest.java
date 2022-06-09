@@ -63,7 +63,7 @@ public class CompoundPredicateScorecardTest extends AbstractPMMLTest {
         this.reasonCode3 = reasonCode3;
     }
 
-  @BeforeClass
+    @BeforeClass
     public static void setupClass() {
         pmmlRuntime = getPMMLRuntime(FILE_NAME);
     }

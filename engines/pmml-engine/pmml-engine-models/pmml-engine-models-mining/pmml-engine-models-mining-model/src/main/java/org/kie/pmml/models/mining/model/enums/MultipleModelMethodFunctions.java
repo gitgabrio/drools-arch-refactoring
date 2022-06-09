@@ -16,21 +16,15 @@
 
 package org.kie.pmml.models.mining.model.enums;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+import org.kie.pmml.commons.model.tuples.KiePMMLValueWeight;
+
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
-
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
-import org.kie.pmml.commons.model.tuples.KiePMMLValueWeight;
 
 public class MultipleModelMethodFunctions {
 
@@ -71,15 +65,15 @@ public class MultipleModelMethodFunctions {
 
     public static final Function<LinkedHashMap<String, KiePMMLNameValue>, Object> WEIGHTED_AVERAGE_RESULT =
             inputData -> {
-        AtomicReference<Double> weightedSum = new AtomicReference<>(0.0);
-        AtomicReference<Double> weights = new AtomicReference<>(0.0);
+                AtomicReference<Double> weightedSum = new AtomicReference<>(0.0);
+                AtomicReference<Double> weights = new AtomicReference<>(0.0);
                 valueWeightList(inputData.values(), "WEIGHTED_AVERAGE")
-                .forEach(elem -> {
-                    weightedSum.accumulateAndGet(elem.weightedValue(), Double::sum);
-                    weights.accumulateAndGet(elem.getWeight(), Double::sum);
-                });
-        return weightedSum.get() / weights.get();
-    };
+                        .forEach(elem -> {
+                            weightedSum.accumulateAndGet(elem.weightedValue(), Double::sum);
+                            weights.accumulateAndGet(elem.getWeight(), Double::sum);
+                        });
+                return weightedSum.get() / weights.get();
+            };
 
     public static final Function<LinkedHashMap<String, KiePMMLNameValue>, Object> MEDIAN_RESULT = inputData -> {
         DoubleStream sortedValues = doubleStream(inputData.values(), "MEDIAN").sorted();
@@ -92,7 +86,7 @@ public class MultipleModelMethodFunctions {
     public static final Function<LinkedHashMap<String, KiePMMLNameValue>, Object> WEIGHTED_MEDIAN_RESULT =
             inputData -> {
                 final List<KiePMMLValueWeight> kiePMMLValueWeights = valueWeightList(inputData.values(),
-                                                                                     "WEIGHTED_MEDIAN");
+                        "WEIGHTED_MEDIAN");
                 kiePMMLValueWeights
                         .sort((o1, o2) -> {
                             int toReturn = 0;
@@ -196,6 +190,7 @@ public class MultipleModelMethodFunctions {
      * KiePMMLNameValue&gt;</code>
      * <p>
      * {@link KiePMMLNameValue#getValue()}
+     *
      * @param toUnwrap
      * @return
      */
@@ -209,6 +204,7 @@ public class MultipleModelMethodFunctions {
      * Returns a <code>List&lt;KiePMMLValueWeight&gt;</code> representing the values inside the original
      * <code>List&lt;KiePMMLNameValue&gt;</code>
      * {@link KiePMMLNameValue#getValue()}
+     *
      * @param toUnwrap
      * @param enumName
      * @return
@@ -219,7 +215,7 @@ public class MultipleModelMethodFunctions {
             Object elem = nameValue.getValue();
             if (!(elem instanceof KiePMMLValueWeight)) {
                 throw new KieEnumException("Failed to get " + enumName + ". Expecting KiePMMLValueWeight, " +
-                                                   "found " + elem.getClass().getSimpleName());
+                        "found " + elem.getClass().getSimpleName());
             }
             toReturn.add((KiePMMLValueWeight) elem);
         });
@@ -231,6 +227,7 @@ public class MultipleModelMethodFunctions {
      * KiePMMLNameValue&gt;</code>
      * <p>
      * {@link KiePMMLValueWeight#getValue()}
+     *
      * @param toUnwrap
      * @param enumName
      * @return

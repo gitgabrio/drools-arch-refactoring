@@ -35,6 +35,7 @@ public class FileUtils {
 
     /**
      * Retrieve the <code>File</code> of the given <b>file</b>
+     *
      * @param fileName
      * @return
      * @throws IOException
@@ -53,6 +54,7 @@ public class FileUtils {
 
     /**
      * Retrieve the <code>FileInputStream</code> of the given <b>file</b>
+     *
      * @param fileName
      * @return
      * @throws IOException
@@ -64,6 +66,7 @@ public class FileUtils {
 
     /**
      * Retrieve the <b>content</b> of the given <b>file</b>
+     *
      * @param fileName
      * @return
      * @throws IOException

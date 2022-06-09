@@ -15,14 +15,12 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 
-import static org.kie.pmml.commons.model.expressions.KiePMMLTextIndex.DEFAULT_TOKENIZER;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Transformations.html#xsdElement_TextIndexNormalization>TextIndexNormalization</a>
@@ -57,9 +55,9 @@ public class KiePMMLTextIndexNormalization extends AbstractKiePMMLComponent {
         Optional<String> retrieved = Optional.empty();
         if (inlineTable != null) {
             AtomicReference<String> toEdit = new AtomicReference<>(text);
-            boolean isCaseSensitiveToUse = isCaseSensitive == null ? isCaseSensitiveParam :  isCaseSensitive;
+            boolean isCaseSensitiveToUse = isCaseSensitive == null ? isCaseSensitiveParam : isCaseSensitive;
             int maxLevenshteinDistanceToUse = maxLevenshteinDistance == null ? maxLevenshteinDistanceParam : maxLevenshteinDistance;
-            boolean tokenizeToUse = tokenize == null ? tokenizeParam :  tokenize;
+            boolean tokenizeToUse = tokenize == null ? tokenizeParam : tokenize;
             String wordSeparatorCharacterREToUse = wordSeparatorCharacterRE == null ? wordSeparatorCharacterREParam : wordSeparatorCharacterRE;
             inlineTable.replace(toEdit, inField, outField, regexField, isCaseSensitiveToUse, maxLevenshteinDistanceToUse, tokenizeToUse, wordSeparatorCharacterREToUse);
             boolean replaced = !text.equals(toEdit.get());

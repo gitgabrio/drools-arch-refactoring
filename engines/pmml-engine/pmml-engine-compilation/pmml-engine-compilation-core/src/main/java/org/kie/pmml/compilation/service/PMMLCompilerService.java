@@ -74,7 +74,7 @@ public class PMMLCompilerService {
             Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
             allSourcesMap.putAll(sourcesMap);
         });
-        List<KiePMMLFactoryModel>  kiePMMLFactoryModels = kiePmmlModels
+        List<KiePMMLFactoryModel> kiePMMLFactoryModels = kiePmmlModels
                 .stream()
                 .filter(KiePMMLFactoryModel.class::isInstance)
                 .map(KiePMMLFactoryModel.class::cast)
@@ -110,7 +110,7 @@ public class PMMLCompilerService {
      * @return
      */
     static List<KiePMMLModel> getKiePMMLModelsFromResourceWithSources(HasClassLoader hasClassLoader,
-                                                                             DARFileResource resource) {
+                                                                      DARFileResource resource) {
         String[] classNamePackageName = getFactoryClassNamePackageName(resource);
         String packageName = classNamePackageName[1];
         try {

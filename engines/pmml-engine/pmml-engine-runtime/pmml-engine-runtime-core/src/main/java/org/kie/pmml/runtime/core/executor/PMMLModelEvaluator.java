@@ -32,7 +32,8 @@ public interface PMMLModelEvaluator<E extends KiePMMLModel> {
     /**
      * Evaluate the model, given the context
      * It may be <code>null</code> for testing purpose for <b>not drools-related</b> models
-     * @param model the model to evaluate
+     *
+     * @param model   the model to evaluate
      * @param context the context with all the input variables
      * @return the result of the evaluation
      * @throws KiePMMLInternalException

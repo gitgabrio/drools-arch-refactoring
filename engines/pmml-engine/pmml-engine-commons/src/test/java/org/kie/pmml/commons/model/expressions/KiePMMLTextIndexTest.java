@@ -16,15 +16,6 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
-
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
@@ -33,11 +24,12 @@ import org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS.AUGMENTED_NORMALIZED_TERM_FREQUENCY;
-import static org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS.BINARY;
-import static org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS.LOGARITHMIC;
-import static org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS.TERM_FREQUENCY;
+import static org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS.*;
 import static org.kie.pmml.commons.CommonTestingUtility.getProcessingDTO;
 
 public class KiePMMLTextIndexTest {
@@ -77,7 +69,7 @@ public class KiePMMLTextIndexTest {
         expectedResults.put(AUGMENTED_NORMALIZED_TERM_FREQUENCY, augmentedNormalizedTermFrequency);
         expectedResults.forEach((localTermWeights, expected) -> {
             KiePMMLTextIndex kiePMMLTextIndex = KiePMMLTextIndex.builder(FIELD_NAME, Collections.emptyList(),
-                    kiePMMLConstant)
+                            kiePMMLConstant)
                     .withMaxLevenshteinDistance(2)
                     .withLocalTermWeights(localTermWeights)
                     .withIsCaseSensitive(true)
@@ -107,7 +99,7 @@ public class KiePMMLTextIndexTest {
         expectedResults.put(AUGMENTED_NORMALIZED_TERM_FREQUENCY, augmentedNormalizedTermFrequency);
         expectedResults.forEach((localTermWeights, expected) -> {
             KiePMMLTextIndex kiePMMLTextIndex = KiePMMLTextIndex.builder(FIELD_NAME, Collections.emptyList(),
-                    kiePMMLConstant)
+                            kiePMMLConstant)
                     .withMaxLevenshteinDistance(2)
                     .withLocalTermWeights(localTermWeights)
                     .withIsCaseSensitive(true)
@@ -156,7 +148,7 @@ public class KiePMMLTextIndexTest {
         KiePMMLInlineTable inlineTable0 = new KiePMMLInlineTable("inlineTable0", Collections.emptyList(),
                 Arrays.asList(row0_0, row0_1, row0_2));
         KiePMMLTextIndexNormalization indexNormalization0 = KiePMMLTextIndexNormalization.builder(
-                "indexNormalization0", Collections.emptyList())
+                        "indexNormalization0", Collections.emptyList())
                 .withInField("string")
                 .withOutField("stem")
                 .withRegexField("regex")
@@ -180,7 +172,7 @@ public class KiePMMLTextIndexTest {
         KiePMMLInlineTable inlineTable1 = new KiePMMLInlineTable("inlineTable1", Collections.emptyList(),
                 Collections.singletonList(row1_0));
         KiePMMLTextIndexNormalization indexNormalization1 = KiePMMLTextIndexNormalization.builder(
-                "indexNormalization1", Collections.emptyList())
+                        "indexNormalization1", Collections.emptyList())
                 .withInField("re")
                 .withOutField("feature")
                 .withRegexField("regex")
@@ -191,7 +183,7 @@ public class KiePMMLTextIndexTest {
         KiePMMLFieldRef kiePMMLFieldRef = new KiePMMLFieldRef("term", Collections.emptyList(), null);
 
         KiePMMLTextIndex kiePMMLTextIndex = KiePMMLTextIndex.builder("reviewText", Collections.emptyList(),
-                kiePMMLFieldRef)
+                        kiePMMLFieldRef)
                 .withMaxLevenshteinDistance(2)
                 .withLocalTermWeights(BINARY)
                 .withIsCaseSensitive(false)
@@ -248,7 +240,7 @@ public class KiePMMLTextIndexTest {
                     localTermWeights,
                     COUNT_HITS.ALL_HITS,
                     levenshteinDistance);
-            assertThat(evaluateRaw).isCloseTo(expected,  Offset.offset(0.0000001));
+            assertThat(evaluateRaw).isCloseTo(expected, Offset.offset(0.0000001));
         });
         //---
         frequency = 4.0;
@@ -466,9 +458,9 @@ public class KiePMMLTextIndexTest {
         columnValues1.put("regex", "true");
         KiePMMLRow row1 = new KiePMMLRow(columnValues1);
         KiePMMLInlineTable inlineTable1 = new KiePMMLInlineTable("inlineTable1", Collections.emptyList(),
-                                                                 Arrays.asList(row0, row1));
+                Arrays.asList(row0, row1));
         KiePMMLTextIndexNormalization indexNormalization1 = KiePMMLTextIndexNormalization.builder(
-                "indexNormalization1", Collections.emptyList())
+                        "indexNormalization1", Collections.emptyList())
                 .withKiePMMLInlineTable(inlineTable1)
                 .withRecursive(true)
                 .build();
@@ -478,9 +470,9 @@ public class KiePMMLTextIndexTest {
         columnValues2.put("regex", "true");
         KiePMMLRow row2 = new KiePMMLRow(columnValues2);
         KiePMMLInlineTable inlineTable2 = new KiePMMLInlineTable("inlineTable2", Collections.emptyList(),
-                                                                 Collections.singletonList(row2));
+                Collections.singletonList(row2));
         KiePMMLTextIndexNormalization indexNormalization2 = KiePMMLTextIndexNormalization.builder(
-                "indexNormalization2", Collections.emptyList())
+                        "indexNormalization2", Collections.emptyList())
                 .withKiePMMLInlineTable(inlineTable2)
                 .withRecursive(true)
                 .build();

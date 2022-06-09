@@ -15,9 +15,9 @@
  */
 package org.kie.pmml.models.regression.model;
 
-import java.util.List;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
+
+import java.util.List;
 
 public final class KiePMMLRegressionTable extends AbstractKiePMMLTable {
 

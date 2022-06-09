@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.runtime.api.container;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.kie.api.internal.io.ResourceTypePackage;
 import org.kie.pmml.commons.model.KiePMMLModel;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  *

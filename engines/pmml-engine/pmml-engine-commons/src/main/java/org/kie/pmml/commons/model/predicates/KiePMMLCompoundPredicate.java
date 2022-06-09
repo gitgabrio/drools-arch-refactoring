@@ -15,16 +15,15 @@
  */
 package org.kie.pmml.commons.model.predicates;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BinaryOperator;
-
 import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/TreeModel.html#xsdElement_CompoundPredicate>CompoundPredicate</a>
@@ -44,6 +43,7 @@ public class KiePMMLCompoundPredicate extends KiePMMLPredicate {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(List<KiePMMLExtension> extensions, BOOLEAN_OPERATOR booleanOperator) {
@@ -121,22 +121,22 @@ public class KiePMMLCompoundPredicate extends KiePMMLPredicate {
     }
 
     static Boolean orOperator(Boolean aBoolean, Boolean aBoolean2) {
-        logger.trace("orOperator {} {}",  aBoolean,  aBoolean2);
+        logger.trace("orOperator {} {}", aBoolean, aBoolean2);
         return aBoolean != null ? aBoolean || aBoolean2 : aBoolean2;
     }
 
     static Boolean andOperator(Boolean aBoolean, Boolean aBoolean2) {
-        logger.trace("andOperator {} {}",  aBoolean,  aBoolean2);
+        logger.trace("andOperator {} {}", aBoolean, aBoolean2);
         return aBoolean != null ? aBoolean && aBoolean2 : aBoolean2;
     }
 
     static Boolean xorOperator(Boolean aBoolean, Boolean aBoolean2) {
-        logger.trace("xorOperator {} {}",  aBoolean,  aBoolean2);
+        logger.trace("xorOperator {} {}", aBoolean, aBoolean2);
         return aBoolean != null ? aBoolean ^ aBoolean2 : aBoolean2;
     }
 
     static Boolean surrogateOperator(Boolean aBoolean, Boolean aBoolean2) {
-        logger.trace("surrogateOperator {} {}",  aBoolean,  aBoolean2);
+        logger.trace("surrogateOperator {} {}", aBoolean, aBoolean2);
         return aBoolean != null ? aBoolean : aBoolean2;
     }
 

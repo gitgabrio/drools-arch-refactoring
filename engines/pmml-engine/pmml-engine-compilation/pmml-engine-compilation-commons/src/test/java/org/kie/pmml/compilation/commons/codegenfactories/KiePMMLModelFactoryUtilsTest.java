@@ -16,29 +16,12 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
@@ -48,18 +31,8 @@ import org.dmg.pmml.tree.TreeModel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kie.pmml.api.enums.CAST_INTEGER;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.FIELD_USAGE_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
-import org.kie.pmml.api.enums.RESULT_FEATURE;
-import org.kie.pmml.api.models.Interval;
-import org.kie.pmml.api.models.MiningField;
-import org.kie.pmml.api.models.OutputField;
-import org.kie.pmml.api.models.TargetField;
-import org.kie.pmml.api.models.TargetValue;
+import org.kie.pmml.api.enums.*;
+import org.kie.pmml.api.models.*;
 import org.kie.pmml.commons.model.KiePMMLTarget;
 import org.kie.pmml.commons.model.KiePMMLTargetValue;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
@@ -70,28 +43,24 @@ import org.kie.pmml.compilation.commons.utils.CommonCodegenUtils;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
 import static org.kie.pmml.commons.Constants.GET_MODEL;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomCastInteger;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomMiningField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomOpType;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomOutputField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomTarget;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_KIEPMMLMININGFIELDS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_KIEPMMLOUTPUTFIELDS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_KIEPMMLTARGETS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_LOCAL_TRANSFORMATIONS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_MININGFIELDS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_OUTPUTFIELDS;
-import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.GET_CREATED_TRANSFORMATION_DICTIONARY;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
+import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils.*;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
-import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
 
 public class KiePMMLModelFactoryUtilsTest {
 
@@ -632,29 +601,29 @@ public class KiePMMLModelFactoryUtilsTest {
         String opType = OP_TYPE.class.getCanonicalName() + "." + kieTargetField.getOpType().toString();
         String castInteger = CAST_INTEGER.class.getCanonicalName() + "." + kieTargetField.getCastInteger().toString();
         Expression expected = JavaParserUtils.parseExpression(String.format(text,
-                                                                            kieTargetField.getName(),
-                                                                            kieTargetValues.get(0).getValue(),
-                                                                            kieTargetValues.get(0).getDisplayValue(),
-                                                                            kieTargetValues.get(0).getPriorProbability(),
-                                                                            kieTargetValues.get(0).getDefaultValue(),
-                                                                            kieTargetValues.get(1).getValue(),
-                                                                            kieTargetValues.get(1).getDisplayValue(),
-                                                                            kieTargetValues.get(1).getPriorProbability(),
-                                                                            kieTargetValues.get(1).getDefaultValue(),
-                                                                            kieTargetValues.get(2).getValue(),
-                                                                            kieTargetValues.get(2).getDisplayValue(),
-                                                                            kieTargetValues.get(2).getPriorProbability(),
-                                                                            kieTargetValues.get(2).getDefaultValue(),
-                                                                            opType,
-                                                                            kieTargetField.getField(),
-                                                                            castInteger,
-                                                                            kieTargetField.getMin(),
-                                                                            kieTargetField.getMax(),
-                                                                            kieTargetField.getRescaleConstant(),
-                                                                            kieTargetField.getRescaleFactor()));
+                kieTargetField.getName(),
+                kieTargetValues.get(0).getValue(),
+                kieTargetValues.get(0).getDisplayValue(),
+                kieTargetValues.get(0).getPriorProbability(),
+                kieTargetValues.get(0).getDefaultValue(),
+                kieTargetValues.get(1).getValue(),
+                kieTargetValues.get(1).getDisplayValue(),
+                kieTargetValues.get(1).getPriorProbability(),
+                kieTargetValues.get(1).getDefaultValue(),
+                kieTargetValues.get(2).getValue(),
+                kieTargetValues.get(2).getDisplayValue(),
+                kieTargetValues.get(2).getPriorProbability(),
+                kieTargetValues.get(2).getDefaultValue(),
+                opType,
+                kieTargetField.getField(),
+                castInteger,
+                kieTargetField.getMin(),
+                kieTargetField.getMax(),
+                kieTargetField.getRescaleConstant(),
+                kieTargetField.getRescaleFactor()));
         assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(Arrays.class, Collections.class, KiePMMLTarget.class,
-                                               KiePMMLTargetValue.class, TargetField.class, TargetValue.class);
+                KiePMMLTargetValue.class, TargetField.class, TargetValue.class);
         commonValidateCompilationWithImports(retrieved, imports);
     }
 
@@ -667,6 +636,7 @@ public class KiePMMLModelFactoryUtilsTest {
     /**
      * Return a <code>List&lt;MethodCallExpr&gt;</code> where every element <b>scope' name</b> is <code>scope</code>
      * and every element <b>name</b> is <code>method</code>
+     *
      * @param blockStmt
      * @param expectedSize
      * @param scope
@@ -690,6 +660,7 @@ public class KiePMMLModelFactoryUtilsTest {
     /**
      * Verify the <b>scope' name</b> scope of the given <code>MethodCallExpr</code> is <code>scope</code>
      * and the <b>name</b> of the given <code>MethodCallExpr</code> is <code>method</code>
+     *
      * @param methodCallExpr
      * @param scope
      * @param method

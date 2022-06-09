@@ -16,27 +16,23 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.InvalidValueTreatmentMethod;
+import org.dmg.pmml.*;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 
 public class KiePMMLApplyFactoryTest {
 
@@ -70,7 +66,7 @@ public class KiePMMLApplyFactoryTest {
         Statement expected = JavaParserUtils.parseBlock(String.format(text, value1, value2, variableName, function,
                 defaultValue, mapMissingTo,
                 invalidValueTreatmentMethod.value()));
-        assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
+        assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLConstant.class, KiePMMLApply.class, Collections.class,
                 Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);
@@ -97,7 +93,7 @@ public class KiePMMLApplyFactoryTest {
         Statement expected = JavaParserUtils.parseBlock(String.format(text, PARAM_1, PARAM_2, variableName, function,
                 defaultValue, mapMissingTo,
                 invalidValueTreatmentMethod.value()));
-        assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
+        assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLFieldRef.class, KiePMMLApply.class, Collections.class,
                 Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);
@@ -131,7 +127,7 @@ public class KiePMMLApplyFactoryTest {
                 nestedInvalidValueTreatmentMethod.value(),
                 variableName,
                 invalidValueTreatmentMethod.value()));
-        assertThat(JavaParserUtils.equalsNode(expected,  retrieved)).isTrue();
+        assertThat(JavaParserUtils.equalsNode(expected, retrieved)).isTrue();
         List<Class<?>> imports = Arrays.asList(KiePMMLFieldRef.class, KiePMMLApply.class, Collections.class,
                 Arrays.class);
         commonValidateCompilationWithImports(retrieved, imports);

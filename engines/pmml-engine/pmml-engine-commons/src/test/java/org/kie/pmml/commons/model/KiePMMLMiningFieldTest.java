@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.commons.model;
 
+import org.junit.jupiter.api.Test;
+import org.kie.pmml.api.enums.CLOSURE;
+import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.junit.jupiter.api.Test;
-import org.kie.pmml.api.enums.CLOSURE;
-import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -101,8 +101,8 @@ public class KiePMMLMiningFieldTest {
                     final int rightMargin = leftMargin + (rnd.nextInt(10) + 10);
                     final CLOSURE closure = CLOSURE.values()[rnd.nextInt(CLOSURE.values().length)];
                     return new KiePMMLInterval(leftMargin,
-                                               rightMargin,
-                                               closure);
+                            rightMargin,
+                            closure);
                 })
                 .collect(Collectors.toList());
     }

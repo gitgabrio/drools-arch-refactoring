@@ -15,19 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.MiningField;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.FIELD_USAGE_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
+import org.kie.pmml.api.enums.*;
 import org.kie.pmml.commons.model.KiePMMLMiningField;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.compilation.api.utils.ModelUtils.convertDataFieldValues;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLIntervalInstanceFactory.getKiePMMLIntervals;

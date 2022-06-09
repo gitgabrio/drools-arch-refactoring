@@ -15,12 +15,6 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
-
 import org.kie.pmml.api.enums.BUILTIN_FUNCTIONS;
 import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
 import org.kie.pmml.api.models.MiningField;
@@ -28,6 +22,8 @@ import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
+
+import java.util.*;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Functions.html#xsdElement_Apply>Apply</a>
@@ -60,7 +56,7 @@ public class KiePMMLApply extends AbstractKiePMMLComponent implements KiePMMLExp
         for (KiePMMLExpression kiePMMLExpression : kiePMMLExpressions) {
             expressionValues.add(kiePMMLExpression.evaluate(processingDTO));
             if (kiePMMLExpression instanceof KiePMMLFieldRef && BUILTIN_FUNCTIONS.isBUILTIN_FUNCTIONS_VALIDATION(function)) {
-                String referredField = ((KiePMMLFieldRef)kiePMMLExpression).getName();
+                String referredField = ((KiePMMLFieldRef) kiePMMLExpression).getName();
                 referredByFieldRef = processingDTO.getMiningFields().stream()
                         .filter(miningField -> referredField.equals(miningField.getName()))
                         .findFirst()

@@ -15,14 +15,7 @@
  */
 package org.kie.pmml.compilation.api.mocks;
 
-import org.dmg.pmml.LocalTransformations;
-import org.dmg.pmml.MathContext;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.Visitor;
-import org.dmg.pmml.VisitorAction;
+import org.dmg.pmml.*;
 
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getGeneratedClassName;
 

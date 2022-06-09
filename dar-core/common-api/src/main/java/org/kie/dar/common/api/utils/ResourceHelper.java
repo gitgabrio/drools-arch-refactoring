@@ -16,15 +16,15 @@
 
 package org.kie.dar.common.api.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility that provide classPath scan to retrieve resources
@@ -35,6 +35,7 @@ public class ResourceHelper {
 
     /**
      * Scan into classpath folders to find resources with the required extension
+     *
      * @param extension to find
      * @return stream of matching resources
      */
@@ -45,8 +46,9 @@ public class ResourceHelper {
 
     /**
      * Scan folder to find resources that match with pattern
+     *
      * @param directory where to start the search
-     * @param pattern to find
+     * @param pattern   to find
      * @return stream of matching resources
      * @throws IOException
      */
@@ -77,7 +79,8 @@ public class ResourceHelper {
 
     /**
      * This method is internal because it works only with folder to explore (classPath folder) and not with exact paths
-     * @param path to folder or jar
+     *
+     * @param path    to folder or jar
      * @param pattern to find
      * @return stream of matching resources
      */

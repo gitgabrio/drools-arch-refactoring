@@ -31,12 +31,14 @@ import java.util.Map;
 
 /**
  * Interface to be implemented by all concrete <b>compilation dtos</b>
+ *
  * @param <T>
  */
 public interface CompilationDTO<T extends Model> extends Serializable {
 
     /**
      * The original <code>PMML</code>
+     *
      * @return
      */
     PMML getPmml();
@@ -58,6 +60,7 @@ public interface CompilationDTO<T extends Model> extends Serializable {
     /**
      * Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
      * DerivedFields from Transformations/LocalTransformations, OutputFields
+     *
      * @return
      */
     List<Field<?>> getFields();
@@ -68,6 +71,7 @@ public interface CompilationDTO<T extends Model> extends Serializable {
 
     /**
      * Returns the <b>model name</b> of the underlying <code>Model</code>
+     *
      * @return
      */
     String getModelName();
@@ -76,18 +80,21 @@ public interface CompilationDTO<T extends Model> extends Serializable {
 
     /**
      * The <b>sanitized</b> base package name
+     *
      * @return
      */
     String getPackageName();
 
     /**
      * Returns the <b>simple, sanitized</b> class name
+     *
      * @return
      */
     String getSimpleClassName();
 
     /**
      * Returns the <b>full, canonical, sanitized</b> class name
+     *
      * @return
      */
     String getPackageCanonicalClassName();
@@ -95,6 +102,7 @@ public interface CompilationDTO<T extends Model> extends Serializable {
     /**
      * Compile the given sources and add them to given <code>Classloader</code> of the current instance.
      * Returns the <code>Class</code> with the current <b>canonicalClassName</b>
+     *
      * @param sourcesMap
      * @return
      * @see HasClassLoader#compileAndLoadClass(Map, String)

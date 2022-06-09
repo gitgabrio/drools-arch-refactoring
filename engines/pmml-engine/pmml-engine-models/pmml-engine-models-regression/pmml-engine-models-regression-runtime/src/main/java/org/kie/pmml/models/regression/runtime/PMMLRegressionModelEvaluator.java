@@ -15,19 +15,19 @@
  */
 package org.kie.pmml.models.regression.runtime;
 
-import java.util.Map;
-
 import org.drools.util.StringUtils;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.api.runtime.PMMLContext;
-import org.kie.pmml.runtime.api.exceptions.KiePMMLModelException;
-import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.models.regression.model.AbstractKiePMMLTable;
 import org.kie.pmml.models.regression.model.KiePMMLClassificationTable;
 import org.kie.pmml.models.regression.model.KiePMMLRegressionModel;
 import org.kie.pmml.models.regression.model.KiePMMLRegressionTable;
+import org.kie.pmml.runtime.api.exceptions.KiePMMLModelException;
+import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
+
+import java.util.Map;
 
 import static org.kie.pmml.api.enums.ResultCode.OK;
 import static org.kie.pmml.runtime.core.utils.Converter.getUnwrappedParametersMap;
@@ -80,7 +80,7 @@ public class PMMLRegressionModelEvaluator implements PMMLModelEvaluator<KiePMMLR
     private void validateRegression(final KiePMMLRegressionTable toValidate) {
         if (toValidate.getTargetField() == null || StringUtils.isEmpty(toValidate.getTargetField().trim())) {
             throw new KiePMMLInternalException(String.format(TARGET_FIELD_REQUIRED_RETRIEVED,
-                                                             toValidate.getTargetField()));
+                    toValidate.getTargetField()));
         }
     }
 
@@ -115,12 +115,12 @@ public class PMMLRegressionModelEvaluator implements PMMLModelEvaluator<KiePMMLR
             case NONE:
                 if (toValidate.getCategoryTableMap().size() != 2) {
                     throw new KiePMMLModelException(String.format(EXPECTED_TWO_REGRESSION_TABLES_RETRIEVED,
-                                                                  toValidate.getCategoryTableMap().size()));
+                            toValidate.getCategoryTableMap().size()));
                 }
                 return;
             default:
                 throw new KiePMMLModelException(String.format(INVALID_NORMALIZATION_METHOD,
-                                                              toValidate.getRegressionNormalizationMethod()));
+                        toValidate.getRegressionNormalizationMethod()));
         }
     }
 
@@ -131,12 +131,12 @@ public class PMMLRegressionModelEvaluator implements PMMLModelEvaluator<KiePMMLR
             case NONE:
                 if (toValidate.getCategoryTableMap().size() < 2) {
                     throw new KiePMMLModelException(String.format(EXPECTED_AT_LEAST_TWO_REGRESSION_TABLES_RETRIEVED,
-                                                                  toValidate.getCategoryTableMap().size()));
+                            toValidate.getCategoryTableMap().size()));
                 }
                 return;
             default:
                 throw new KiePMMLModelException(String.format(INVALID_NORMALIZATION_METHOD,
-                                                              toValidate.getRegressionNormalizationMethod()));
+                        toValidate.getRegressionNormalizationMethod()));
         }
     }
 
@@ -150,12 +150,12 @@ public class PMMLRegressionModelEvaluator implements PMMLModelEvaluator<KiePMMLR
             case NONE:
                 if (toValidate.getCategoryTableMap().size() < 2) {
                     throw new KiePMMLModelException(String.format(EXPECTED_AT_LEAST_TWO_REGRESSION_TABLES_RETRIEVED,
-                                                                  toValidate.getCategoryTableMap().size()));
+                            toValidate.getCategoryTableMap().size()));
                 }
                 return;
             default:
                 throw new KiePMMLModelException(String.format(INVALID_NORMALIZATION_METHOD,
-                                                              toValidate.getRegressionNormalizationMethod()));
+                        toValidate.getRegressionNormalizationMethod()));
         }
     }
 }

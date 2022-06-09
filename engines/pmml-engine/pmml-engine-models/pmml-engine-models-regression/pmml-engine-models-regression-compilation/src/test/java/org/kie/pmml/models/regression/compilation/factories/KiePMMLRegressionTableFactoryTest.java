@@ -16,41 +16,16 @@
 
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.CastExpr;
 import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.LambdaExpr;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.MethodReferenceExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import org.assertj.core.data.Offset;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.regression.CategoricalPredictor;
-import org.dmg.pmml.regression.NumericPredictor;
-import org.dmg.pmml.regression.PredictorTerm;
-import org.dmg.pmml.regression.RegressionModel;
-import org.dmg.pmml.regression.RegressionTable;
+import org.dmg.pmml.*;
+import org.dmg.pmml.regression.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
@@ -64,20 +39,22 @@ import org.kie.pmml.models.regression.compilation.dto.RegressionCompilationDTO;
 import org.kie.pmml.models.regression.model.KiePMMLRegressionTable;
 import org.kie.pmml.models.regression.model.tuples.KiePMMLTableSourceCategory;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getGeneratedClassName;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedVariableName;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilation;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.GETKIEPMML_TABLE;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.KIE_PMML_REGRESSION_TABLE_TEMPLATE;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.KIE_PMML_REGRESSION_TABLE_TEMPLATE_JAVA;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.SUPPORTED_NORMALIZATION_METHODS;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.UNSUPPORTED_NORMALIZATION_METHODS;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.*;
 
 public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegressionTableRegressionFactoryTest {
 
@@ -251,7 +228,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                         new ArrayList<>(),
                         regressionModel.getNormalizationMethod());
         Map.Entry<String, String> retrieved = KiePMMLRegressionTableFactory.getRegressionTableBuilder(regressionTable
-        , compilationDTO);
+                , compilationDTO);
         assertThat(retrieved).isNotNull();
         Map<String, String> sources = new HashMap<>();
         sources.put(retrieved.getKey(), retrieved.getValue());
@@ -298,11 +275,11 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
     void getCategoricalPredictorsMap() {
         final List<CategoricalPredictor> categoricalPredictors = IntStream.range(0, 3).mapToObj(index ->
                 IntStream.range(0,
-                        3).mapToObj(i -> {
-                    String predictorName = "predictorName-" + index;
-                    double coefficient = 1.23 * i;
-                    return PMMLModelTestUtils.getCategoricalPredictor(predictorName, i, coefficient);
-                })
+                                3).mapToObj(i -> {
+                            String predictorName = "predictorName-" + index;
+                            double coefficient = 1.23 * i;
+                            return PMMLModelTestUtils.getCategoricalPredictor(predictorName, i, coefficient);
+                        })
                         .collect(Collectors.toList())).reduce((categoricalPredictors1, categoricalPredictors2) -> {
             List<CategoricalPredictor> toReturn = new ArrayList<>();
             toReturn.addAll(categoricalPredictors1);
@@ -508,11 +485,11 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
     void getCategoricalPredictorsExpressions() {
         final List<CategoricalPredictor> categoricalPredictors = IntStream.range(0, 3).mapToObj(index ->
                 IntStream.range(0,
-                        3).mapToObj(i -> {
-                    String predictorName = "predictorName-" + index;
-                    double coefficient = 1.23 * i;
-                    return PMMLModelTestUtils.getCategoricalPredictor(predictorName, i, coefficient);
-                })
+                                3).mapToObj(i -> {
+                            String predictorName = "predictorName-" + index;
+                            double coefficient = 1.23 * i;
+                            return PMMLModelTestUtils.getCategoricalPredictor(predictorName, i, coefficient);
+                        })
                         .collect(Collectors.toList())).reduce((categoricalPredictors1, categoricalPredictors2) -> {
             List<CategoricalPredictor> toReturn = new ArrayList<>();
             toReturn.addAll(categoricalPredictors1);
@@ -610,6 +587,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 .collect(Collectors.toList());
         outputFields.addAll(probabilityOutputFields);
     }
+
     private void commonEvaluateRegressionTable(KiePMMLRegressionTable retrieved, RegressionTable source) {
         Map<String, SerializableFunction<Double, Double>> numericFunctionMap = retrieved.getNumericFunctionMap();
         assertThat(numericFunctionMap).hasSameSizeAs(source.getNumericPredictors());
@@ -634,17 +612,17 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
             String expectedVariableName =
                     getSanitizedVariableName(String.format("%sMap", variableName)) + "_" + i;
             assertThat(toVerify.getStatements()
-                               .stream()
-                               .anyMatch(statement -> {
-                                   String expected = String.format(
-                                           "%s.put(\"%s\", %s);",
-                                           expectedVariableName,
-                                           categoricalPredictor.getValue(),
-                                           categoricalPredictor.getCoefficient());
-                                   return statement instanceof ExpressionStmt &&
-                                           ((ExpressionStmt) statement).getExpression() instanceof MethodCallExpr &&
-                                           statement.toString().equals(expected);
-                               })).isTrue();
+                    .stream()
+                    .anyMatch(statement -> {
+                        String expected = String.format(
+                                "%s.put(\"%s\", %s);",
+                                expectedVariableName,
+                                categoricalPredictor.getValue(),
+                                categoricalPredictor.getCoefficient());
+                        return statement instanceof ExpressionStmt &&
+                                ((ExpressionStmt) statement).getExpression() instanceof MethodCallExpr &&
+                                statement.toString().equals(expected);
+                    })).isTrue();
         }
     }
 

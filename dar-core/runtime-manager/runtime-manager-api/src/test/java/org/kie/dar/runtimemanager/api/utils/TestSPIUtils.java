@@ -15,17 +15,13 @@ package org.kie.dar.runtimemanager.api.utils;/*
  */
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.mocks.MockKieRuntimeServiceAB;
+import org.kie.dar.runtimemanager.api.mocks.MockKieRuntimeServiceC;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
-import org.kie.dar.runtimemanager.api.mocks.*;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TestSPIUtils {
 

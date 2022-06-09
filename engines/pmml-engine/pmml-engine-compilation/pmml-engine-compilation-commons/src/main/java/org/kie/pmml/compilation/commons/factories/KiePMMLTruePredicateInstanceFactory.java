@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-
 import org.dmg.pmml.True;
 import org.kie.pmml.commons.model.predicates.KiePMMLTruePredicate;
+
+import java.util.Collections;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLTruePredicate</code> instance

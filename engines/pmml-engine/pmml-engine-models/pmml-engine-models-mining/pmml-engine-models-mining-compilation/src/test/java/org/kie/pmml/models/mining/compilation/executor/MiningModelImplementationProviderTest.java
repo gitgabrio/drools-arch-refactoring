@@ -38,7 +38,7 @@ class MiningModelImplementationProviderTest {
 
     private static final MiningModelImplementationProvider PROVIDER = new MiningModelImplementationProvider();
     private static final String SOURCE_REGRESSION = "MiningModel_Regression.pmml";
-//    private static final String SOURCE_TREE = "MiningModel_TreeModel.pmml";
+    //    private static final String SOURCE_TREE = "MiningModel_TreeModel.pmml";
 //    private static final String SOURCE_SCORECARD = "MiningModel_Scorecard.pmml";
 //    private static final String SOURCE_MIXED = "MiningModel_Mixed.pmml";
     private static final String SOURCE_NO_SEGMENT_ID = "MiningModel_NoSegmentId.pmml";
@@ -130,13 +130,13 @@ class MiningModelImplementationProviderTest {
         final MiningModel miningmodel = (MiningModel) pmml.getModels().get(0);
         final CommonCompilationDTO<MiningModel> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                                                                       pmml,
-                                                                       miningmodel,
-                                                                       new HasClassLoaderMock());
+                        pmml,
+                        miningmodel,
+                        new HasClassLoaderMock());
         final KiePMMLMiningModelWithSources retrieved =
                 (KiePMMLMiningModelWithSources) PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
-       // commonVerifyIsDeepCloneable(retrieved);
+        // commonVerifyIsDeepCloneable(retrieved);
         assertThat(retrieved.getNestedModels()).isNotNull();
         assertThat(retrieved.getNestedModels()).isNotEmpty();
         final Map<String, String> sourcesMap = new HashMap<>(retrieved.getSourcesMap());

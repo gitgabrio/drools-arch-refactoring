@@ -15,9 +15,9 @@
  */
 package org.kie.pmml.api.enums;
 
-import java.util.Arrays;
-
 import org.kie.pmml.api.exceptions.KieEnumException;
+
+import java.util.Arrays;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/Scorecard.html#baselinemethod>baselinemethod</a>

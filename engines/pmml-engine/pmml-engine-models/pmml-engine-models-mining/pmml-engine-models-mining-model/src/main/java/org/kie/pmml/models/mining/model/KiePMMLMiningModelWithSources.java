@@ -15,16 +15,16 @@
  */
 package org.kie.pmml.models.mining.model;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.api.models.OutputField;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.commons.model.HasNestedModels;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.KiePMMLModelWithSources;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-3/MultipleModels.html>MiningModel</a>

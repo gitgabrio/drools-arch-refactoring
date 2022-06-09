@@ -20,13 +20,11 @@ import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 class KieRuntimeServiceBarTest {
 

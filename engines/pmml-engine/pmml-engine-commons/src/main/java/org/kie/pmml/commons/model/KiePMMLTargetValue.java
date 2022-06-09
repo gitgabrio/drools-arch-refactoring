@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.commons.model;
 
+import org.kie.pmml.api.models.TargetValue;
+import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
-
-import org.kie.pmml.api.models.TargetValue;
-import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Targets.html#xsdElement_TargetValue>TargetValue</a>

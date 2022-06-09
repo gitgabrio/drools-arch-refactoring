@@ -16,14 +16,6 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import org.dmg.pmml.DerivedField;
@@ -38,10 +30,18 @@ import org.kie.pmml.commons.model.expressions.KiePMMLRow;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 
 public class KiePMMLMapValuesFactoryTest {
 

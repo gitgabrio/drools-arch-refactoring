@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-
 import org.dmg.pmml.OutputField;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
 import org.kie.pmml.commons.model.KiePMMLOutputField;
 import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
+
+import java.util.Collections;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExpressionInstanceFactory.getKiePMMLExpression;
 

@@ -16,13 +16,13 @@
 
 package org.kie.pmml.models.mining.model.segmentation;
 
-import java.util.Collections;
-
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.models.mining.model.AbstractKiePMMLMiningModelTest.getKiePMMLModel;
@@ -40,7 +40,7 @@ public class KiePMMLSegmentTest {
     @BeforeAll
     public static void setup() {
         BUILDER = KiePMMLSegment.builder(SEGMENT_NAME, Collections.emptyList(),
-                                         KIE_PMML_PREDICATE, KIE_PMML_MODEL);
+                KIE_PMML_PREDICATE, KIE_PMML_MODEL);
         assertThat(BUILDER).isNotNull();
         KIE_PMML_SEGMENT = BUILDER.build();
         assertThat(KIE_PMML_SEGMENT).isNotNull();

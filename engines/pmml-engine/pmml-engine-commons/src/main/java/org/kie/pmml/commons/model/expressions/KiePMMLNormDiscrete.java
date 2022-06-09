@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.List;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.List;
 
 import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPossibleSources;
 
@@ -29,7 +29,7 @@ import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPos
 public class KiePMMLNormDiscrete extends AbstractKiePMMLComponent implements KiePMMLExpression {
 
     private static final long serialVersionUID = -7935602676734880795L;
-    
+
     private final String value;
     private final Number mapMissingTo;
 

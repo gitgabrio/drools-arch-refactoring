@@ -16,22 +16,16 @@
 
 package org.kie.pmml.commons.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.RESULT_FEATURE;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.CommonTestingUtility.getProcessingDTO;
@@ -101,7 +95,7 @@ public class KiePMMLOutputFieldTest {
                 .withRank(4)
                 .build();
         final List<String> reasonCodes = IntStream.range(0, 3).mapToObj(i ->
-                "reasonCode-" + i)
+                        "reasonCode-" + i)
                 .collect(Collectors.toList());
         ProcessingDTO processingDTO = getProcessingDTO(Collections.emptyList(), Collections.emptyList(), reasonCodes);
         assertThat(kiePMMLOutputField.evaluate(processingDTO)).isNull();

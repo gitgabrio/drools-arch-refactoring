@@ -16,18 +16,13 @@
 
 package org.kie.pmml.commons.model.predicates;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.ARRAY_TYPE;
 import org.kie.pmml.api.enums.IN_NOTIN;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -188,26 +183,26 @@ public class KiePMMLSimpleSetPredicateTest {
     private KiePMMLSimpleSetPredicate getKiePMMLSimpleSetPredicate(final List<Object> values,
                                                                    final ARRAY_TYPE arrayType, final IN_NOTIN inNotIn) {
         return KiePMMLSimpleSetPredicate.builder(SIMPLE_SET_PREDICATE_NAME,
-                                                 Collections.emptyList(),
-                                                 arrayType,
-                                                 inNotIn)
+                        Collections.emptyList(),
+                        arrayType,
+                        inNotIn)
                 .withValues(values)
                 .build();
     }
 
     private List<Object> getObjects(ARRAY_TYPE arrayType, int size) {
         return IntStream.range(0, size).mapToObj(index -> {
-            switch (arrayType) {
-                case INT:
-                    return new Random().nextInt(40);
-                case REAL:
-                    return new Random().nextDouble();
-                case STRING:
-                    return UUID.randomUUID().toString();
-                default:
-                    return null;
-            }
-        })
+                    switch (arrayType) {
+                        case INT:
+                            return new Random().nextInt(40);
+                        case REAL:
+                            return new Random().nextDouble();
+                        case STRING:
+                            return UUID.randomUUID().toString();
+                        default:
+                            return null;
+                    }
+                })
                 .collect(Collectors.toList());
     }
 }

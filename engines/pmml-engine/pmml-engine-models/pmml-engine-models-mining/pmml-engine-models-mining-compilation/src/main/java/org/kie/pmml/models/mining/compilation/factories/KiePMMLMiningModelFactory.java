@@ -24,6 +24,7 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.commons.model.KiePMMLModel;
+import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils;
 import org.kie.pmml.compilation.commons.utils.CommonCodegenUtils;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
@@ -56,6 +57,12 @@ public class KiePMMLMiningModelFactory {
                 compilationDTO.getModel(), compilationDTO.getPackageName());
         final Map<String, String> toReturn = getSegmentationSourcesMap(compilationDTO,
                 nestedModels);
+        nestedModels.forEach(nestedModel -> {
+            if (!(nestedModel instanceof KiePMMLModelWithSources)) {
+                throw new KiePMMLException("Expecting only KiePMMLModelWithSources at this phase; retrieved " + nestedModel.getClass());
+            }
+            toReturn.putAll(((KiePMMLModelWithSources) nestedModel).getSourcesMap());
+        });
         return getKiePMMLMiningModelSourcesMapCommon(compilationDTO,
                 toReturn);
     }

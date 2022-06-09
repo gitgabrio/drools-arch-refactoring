@@ -28,9 +28,7 @@ import org.kie.pmml.api.enums.CLOSURE;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
@@ -59,7 +57,7 @@ public class KiePMMLIntervalFactory {
     }
 
     static BlockStmt getIntervalVariableDeclaration(final String variableName,
-                                                        final Interval interval) {
+                                                    final Interval interval) {
         final MethodDeclaration methodDeclaration =
                 INTERVAL_TEMPLATE.getMethodsByName(GETKIEPMMLINTERVAL).get(0).clone();
         final BlockStmt toReturn =
@@ -69,7 +67,7 @@ public class KiePMMLIntervalFactory {
         variableDeclarator.setName(variableName);
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      INTERVAL, toReturn)))
+                        INTERVAL, toReturn)))
                 .asObjectCreationExpr();
         final Expression leftMarginExpr = getExpressionForObject(interval.getLeftMargin());
         final Expression rightMarginExpr = getExpressionForObject(interval.getRightMargin());

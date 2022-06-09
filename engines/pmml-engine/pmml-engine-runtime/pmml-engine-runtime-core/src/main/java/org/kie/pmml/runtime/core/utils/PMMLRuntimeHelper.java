@@ -133,7 +133,7 @@ public class PMMLRuntimeHelper {
         return evaluate(toEvaluate, pmmlContext);
     }
 
-    static PMML4Result evaluate(final KiePMMLModel model, final PMMLContext context) {
+    public static PMML4Result evaluate(final KiePMMLModel model, final PMMLContext context) {
         if (logger.isDebugEnabled()) {
             logger.debug("evaluate {} {}", model, context);
         }

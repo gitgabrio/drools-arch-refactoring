@@ -16,7 +16,6 @@
 package org.kie.foo.engine.runtime.service;
 
 import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.foo.engine.api.model.FooResources;

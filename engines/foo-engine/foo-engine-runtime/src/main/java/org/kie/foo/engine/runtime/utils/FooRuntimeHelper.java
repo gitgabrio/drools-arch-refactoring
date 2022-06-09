@@ -34,8 +34,6 @@ import java.util.Optional;
 
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
-import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 
 public class FooRuntimeHelper {
 
@@ -80,7 +78,7 @@ public class FooRuntimeHelper {
             GeneratedResources generatedResources = getGeneratedResourcesObject(toSearch);
             return generatedResources.stream()
                     .filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource &&
-                            ((GeneratedExecutableResource)generatedResource).getFri().equals(fri))
+                            ((GeneratedExecutableResource) generatedResource).getFri().equals(fri))
                     .findFirst()
                     .map(GeneratedExecutableResource.class::cast);
         } catch (IOException e) {

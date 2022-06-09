@@ -88,7 +88,8 @@ public class KiePMMLSessionUtils {
 
     /**
      * Insert an <code>Object</code> to the underlying <code>KieSession</code>.
-     * @param toInsert the <code>Object</code> to insert
+     *
+     * @param toInsert   the <code>Object</code> to insert
      * @param globalName its global name
      */
     void insertObjectInSession(final Object toInsert, final String globalName) {
@@ -99,6 +100,7 @@ public class KiePMMLSessionUtils {
     /**
      * Add <code>Object</code>s to the underlying <code>KieSession</code>.
      * Such <code>Object</code>s are retrieved/instantiated from the given <code>Map</code>s and the content of the current kieSession' <code>KieBase</code>
+     *
      * @param unwrappedInputParams
      * @param fieldTypeMap
      */
@@ -111,7 +113,7 @@ public class KiePMMLSessionUtils {
                 String generatedTypeName = fieldTypeMap.get(entry.getKey()).getGeneratedType();
                 FactType factType = kieSession.getKieBase().getFactType(packageName, generatedTypeName);
                 if (factType == null) {
-                    String name = String.format(PACKAGE_CLASS_TEMPLATE,  packageName, generatedTypeName);
+                    String name = String.format(PACKAGE_CLASS_TEMPLATE, packageName, generatedTypeName);
                     String error = String.format("Failed to retrieve FactType %s for input value %s", name, entry.getKey());
                     throw new KiePMMLModelException(error);
                 }
@@ -134,6 +136,7 @@ public class KiePMMLSessionUtils {
 
         /**
          * Add an <code>AgendaEventListener</code> to the underlying <code>KieSession</code>
+         *
          * @param agendaEventListener
          * @return
          */
@@ -145,6 +148,7 @@ public class KiePMMLSessionUtils {
         /**
          * Insert <code>Object</code>s to the underlying <code>KieSession</code>.
          * Such <code>Object</code>s are retrieved out of the given <code>Map</code>s
+         *
          * @param unwrappedInputParams
          * @param fieldTypeMap
          * @return
@@ -156,6 +160,7 @@ public class KiePMMLSessionUtils {
 
         /**
          * Insert <code>Map&lt;String, Object&gt;</code> <b>outputFieldsMap</b> to the underlying <code>KieSession</code>.
+         *
          * @param outputFieldsMap
          * @return
          */

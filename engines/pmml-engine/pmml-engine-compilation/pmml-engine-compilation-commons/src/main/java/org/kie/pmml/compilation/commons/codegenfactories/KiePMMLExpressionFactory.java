@@ -16,14 +16,7 @@
 package org.kie.pmml.compilation.commons.codegenfactories;
 
 import com.github.javaparser.ast.stmt.BlockStmt;
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.Discretize;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.MapValues;
-import org.dmg.pmml.NormContinuous;
-import org.dmg.pmml.NormDiscrete;
-import org.dmg.pmml.TextIndex;
+import org.dmg.pmml.*;
 
 import static org.kie.pmml.commons.Constants.EXPRESSION_NOT_MANAGED;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLApplyFactory.getApplyVariableDeclaration;

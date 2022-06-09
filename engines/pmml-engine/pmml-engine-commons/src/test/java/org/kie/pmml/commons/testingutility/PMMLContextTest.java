@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.commons.testingutility;
 
+import org.kie.api.pmml.PMMLRequestData;
+import org.kie.pmml.api.runtime.PMMLContext;
+import org.kie.pmml.api.runtime.PMMLListener;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
-import org.kie.api.pmml.PMMLRequestData;
-import org.kie.pmml.api.runtime.PMMLContext;
-import org.kie.pmml.api.runtime.PMMLListener;
 
 public class PMMLContextTest implements PMMLContext {
 

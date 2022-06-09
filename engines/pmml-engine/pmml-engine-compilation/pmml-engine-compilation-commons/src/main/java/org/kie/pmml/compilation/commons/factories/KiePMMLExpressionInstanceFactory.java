@@ -15,18 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.*;
+import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.Discretize;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.MapValues;
-import org.dmg.pmml.NormContinuous;
-import org.dmg.pmml.NormDiscrete;
-import org.dmg.pmml.TextIndex;
-import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
 
 import static org.kie.pmml.commons.Constants.EXPRESSION_NOT_MANAGED;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLApplyInstanceFactory.getKiePMMLApply;

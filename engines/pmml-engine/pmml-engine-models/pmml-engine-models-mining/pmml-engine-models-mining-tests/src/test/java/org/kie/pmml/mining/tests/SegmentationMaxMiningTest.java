@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SegmentationMaxMiningTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "segmentationMaxMining";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "SegmentationMaxMining";
     private static final String TARGET_FIELD = "result";
     private PMMLRuntime pmmlRuntime;

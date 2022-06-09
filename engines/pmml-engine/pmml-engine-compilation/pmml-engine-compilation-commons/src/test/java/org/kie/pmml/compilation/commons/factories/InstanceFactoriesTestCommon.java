@@ -15,43 +15,9 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.IntStream;
-
 import org.apache.commons.text.StringEscapeUtils;
 import org.assertj.core.data.Offset;
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Array;
-import org.dmg.pmml.CompoundPredicate;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DefineFunction;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.Discretize;
-import org.dmg.pmml.DiscretizeBin;
-import org.dmg.pmml.Expression;
-import org.dmg.pmml.False;
-import org.dmg.pmml.FieldColumnPair;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.InlineTable;
-import org.dmg.pmml.Interval;
-import org.dmg.pmml.LinearNorm;
-import org.dmg.pmml.MapValues;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.NormContinuous;
-import org.dmg.pmml.NormDiscrete;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.ParameterField;
-import org.dmg.pmml.Predicate;
-import org.dmg.pmml.Row;
-import org.dmg.pmml.SimplePredicate;
-import org.dmg.pmml.SimpleSetPredicate;
-import org.dmg.pmml.Target;
-import org.dmg.pmml.TargetValue;
-import org.dmg.pmml.TextIndex;
-import org.dmg.pmml.TextIndexNormalization;
-import org.dmg.pmml.True;
+import org.dmg.pmml.*;
 import org.kie.pmml.api.enums.CAST_INTEGER;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
@@ -60,31 +26,15 @@ import org.kie.pmml.commons.model.KiePMMLMiningField;
 import org.kie.pmml.commons.model.KiePMMLOutputField;
 import org.kie.pmml.commons.model.KiePMMLTarget;
 import org.kie.pmml.commons.model.KiePMMLTargetValue;
-import org.kie.pmml.commons.model.expressions.KiePMMLApply;
-import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
-import org.kie.pmml.commons.model.expressions.KiePMMLDiscretize;
-import org.kie.pmml.commons.model.expressions.KiePMMLDiscretizeBin;
-import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
-import org.kie.pmml.commons.model.expressions.KiePMMLFieldColumnPair;
-import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
-import org.kie.pmml.commons.model.expressions.KiePMMLInlineTable;
-import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
-import org.kie.pmml.commons.model.expressions.KiePMMLLinearNorm;
-import org.kie.pmml.commons.model.expressions.KiePMMLMapValues;
-import org.kie.pmml.commons.model.expressions.KiePMMLNormContinuous;
-import org.kie.pmml.commons.model.expressions.KiePMMLNormDiscrete;
-import org.kie.pmml.commons.model.expressions.KiePMMLRow;
-import org.kie.pmml.commons.model.expressions.KiePMMLTextIndex;
-import org.kie.pmml.commons.model.expressions.KiePMMLTextIndexNormalization;
-import org.kie.pmml.commons.model.predicates.KiePMMLCompoundPredicate;
-import org.kie.pmml.commons.model.predicates.KiePMMLFalsePredicate;
-import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
-import org.kie.pmml.commons.model.predicates.KiePMMLSimplePredicate;
-import org.kie.pmml.commons.model.predicates.KiePMMLSimpleSetPredicate;
-import org.kie.pmml.commons.model.predicates.KiePMMLTruePredicate;
+import org.kie.pmml.commons.model.expressions.*;
+import org.kie.pmml.commons.model.predicates.*;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLParameterField;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -154,7 +104,7 @@ public class InstanceFactoriesTestCommon {
                 break;
             case "SimpleSetPredicate":
                 commonVerifyKiePMMLSimpleSetPredicate((KiePMMLSimpleSetPredicate) toVerify,
-                                                      (SimpleSetPredicate) source);
+                        (SimpleSetPredicate) source);
                 break;
             case "True":
                 commonVerifyKiePMMLTruePredicate((KiePMMLTruePredicate) toVerify, (True) source);
@@ -325,7 +275,7 @@ public class InstanceFactoriesTestCommon {
         assertThat(toVerify.getTextIndexNormalizations()).hasSameSizeAs(source.getTextIndexNormalizations());
         IntStream.range(0, source.getTextIndexNormalizations().size()).forEach(i -> {
             commonVerifyKiePMMLTextIndexNormalization(toVerify.getTextIndexNormalizations().get(i),
-                                                      source.getTextIndexNormalizations().get(i));
+                    source.getTextIndexNormalizations().get(i));
         });
         assertThat(toVerify.isCaseSensitive()).isEqualTo(source.isCaseSensitive());
         assertThat(toVerify.getMaxLevenshteinDistance()).isEqualTo(source.getMaxLevenshteinDistance().intValue());

@@ -15,6 +15,11 @@
  */
 package org.kie.pmml.api.enums.builtinfunctions;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.api.exceptions.KiePMMLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
@@ -23,16 +28,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static java.time.temporal.ChronoUnit.DAYS;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkDate;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkDates;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkInteger;
-import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.checkLength;
+import static org.kie.pmml.api.enums.BUILTIN_FUNCTIONS.*;
 
 /**
  * @see <a http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html>Built-in functions</a>
@@ -86,7 +83,7 @@ public enum DateFunctions {
         checkDate(inputData[0]);
         checkInteger(inputData[1]);
 
-        LocalDateTime referredDate = LocalDateTime.of((int)inputData[1], 1, 1, 0, 0, 0);
+        LocalDateTime referredDate = LocalDateTime.of((int) inputData[1], 1, 1, 0, 0, 0);
         LocalDateTime referringDate = ((Date) inputData[0]).toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
@@ -97,7 +94,7 @@ public enum DateFunctions {
         checkLength(inputData, 2);
         checkDate(inputData[0]);
         checkInteger(inputData[1]);
-        Date yearDate = new GregorianCalendar((int)inputData[1], 0, 1).getTime();
+        Date yearDate = new GregorianCalendar((int) inputData[1], 0, 1).getTime();
         long diff = ((Date) inputData[0]).getTime() - yearDate.getTime();
         return (int) TimeUnit.SECONDS.convert(diff, TimeUnit.MILLISECONDS);
     }

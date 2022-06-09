@@ -16,19 +16,6 @@
 
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -36,20 +23,8 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.TransformationDictionary;
-import org.dmg.pmml.regression.CategoricalPredictor;
-import org.dmg.pmml.regression.NumericPredictor;
-import org.dmg.pmml.regression.PredictorTerm;
-import org.dmg.pmml.regression.RegressionModel;
-import org.dmg.pmml.regression.RegressionTable;
+import org.dmg.pmml.*;
+import org.dmg.pmml.regression.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
@@ -68,23 +43,20 @@ import org.kie.pmml.models.regression.model.KiePMMLRegressionTable;
 import org.kie.pmml.models.regression.model.enums.REGRESSION_NORMALIZATION_METHOD;
 import org.kie.pmml.models.regression.model.tuples.KiePMMLTableSourceCategory;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.commons.Constants.GET_MODEL;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getCategoricalPredictor;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataDictionary;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getMiningField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getMiningSchema;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getNumericPredictor;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getPredictorTerm;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRegressionModel;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRegressionTable;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
 import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionModelFactory.KIE_PMML_REGRESSION_MODEL_TEMPLATE;
 import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionModelFactory.KIE_PMML_REGRESSION_MODEL_TEMPLATE_JAVA;
 import static org.kie.pmml.models.regression.compilation.factories.KiePMMLRegressionTableFactory.GETKIEPMML_TABLE;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLRegressionModelFactoryTest {
 
@@ -110,26 +82,26 @@ public class KiePMMLRegressionModelFactoryTest {
         Random random = new Random();
         Set<String> fieldNames = new HashSet<>();
         regressionTables = IntStream.range(0, 3).mapToObj(i -> {
-                                                              List<CategoricalPredictor> categoricalPredictors =
-                                                                      new ArrayList<>();
-                                                              List<NumericPredictor> numericPredictors =
-                                                                      new ArrayList<>();
-                                                              List<PredictorTerm> predictorTerms = new ArrayList<>();
-                                                              IntStream.range(0, 3).forEach(j -> {
-                                                                  String catFieldName = "CatPred-" + j;
-                                                                  String numFieldName = "NumPred-" + j;
-                                                                  categoricalPredictors.add(getCategoricalPredictor(catFieldName, random.nextDouble(), random.nextDouble()));
-                                                                  numericPredictors.add(getNumericPredictor(numFieldName, random.nextInt(), random.nextDouble()));
-                                                                  predictorTerms.add(getPredictorTerm("PredTerm-" + j
-                                                                          , random.nextDouble(), Arrays.asList(catFieldName, numFieldName)));
-                                                                  fieldNames.add(catFieldName);
-                                                                  fieldNames.add(numFieldName);
-                                                              });
-                                                              return getRegressionTable(categoricalPredictors,
-                                                                                        numericPredictors,
-                                                                                        predictorTerms,
-                                                                                        tableIntercept + random.nextDouble(), tableTargetCategory + "-" + i);
-                                                          }
+                    List<CategoricalPredictor> categoricalPredictors =
+                            new ArrayList<>();
+                    List<NumericPredictor> numericPredictors =
+                            new ArrayList<>();
+                    List<PredictorTerm> predictorTerms = new ArrayList<>();
+                    IntStream.range(0, 3).forEach(j -> {
+                        String catFieldName = "CatPred-" + j;
+                        String numFieldName = "NumPred-" + j;
+                        categoricalPredictors.add(getCategoricalPredictor(catFieldName, random.nextDouble(), random.nextDouble()));
+                        numericPredictors.add(getNumericPredictor(numFieldName, random.nextInt(), random.nextDouble()));
+                        predictorTerms.add(getPredictorTerm("PredTerm-" + j
+                                , random.nextDouble(), Arrays.asList(catFieldName, numFieldName)));
+                        fieldNames.add(catFieldName);
+                        fieldNames.add(numFieldName);
+                    });
+                    return getRegressionTable(categoricalPredictors,
+                            numericPredictors,
+                            predictorTerms,
+                            tableIntercept + random.nextDouble(), tableTargetCategory + "-" + i);
+                }
         ).collect(Collectors.toList());
         dataFields = new ArrayList<>();
         miningFields = new ArrayList<>();
@@ -243,7 +215,7 @@ public class KiePMMLRegressionModelFactoryTest {
         for (RegressionTable originalRegressionTable : regressionTables) {
             assertThat(categoryTableMap).containsKey(originalRegressionTable.getTargetCategory().toString());
             evaluateRegressionTable(categoryTableMap.get(originalRegressionTable.getTargetCategory().toString()),
-                                    originalRegressionTable);
+                    originalRegressionTable);
         }
     }
 
@@ -258,12 +230,12 @@ public class KiePMMLRegressionModelFactoryTest {
         final Map<String, SerializableFunction<String, Double>> categoricalFunctionMap =
                 regressionTable.getCategoricalFunctionMap();
         for (CategoricalPredictor categoricalPredictor : originalRegressionTable.getCategoricalPredictors()) {
-        	assertThat(categoricalFunctionMap).containsKey(categoricalPredictor.getName().getValue());
+            assertThat(categoricalFunctionMap).containsKey(categoricalPredictor.getName().getValue());
         }
         final Map<String, SerializableFunction<Map<String, Object>, Double>> predictorTermsFunctionMap =
                 regressionTable.getPredictorTermsFunctionMap();
         for (PredictorTerm predictorTerm : originalRegressionTable.getPredictorTerms()) {
-        	assertThat(predictorTermsFunctionMap).containsKey(predictorTerm.getName().getValue());
+            assertThat(predictorTermsFunctionMap).containsKey(predictorTerm.getName().getValue());
         }
     }
 }

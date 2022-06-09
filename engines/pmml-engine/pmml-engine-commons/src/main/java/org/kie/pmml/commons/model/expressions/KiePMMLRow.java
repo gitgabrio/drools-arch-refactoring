@@ -15,23 +15,17 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Pattern;
-
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
+
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static org.kie.pmml.commons.model.expressions.KiePMMLTextIndex.DEFAULT_TOKENIZER;
-import static org.kie.pmml.commons.model.expressions.KiePMMLTextIndex.evaluateLevenshteinDistance;
-import static org.kie.pmml.commons.model.expressions.KiePMMLTextIndex.splitText;
+import static org.kie.pmml.commons.model.expressions.KiePMMLTextIndex.*;
 
 /**
  * KiePMML representation of an InlineTable <b>Row</b>
@@ -75,9 +69,9 @@ public class KiePMMLRow implements Serializable {
                         final boolean tokenize,
                         final String wordSeparatorCharacterRE) {
         boolean isRegex =
-                regexField != null && columnValues.containsKey(regexField) &&  Boolean.parseBoolean((String)columnValues.get(regexField));
+                regexField != null && columnValues.containsKey(regexField) && Boolean.parseBoolean((String) columnValues.get(regexField));
         String replaced = isRegex ? regexReplace(text.get(), (String) columnValues.get(outField), (String) columnValues.get(inField))
-                : replace(text.get(), (String) columnValues.get(outField), (String)  columnValues.get(inField), isCaseSensitive, maxLevenshteinDistance, tokenize, wordSeparatorCharacterRE);
+                : replace(text.get(), (String) columnValues.get(outField), (String) columnValues.get(inField), isCaseSensitive, maxLevenshteinDistance, tokenize, wordSeparatorCharacterRE);
         text.set(replaced);
     }
 
@@ -92,7 +86,7 @@ public class KiePMMLRow implements Serializable {
 
     String replace(String original, String replacement, String term, boolean isCaseSensitive, int maxLevenshteinDistance, boolean tokenize, String wordSeparatorCharacterRE) {
         logger.debug("replace {} {} {} {} {}", original, replacement, term, isCaseSensitive, maxLevenshteinDistance);
-        int caseSensitiveFlag = isCaseSensitive ? 0 :  CASE_INSENSITIVE;
+        int caseSensitiveFlag = isCaseSensitive ? 0 : CASE_INSENSITIVE;
         Pattern pattern = tokenize ? Pattern.compile(wordSeparatorCharacterRE, caseSensitiveFlag) : Pattern.compile(DEFAULT_TOKENIZER);
         List<String> terms = splitText(replacement, pattern);
         String replacementToUse = String.join(" ", terms);

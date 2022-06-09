@@ -16,26 +16,12 @@
 
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodReferenceExpr;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.Output;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.ResultFeature;
+import org.dmg.pmml.*;
 import org.dmg.pmml.regression.RegressionModel;
 import org.dmg.pmml.regression.RegressionTable;
 import org.junit.jupiter.api.BeforeAll;
@@ -49,18 +35,19 @@ import org.kie.pmml.models.regression.compilation.dto.RegressionCompilationDTO;
 import org.kie.pmml.models.regression.model.KiePMMLClassificationTable;
 import org.kie.pmml.models.regression.model.tuples.KiePMMLTableSourceCategory;
 
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getGeneratedClassName;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilation;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.GETKIEPMML_TABLE;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE_JAVA;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.SUPPORTED_NORMALIZATION_METHODS;
-import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.UNSUPPORTED_NORMALIZATION_METHODS;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.pmml.models.regression.compilation.factories.KiePMMLClassificationTableFactory.*;
 
 public class KiePMMLClassificationTableFactoryTest extends AbstractKiePMMLRegressionTableRegressionFactoryTest {
 

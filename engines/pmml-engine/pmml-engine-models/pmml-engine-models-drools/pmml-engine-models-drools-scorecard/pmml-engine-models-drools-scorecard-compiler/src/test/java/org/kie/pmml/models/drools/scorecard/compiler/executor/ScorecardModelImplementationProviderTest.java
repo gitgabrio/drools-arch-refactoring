@@ -52,9 +52,9 @@ public class ScorecardModelImplementationProviderTest {
         KnowledgeBuilderImpl knowledgeBuilder = new KnowledgeBuilderImpl();
         final CommonCompilationDTO<Scorecard> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                                                                       pmml,
-                                                                       (Scorecard) pmml.getModels().get(0),
-                                                                       new HasKnowledgeBuilderMock(knowledgeBuilder));
+                        pmml,
+                        (Scorecard) pmml.getModels().get(0),
+                        new HasKnowledgeBuilderMock(knowledgeBuilder));
         final KiePMMLScorecardModel retrieved = PROVIDER.getKiePMMLModel(compilationDTO);
         assertThat(retrieved).isNotNull();
         commonVerifyIsDeepCloneable(retrieved);
@@ -66,9 +66,9 @@ public class ScorecardModelImplementationProviderTest {
         KnowledgeBuilderImpl knowledgeBuilder = new KnowledgeBuilderImpl();
         final CommonCompilationDTO<Scorecard> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                                                                       pmml,
-                                                                       (Scorecard) pmml.getModels().get(0),
-                                                                       new HasKnowledgeBuilderMock(knowledgeBuilder));
+                        pmml,
+                        (Scorecard) pmml.getModels().get(0),
+                        new HasKnowledgeBuilderMock(knowledgeBuilder));
         final KiePMMLDroolsModelWithSources retrieved = PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
         commonVerifyIsDeepCloneable(retrieved);

@@ -15,8 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.List;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -33,14 +31,12 @@ import org.kie.pmml.api.enums.OPERATOR;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
-import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
+import java.util.List;
+
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getDataType;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLSimplePredicate</code> code-generators

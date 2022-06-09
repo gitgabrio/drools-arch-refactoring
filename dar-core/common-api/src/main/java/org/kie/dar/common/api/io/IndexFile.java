@@ -19,7 +19,6 @@ import org.kie.dar.common.api.exceptions.KieDARCommonException;
 import org.kie.dar.common.api.utils.FileNameUtils;
 
 import java.io.File;
-import java.net.URI;
 
 import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
 

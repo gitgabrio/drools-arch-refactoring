@@ -16,11 +16,15 @@
 
 package org.kie.pmml.compilation.commons.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.dmg.pmml.*;
+import org.dmg.pmml.mining.MiningModel;
+import org.dmg.pmml.mining.Segment;
+import org.junit.jupiter.api.Test;
+import org.xml.sax.SAXException;
+
+import javax.xml.bind.JAXBException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -30,34 +34,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.xml.bind.JAXBException;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.MathContext;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.Model;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.OutputField;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.ResultFeature;
-import org.dmg.pmml.Target;
-import org.dmg.pmml.Targets;
-import org.dmg.pmml.mining.MiningModel;
-import org.dmg.pmml.mining.Segment;
-import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.MODELNAME_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.SEGMENTID_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.SEGMENTMODELNAME_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.TARGETFIELD_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.getMiningTargetFields;
 import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
+import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.*;
 
 public class KiePMMLUtilTest {
 
@@ -144,7 +123,7 @@ public class KiePMMLUtilTest {
     }
 
     @Test
-    void getTargetDataType()  {
+    void getTargetDataType() {
         MiningFunction miningFunction = MiningFunction.REGRESSION;
         MathContext mathContext = MathContext.DOUBLE;
         DataType retrieved = KiePMMLUtil.getTargetDataType(miningFunction, mathContext);
@@ -167,7 +146,7 @@ public class KiePMMLUtilTest {
     }
 
     @Test
-    void getTargetOpType()  {
+    void getTargetOpType() {
         MiningFunction miningFunction = MiningFunction.REGRESSION;
         OpType retrieved = KiePMMLUtil.getTargetOpType(miningFunction);
         assertThat(retrieved).isEqualTo(OpType.CONTINUOUS);
@@ -390,7 +369,7 @@ public class KiePMMLUtilTest {
 
         StringBuilder textBuilder = new StringBuilder();
         try (Reader reader = new BufferedReader(new InputStreamReader
-                                                        (inputStream, Charset.forName(StandardCharsets.UTF_8.name())))) {
+                (inputStream, Charset.forName(StandardCharsets.UTF_8.name())))) {
             int c = 0;
             while ((c = reader.read()) != -1) {
                 textBuilder.append((char) c);

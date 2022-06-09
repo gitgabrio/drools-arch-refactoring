@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.api.enums;
 
+import org.apache.commons.math3.util.Precision;
+import org.kie.pmml.api.exceptions.KieEnumException;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
-
-import org.apache.commons.math3.util.Precision;
-import org.kie.pmml.api.exceptions.KieEnumException;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4-1/Targets.html>castInteger</a>

@@ -16,16 +16,12 @@
 
 package org.kie.pmml.models.regression.model;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.pmml.api.iinterfaces.SerializableFunction;
 import org.kie.pmml.api.runtime.PMMLContext;
+
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -47,10 +43,10 @@ public class KiePMMLRegressionTableTest {
     private double expectedResult;
 
     public void initKiePMMLRegressionTableTest(double firstNumericalInput,
-                                      double secondNumericalInput,
-                                      double firstCategoricalResult,
-                                      double secondCategoricalResult,
-                                      double expectedResult) {
+                                               double secondNumericalInput,
+                                               double firstCategoricalResult,
+                                               double secondCategoricalResult,
+                                               double expectedResult) {
         firstCategoricalFunction = aObject -> firstCategoricalResult;
         secondCategoricalFunction = aObject -> secondCategoricalResult;
         this.firstNumericalInput = firstNumericalInput;

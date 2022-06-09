@@ -65,7 +65,7 @@ public class FooCompilerHelper {
     }
 
     static DARCallableOutputFoo getDARProcessedFooFromFile(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        FRI fri = new FRI (((File) resource.getContent()).getAbsolutePath(), "foo");
+        FRI fri = new FRI(((File) resource.getContent()).getAbsolutePath(), "foo");
         String simpleClassName = getSanitizedClassName(fri.getFri());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
                 FOO_MODEL_PACKAGE_NAME,

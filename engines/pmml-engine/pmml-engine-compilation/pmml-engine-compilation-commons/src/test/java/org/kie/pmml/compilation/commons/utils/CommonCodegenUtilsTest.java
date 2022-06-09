@@ -16,44 +16,11 @@
 
 package org.kie.pmml.compilation.commons.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.AssignExpr;
-import com.github.javaparser.ast.expr.BooleanLiteralExpr;
-import com.github.javaparser.ast.expr.DoubleLiteralExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.IntegerLiteralExpr;
-import com.github.javaparser.ast.expr.LongLiteralExpr;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.MethodReferenceExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
-import com.github.javaparser.ast.expr.SimpleName;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
-import com.github.javaparser.ast.expr.ThisExpr;
-import com.github.javaparser.ast.expr.VariableDeclarationExpr;
-import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
-import com.github.javaparser.ast.stmt.ReturnStmt;
-import com.github.javaparser.ast.stmt.Statement;
+import com.github.javaparser.ast.body.*;
+import com.github.javaparser.ast.expr.*;
+import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
@@ -61,15 +28,17 @@ import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static com.github.javaparser.StaticJavaParser.parseBlock;
 import static com.github.javaparser.StaticJavaParser.parseClassOrInterfaceType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilation;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.LAMBDA_PARAMETER_NAME;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.OPTIONAL_FILTERED_KIEPMMLNAMEVALUE_NAME;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.literalExprFrom;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 
 public class CommonCodegenUtilsTest {
 
@@ -276,7 +245,7 @@ public class CommonCodegenUtilsTest {
         String retrievedString = retrieved.toString();
         assertThat(retrievedString).isEqualTo(expected);
         List<Double> doubles = IntStream.range(0, 3)
-                .mapToObj(i ->  i * 0.17)
+                .mapToObj(i -> i * 0.17)
                 .collect(Collectors.toList());
         retrieved = CommonCodegenUtils.createArraysAsListFromList(doubles);
         assertThat(retrieved).isNotNull();
@@ -454,7 +423,7 @@ public class CommonCodegenUtilsTest {
         assertThat(CommonCodegenUtils.getVariableDeclarator(body, variableName)).isNotPresent();
         final VariableDeclarationExpr variableDeclarationExpr = new VariableDeclarationExpr(parseClassOrInterfaceType("String"), variableName);
         body.addStatement(variableDeclarationExpr);
-        Optional<VariableDeclarator> retrieved =  CommonCodegenUtils.getVariableDeclarator(body, variableName);
+        Optional<VariableDeclarator> retrieved = CommonCodegenUtils.getVariableDeclarator(body, variableName);
         assertThat(retrieved).isPresent();
         VariableDeclarator variableDeclarator = retrieved.get();
         assertThat(variableDeclarator.getName().asString()).isEqualTo(variableName);
@@ -578,7 +547,7 @@ public class CommonCodegenUtilsTest {
         final BlockStmt toRead = getBlockStmt();
         final List<NameExpr> retrieved = CommonCodegenUtils.getNameExprsFromBlock(toRead, "value");
         assertThat(retrieved).hasSize(2);
-        final List<NullLiteralExpr> nullExprs =  toRead.stream()
+        final List<NullLiteralExpr> nullExprs = toRead.stream()
                 .filter(node -> node instanceof NullLiteralExpr)
                 .map(NullLiteralExpr.class::cast)
                 .collect(Collectors.toList());
@@ -597,7 +566,7 @@ public class CommonCodegenUtilsTest {
         final List<NameExpr> newRetrieved = CommonCodegenUtils.getNameExprsFromBlock(toRead, "value");
         assertThat(newRetrieved).isEmpty();
 
-        final List<NullLiteralExpr> retrievedNullExprs =  toRead.stream()
+        final List<NullLiteralExpr> retrievedNullExprs = toRead.stream()
                 .filter(node -> node instanceof NullLiteralExpr)
                 .map(NullLiteralExpr.class::cast)
                 .collect(Collectors.toList());

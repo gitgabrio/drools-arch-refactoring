@@ -50,7 +50,7 @@ public class KiePMMLScorecardModelASTFactoryTest {
 
     @Test
     public void getKiePMMLDroolsSampleAST() {
-        final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(samplePmml.getDataDictionary(), samplePmml.getTransformationDictionary(),  scorecardModel.getLocalTransformations());
+        final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(samplePmml.getDataDictionary(), samplePmml.getTransformationDictionary(), scorecardModel.getLocalTransformations());
         List<KiePMMLDroolsType> types = Collections.emptyList();
         KiePMMLDroolsAST retrieved = KiePMMLScorecardModelASTFactory.getKiePMMLDroolsAST(getFieldsFromDataDictionary(samplePmml.getDataDictionary()), scorecardModel, fieldTypeMap, types);
         assertThat(retrieved).isNotNull();

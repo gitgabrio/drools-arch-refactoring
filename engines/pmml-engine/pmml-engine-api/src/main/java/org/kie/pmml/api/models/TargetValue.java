@@ -69,7 +69,7 @@ public class TargetValue implements Serializable {
         }
         TargetValue that = (TargetValue) o;
         return Objects.equals(name, that.name) && Objects.equals(value, that.value) && Objects.equals(displayValue,
-                                                                                                      that.displayValue) && Objects.equals(priorProbability, that.priorProbability) && Objects.equals(defaultValue, that.defaultValue);
+                that.displayValue) && Objects.equals(priorProbability, that.priorProbability) && Objects.equals(defaultValue, that.defaultValue);
     }
 
     @Override

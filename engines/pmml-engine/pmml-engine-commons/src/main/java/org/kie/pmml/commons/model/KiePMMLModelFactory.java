@@ -17,8 +17,6 @@ package org.kie.pmml.commons.model;
 
 import java.util.List;
 
-import org.kie.pmml.commons.model.KiePMMLModel;
-
 /**
  * Interface to be implemented by <b>code-generated</b> classes to
  * retrieve <code>List&lt;KiePMMLModel&gt;</code>s

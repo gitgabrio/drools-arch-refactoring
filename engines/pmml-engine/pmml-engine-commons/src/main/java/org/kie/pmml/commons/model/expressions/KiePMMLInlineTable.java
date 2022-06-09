@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
+import org.kie.pmml.commons.model.KiePMMLExtension;
+import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.kie.pmml.commons.model.KiePMMLExtension;
-import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 
 /**
  * KiePMML representation of a <b>FieldColumnPair</b>

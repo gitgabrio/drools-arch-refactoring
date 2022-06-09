@@ -45,6 +45,7 @@ public class KiePMMLDescrFactory {
 
     /**
      * Returns the <code>PackageDescr</code> built out of the given <code>KiePMMLDroolsAST</code>.
+     *
      * @param kiePMMLDroolsAST
      * @param packageName
      * @return

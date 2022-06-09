@@ -15,19 +15,15 @@
  */
 package org.kie.pmml.commons.model.predicates;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.StringJoiner;
-
-import org.kie.pmml.api.exceptions.KiePMMLException;
-import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.api.enums.ARRAY_TYPE;
 import org.kie.pmml.api.enums.IN_NOTIN;
+import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.utils.ConverterTypeUtil;
+import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/TreeModel.html#xsdElement_SimpleSetPredicate>SimpleSetPredicate</a>
@@ -48,6 +44,7 @@ public class KiePMMLSimpleSetPredicate extends KiePMMLPredicate {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(final String name, final List<KiePMMLExtension> extensions, final ARRAY_TYPE arrayType, final IN_NOTIN inNotIn) {

@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.Interval;
 import org.kie.pmml.api.enums.CLOSURE;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLInterval</code> instance
@@ -42,6 +42,6 @@ public class KiePMMLIntervalInstanceFactory {
 
     static KiePMMLInterval getKiePMMLInterval(final Interval interval) {
         return new KiePMMLInterval(interval.getLeftMargin(), interval.getRightMargin(),
-                                   CLOSURE.byName(interval.getClosure().value()));
+                CLOSURE.byName(interval.getClosure().value()));
     }
 }

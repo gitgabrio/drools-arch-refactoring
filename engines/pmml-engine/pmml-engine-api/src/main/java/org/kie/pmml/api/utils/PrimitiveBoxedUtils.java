@@ -28,13 +28,13 @@ public class PrimitiveBoxedUtils {
 
     private static final Set<PrimitiveBoxed> KIE_PMML_PRIMITIVE_BOXEDS = new HashSet<>(
             Arrays.asList(new PrimitiveBoxed(Boolean.TYPE, Boolean.class),
-                          new PrimitiveBoxed(Byte.TYPE, Byte.class),
-                          new PrimitiveBoxed(Character.TYPE, Character.class),
-                          new PrimitiveBoxed(Float.TYPE, Float.class),
-                          new PrimitiveBoxed(Integer.TYPE, Integer.class),
-                          new PrimitiveBoxed(Long.TYPE, Long.class),
-                          new PrimitiveBoxed(Short.TYPE, Short.class),
-                          new PrimitiveBoxed(Double.TYPE, Double.class)));
+                    new PrimitiveBoxed(Byte.TYPE, Byte.class),
+                    new PrimitiveBoxed(Character.TYPE, Character.class),
+                    new PrimitiveBoxed(Float.TYPE, Float.class),
+                    new PrimitiveBoxed(Integer.TYPE, Integer.class),
+                    new PrimitiveBoxed(Long.TYPE, Long.class),
+                    new PrimitiveBoxed(Short.TYPE, Short.class),
+                    new PrimitiveBoxed(Double.TYPE, Double.class)));
 
     private PrimitiveBoxedUtils() {
         // Avoid instantiation
@@ -50,6 +50,7 @@ public class PrimitiveBoxedUtils {
      * <b>boxed/unboxed</b> counterpart of the same <code>KiePMMLPrimitiveBoxed</code> <b>OR</b> the same one.
      * Returns <code>false</code> otherwise. Please note it returns <code>false</code> even if both classes are <code>equals</code>
      * <b>but</b> are not a found between <code>KIE_PMML_PRIMITIVE_BOXEDS</code>
+     *
      * @param a
      * @param b
      * @return
@@ -80,6 +81,7 @@ public class PrimitiveBoxedUtils {
         /**
          * Returns <code>true</code> if the given <code>Class&lt;?&gt;</code> is the <b>primitive</b>
          * or the <b>boxed</b> one of the current <code>KiePMMLPrimitiveBoxed</code>
+         *
          * @param c
          * @return
          */

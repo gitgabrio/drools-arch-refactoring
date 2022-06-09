@@ -29,6 +29,7 @@ public class DroolsCompilationDTO<T extends Model> extends AbstractSpecificCompi
 
     /**
      * Private constructor that use given <code>CommonCompilationDTO</code>
+     *
      * @param source
      * @param fieldTypeMap
      */
@@ -40,6 +41,7 @@ public class DroolsCompilationDTO<T extends Model> extends AbstractSpecificCompi
 
     /**
      * Builder that use given <code>CommonCompilationDTO</code>
+     *
      * @param source
      * @param fieldTypeMap
      */

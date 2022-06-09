@@ -15,25 +15,12 @@
  */
 package org.kie.pmml.models.clustering.compilation.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.BooleanLiteralExpr;
-import com.github.javaparser.ast.expr.DoubleLiteralExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NullLiteralExpr;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.dmg.pmml.Array;
@@ -48,33 +35,18 @@ import org.kie.pmml.compilation.api.dto.CompilationDTO;
 import org.kie.pmml.compilation.commons.codegenfactories.KiePMMLModelFactoryUtils;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 import org.kie.pmml.models.clustering.compilation.dto.ClusteringCompilationDTO;
-import org.kie.pmml.models.clustering.model.KiePMMLCluster;
-import org.kie.pmml.models.clustering.model.KiePMMLClusteringField;
-import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
-import org.kie.pmml.models.clustering.model.KiePMMLCompareFunction;
-import org.kie.pmml.models.clustering.model.KiePMMLComparisonMeasure;
-import org.kie.pmml.models.clustering.model.KiePMMLMissingValueWeights;
+import org.kie.pmml.models.clustering.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.pmml.commons.Constants.GET_MODEL;
-import static org.kie.pmml.commons.Constants.MISSING_METHOD_IN_CLASS;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.TO_RETURN;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.createArraysAsListFromList;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getMethodDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getMethodDeclarationBlockStmt;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.literalExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.populateListInListGetter;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.kie.pmml.commons.Constants.*;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFullClassName;
-import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.aggregateFunctionFrom;
-import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.compareFunctionFrom;
-import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.comparisonMeasureKindFrom;
-import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.modelClassFrom;
+import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.*;
 
 public class KiePMMLClusteringModelFactory {
 
@@ -130,9 +102,9 @@ public class KiePMMLClusteringModelFactory {
         String simpleClassName = compilationDTO.getSimpleClassName();
 
         CompilationUnit compilationUnit = JavaParserUtils.getKiePMMLModelCompilationUnit(simpleClassName,
-                                                                                         compilationDTO.getPackageName(),
-                                                                                         KIE_PMML_CLUSTERING_MODEL_TEMPLATE_JAVA,
-                                                                                         KIE_PMML_CLUSTERING_MODEL_TEMPLATE);
+                compilationDTO.getPackageName(),
+                KIE_PMML_CLUSTERING_MODEL_TEMPLATE_JAVA,
+                KIE_PMML_CLUSTERING_MODEL_TEMPLATE);
         ClassOrInterfaceDeclaration modelTemplate = compilationUnit.getClassByName(simpleClassName)
                 .orElseThrow(() -> new KiePMMLException(MAIN_CLASS_NOT_FOUND + ": " + simpleClassName));
         setStaticGetter(compilationDTO, modelTemplate);
@@ -175,8 +147,8 @@ public class KiePMMLClusteringModelFactory {
 
     static KiePMMLComparisonMeasure getKiePMMLComparisonMeasure(ComparisonMeasure comparisonMeasure) {
         return new KiePMMLComparisonMeasure(comparisonMeasureKindFrom(comparisonMeasure.getKind()),
-                                            aggregateFunctionFrom(comparisonMeasure.getMeasure()),
-                                            compareFunctionFrom(comparisonMeasure.getCompareFunction()));
+                aggregateFunctionFrom(comparisonMeasure.getMeasure()),
+                compareFunctionFrom(comparisonMeasure.getCompareFunction()));
 
     }
 
@@ -195,7 +167,7 @@ public class KiePMMLClusteringModelFactory {
 
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      TO_RETURN, body)))
+                        TO_RETURN, body)))
                 .asMethodCallExpr();
 
         ClusteringModel clusteringModel = compilationDTO.getModel();
@@ -203,7 +175,7 @@ public class KiePMMLClusteringModelFactory {
 
         getChainedMethodCallExprFrom("withModelClass", initializer).setArgument(0, literalExprFrom(modelClass));
         getChainedMethodCallExprFrom("withComparisonMeasure", initializer).setArgument(0,
-                                                                                       comparisonMeasureCreationExprFrom(clusteringModel.getComparisonMeasure()));
+                comparisonMeasureCreationExprFrom(clusteringModel.getComparisonMeasure()));
         Expression missingValueWeights = clusteringModel.getMissingValueWeights() != null ?
                 missingValueWeightsCreationExprFrom(clusteringModel.getMissingValueWeights()) : new NullLiteralExpr();
 
@@ -214,7 +186,7 @@ public class KiePMMLClusteringModelFactory {
                                           final ClusteringModel clusteringModel) {
         MethodDeclaration methodDeclaration = getMethodDeclaration(toPopulate, GET_CLUSTERS)
                 .orElseThrow(() -> new KiePMMLInternalException(String.format(MISSING_METHOD_IN_CLASS, toPopulate,
-                                                                              GET_CLUSTERS)));
+                        GET_CLUSTERS)));
         List<ObjectCreationExpr> objectCreationExprStream = clusteringModel.getClusters().stream()
                 .map(KiePMMLClusteringModelFactory::clusterCreationExprFrom)
                 .collect(Collectors.toList());
@@ -225,7 +197,7 @@ public class KiePMMLClusteringModelFactory {
                                                   final ClusteringModel clusteringModel) {
         MethodDeclaration methodDeclaration = getMethodDeclaration(toPopulate, GET_CLUSTERING_FIELDS)
                 .orElseThrow(() -> new KiePMMLInternalException(String.format(MISSING_METHOD_IN_CLASS, toPopulate,
-                                                                              GET_CLUSTERING_FIELDS)));
+                        GET_CLUSTERING_FIELDS)));
         List<ObjectCreationExpr> objectCreationExprStream = clusteringModel.getClusteringFields().stream()
                 .map(KiePMMLClusteringModelFactory::clusteringFieldCreationExprFrom)
                 .collect(Collectors.toList());
@@ -239,7 +211,7 @@ public class KiePMMLClusteringModelFactory {
         final List<Double> values = getClusterDoubleValues(cluster);
         arguments.add(createArraysAsListFromList(values).getExpression());
         return new ObjectCreationExpr(null, new ClassOrInterfaceType(null, KiePMMLCluster.class.getCanonicalName()),
-                                      arguments);
+                arguments);
     }
 
     private static ObjectCreationExpr clusteringFieldCreationExprFrom(ClusteringField clusteringField) {
@@ -253,11 +225,11 @@ public class KiePMMLClusteringModelFactory {
         arguments.add(new DoubleLiteralExpr(fieldWeight));
         arguments.add(new BooleanLiteralExpr(isCenterField));
         arguments.add(clusteringField.getCompareFunction() == null ? new NullLiteralExpr() :
-                              literalExprFrom(compareFunctionFrom(clusteringField.getCompareFunction())));
+                literalExprFrom(compareFunctionFrom(clusteringField.getCompareFunction())));
         arguments.add(new NullLiteralExpr());
 
         return new ObjectCreationExpr(null, new ClassOrInterfaceType(null,
-                                                                     KiePMMLClusteringField.class.getCanonicalName())
+                KiePMMLClusteringField.class.getCanonicalName())
                 , arguments);
     }
 
@@ -268,7 +240,7 @@ public class KiePMMLClusteringModelFactory {
         arguments.add(literalExprFrom(compareFunctionFrom(comparisonMeasure.getCompareFunction())));
 
         return new ObjectCreationExpr(null, new ClassOrInterfaceType(null,
-                                                                     KiePMMLComparisonMeasure.class.getCanonicalName()), arguments);
+                KiePMMLComparisonMeasure.class.getCanonicalName()), arguments);
     }
 
     private static ObjectCreationExpr missingValueWeightsCreationExprFrom(MissingValueWeights missingValueWeights) {
@@ -276,7 +248,7 @@ public class KiePMMLClusteringModelFactory {
         final List<Double> values = getMissingValueWeightsDoubleValues(missingValueWeights);
         arguments.add(createArraysAsListFromList(values).getExpression());
         return new ObjectCreationExpr(null, new ClassOrInterfaceType(null,
-                                                                     KiePMMLMissingValueWeights.class.getCanonicalName()), arguments);
+                KiePMMLMissingValueWeights.class.getCanonicalName()), arguments);
     }
 
     private static List<Double> getClusterDoubleValues(Cluster cluster) {

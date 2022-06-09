@@ -49,6 +49,7 @@ public class StringUtils {
     /**
      * Returns an array where the first item is the <b>factory class</b> name and the second item is the <b>package</b> name,
      * built starting from the given <b>sourcePath</b> <code>String</code>
+     *
      * @param sourcePath
      * @return
      */
@@ -60,7 +61,6 @@ public class StringUtils {
         String factoryClassName = getSanitizedClassName(fileName + "Factory");
         return new String[]{factoryClassName, packageName};
     }
-
 
 
 }

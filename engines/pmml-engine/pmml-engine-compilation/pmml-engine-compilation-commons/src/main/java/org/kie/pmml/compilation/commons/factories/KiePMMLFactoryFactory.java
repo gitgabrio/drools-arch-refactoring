@@ -15,11 +15,6 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -33,6 +28,11 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.github.javaparser.StaticJavaParser.parseClassOrInterfaceType;
 import static org.kie.pmml.commons.Constants.GET_MODEL;
@@ -67,8 +67,8 @@ public class KiePMMLFactoryFactory {
         modelTemplate.setName(factoryClassName);
         final FieldDeclaration fieldByName = modelTemplate.getFieldByName(KIE_PMML_MODELS_FIELD)
                 .orElseThrow(() -> new KiePMMLException(String.format("Failed to find FieldDeclaration %s in template" +
-                                                                              " %s", KIE_PMML_MODELS_FIELD,
-                                                                      KIE_PMML_MODEL_FACTORY_TEMPLATE_JAVA)));
+                                " %s", KIE_PMML_MODELS_FIELD,
+                        KIE_PMML_MODEL_FACTORY_TEMPLATE_JAVA)));
         populateKiePmmlFields(fieldByName, generatedClassesModelTypeMap);
         toReturn.put(fullClassName, cloneCU.toString());
         return toReturn;

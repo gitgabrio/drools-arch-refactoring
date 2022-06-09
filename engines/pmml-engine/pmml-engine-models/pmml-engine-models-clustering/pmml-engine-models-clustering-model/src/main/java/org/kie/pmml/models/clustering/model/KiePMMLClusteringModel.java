@@ -13,16 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package  org.kie.pmml.models.clustering.model;
+package org.kie.pmml.models.clustering.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.kie.pmml.api.enums.ARRAY_TYPE;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.Named;
 import org.kie.pmml.api.enums.PMML_MODEL;
@@ -30,6 +22,8 @@ import org.kie.pmml.api.exceptions.KieEnumException;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.IsInterpreted;
 import org.kie.pmml.commons.model.KiePMMLModel;
+
+import java.util.*;
 
 public class KiePMMLClusteringModel extends KiePMMLModel implements IsInterpreted {
 
@@ -107,7 +101,7 @@ public class KiePMMLClusteringModel extends KiePMMLModel implements IsInterprete
         for (int i = 0; i < clusters.size(); i++) {
             aggregates[i] = comparisonMeasure.getAggregateFunction()
                     .apply(clusteringFields, comparisonMeasure.getCompareFunction(), inputs,
-                           clusters.get(i).getValuesArray(), adjustmentFactor);
+                            clusters.get(i).getValuesArray(), adjustmentFactor);
         }
 
         final int selectedIndex = findMinIndex(aggregates);

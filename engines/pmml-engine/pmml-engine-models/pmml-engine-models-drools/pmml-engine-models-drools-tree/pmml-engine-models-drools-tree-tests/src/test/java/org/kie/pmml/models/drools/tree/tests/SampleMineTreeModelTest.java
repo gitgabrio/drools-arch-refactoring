@@ -50,7 +50,7 @@ public class SampleMineTreeModelTest extends AbstractPMMLTest {
 
     @BeforeClass
     public static void setupClass() {
-        pmmlRuntime =  getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME);
     }
 
     @Parameterized.Parameters

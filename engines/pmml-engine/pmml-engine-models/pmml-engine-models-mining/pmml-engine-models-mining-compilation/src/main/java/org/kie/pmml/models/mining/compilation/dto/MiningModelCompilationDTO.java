@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.models.mining.compilation.dto;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
 import org.dmg.pmml.mining.Segmentation;
-import org.kie.pmml.compilation.commons.dto.AbstractSpecificCompilationDTO;
 import org.kie.pmml.compilation.api.dto.CompilationDTO;
+import org.kie.pmml.compilation.commons.dto.AbstractSpecificCompilationDTO;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.commons.Constants.PACKAGE_CLASS_TEMPLATE;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
@@ -41,6 +41,7 @@ public class MiningModelCompilationDTO extends AbstractSpecificCompilationDTO<Mi
 
     /**
      * Private constructor that use given <code>CommonCompilationDTO</code>
+     *
      * @param source
      */
     private MiningModelCompilationDTO(final CompilationDTO<MiningModel> source) {
@@ -49,12 +50,13 @@ public class MiningModelCompilationDTO extends AbstractSpecificCompilationDTO<Mi
         segmentationPackageName = getSanitizedPackageName(getPackageName() + "." + segmentationName);
         segmentationClassName = getSanitizedClassName(segmentationName);
         segmentationCanonicalClassName = String.format(PACKAGE_CLASS_TEMPLATE, segmentationPackageName,
-                                                       segmentationClassName);
+                segmentationClassName);
         this.segmentation = source.getModel().getSegmentation();
     }
 
     /**
      * Builder that use given <code>CommonCompilationDTO</code>
+     *
      * @param source
      */
     public static MiningModelCompilationDTO fromCompilationDTO(final CompilationDTO<MiningModel> source) {

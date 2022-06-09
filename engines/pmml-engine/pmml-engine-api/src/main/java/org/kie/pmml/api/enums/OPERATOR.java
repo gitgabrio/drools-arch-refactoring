@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.api.enums;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+
 import java.util.Arrays;
 import java.util.List;
-
-import org.kie.pmml.api.exceptions.KieEnumException;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/TreeModel.html#xsdGroup_PREDICATE>PREDICATE</a>
@@ -38,28 +38,28 @@ public enum OPERATOR implements Named {
      * <code>OPERATOR</code>s that operates with <code>Number</code>s
      */
     static final List<OPERATOR> NUMBER_OPERATORS = Arrays.asList(EQUAL,
-                                                                 NOT_EQUAL,
-                                                                 LESS_THAN,
-                                                                 LESS_OR_EQUAL,
-                                                                 GREATER_THAN,
-                                                                 GREATER_OR_EQUAL);
+            NOT_EQUAL,
+            LESS_THAN,
+            LESS_OR_EQUAL,
+            GREATER_THAN,
+            GREATER_OR_EQUAL);
 
     /**
      * <code>OPERATOR</code>s that operates <b>ONLY</b >with <code>Number</code>s
      */
     static final List<OPERATOR> ONLY_NUMBER_OPERATORS = Arrays.asList(LESS_THAN,
-                                                                 LESS_OR_EQUAL,
-                                                                 GREATER_THAN,
-                                                                 GREATER_OR_EQUAL);
+            LESS_OR_EQUAL,
+            GREATER_THAN,
+            GREATER_OR_EQUAL);
     /**
      * <code>OPERATOR</code>s that operates with a <b>value</b>
      */
     static final List<OPERATOR> VALUE_OPERATORS = Arrays.asList(EQUAL,
-                                                                NOT_EQUAL,
-                                                                LESS_THAN,
-                                                                LESS_OR_EQUAL,
-                                                                GREATER_THAN,
-                                                                GREATER_OR_EQUAL);
+            NOT_EQUAL,
+            LESS_THAN,
+            LESS_OR_EQUAL,
+            GREATER_THAN,
+            GREATER_OR_EQUAL);
     private final String name;
     private final String operator;
 
@@ -77,6 +77,7 @@ public enum OPERATOR implements Named {
 
     /**
      * Returns <code>true</code> if the <code>OPERATOR</code> is applicable only for <code>NUMBER</code>s
+     *
      * @return
      */
     public boolean isOnlyNumberOperator() {

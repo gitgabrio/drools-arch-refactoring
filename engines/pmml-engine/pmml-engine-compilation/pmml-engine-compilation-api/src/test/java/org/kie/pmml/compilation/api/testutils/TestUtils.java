@@ -15,20 +15,20 @@
  */
 package org.kie.pmml.compilation.api.testutils;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-
 import org.dmg.pmml.PMML;
 import org.kie.dar.common.api.utils.FileUtils;
 import org.xml.sax.SAXException;
+
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TestUtils {
 
     /**
      * Load a <code>PMML</code> from the given <b>file</b>
+     *
      * @param fileName
      * @return
      * @throws SAXException
@@ -41,6 +41,7 @@ public class TestUtils {
 
     /**
      * Load a <code>PMML</code> from the given <b>xml source</b>
+     *
      * @param xmlSource
      * @return
      * @throws SAXException
@@ -52,6 +53,7 @@ public class TestUtils {
 
     /**
      * Load a <code>PMML</code> from the given <code>InputStream</code>
+     *
      * @param is
      * @return
      * @throws SAXException

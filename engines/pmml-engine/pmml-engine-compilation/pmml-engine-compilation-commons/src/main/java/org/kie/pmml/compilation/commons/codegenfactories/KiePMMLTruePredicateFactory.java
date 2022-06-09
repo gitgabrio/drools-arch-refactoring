@@ -26,9 +26,7 @@ import org.dmg.pmml.True;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
@@ -59,11 +57,11 @@ public class KiePMMLTruePredicateFactory {
     static BlockStmt getTruePredicateVariableDeclaration(final String variableName, final True truePredicate) {
         final MethodDeclaration methodDeclaration = TRUEPREDICATE_TEMPLATE.getMethodsByName(GETKIEPMMLTRUEPREDICATE).get(0).clone();
         final BlockStmt toReturn = methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE, methodDeclaration)));
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, TRUEPREDICATE) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, TRUEPREDICATE, toReturn)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, TRUEPREDICATE).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, TRUEPREDICATE, toReturn)));
         variableDeclarator.setName(variableName);
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, TRUEPREDICATE, toReturn)))
-        .asObjectCreationExpr();
+                .asObjectCreationExpr();
 
         final StringLiteralExpr nameExpr = new StringLiteralExpr(variableName);
         objectCreationExpr.getArguments().set(0, nameExpr);

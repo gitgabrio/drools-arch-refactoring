@@ -15,17 +15,12 @@ package org.kie.dar.common.api.utils;/*
  */
 
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FileNameUtilsTest {
-
 
 
     @Test

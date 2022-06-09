@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Helper methods for <code>KiePMMLExpression</code>s
@@ -32,8 +32,8 @@ public class ExpressionsUtils {
 
     public static Optional<Object> getFromPossibleSources(final String name, final ProcessingDTO processingDTO) {
         return Stream.of(getFromKiePMMLNameValues(name, processingDTO),
-                         getFromDerivedFields(name, processingDTO),
-                         getFromOutputFields(name, processingDTO))
+                        getFromDerivedFields(name, processingDTO),
+                        getFromOutputFields(name, processingDTO))
                 .filter(Optional::isPresent)
                 .findFirst()
                 .map(Optional::get);

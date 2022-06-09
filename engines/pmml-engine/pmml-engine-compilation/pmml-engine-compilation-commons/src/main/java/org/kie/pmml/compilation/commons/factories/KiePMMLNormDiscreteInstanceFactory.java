@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-
 import org.dmg.pmml.NormDiscrete;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.expressions.KiePMMLNormDiscrete;
+
+import java.util.List;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 
@@ -36,8 +36,8 @@ public class KiePMMLNormDiscreteInstanceFactory {
     static KiePMMLNormDiscrete getKiePMMLNormDiscrete(final NormDiscrete normDiscrete) {
         List<KiePMMLExtension> extensions = getKiePMMLExtensions(normDiscrete.getExtensions());
         return new KiePMMLNormDiscrete(normDiscrete.getField().getValue(),
-                                       extensions,
-                                       normDiscrete.getValue().toString(),
-                                       normDiscrete.getMapMissingTo());
+                extensions,
+                normDiscrete.getValue().toString(),
+                normDiscrete.getMapMissingTo());
     }
 }

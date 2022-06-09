@@ -5,7 +5,7 @@
         <DataField name="Dimension2" optype="continuous" dataType="double"/>
     </DataDictionary>
     <ClusteringModel modelName="euclidianDistance" functionName="clustering"
-        modelClass="centerBased" numberOfClusters="2">
+                     modelClass="centerBased" numberOfClusters="2">
         <MiningSchema>
             <MiningField name="Dimension1" invalidValueTreatment="returnInvalid"/>
             <MiningField name="Dimension2" invalidValueTreatment="returnInvalid"/>

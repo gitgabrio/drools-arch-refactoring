@@ -16,31 +16,26 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import org.dmg.pmml.Array;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.SimpleSetPredicate;
+import org.dmg.pmml.*;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.ARRAY_TYPE;
 import org.kie.pmml.api.enums.IN_NOTIN;
 import org.kie.pmml.commons.model.predicates.KiePMMLSimpleSetPredicate;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getArray;
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getStringObjects;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLSimpleSetPredicateFactoryTest {
 

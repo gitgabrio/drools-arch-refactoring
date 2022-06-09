@@ -16,12 +16,12 @@
 
 package org.kie.pmml.commons.model.predicates;
 
+import org.junit.jupiter.api.Test;
+import org.kie.pmml.api.enums.OPERATOR;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-import org.kie.pmml.api.enums.OPERATOR;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -119,8 +119,8 @@ public class KiePMMLSimplePredicateTest {
     private KiePMMLSimplePredicate getKiePMMLSimplePredicate(final OPERATOR operator,
                                                              final Object value) {
         return KiePMMLSimplePredicate.builder(SIMPLE_PREDICATE_NAME,
-                                              Collections.emptyList(),
-                                              operator)
+                        Collections.emptyList(),
+                        operator)
                 .withValue(value)
                 .build();
     }

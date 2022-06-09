@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.commons.transformations;
 
+import org.kie.pmml.commons.model.KiePMMLExtension;
+import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import org.kie.pmml.commons.model.KiePMMLExtension;
-import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/Transformations.html>TransformationDictionary</a>

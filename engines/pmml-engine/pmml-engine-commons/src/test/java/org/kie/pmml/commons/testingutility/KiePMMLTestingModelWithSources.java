@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.commons.testingutility;
 
+import org.kie.pmml.commons.model.KiePMMLModelWithSources;
+
 import java.util.Collections;
 import java.util.Map;
-
-import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 
 public class KiePMMLTestingModelWithSources extends KiePMMLModelWithSources {
 
@@ -26,6 +26,6 @@ public class KiePMMLTestingModelWithSources extends KiePMMLModelWithSources {
 
     public KiePMMLTestingModelWithSources(String modelName, String kmodulePackageName, Map<String, String> sourcesMap) {
         super(modelName, kmodulePackageName, Collections.emptyList(), Collections.emptyList(),
-              Collections.emptyList(), sourcesMap, false);
+                Collections.emptyList(), sourcesMap, false);
     }
 }

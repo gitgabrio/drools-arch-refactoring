@@ -30,14 +30,9 @@ import org.dmg.pmml.DiscretizeBin;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLDiscretizeBinFactory.getDiscretizeBinVariableDeclaration;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForDataType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -83,7 +78,7 @@ public class KiePMMLDiscretizeFactory {
         }
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      DISCRETIZE, toReturn)))
+                        DISCRETIZE, toReturn)))
                 .asObjectCreationExpr();
         final Expression nameExpr = new StringLiteralExpr(discretize.getField().getValue());
         final Expression mapMissingToExpr = getExpressionForObject(discretize.getMapMissingTo());

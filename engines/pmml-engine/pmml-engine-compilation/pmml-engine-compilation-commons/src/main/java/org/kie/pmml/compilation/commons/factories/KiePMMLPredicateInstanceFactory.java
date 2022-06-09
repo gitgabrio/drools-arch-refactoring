@@ -15,17 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.*;
+import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.dmg.pmml.CompoundPredicate;
-import org.dmg.pmml.False;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.Predicate;
-import org.dmg.pmml.SimplePredicate;
-import org.dmg.pmml.SimpleSetPredicate;
-import org.dmg.pmml.True;
-import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLCompoundPredicateInstanceFactory.getKiePMMLCompoundPredicate;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLFalsePredicateInstanceFactory.getKiePMMLFalsePredicate;

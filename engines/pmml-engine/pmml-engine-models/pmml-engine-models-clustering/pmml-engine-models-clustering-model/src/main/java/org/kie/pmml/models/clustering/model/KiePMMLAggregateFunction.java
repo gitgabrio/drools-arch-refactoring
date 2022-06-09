@@ -16,9 +16,9 @@
 
 package org.kie.pmml.models.clustering.model;
 
-import java.util.List;
-
 import org.kie.pmml.api.enums.Named;
+
+import java.util.List;
 
 public enum KiePMMLAggregateFunction implements Named {
     EUCLIDEAN("euclidean"),

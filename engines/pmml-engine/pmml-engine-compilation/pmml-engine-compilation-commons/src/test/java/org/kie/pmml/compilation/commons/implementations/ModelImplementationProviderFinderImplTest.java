@@ -16,14 +16,14 @@
 
 package org.kie.pmml.compilation.commons.implementations;
 
-import java.util.List;
-
 import org.dmg.pmml.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.compilation.api.provider.ModelImplementationProvider;
 import org.kie.pmml.compilation.commons.mocks.TestingModelImplementationProvider;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +37,7 @@ public class ModelImplementationProviderFinderImplTest {
     }
 
     @Test
- <T extends Model, E extends KiePMMLModel> void getImplementations() {
+    <T extends Model, E extends KiePMMLModel> void getImplementations() {
         final List<ModelImplementationProvider<T, E>> retrieved = modelImplementationProviderFinder.getImplementations(false);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved).hasSize(1);

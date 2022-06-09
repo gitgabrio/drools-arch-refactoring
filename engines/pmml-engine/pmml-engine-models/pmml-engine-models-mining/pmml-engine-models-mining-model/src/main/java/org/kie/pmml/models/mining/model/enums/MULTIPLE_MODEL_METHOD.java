@@ -15,26 +15,15 @@
  */
 package org.kie.pmml.models.mining.model.enums;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Function;
 
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
-
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.AVERAGE_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.MAX_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.MEDIAN_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.MOST_FREQUENT_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.PROBABILITY_FUNCTION;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.SELECT_ALL_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.SELECT_FIRST_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.SELECT_LAST_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.SUM_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.WEIGHTED_AVERAGE_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.WEIGHTED_MEDIAN_RESULT;
-import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.WEIGHTED_SUM_RESULT;
+import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunctions.*;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/MultipleModels.html#xsdType_MULTIPLE-MODEL-METHOD>MULTIPLE-MODEL-METHOD</a>
@@ -42,59 +31,59 @@ import static org.kie.pmml.models.mining.model.enums.MultipleModelMethodFunction
 public enum MULTIPLE_MODEL_METHOD {
 
     MAJORITY_VOTE("majorityVote",
-                  MOST_FREQUENT_RESULT,
-                  MOST_FREQUENT_RESULT,
-                  inputData -> null),
+            MOST_FREQUENT_RESULT,
+            MOST_FREQUENT_RESULT,
+            inputData -> null),
     WEIGHTED_MAJORITY_VOTE("weightedMajorityVote",
-                           inputData -> {
-                               throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
-                           },
-                           inputData -> {
-                               throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
-                           },
-                           inputData -> {
-                               throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
-                           }),
+            inputData -> {
+                throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
+            },
+            inputData -> {
+                throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
+            },
+            inputData -> {
+                throw new KieEnumException("WEIGHTED_MAJORITY_VOTE not implemented, yet");
+            }),
     AVERAGE("average",
             AVERAGE_RESULT,
             MOST_FREQUENT_RESULT,
             PROBABILITY_FUNCTION),
     WEIGHTED_AVERAGE("weightedAverage",
-                     WEIGHTED_AVERAGE_RESULT,
-                     inputData -> null,
-                     inputData -> null),
+            WEIGHTED_AVERAGE_RESULT,
+            inputData -> null,
+            inputData -> null),
     MEDIAN("median",
-           MEDIAN_RESULT,
-           MEDIAN_RESULT,
-           inputData -> null),
+            MEDIAN_RESULT,
+            MEDIAN_RESULT,
+            inputData -> null),
     WEIGHTED_MEDIAN("x-weightedMedian",
-                    WEIGHTED_MEDIAN_RESULT,
-                    inputData -> null,
-                    inputData -> null),
+            WEIGHTED_MEDIAN_RESULT,
+            inputData -> null,
+            inputData -> null),
     MAX("max",
-        MAX_RESULT,
-        MAX_RESULT,
-        inputData -> null),
+            MAX_RESULT,
+            MAX_RESULT,
+            inputData -> null),
     SUM("sum",
-        SUM_RESULT,
-        inputData -> null,
-        inputData -> null),
+            SUM_RESULT,
+            inputData -> null,
+            inputData -> null),
     WEIGHTED_SUM("x-weightedSum",
-                 WEIGHTED_SUM_RESULT,
-                 inputData -> null,
-                 inputData -> null),
+            WEIGHTED_SUM_RESULT,
+            inputData -> null,
+            inputData -> null),
     SELECT_FIRST("selectFirst",
-                 SELECT_FIRST_RESULT,
-                 SELECT_FIRST_RESULT,
-                 inputData -> null),
+            SELECT_FIRST_RESULT,
+            SELECT_FIRST_RESULT,
+            inputData -> null),
     SELECT_ALL("selectAll",
-               SELECT_ALL_RESULT,
-               inputData -> null,
-               inputData -> null),
+            SELECT_ALL_RESULT,
+            inputData -> null,
+            inputData -> null),
     MODEL_CHAIN("modelChain",
-                SELECT_LAST_RESULT,
-                SELECT_LAST_RESULT,
-                inputData -> null);
+            SELECT_LAST_RESULT,
+            SELECT_LAST_RESULT,
+            inputData -> null);
 
     private final String name;
     /**
@@ -145,6 +134,7 @@ public enum MULTIPLE_MODEL_METHOD {
      * Return the prediction of the input data
      * The <b>key</b> of the map is the name of the (inner) model, the <b>value</b> is the result of the model
      * evaluation
+     *
      * @param inputData
      * @return
      * @throws KieEnumException
@@ -157,6 +147,7 @@ public enum MULTIPLE_MODEL_METHOD {
      * Return the classification of the input data
      * The <b>key</b> of the map is the name of the (inner) model, the <b>value</b> is the result of the model
      * evaluation
+     *
      * @param inputData
      * @return
      * @throws KieEnumException
@@ -169,6 +160,7 @@ public enum MULTIPLE_MODEL_METHOD {
      * Return the probabilities of the input data
      * The <b>key</b> of the map is the name of the (inner) model, the <b>value</b> are the probabilities of the model
      * evaluation
+     *
      * @param inputData
      * @return
      * @throws KieEnumException

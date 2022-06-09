@@ -27,14 +27,8 @@ import org.dmg.pmml.ParameterField;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForDataType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForOpType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import static org.kie.pmml.commons.Constants.*;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
@@ -64,7 +58,7 @@ public class KiePMMLParameterFieldFactory {
     static BlockStmt getParameterFieldVariableDeclaration(final String variableName, final ParameterField parameterField) {
         final MethodDeclaration methodDeclaration = PARAMETER_FIELD_TEMPLATE.getMethodsByName(GEKIEPMMLPARAMETERFIELD).get(0).clone();
         final BlockStmt toReturn = methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE, methodDeclaration)));
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, PARAMETER_FIELD) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, PARAMETER_FIELD, toReturn)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, PARAMETER_FIELD).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, PARAMETER_FIELD, toReturn)));
         variableDeclarator.setName(variableName);
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, PARAMETER_FIELD, toReturn)))

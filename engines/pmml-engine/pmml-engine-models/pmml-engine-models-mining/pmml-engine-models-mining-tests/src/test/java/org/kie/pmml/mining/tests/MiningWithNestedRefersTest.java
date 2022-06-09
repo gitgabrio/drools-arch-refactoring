@@ -16,11 +16,6 @@
 
 package org.kie.pmml.mining.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,12 +23,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MiningWithNestedRefersTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MiningWithNestedRefers";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "MiningWithNestedRefers";
     private static final String TARGET_FIELD = "class";
     private static final String S_LEN = "s_len";
@@ -56,13 +56,13 @@ public class MiningWithNestedRefersTest extends AbstractPMMLTest {
     private double pVirginica;
 
     public void initMiningWithNestedRefersTest(float sLen,
-                                      float sWid,
-                                      float pLen,
-                                      float pWid,
-                                      double pSetosa,
-                                      double pVersicolor,
-                                      double pVirginica,
-                                      String expectedResult) {
+                                               float sWid,
+                                               float pLen,
+                                               float pWid,
+                                               double pSetosa,
+                                               double pVersicolor,
+                                               double pVirginica,
+                                               String expectedResult) {
         this.sLen = sLen;
         this.sWid = sWid;
         this.pLen = pLen;

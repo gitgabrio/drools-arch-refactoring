@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.models.mining.model.segmentation;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
+
+import java.util.List;
+import java.util.Objects;
 
 public class KiePMMLSegment extends AbstractKiePMMLComponent {
 
@@ -37,6 +37,7 @@ public class KiePMMLSegment extends AbstractKiePMMLComponent {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(String name, List<KiePMMLExtension> extensions, KiePMMLPredicate kiePMMLPredicate, KiePMMLModel model) {

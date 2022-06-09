@@ -16,26 +16,15 @@
 
 package org.kie.pmml.models.clustering.compilation.factories;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.dmg.pmml.BinarySimilarity;
-import org.dmg.pmml.Chebychev;
-import org.dmg.pmml.CityBlock;
-import org.dmg.pmml.CompareFunction;
-import org.dmg.pmml.ComparisonMeasure;
-import org.dmg.pmml.Euclidean;
-import org.dmg.pmml.Jaccard;
-import org.dmg.pmml.Measure;
-import org.dmg.pmml.Minkowski;
-import org.dmg.pmml.SimpleMatching;
-import org.dmg.pmml.SquaredEuclidean;
-import org.dmg.pmml.Tanimoto;
+import org.dmg.pmml.*;
 import org.dmg.pmml.clustering.ClusteringModel;
 import org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction;
 import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
 import org.kie.pmml.models.clustering.model.KiePMMLCompareFunction;
 import org.kie.pmml.models.clustering.model.KiePMMLComparisonMeasure;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.kie.pmml.api.utils.EnumUtils.enumByName;
 

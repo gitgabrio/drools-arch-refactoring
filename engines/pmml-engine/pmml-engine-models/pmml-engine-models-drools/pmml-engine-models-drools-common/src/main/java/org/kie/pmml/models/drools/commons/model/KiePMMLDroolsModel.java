@@ -73,14 +73,14 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
         logger.trace("evaluate {} {}", knowledgeBase, requestData);
         if (!(knowledgeBase instanceof KieBase)) {
             throw new KiePMMLException(String.format("Expecting KieBase, received %s",
-                                                     knowledgeBase.getClass().getName()));
+                    knowledgeBase.getClass().getName()));
         }
         final PMML4Result toReturn = getPMML4Result(targetField);
         String fullClassName = this.getClass().getName();
         String packageName = fullClassName.contains(".") ?
                 fullClassName.substring(0, fullClassName.lastIndexOf('.')) : "";
         KiePMMLSessionUtils.Builder builder = KiePMMLSessionUtils.builder((KieBase) knowledgeBase, name, packageName,
-                                                                          toReturn)
+                        toReturn)
                 .withObjectsInSession(requestData, fieldTypeMap)
                 .withOutputFieldsMap(context.getOutputFieldsMap());
         if (logger.isDebugEnabled()) {

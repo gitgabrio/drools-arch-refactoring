@@ -14,33 +14,10 @@ package org.kie.pmml.models.clustering.compilation.factories;/*
  * limitations under the License.
  */
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import org.dmg.pmml.Array;
-import org.dmg.pmml.CompareFunction;
-import org.dmg.pmml.ComparisonMeasure;
-import org.dmg.pmml.DataDictionary;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.Euclidean;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.MiningField;
-import org.dmg.pmml.MiningFunction;
-import org.dmg.pmml.MiningSchema;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.TransformationDictionary;
+import org.dmg.pmml.*;
 import org.dmg.pmml.clustering.Cluster;
 import org.dmg.pmml.clustering.ClusteringField;
 import org.dmg.pmml.clustering.ClusteringModel;
@@ -51,32 +28,23 @@ import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 import org.kie.pmml.models.clustering.compilation.dto.ClusteringCompilationDTO;
-import org.kie.pmml.models.clustering.model.KiePMMLAggregateFunction;
-import org.kie.pmml.models.clustering.model.KiePMMLCluster;
-import org.kie.pmml.models.clustering.model.KiePMMLClusteringField;
-import org.kie.pmml.models.clustering.model.KiePMMLClusteringModel;
-import org.kie.pmml.models.clustering.model.KiePMMLCompareFunction;
-import org.kie.pmml.models.clustering.model.KiePMMLComparisonMeasure;
-import org.kie.pmml.models.clustering.model.KiePMMLMissingValueWeights;
+import org.kie.pmml.models.clustering.model.*;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.commons.Constants.GET_MODEL;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getArray;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getClusteringModel;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataDictionary;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getMiningField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getMiningSchema;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomCluster;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomClusteringField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomEnum;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getObjectsFromArray;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFromFileName;
 import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringConversionUtils.AGGREGATE_FN_MAP;
 import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringModelFactory.KIE_PMML_CLUSTERING_MODEL_TEMPLATE;
 import static org.kie.pmml.models.clustering.compilation.factories.KiePMMLClusteringModelFactory.KIE_PMML_CLUSTERING_MODEL_TEMPLATE_JAVA;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLClusteringModelFactoryTest {
 
@@ -120,7 +88,7 @@ public class KiePMMLClusteringModelFactoryTest {
         transformationDictionary = new TransformationDictionary();
         miningSchema = getMiningSchema(miningFields);
         clusteringModel = getClusteringModel(modelName, MiningFunction.CLUSTERING, miningSchema, clusteringFields,
-                                             clusters);
+                clusters);
         COMPILATION_UNIT = getFromFileName(KIE_PMML_CLUSTERING_MODEL_TEMPLATE_JAVA);
         MODEL_TEMPLATE = COMPILATION_UNIT.getClassByName(KIE_PMML_CLUSTERING_MODEL_TEMPLATE).get();
         pmml = new PMML();

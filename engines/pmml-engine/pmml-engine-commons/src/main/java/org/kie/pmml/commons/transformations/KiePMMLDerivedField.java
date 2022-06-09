@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.commons.transformations;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
+
+import java.io.Serializable;
+import java.util.List;
 
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.commonEvaluate;
 
@@ -40,10 +40,10 @@ public class KiePMMLDerivedField extends AbstractKiePMMLComponent implements Ser
     private String displayName;
 
     private KiePMMLDerivedField(String name,
-                               List<KiePMMLExtension> extensions,
+                                List<KiePMMLExtension> extensions,
                                 DATA_TYPE dataType,
                                 OP_TYPE opType,
-                               KiePMMLExpression kiePMMLExpression) {
+                                KiePMMLExpression kiePMMLExpression) {
         super(name, extensions);
         this.dataType = dataType;
         this.opType = opType;

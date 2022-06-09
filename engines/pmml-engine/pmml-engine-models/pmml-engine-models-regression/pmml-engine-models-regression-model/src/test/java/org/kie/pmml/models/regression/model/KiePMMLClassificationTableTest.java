@@ -16,19 +16,14 @@
 
 package org.kie.pmml.models.regression.model;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.DoubleUnaryOperator;
-
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.testingutility.PMMLContextTest;
+
+import java.util.*;
+import java.util.function.DoubleUnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -50,10 +45,10 @@ public class KiePMMLClassificationTableTest {
     private double secondExpectedValue;
 
     public void initKiePMMLClassificationTableTest(double firstTableResult,
-                                          double secondTableResult,
-                                          String expectedResult,
-                                          double firstExpectedValue,
-                                          double secondExpectedValue) {
+                                                   double secondTableResult,
+                                                   String expectedResult,
+                                                   double firstExpectedValue,
+                                                   double secondExpectedValue) {
         this.firstTableResult = firstTableResult;
         this.secondTableResult = secondTableResult;
         this.expectedResult = expectedResult;

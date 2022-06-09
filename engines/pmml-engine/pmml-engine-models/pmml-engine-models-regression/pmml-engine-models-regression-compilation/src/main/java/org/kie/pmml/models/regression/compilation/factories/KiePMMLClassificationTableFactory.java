@@ -15,25 +15,11 @@
  */
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.CastExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.MethodReferenceExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import org.dmg.pmml.regression.RegressionModel;
@@ -50,17 +36,11 @@ import org.kie.pmml.models.regression.model.tuples.KiePMMLTableSourceCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.TO_RETURN;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.createPopulatedLinkedHashMap;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getChainedMethodCallExprFrom;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getTypedClassOrInterfaceTypeByTypeNames;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getTypedClassOrInterfaceTypeByTypes;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.kie.pmml.commons.Constants.*;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.getFullClassName;
 
@@ -84,15 +64,15 @@ public class KiePMMLClassificationTableFactory {
 
     public static final List<RegressionModel.NormalizationMethod> SUPPORTED_NORMALIZATION_METHODS =
             Arrays.asList(RegressionModel.NormalizationMethod.SOFTMAX,
-                          RegressionModel.NormalizationMethod.SIMPLEMAX,
-                          RegressionModel.NormalizationMethod.NONE,
-                          RegressionModel.NormalizationMethod.LOGIT,
-                          RegressionModel.NormalizationMethod.PROBIT,
-                          RegressionModel.NormalizationMethod.CLOGLOG,
-                          RegressionModel.NormalizationMethod.CAUCHIT);
+                    RegressionModel.NormalizationMethod.SIMPLEMAX,
+                    RegressionModel.NormalizationMethod.NONE,
+                    RegressionModel.NormalizationMethod.LOGIT,
+                    RegressionModel.NormalizationMethod.PROBIT,
+                    RegressionModel.NormalizationMethod.CLOGLOG,
+                    RegressionModel.NormalizationMethod.CAUCHIT);
     public static final List<RegressionModel.NormalizationMethod> UNSUPPORTED_NORMALIZATION_METHODS =
             Arrays.asList(RegressionModel.NormalizationMethod.EXP,
-                          RegressionModel.NormalizationMethod.LOGLOG);
+                    RegressionModel.NormalizationMethod.LOGLOG);
     private static AtomicInteger classArity = new AtomicInteger(0);
 
     private KiePMMLClassificationTableFactory() {
@@ -129,7 +109,7 @@ public class KiePMMLClassificationTableFactory {
                 KiePMMLRegressionTableFactory.getRegressionTableBuilders(compilationDTO);
         Map.Entry<String, String> regressionTableEntry = getClassificationTableBuilder(compilationDTO, toReturn);
         toReturn.put(regressionTableEntry.getKey(), new KiePMMLTableSourceCategory(regressionTableEntry.getValue(),
-                                                                                   ""));
+                ""));
         return toReturn;
     }
 
@@ -139,8 +119,8 @@ public class KiePMMLClassificationTableFactory {
         logger.trace("getRegressionTableBuilder {}", regressionTablesMap);
         String className = "KiePMMLClassificationTable" + classArity.addAndGet(1);
         CompilationUnit cloneCU = JavaParserUtils.getKiePMMLModelCompilationUnit(className,
-                                                                                 compilationDTO.getPackageName(),
-                                                                                 KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE_JAVA, KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE);
+                compilationDTO.getPackageName(),
+                KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE_JAVA, KIE_PMML_CLASSIFICATION_TABLE_TEMPLATE);
         ClassOrInterfaceDeclaration tableTemplate = cloneCU.getClassByName(className)
                 .orElseThrow(() -> new KiePMMLException(MAIN_CLASS_NOT_FOUND + ": " + className));
         final MethodDeclaration staticGetterMethod =
@@ -153,10 +133,10 @@ public class KiePMMLClassificationTableFactory {
 
     static SerializableFunction<LinkedHashMap<String, Double>,
             LinkedHashMap<String, Double>> getProbabilityMapFunction(final RegressionModel.NormalizationMethod normalizationMethod,
-                                                          final boolean isBinary) {
+                                                                     final boolean isBinary) {
         if (UNSUPPORTED_NORMALIZATION_METHODS.contains(normalizationMethod)) {
             throw new KiePMMLInternalException(String.format("Unsupported NormalizationMethod %s",
-                                                             normalizationMethod));
+                    normalizationMethod));
         } else {
             return getProbabilityMapFunctionSupported(normalizationMethod, isBinary);
         }
@@ -164,20 +144,21 @@ public class KiePMMLClassificationTableFactory {
 
     /**
      * Create <b>probabilityMapFunction</b> <code>SerializableFunction</code>
+     *
      * @param normalizationMethod
      * @param isBinary
      * @return
      */
     static SerializableFunction<LinkedHashMap<String, Double>,
             LinkedHashMap<String, Double>> getProbabilityMapFunctionSupported(final RegressionModel.NormalizationMethod normalizationMethod,
-                                                                            final boolean isBinary) {
+                                                                              final boolean isBinary) {
         switch (normalizationMethod) {
             case SOFTMAX:
                 return KiePMMLClassificationTable::getSOFTMAXProbabilityMap;
             case SIMPLEMAX:
                 return KiePMMLClassificationTable::getSIMPLEMAXProbabilityMap;
             case NONE:
-                return isBinary ? KiePMMLClassificationTable::getNONEBinaryProbabilityMap :  KiePMMLClassificationTable::getNONEProbabilityMap;
+                return isBinary ? KiePMMLClassificationTable::getNONEBinaryProbabilityMap : KiePMMLClassificationTable::getNONEProbabilityMap;
             case LOGIT:
                 return KiePMMLClassificationTable::getLOGITProbabilityMap;
             case PROBIT:
@@ -213,37 +194,37 @@ public class KiePMMLClassificationTableFactory {
         // populate map
         String categoryTableMapName = String.format(VARIABLE_NAME_TEMPLATE, CATEGORICAL_TABLE_MAP, variableName);
         createPopulatedLinkedHashMap(newBody, categoryTableMapName, Arrays.asList(String.class.getSimpleName(),
-                                                                                  KiePMMLRegressionTable.class.getName()),
-                                     regressionTableCategoriesMap);
+                        KiePMMLRegressionTable.class.getName()),
+                regressionTableCategoriesMap);
         final MethodCallExpr initializer = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE,
-                                                                      TO_RETURN, classificationTableBody)))
+                        TO_RETURN, classificationTableBody)))
                 .asMethodCallExpr();
         final MethodCallExpr builder = getChainedMethodCallExprFrom("builder", initializer);
         builder.setArgument(0, new StringLiteralExpr(variableName));
         final REGRESSION_NORMALIZATION_METHOD regressionNormalizationMethod =
                 compilationDTO.getDefaultREGRESSION_NORMALIZATION_METHOD();
         getChainedMethodCallExprFrom("withRegressionNormalizationMethod", initializer).setArgument(0,
-                                                                                                   new NameExpr(regressionNormalizationMethod.getClass().getSimpleName() + "." + regressionNormalizationMethod.name()));
+                new NameExpr(regressionNormalizationMethod.getClass().getSimpleName() + "." + regressionNormalizationMethod.name()));
 
         OP_TYPE opType = compilationDTO.getOP_TYPE();
         getChainedMethodCallExprFrom("withOpType", initializer).setArgument(0,
-                                                                            new NameExpr(opType.getClass().getSimpleName() + "." + opType.name()));
+                new NameExpr(opType.getClass().getSimpleName() + "." + opType.name()));
         getChainedMethodCallExprFrom("withCategoryTableMap", initializer).setArgument(0,
-                                                                                      new NameExpr(categoryTableMapName));
+                new NameExpr(categoryTableMapName));
 
         boolean isBinary = compilationDTO.isBinary(regressionTablesMap.size());
         final Expression probabilityMapFunctionExpression =
                 getProbabilityMapFunctionExpression(compilationDTO.getModelNormalizationMethod(), isBinary);
 
         getChainedMethodCallExprFrom("withProbabilityMapFunction", initializer).setArgument(0,
-                                                                                            probabilityMapFunctionExpression);
+                probabilityMapFunctionExpression);
         getChainedMethodCallExprFrom("withIsBinary", initializer).setArgument(0, getExpressionForObject(isBinary));
 
         getChainedMethodCallExprFrom("withTargetField", initializer).setArgument(0,
-                                                                                 getExpressionForObject(compilationDTO.getTargetFieldName()));
+                getExpressionForObject(compilationDTO.getTargetFieldName()));
         getChainedMethodCallExprFrom("withTargetCategory", initializer).setArgument(0,
-                                                                                    getExpressionForObject(null));
+                getExpressionForObject(null));
         classificationTableBody.getStatements().forEach(newBody::addStatement);
         staticGetterMethod.setBody(newBody);
     }
@@ -252,7 +233,7 @@ public class KiePMMLClassificationTableFactory {
                                                           final boolean isBinary) {
         if (UNSUPPORTED_NORMALIZATION_METHODS.contains(normalizationMethod)) {
             throw new KiePMMLInternalException(String.format("Unsupported NormalizationMethod %s",
-                                                             normalizationMethod));
+                    normalizationMethod));
         } else {
             return getProbabilityMapFunctionSupportedExpression(normalizationMethod, isBinary);
         }
@@ -260,6 +241,7 @@ public class KiePMMLClassificationTableFactory {
 
     /**
      * Create <b>probabilityMapFunction</b> <code>MethodReferenceExpr</code>
+     *
      * @param normalizationMethod
      * @param isBinary
      * @return
@@ -276,11 +258,11 @@ public class KiePMMLClassificationTableFactory {
         final String doubleClassName = Double.class.getSimpleName();
         final ClassOrInterfaceType linkedHashMapReferenceType =
                 getTypedClassOrInterfaceTypeByTypeNames(LinkedHashMap.class.getCanonicalName(),
-                                                        Arrays.asList(stringClassName, doubleClassName));
+                        Arrays.asList(stringClassName, doubleClassName));
         final ClassOrInterfaceType consumerType =
                 getTypedClassOrInterfaceTypeByTypes(SerializableFunction.class.getCanonicalName(),
-                                                    Arrays.asList(linkedHashMapReferenceType,
-                                                                  linkedHashMapReferenceType));
+                        Arrays.asList(linkedHashMapReferenceType,
+                                linkedHashMapReferenceType));
         castExpr.setType(consumerType);
         castExpr.setExpression("KiePMMLClassificationTable");
         final MethodReferenceExpr toReturn = new MethodReferenceExpr();

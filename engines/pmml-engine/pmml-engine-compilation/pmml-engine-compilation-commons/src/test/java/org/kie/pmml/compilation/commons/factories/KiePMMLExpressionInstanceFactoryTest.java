@@ -19,14 +19,7 @@ import org.dmg.pmml.Expression;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLExpression;
 
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomApply;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomConstant;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDiscretize;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomFieldRef;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomMapValues;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomNormContinuous;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomNormDiscrete;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomTextIndex;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 import static org.kie.pmml.compilation.commons.factories.InstanceFactoriesTestCommon.commonVerifyKiePMMLExpression;
 
 public class KiePMMLExpressionInstanceFactoryTest {

@@ -63,15 +63,15 @@ public class KiePMMLScorecardModelFactory {
 
     public static Map<String, String> getKiePMMLScorecardModelSourcesMap(final DroolsCompilationDTO<Scorecard> compilationDTO) {
         logger.trace("getKiePMMLScorecardModelSourcesMap {} {} {}", compilationDTO.getFields(),
-                     compilationDTO.getModel(), compilationDTO.getPackageName());
+                compilationDTO.getModel(), compilationDTO.getPackageName());
         CompilationUnit cloneCU = getKiePMMLModelCompilationUnit(compilationDTO,
-                                                                 KIE_PMML_SCORECARD_MODEL_TEMPLATE_JAVA,
-                                                                 KIE_PMML_SCORECARD_MODEL_TEMPLATE);
+                KIE_PMML_SCORECARD_MODEL_TEMPLATE_JAVA,
+                KIE_PMML_SCORECARD_MODEL_TEMPLATE);
         String className = compilationDTO.getSimpleClassName();
         ClassOrInterfaceDeclaration modelTemplate = cloneCU.getClassByName(className)
                 .orElseThrow(() -> new KiePMMLException(MAIN_CLASS_NOT_FOUND + ": " + className));
         setConstructor(compilationDTO,
-                       modelTemplate);
+                modelTemplate);
         Map<String, String> toReturn = new HashMap<>();
         String fullClassName = compilationDTO.getPackageCanonicalClassName();
         toReturn.put(fullClassName, cloneCU.toString());
@@ -83,6 +83,7 @@ public class KiePMMLScorecardModelFactory {
      * <code>Scorecard</code>.
      * <b>It also populate the given <code>Map</code> that has to be used for final
      * <code>KiePMMLScorecardModel</code></b>
+     *
      * @param fields
      * @param model
      * @param fieldTypeMap
@@ -100,6 +101,6 @@ public class KiePMMLScorecardModelFactory {
     static void setConstructor(final DroolsCompilationDTO<Scorecard> compilationDTO,
                                final ClassOrInterfaceDeclaration modelTemplate) {
         KiePMMLModelFactoryUtils.init(compilationDTO,
-                                      modelTemplate);
+                modelTemplate);
     }
 }

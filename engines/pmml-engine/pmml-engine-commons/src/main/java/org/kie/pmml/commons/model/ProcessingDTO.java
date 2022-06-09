@@ -15,16 +15,12 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
+
+import java.util.*;
 
 /**
  * DTO class used to bring around data related to Pre/Post processing
@@ -45,7 +41,6 @@ public class ProcessingDTO {
     private Map<String, Double> probabilityMap;
 
     /**
-     *
      * @param model
      * @param kiePMMLNameValues a <b>mutable</b> list of <code>KiePMMLNameValue</code>
      */
@@ -71,12 +66,11 @@ public class ProcessingDTO {
     }
 
     /**
-     *
      * @param defineFunctions
      * @param derivedFields
      * @param outputFields
      * @param kiePMMLTargets
-     * @param kiePMMLNameValues a <b>mutable</b> list of <code>KiePMMLNameValue</code>
+     * @param kiePMMLNameValues  a <b>mutable</b> list of <code>KiePMMLNameValue</code>
      * @param miningFields
      * @param orderedReasonCodes a <b>mutable</b> list
      */
@@ -89,9 +83,9 @@ public class ProcessingDTO {
                          final List<String> orderedReasonCodes) {
         this.defineFunctions = defineFunctions;
         this.derivedFields = derivedFields;
-        this.outputFields =  outputFields;
+        this.outputFields = outputFields;
         this.kiePMMLTargets = kiePMMLTargets;
-        this.miningFields =  miningFields;
+        this.miningFields = miningFields;
         this.kiePMMLNameValues = kiePMMLNameValues;
         this.orderedReasonCodes = orderedReasonCodes;
         this.predictedDisplayValue = null;
@@ -123,6 +117,7 @@ public class ProcessingDTO {
     /**
      * Add the given <code>KiePMMLNameValue</code> to <b>kiePMMLNameValues</b>
      * if there is not another with the same name; otherwise replace it.
+     *
      * @param toAdd
      * @return
      */

@@ -15,19 +15,6 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.SortedMap;
-import java.util.StringJoiner;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.kie.pmml.api.enums.COUNT_HITS;
 import org.kie.pmml.api.enums.LOCAL_TERM_WEIGHTS;
@@ -37,6 +24,12 @@ import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPossibleSources;
@@ -222,17 +215,17 @@ public class KiePMMLTextIndex extends AbstractKiePMMLComponent implements KiePMM
         if (textIndexNormalizations != null) {
             for (KiePMMLTextIndexNormalization textIndexNormalization : textIndexNormalizations) {
                 text = textIndexNormalization.replace(text, isCaseSensitive, maxLevenshteinDistance, false,
-                                                      DEFAULT_TOKENIZER);
+                        DEFAULT_TOKENIZER);
             }
         }
         return evaluateRaw(isCaseSensitive,
-                           tokenize,
-                           term,
-                           text,
-                           wordSeparatorCharacterRE,
-                           localTermWeights,
-                           countHits,
-                           levenshteinDistance);
+                tokenize,
+                term,
+                text,
+                wordSeparatorCharacterRE,
+                localTermWeights,
+                countHits,
+                levenshteinDistance);
     }
 
     @Override
@@ -263,7 +256,7 @@ public class KiePMMLTextIndex extends AbstractKiePMMLComponent implements KiePMM
     @Override
     public int hashCode() {
         return Objects.hash(localTermWeights, isCaseSensitive, maxLevenshteinDistance, countHits,
-                            wordSeparatorCharacterRE, tokenize);
+                wordSeparatorCharacterRE, tokenize);
     }
 
     public static class Builder extends AbstractKiePMMLComponent.Builder<KiePMMLTextIndex> {

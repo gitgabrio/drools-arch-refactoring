@@ -16,11 +16,6 @@
 
 package org.kie.pmml.regression.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,12 +24,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogisticRegressionIrisDataTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "LogisticRegressionIrisData";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
 
     private static final String MODEL_NAME = "LogisticRegressionIrisData";
     private static final String TARGET_FIELD = "Species";
@@ -52,7 +52,7 @@ public class LogisticRegressionIrisDataTest extends AbstractPMMLTest {
     private String expectedResult;
 
     public void initLogisticRegressionIrisDataTest(double sepalLength, double sepalWidth, double petalLength,
-                                          double petalWidth, String expectedResult) {
+                                                   double petalWidth, String expectedResult) {
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;

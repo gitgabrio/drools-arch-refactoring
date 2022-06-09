@@ -2,24 +2,24 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <groupId>org.kie</groupId>
-    <artifactId>pmml-engine</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.kie</groupId>
+        <artifactId>pmml-engine</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>pmml-engine-compilation</artifactId>
-  <packaging>pom</packaging>
+    <artifactId>pmml-engine-compilation</artifactId>
+    <packaging>pom</packaging>
 
-  <name>PMML :: ENGINE :: Compiler</name>
-  <description>PMML Compiler</description>
+    <name>PMML :: ENGINE :: Compiler</name>
+    <description>PMML Compiler</description>
 
-  <modules>
-    <module>pmml-engine-compilation-api</module>
-    <module>pmml-engine-compilation-commons</module>
-    <module>pmml-engine-compilation-core</module>
-  </modules>
+    <modules>
+        <module>pmml-engine-compilation-api</module>
+        <module>pmml-engine-compilation-commons</module>
+        <module>pmml-engine-compilation-core</module>
+    </modules>
 
 
 </project>

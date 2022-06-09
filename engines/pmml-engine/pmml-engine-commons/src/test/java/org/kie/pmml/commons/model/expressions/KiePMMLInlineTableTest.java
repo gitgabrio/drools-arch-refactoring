@@ -16,14 +16,14 @@
 
 package org.kie.pmml.commons.model.expressions;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +37,7 @@ public class KiePMMLInlineTableTest {
                     Map<String, Object> columnValues = IntStream.range(0, 3)
                             .boxed()
                             .collect(Collectors.toMap(j -> "KEY-" + i + "-" + j,
-                                                      j -> "VALUE-" + i + "-" + j));
+                                    j -> "VALUE-" + i + "-" + j));
                     return new KiePMMLRow(columnValues);
                 })
                 .collect(Collectors.toList());

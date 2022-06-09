@@ -46,13 +46,13 @@ public class RegressionModelImplementationProviderTest {
     private static final String SOURCE_3 = "test_regression_clax.pmml";
     private static final String PACKAGE_NAME = "packagename";
     private static final List<RegressionModel.NormalizationMethod> VALID_NORMALIZATION_METHODS = Arrays.asList(NONE,
-                                                                                                               SOFTMAX,
-                                                                                                               LOGIT,
-                                                                                                               EXP,
-                                                                                                               PROBIT,
-                                                                                                               CLOGLOG,
-                                                                                                               LOGLOG,
-                                                                                                               CAUCHIT);
+            SOFTMAX,
+            LOGIT,
+            EXP,
+            PROBIT,
+            CLOGLOG,
+            LOGLOG,
+            CAUCHIT);
 
     @Test
     void getPMMLModelType() {

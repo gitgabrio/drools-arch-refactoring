@@ -15,6 +15,8 @@
  */
 package org.kie.pmml.api.utils;
 
+import org.kie.pmml.api.enums.PMML_MODEL;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -23,8 +25,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
-
-import org.kie.pmml.api.enums.PMML_MODEL;
 
 public class SourceUtils {
 
@@ -49,7 +49,7 @@ public class SourceUtils {
         if ("true".equalsIgnoreCase(dumpKiePmmlSources)) {
             String outputDir = System.getProperty(DUMP_KIE_PMML_DIRECTORY, DEFAULT_DUMP_KIE_PMML_DIRECTORY);
             String targetPath = String.format("%1$s%2$starget%2$s%3$s", System.getProperty("user.dir"),
-                                              File.separator, outputDir);
+                    File.separator, outputDir);
             final File targetDirectory = new File(targetPath);
             if (!targetDirectory.exists()) {
                 Files.createDirectories(targetDirectory.toPath().getParent());
@@ -62,7 +62,7 @@ public class SourceUtils {
                                              String dumpKieSourcesFolder) {
         for (Map.Entry<String, String> entry : classNameSourceMap.entrySet()) {
             Path sourceDestinationPath = Paths.get(targetDirectory.getPath(), dumpKieSourcesFolder,
-                                                   entry.getKey().replace('.', '/') + ".java");
+                    entry.getKey().replace('.', '/') + ".java");
             writeFile(sourceDestinationPath, entry.getValue().getBytes(StandardCharsets.UTF_8));
         }
     }

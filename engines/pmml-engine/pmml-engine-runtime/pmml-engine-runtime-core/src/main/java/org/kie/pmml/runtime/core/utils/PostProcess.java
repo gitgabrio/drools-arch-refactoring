@@ -15,14 +15,6 @@
  */
 package org.kie.pmml.runtime.core.utils;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -34,6 +26,10 @@ import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.api.enums.ResultCode.OK;
 
@@ -60,6 +56,7 @@ public class PostProcess {
      * Method used to populate a <code>ProcessingDTO</code> with values accumulated inside the given
      * <code>KiePMMLModel</code>
      * during evaluation
+     *
      * @param pmml4Result
      * @param pmmlContext
      * @param toPopulate
@@ -75,7 +72,7 @@ public class PostProcess {
                 .map((Function<Map.Entry<String, Object>, Map.Entry<String, Double>>) entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (Double) entry.getValue()))
                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1,
-                                          LinkedHashMap::new));
+                        LinkedHashMap::new));
         final List<String> orderedReasonCodes = new ArrayList<>(sortedByValue.keySet());
         toPopulate.addOrderedReasonCodes(orderedReasonCodes);
         toPopulate.setAffinity(pmmlContext.getAffinity());
@@ -86,6 +83,7 @@ public class PostProcess {
 
     /**
      * Execute <b>modifications</b> on target result.
+     *
      * @param toModify
      * @param processingDTO
      * @see <a href="http://dmg.org/pmml/v4-4-1/Targets.html>Targets</a>
@@ -112,6 +110,7 @@ public class PostProcess {
 
     /**
      * Verify that the returned value has the required type as defined inside <code>DataDictionary/MiningSchema</code>
+     *
      * @param model
      * @param toUpdate
      */
@@ -130,6 +129,7 @@ public class PostProcess {
 
     /**
      * Populated the <code>PMML4Result</code> with <code>OutputField</code> results
+     *
      * @param toUpdate
      * @param processingDTO
      */

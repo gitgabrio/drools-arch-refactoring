@@ -15,24 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.*;
+import org.junit.jupiter.api.Test;
+import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.dmg.pmml.CompoundPredicate;
-import org.dmg.pmml.DataField;
-import org.dmg.pmml.False;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.SimplePredicate;
-import org.dmg.pmml.SimpleSetPredicate;
-import org.dmg.pmml.True;
-import org.junit.jupiter.api.Test;
-import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
-
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomCompoundPredicate;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDataField;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomSimplePredicate;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomSimpleSetPredicate;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 import static org.kie.pmml.compilation.commons.factories.InstanceFactoriesTestCommon.commonVerifyKiePMMLPredicate;
 
 public class KiePMMLPredicateInstanceFactoryTest {

@@ -16,11 +16,6 @@
 
 package org.kie.pmml.models.regression.compilation.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.validator.ProblemReporter;
@@ -31,10 +26,13 @@ import org.dmg.pmml.regression.PredictorTerm;
 import org.dmg.pmml.regression.RegressionTable;
 import org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.fail;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getCategoricalPredictor;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getNumericPredictor;
-import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getPredictorTerm;
+import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.*;
 
 public abstract class AbstractKiePMMLRegressionTableRegressionFactoryTest {
 
@@ -64,8 +62,8 @@ public abstract class AbstractKiePMMLRegressionTableRegressionFactoryTest {
             IntStream.range(0, 2).forEach(j -> categoricalPredictors.add(getCategoricalPredictor("CatPred-" + i, 27.12, 3.46)));
             numericPredictors.add(getNumericPredictor("NumPred-" + i, 2, 13.11));
             predictorTerms.add(getPredictorTerm("PredTerm-" + i, 32.29,
-                                                Arrays.asList(categoricalPredictors.get(0).getName().getValue(),
-                                                              numericPredictors.get(0).getName().getValue())));
+                    Arrays.asList(categoricalPredictors.get(0).getName().getValue(),
+                            numericPredictors.get(0).getName().getValue())));
         });
         return PMMLModelTestUtils.getRegressionTable(categoricalPredictors, numericPredictors, predictorTerms, intercept, targetCategory);
     }

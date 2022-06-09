@@ -80,9 +80,9 @@ public class PMMLTreeModelEvaluatorTest {
         KnowledgeBuilderImpl knowledgeBuilder = new KnowledgeBuilderImpl();
         final CommonCompilationDTO<TreeModel> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                                                                       pmml,
-                                                                       (TreeModel) pmml.getModels().get(0),
-                                                                       new HasKnowledgeBuilderMock(knowledgeBuilder));
+                        pmml,
+                        (TreeModel) pmml.getModels().get(0),
+                        new HasKnowledgeBuilderMock(knowledgeBuilder));
 
         kiePMMLModel = provider.getKiePMMLModel(compilationDTO);
         kieBase = new KieHelper()
@@ -196,8 +196,8 @@ public class PMMLTreeModelEvaluatorTest {
             assertThat(resultVariables).containsKey(TARGET_FIELD);
             assertThat(resultVariables.get(TARGET_FIELD)).isEqualTo(expectedScore);
         } else {
-        	assertThat(retrieved.getResultCode()).isEqualTo(ResultCode.FAIL.getName());
-        	assertThat(resultVariables).doesNotContainKey(TARGET_FIELD);
+            assertThat(retrieved.getResultCode()).isEqualTo(ResultCode.FAIL.getName());
+            assertThat(resultVariables).doesNotContainKey(TARGET_FIELD);
         }
     }
 

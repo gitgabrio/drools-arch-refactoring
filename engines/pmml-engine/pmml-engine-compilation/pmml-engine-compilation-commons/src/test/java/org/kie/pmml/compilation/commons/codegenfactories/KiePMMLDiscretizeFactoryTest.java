@@ -16,18 +16,9 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.Discretize;
-import org.dmg.pmml.DiscretizeBin;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.Interval;
+import org.dmg.pmml.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLDiscretize;
@@ -35,10 +26,15 @@ import org.kie.pmml.commons.model.expressions.KiePMMLDiscretizeBin;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.compilation.api.CommonTestingUtils.getDATA_TYPEString;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 
 public class KiePMMLDiscretizeFactoryTest {
 
@@ -56,7 +52,7 @@ public class KiePMMLDiscretizeFactoryTest {
     public static void setup() {
         discretizeBin1 = getDiscretizeBin(getInterval(null, 20, Interval.Closure.OPEN_OPEN), "discretizeBin1");
         discretizeBin2 = getDiscretizeBin(getInterval(21, 30,
-                                                      Interval.Closure.OPEN_CLOSED), "discretizeBin2");
+                Interval.Closure.OPEN_CLOSED), "discretizeBin2");
         discretizeBins = Arrays.asList(discretizeBin1, discretizeBin2);
     }
 

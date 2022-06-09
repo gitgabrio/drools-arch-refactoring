@@ -16,24 +16,10 @@
 
 package org.kie.pmml.runtime.core.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.api.pmml.ParameterInfo;
-import org.kie.pmml.api.enums.CLOSURE;
-import org.kie.pmml.api.enums.DATA_TYPE;
-import org.kie.pmml.api.enums.INVALID_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.MINING_FUNCTION;
-import org.kie.pmml.api.enums.MISSING_VALUE_TREATMENT_METHOD;
-import org.kie.pmml.api.enums.OP_TYPE;
+import org.kie.pmml.api.enums.*;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.commons.model.KiePMMLMiningField;
@@ -48,6 +34,10 @@ import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLParameterField;
 import org.kie.pmml.commons.transformations.KiePMMLTransformationDictionary;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -65,11 +55,11 @@ public class PreProcessTest {
     @Test
     void convertInputDataConvertibles() {
         List<KiePMMLMiningField> miningFields = IntStream.range(0, 3).mapToObj(i -> {
-            DATA_TYPE dataType = DATA_TYPE.values()[i];
-            return KiePMMLMiningField.builder("FIELD-" + i, null)
-                    .withDataType(dataType)
-                    .build();
-        })
+                    DATA_TYPE dataType = DATA_TYPE.values()[i];
+                    return KiePMMLMiningField.builder("FIELD-" + i, null)
+                            .withDataType(dataType)
+                            .build();
+                })
                 .collect(Collectors.toList());
         PMMLRequestData pmmlRequestData = new PMMLRequestData("123", "modelName");
         pmmlRequestData.addRequestParam("FIELD-0", 123);
@@ -89,12 +79,12 @@ public class PreProcessTest {
     void convertInputDataNotConvertibles() {
         assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             List<KiePMMLMiningField> miningFields = IntStream.range(0, 3).mapToObj(i -> {
-                DATA_TYPE dataType = DATA_TYPE.values()[i];
-                new MiningField("FIELD-" + i, null, null, dataType, null, null, null, null, null, null);
-                return KiePMMLMiningField.builder("FIELD-" + i, null)
-                        .withDataType(dataType)
-                        .build();
-            })
+                        DATA_TYPE dataType = DATA_TYPE.values()[i];
+                        new MiningField("FIELD-" + i, null, null, dataType, null, null, null, null, null, null);
+                        return KiePMMLMiningField.builder("FIELD-" + i, null)
+                                .withDataType(dataType)
+                                .build();
+                    })
                     .collect(Collectors.toList());
             PMMLRequestData pmmlRequestData = new PMMLRequestData("123", "modelName");
             pmmlRequestData.addRequestParam("FIELD-0", 123);
@@ -294,12 +284,12 @@ public class PreProcessTest {
     @Test
     void verifyAddMissingValuesNotMissingReturnInvalid() {
         List<KiePMMLMiningField> miningFields = IntStream.range(0, 3).mapToObj(i -> {
-            DATA_TYPE dataType = DATA_TYPE.values()[i];
-            return KiePMMLMiningField.builder("FIELD-" + i, null)
-                    .withDataType(dataType)
-                    .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.RETURN_INVALID)
-                    .build();
-        })
+                    DATA_TYPE dataType = DATA_TYPE.values()[i];
+                    return KiePMMLMiningField.builder("FIELD-" + i, null)
+                            .withDataType(dataType)
+                            .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.RETURN_INVALID)
+                            .build();
+                })
                 .collect(Collectors.toList());
         PMMLRequestData pmmlRequestData = new PMMLRequestData("123", "modelName");
         pmmlRequestData.addRequestParam("FIELD-0", "123");
@@ -311,12 +301,12 @@ public class PreProcessTest {
     @Test
     void verifyAddMissingValuesNotMissingNotReturnInvalidNotReplacement() {
         List<KiePMMLMiningField> miningFields = IntStream.range(0, 3).mapToObj(i -> {
-            DATA_TYPE dataType = DATA_TYPE.values()[i];
-            return KiePMMLMiningField.builder("FIELD-" + i, null)
-                    .withDataType(dataType)
-                    .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.AS_IS)
-                    .build();
-        })
+                    DATA_TYPE dataType = DATA_TYPE.values()[i];
+                    return KiePMMLMiningField.builder("FIELD-" + i, null)
+                            .withDataType(dataType)
+                            .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.AS_IS)
+                            .build();
+                })
                 .collect(Collectors.toList());
         PMMLRequestData pmmlRequestData = new PMMLRequestData("123", "modelName");
         PreProcess.verifyAddMissingValues(miningFields, pmmlRequestData);
@@ -360,13 +350,13 @@ public class PreProcessTest {
     void verifyAddMissingValuesMissingReturnInvalid() {
         assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             List<KiePMMLMiningField> miningFields = IntStream.range(0, 3).mapToObj(i -> {
-                DATA_TYPE dataType = DATA_TYPE.values()[i];
+                        DATA_TYPE dataType = DATA_TYPE.values()[i];
 
-                return KiePMMLMiningField.builder("FIELD-" + i, null)
-                        .withDataType(dataType)
-                        .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.RETURN_INVALID)
-                        .build();
-            })
+                        return KiePMMLMiningField.builder("FIELD-" + i, null)
+                                .withDataType(dataType)
+                                .withMissingValueTreatmentMethod(MISSING_VALUE_TREATMENT_METHOD.RETURN_INVALID)
+                                .build();
+                    })
                     .collect(Collectors.toList());
             PMMLRequestData pmmlRequestData = new PMMLRequestData("123", "modelName");
             PreProcess.verifyAddMissingValues(miningFields, pmmlRequestData);
@@ -416,7 +406,7 @@ public class PreProcessTest {
                 kiePMMLApply).build();
         // From TransformationDictionary
         KiePMMLTransformationDictionary transformationDictionary = KiePMMLTransformationDictionary.builder(
-                "transformationDictionary", Collections.emptyList())
+                        "transformationDictionary", Collections.emptyList())
                 .withDefineFunctions(Collections.singletonList(defineFunction))
                 .withDerivedFields(Collections.singletonList(derivedField))
                 .build();

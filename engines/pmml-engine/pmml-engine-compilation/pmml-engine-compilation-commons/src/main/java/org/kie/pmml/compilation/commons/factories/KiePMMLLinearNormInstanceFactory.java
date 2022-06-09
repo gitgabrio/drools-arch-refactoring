@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
+import org.dmg.pmml.LinearNorm;
+import org.kie.pmml.commons.model.expressions.KiePMMLLinearNorm;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.dmg.pmml.LinearNorm;
-import org.kie.pmml.commons.model.expressions.KiePMMLLinearNorm;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 
@@ -40,7 +40,7 @@ public class KiePMMLLinearNormInstanceFactory {
 
     static KiePMMLLinearNorm getKiePMMLLinearNorm(LinearNorm linearNorm) {
         return new KiePMMLLinearNorm(UUID.randomUUID().toString(), getKiePMMLExtensions(linearNorm.getExtensions()),
-                                     linearNorm.getOrig().doubleValue(),
-                                     linearNorm.getNorm().doubleValue());
+                linearNorm.getOrig().doubleValue(),
+                linearNorm.getNorm().doubleValue());
     }
 }

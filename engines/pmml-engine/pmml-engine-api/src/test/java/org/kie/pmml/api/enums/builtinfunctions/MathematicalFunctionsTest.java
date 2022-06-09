@@ -16,11 +16,11 @@
 
 package org.kie.pmml.api.enums.builtinfunctions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;

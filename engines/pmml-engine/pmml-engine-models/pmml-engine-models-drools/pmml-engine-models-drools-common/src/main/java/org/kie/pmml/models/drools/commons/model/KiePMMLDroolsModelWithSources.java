@@ -29,7 +29,7 @@ import org.kie.pmml.commons.model.KiePMMLModelWithSources;
  * KIE representation of PMML model that use <b>Drools</b> for implementation
  */
 public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources implements IsDrools,
-                                                                                      HasRule {
+        HasRule {
 
     private static final long serialVersionUID = -168095076511604775L;
     protected Map<String, String> rulesSourceMap;

@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.FieldColumnPair;
 import org.kie.pmml.commons.model.expressions.KiePMMLFieldColumnPair;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 
@@ -39,7 +39,7 @@ public class KiePMMLFieldColumnPairInstanceFactory {
 
     static KiePMMLFieldColumnPair getKiePMMLFieldColumnPair(final FieldColumnPair fieldColumnPair) {
         return new KiePMMLFieldColumnPair(fieldColumnPair.getField().getValue(),
-                                          getKiePMMLExtensions(fieldColumnPair.getExtensions()),
-                                          fieldColumnPair.getColumn());
+                getKiePMMLExtensions(fieldColumnPair.getExtensions()),
+                fieldColumnPair.getColumn());
     }
 }

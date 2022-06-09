@@ -97,21 +97,21 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
         model.setMiningSchema(miningSchema);
         Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         fieldTypeMap.put(targetFieldString, new KiePMMLOriginalTypeGeneratedType(targetFieldString,
-                                                                                 getSanitizedClassName(targetFieldString)));
+                getSanitizedClassName(targetFieldString)));
         String packageName = "net.test";
         PMML pmml = new PMML();
         pmml.setDataDictionary(dataDictionary);
         pmml.addModels(model);
         final CommonCompilationDTO<TreeModel> source =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(packageName,
-                                                                       pmml,
-                                                                       model,
-                                                                       new HasClassLoaderMock());
+                        pmml,
+                        model,
+                        new HasClassLoaderMock());
         final DroolsCompilationDTO<TreeModel> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(source, fieldTypeMap);
         CompilationUnit retrieved =
                 KiePMMLDroolsModelFactoryUtils.getKiePMMLModelCompilationUnit(droolsCompilationDTO, TEMPLATE_SOURCE,
-                                                                              TEMPLATE_CLASS_NAME);
+                        TEMPLATE_CLASS_NAME);
         assertThat(retrieved.getPackageDeclaration().get().getNameAsString()).isEqualTo(droolsCompilationDTO.getPackageName());
         ConstructorDeclaration constructorDeclaration =
                 retrieved.getClassByName(modelName).get().getDefaultConstructor().get();
@@ -120,7 +120,7 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
         Map<String, Expression> assignExpressionMap = new HashMap<>();
         assignExpressionMap.put("targetField", new StringLiteralExpr(targetFieldString));
         assignExpressionMap.put("miningFunction",
-                                new NameExpr(miningFunction.getClass().getName() + "." + miningFunction.name()));
+                new NameExpr(miningFunction.getClass().getName() + "." + miningFunction.name()));
         assignExpressionMap.put("pmmlMODEL", new NameExpr(pmmlModel.getClass().getName() + "." + pmmlModel.name()));
         String expectedKModulePackageName = getSanitizedPackageName(packageName + "." + modelName);
         assignExpressionMap.put("kModulePackageName", new StringLiteralExpr(expectedKModulePackageName));
@@ -140,18 +140,18 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
         MINING_FUNCTION miningFunction = MINING_FUNCTION.CLASSIFICATION;
         String kModulePackageName = getSanitizedPackageName("kModulePackageName");
         KiePMMLDroolsModelFactoryUtils.setConstructor(model, constructorDeclaration, tableName, targetField,
-                                                      miningFunction,
-                                                      kModulePackageName);
+                miningFunction,
+                kModulePackageName);
         Map<Integer, Expression> superInvocationExpressionsMap = new HashMap<>();
         Map<String, Expression> assignExpressionMap = new HashMap<>();
         assignExpressionMap.put("targetField", new StringLiteralExpr(targetField));
         assignExpressionMap.put("miningFunction",
-                                new NameExpr(miningFunction.getClass().getName() + "." + miningFunction.name()));
+                new NameExpr(miningFunction.getClass().getName() + "." + miningFunction.name()));
         assignExpressionMap.put("pmmlMODEL", new NameExpr(pmmlModel.getClass().getName() + "." + pmmlModel.name()));
         assignExpressionMap.put("kModulePackageName", new StringLiteralExpr(kModulePackageName));
         assertThat(commonEvaluateConstructor(constructorDeclaration, tableName.asString(),
-                                             superInvocationExpressionsMap,
-                                             assignExpressionMap)).isTrue();
+                superInvocationExpressionsMap,
+                assignExpressionMap)).isTrue();
     }
 
     @Test
@@ -161,7 +161,7 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
         IntStream.range(0, 3).forEach(index -> {
             String key = "KEY-" + index;
             KiePMMLOriginalTypeGeneratedType value = new KiePMMLOriginalTypeGeneratedType("ORIGINALTYPE-" + index,
-                                                                                          "GENERATEDTYPE-" + index);
+                    "GENERATEDTYPE-" + index);
             fieldTypeMap.put(key, value);
         });
         KiePMMLDroolsModelFactoryUtils.addFieldTypeMapPopulation(blockStmt, fieldTypeMap);
@@ -172,11 +172,11 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
                                             Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap,
                                             int expectedMethodCallSize) {
         List<MethodCallExpr> retrieved = getMethodCallExprList(blockStmt, expectedMethodCallSize, "fieldTypeMap",
-                                                               "put");
+                "put");
         for (Map.Entry<String, KiePMMLOriginalTypeGeneratedType> entry : fieldTypeMap.entrySet()) {
             assertThat(retrieved.stream()
-                               .map(MethodCallExpr::getArguments)
-                               .anyMatch(arguments -> evaluateFieldTypeMapPopulation(entry, arguments))).isTrue();
+                    .map(MethodCallExpr::getArguments)
+                    .anyMatch(arguments -> evaluateFieldTypeMapPopulation(entry, arguments))).isTrue();
         }
     }
 
@@ -197,6 +197,7 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
     /**
      * Return a <code>List&lt;MethodCallExpr&gt;</code> where every element <b>scope' name</b> is <code>scope</code>
      * and every element <b>name</b> is <code>method</code>
+     *
      * @param blockStmt
      * @param expectedSize
      * @param scope
@@ -218,6 +219,7 @@ public class KiePMMLDroolsModelFactoryUtilsTest {
     /**
      * Verify the <b>scope' name</b> scope of the given <code>MethodCallExpr</code> is <code>scope</code>
      * and the <b>name</b> of the given <code>MethodCallExpr</code> is <code>method</code>
+     *
      * @param methodCallExpr
      * @param scope
      * @param method

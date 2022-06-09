@@ -1,10 +1,5 @@
 package org.kie.pmml.clustering.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,12 +9,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EuclideanDistanceTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "euclideanDistance";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final double DOUBLE_VALID_PERCENTAGE = 0.99999;
     private static final String MODEL_NAME = "euclidianDistance";
     private static final String CLUSTER_ID_FIELD = "predictedValue";

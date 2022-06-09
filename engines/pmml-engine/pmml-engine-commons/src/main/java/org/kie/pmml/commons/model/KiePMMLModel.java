@@ -15,12 +15,6 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
-
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.models.MiningField;
@@ -30,6 +24,12 @@ import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.commons.transformations.KiePMMLLocalTransformations;
 import org.kie.pmml.commons.transformations.KiePMMLTransformationDictionary;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * KIE representation of PMML model
@@ -70,6 +70,7 @@ public abstract class KiePMMLModel extends AbstractKiePMMLComponent implements P
      * kmodule.xml and to use for package creation inside PMMLAssemblerService
      * By default returns the package name of the current instance
      * To be eventually overridden.
+     *
      * @return
      */
     public String getKModulePackageName() {
@@ -111,8 +112,9 @@ public abstract class KiePMMLModel extends AbstractKiePMMLComponent implements P
 
     /**
      * models, so it may be <b>ignored</b> by others
+     *
      * @param requestData
-     * @param context used to accumulate additional evaluated values
+     * @param context     used to accumulate additional evaluated values
      * @return
      */
     public abstract Object evaluate(final Map<String, Object> requestData,

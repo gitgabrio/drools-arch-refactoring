@@ -15,13 +15,14 @@
  */
 package org.kie.pmml.api.enums;
 
+import org.kie.pmml.api.exceptions.KieEnumException;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-import org.kie.pmml.api.exceptions.KieEnumException;
-
 /**
  * PMML models
+ *
  * @see <a href=http://dmg.org/pmml/v4-4/GeneralStructure.html#xsdGroup_MODEL-ELEMENT>MODEL-ELEMENT</a>
  */
 public enum PMML_MODEL implements Named {

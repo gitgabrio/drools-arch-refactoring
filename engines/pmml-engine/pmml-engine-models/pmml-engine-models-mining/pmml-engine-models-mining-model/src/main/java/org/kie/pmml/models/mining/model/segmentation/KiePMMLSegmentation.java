@@ -15,12 +15,12 @@
  */
 package org.kie.pmml.models.mining.model.segmentation;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
 import org.kie.pmml.models.mining.model.enums.MULTIPLE_MODEL_METHOD;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-3/MultipleModels.html#xsdElement_Segmentation>Segmentation</a>
@@ -37,6 +37,7 @@ public class KiePMMLSegmentation extends AbstractKiePMMLComponent {
 
     /**
      * Builder to auto-generate the <b>id</b>
+     *
      * @return
      */
     public static Builder builder(String name, List<KiePMMLExtension> extensions, MULTIPLE_MODEL_METHOD multipleModelMethod) {

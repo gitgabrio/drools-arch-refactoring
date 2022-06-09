@@ -15,16 +15,16 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.Target;
 import org.kie.pmml.api.enums.CAST_INTEGER;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.api.models.TargetValue;
 import org.kie.pmml.commons.model.KiePMMLTarget;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLTarget</code> instance
@@ -46,15 +46,15 @@ public class KiePMMLTargetInstanceFactory {
         final CAST_INTEGER castInteger = target.getCastInteger() != null ?
                 CAST_INTEGER.byName(target.getCastInteger().value()) : null;
         TargetField targetField = new TargetField(targetValues,
-                                                  opType,
-                                                  field,
-                                                  castInteger,
-                                                  target.getMin(),
-                                                  target.getMax(),
-                                                  target.getRescaleConstant(),
-                                                  target.getRescaleFactor());
+                opType,
+                field,
+                castInteger,
+                target.getMin(),
+                target.getMax(),
+                target.getRescaleConstant(),
+                target.getRescaleFactor());
         final KiePMMLTarget.Builder builder = KiePMMLTarget.builder(targetField.getName(), Collections.emptyList(),
-                                                                    targetField);
+                targetField);
         return builder.build();
     }
 

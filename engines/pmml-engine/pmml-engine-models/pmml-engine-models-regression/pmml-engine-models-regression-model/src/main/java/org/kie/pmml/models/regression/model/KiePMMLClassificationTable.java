@@ -15,13 +15,6 @@
  */
 package org.kie.pmml.models.regression.model;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.DoubleUnaryOperator;
-
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -29,6 +22,13 @@ import org.kie.pmml.api.iinterfaces.SerializableFunction;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.models.regression.model.enums.REGRESSION_NORMALIZATION_METHOD;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.DoubleUnaryOperator;
 
 import static org.kie.pmml.commons.Constants.EXPECTED_TWO_ENTRIES_RETRIEVED;
 
@@ -53,13 +53,14 @@ public final class KiePMMLClassificationTable extends AbstractKiePMMLTable {
         }
         context.setProbabilityResultMap(probabilityMapFunction.apply(resultMap));
         final Map.Entry<String, Double> predictedEntry = Collections.max(context.getProbabilityResultMap().entrySet(),
-                                                                         Map.Entry.comparingByValue());
+                Map.Entry.comparingByValue());
         return predictedEntry.getKey();
     }
 
     /**
      * A <b>Classification</b> is considered <b>binary</b> if it is of <b>CATEGORICAL</b> type and contains
      * <b>exactly</b> two Regression tables
+     *
      * @return
      */
     public boolean isBinary() {
@@ -181,7 +182,7 @@ public final class KiePMMLClassificationTable extends AbstractKiePMMLTable {
 
         protected Builder(String name, List<KiePMMLExtension> extensions) {
             super("KiePMMLRegressionClassificationTable-", () -> new KiePMMLClassificationTable(name,
-                                                                                                extensions));
+                    extensions));
         }
 
         public Builder withRegressionNormalizationMethod(REGRESSION_NORMALIZATION_METHOD regressionNormalizationMethod) {
@@ -207,7 +208,7 @@ public final class KiePMMLClassificationTable extends AbstractKiePMMLTable {
 
         /**
          * @param probabilityMapFunction Keep in mind that insertion order matters, so provide an ordered map
-         * inside the <code>SerializableFunction</code>
+         *                               inside the <code>SerializableFunction</code>
          * @return
          */
         public Builder withProbabilityMapFunction(SerializableFunction<LinkedHashMap<String, Double>,

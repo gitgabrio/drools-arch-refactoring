@@ -85,7 +85,7 @@ public class FRI implements Serializable {
             toReturn = SLASH + toReturn;
         }
         if (toReturn.startsWith(modelPrefix)) {
-            toReturn =  toReturn.substring(modelPrefix.length() -1) ;
+            toReturn = toReturn.substring(modelPrefix.length() - 1);
         }
         return toReturn;
     }

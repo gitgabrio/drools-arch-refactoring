@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.Field;
 import org.dmg.pmml.SimplePredicate;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.predicates.KiePMMLSimplePredicate;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomDataField;
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomSimplePredicate;

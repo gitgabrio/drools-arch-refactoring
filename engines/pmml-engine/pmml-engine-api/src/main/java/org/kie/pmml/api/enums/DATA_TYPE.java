@@ -15,16 +15,16 @@
  */
 package org.kie.pmml.api.enums;
 
+import org.kie.pmml.api.exceptions.KieDataFieldException;
+import org.kie.pmml.api.exceptions.KieEnumException;
+import org.kie.pmml.api.utils.ConverterTypeUtil;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
-
-import org.kie.pmml.api.exceptions.KieDataFieldException;
-import org.kie.pmml.api.exceptions.KieEnumException;
-import org.kie.pmml.api.utils.ConverterTypeUtil;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/DataDictionary.html#xsdType_DATATYPE>DATATYPE</a>
@@ -77,6 +77,7 @@ public enum DATA_TYPE implements Named {
      * in the original <code>DataDictionary</code>.
      * Needed for example when an <b>unmarshalled</b> <code>Predicate</code> expose a field' value as <code>String</code>
      * while the value' type is defined as <code>double</code> in the <code>DataField</code>definition.
+     *
      * @param rawValue
      * @return
      */

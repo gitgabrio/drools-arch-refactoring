@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.LocalTransformations;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLLocalTransformations;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLDerivedFieldInstanceFactory.getKiePMMLDerivedField;
 
@@ -38,7 +38,7 @@ public class KiePMMLLocalTransformationsInstanceFactory {
     }
 
     public static KiePMMLLocalTransformations getKiePMMLLocalTransformations(final LocalTransformations localTransformations,
-                                                                      final List<Field<?>> fields) {
+                                                                             final List<Field<?>> fields) {
         final List<KiePMMLDerivedField> kiePMMLDerivedFields =
                 localTransformations.getDerivedFields().stream()
                         .map(derivedField -> getKiePMMLDerivedField(derivedField, fields))

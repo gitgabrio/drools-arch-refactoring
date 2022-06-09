@@ -43,8 +43,8 @@ public class KiePMMLTextIndexInstanceFactory {
         final String wordSeparatorCharacterRE = textIndex.getWordSeparatorCharacterRE() != null ?
                 StringEscapeUtils.escapeJava(textIndex.getWordSeparatorCharacterRE()) : null;
         return KiePMMLTextIndex.builder(textIndex.getTextField().getValue(),
-                                        getKiePMMLExtensions(textIndex.getExtensions()),
-                                        getKiePMMLExpression(textIndex.getExpression()))
+                        getKiePMMLExtensions(textIndex.getExtensions()),
+                        getKiePMMLExpression(textIndex.getExpression()))
                 .withTextIndexNormalizations(getKiePMMLTextIndexNormalizations(textIndex.getTextIndexNormalizations()))
                 .withLocalTermWeights(localTermWeights)
                 .withIsCaseSensitive(textIndex.isCaseSensitive())

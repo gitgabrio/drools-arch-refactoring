@@ -30,10 +30,7 @@ import org.dmg.pmml.Row;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLRowFactory.getRowVariableDeclaration;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
@@ -65,7 +62,7 @@ public class KiePMMLInlineTableFactory {
     static BlockStmt getInlineTableVariableDeclaration(final String variableName, final InlineTable inlineTable) {
         final MethodDeclaration methodDeclaration = INLINETABLE_TEMPLATE.getMethodsByName(GETKIEPMMLINLINETABLE).get(0).clone();
         final BlockStmt inlineTableBody = methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE, methodDeclaration)));
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(inlineTableBody, INLINETABLE) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, INLINETABLE, inlineTableBody)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(inlineTableBody, INLINETABLE).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, INLINETABLE, inlineTableBody)));
         variableDeclarator.setName(variableName);
         final BlockStmt toReturn = new BlockStmt();
         int counter = 0;
@@ -75,7 +72,7 @@ public class KiePMMLInlineTableFactory {
             arguments.add(new NameExpr(nestedVariableName));
             BlockStmt toAdd = getRowVariableDeclaration(nestedVariableName, row);
             toAdd.getStatements().forEach(toReturn::addStatement);
-            counter ++;
+            counter++;
         }
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, INLINETABLE, toReturn)))

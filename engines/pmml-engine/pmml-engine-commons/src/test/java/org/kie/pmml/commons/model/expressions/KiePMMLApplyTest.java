@@ -16,11 +16,6 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.OP_TYPE;
@@ -30,6 +25,11 @@ import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLParameterField;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -103,10 +103,10 @@ public class KiePMMLApplyTest {
         // Apply with a Constant and a FieldRef: returns kiePMMLConstant1 divided evaluation of FieldRef from
         // derivedFields
         final KiePMMLDerivedField kiePMMLDerivedField = KiePMMLDerivedField.builder(FIELD_NAME,
-                Collections.emptyList(),
-                DATA_TYPE.DOUBLE,
-                OP_TYPE.CONTINUOUS,
-                kiePMMLConstant2)
+                        Collections.emptyList(),
+                        DATA_TYPE.DOUBLE,
+                        OP_TYPE.CONTINUOUS,
+                        kiePMMLConstant2)
                 .build();
         final List<KiePMMLDerivedField> derivedFields = Collections.singletonList(kiePMMLDerivedField);
         kiePMMLNameValues = Collections.singletonList(new KiePMMLNameValue("UNKNOWN", "WRONG"));
@@ -231,11 +231,11 @@ public class KiePMMLApplyTest {
         final KiePMMLParameterField parameterField2 =
                 KiePMMLParameterField.builder(PARAM_2, Collections.emptyList()).build();
         return new KiePMMLDefineFunction(CUSTOM_FUNCTION, Collections.emptyList(),
-                                         null,
-                                         OP_TYPE.CONTINUOUS,
-                                         Arrays.asList(parameterField1,
-                                                       parameterField2),
-                                         kiePMMLApply);
+                null,
+                OP_TYPE.CONTINUOUS,
+                Arrays.asList(parameterField1,
+                        parameterField2),
+                kiePMMLApply);
     }
 
     private KiePMMLDefineFunction getDefineFunctionApplyFromFieldRef() {
@@ -257,11 +257,11 @@ public class KiePMMLApplyTest {
         final KiePMMLParameterField parameterField2 =
                 KiePMMLParameterField.builder(PARAM_2, Collections.emptyList()).build();
         return new KiePMMLDefineFunction(CUSTOM_FUNCTION, Collections.emptyList(),
-                                         null,
-                                         OP_TYPE.CONTINUOUS,
-                                         Arrays.asList(parameterField1,
-                                                       parameterField2),
-                                         kiePMMLApply);
+                null,
+                OP_TYPE.CONTINUOUS,
+                Arrays.asList(parameterField1,
+                        parameterField2),
+                kiePMMLApply);
     }
 
     private KiePMMLDefineFunction getDefineFunctionApplyFromCustomFunction() {
@@ -283,23 +283,23 @@ public class KiePMMLApplyTest {
         final KiePMMLParameterField parameterField2 =
                 KiePMMLParameterField.builder(PARAM_2, Collections.emptyList()).build();
         return new KiePMMLDefineFunction(OUTER_FUNCTION, Collections.emptyList(),
-                                         null,
-                                         OP_TYPE.CONTINUOUS,
-                                         Arrays.asList(parameterField1,
-                                                       parameterField2),
-                                         kiePMMLApply);
+                null,
+                OP_TYPE.CONTINUOUS,
+                Arrays.asList(parameterField1,
+                        parameterField2),
+                kiePMMLApply);
     }
 
     private MiningField getReferredByFieldRef(String name) {
         return new MiningField(name,
-                               null,
-                               null,
-                               null,
-                               null,
-                               null,
-                               null,
-                               null,
-                               null,
-                               null);
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 }

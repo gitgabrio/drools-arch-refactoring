@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-
 import org.dmg.pmml.DerivedField;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
+
+import java.util.Collections;
 
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getDerivedField;
 import static org.kie.pmml.compilation.commons.factories.InstanceFactoriesTestCommon.commonVerifyKiePMMLDerivedField;

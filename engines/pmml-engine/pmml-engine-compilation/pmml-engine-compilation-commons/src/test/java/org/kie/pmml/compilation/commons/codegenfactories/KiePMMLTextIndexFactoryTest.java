@@ -16,6 +16,17 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
+import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.Statement;
+import org.dmg.pmml.DefineFunction;
+import org.dmg.pmml.PMML;
+import org.dmg.pmml.TextIndex;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.kie.pmml.commons.model.expressions.*;
+import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
+import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,25 +35,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.Statement;
-import org.dmg.pmml.DefineFunction;
-import org.dmg.pmml.PMML;
-import org.dmg.pmml.TextIndex;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.kie.pmml.commons.model.expressions.KiePMMLFieldRef;
-import org.kie.pmml.commons.model.expressions.KiePMMLInlineTable;
-import org.kie.pmml.commons.model.expressions.KiePMMLRow;
-import org.kie.pmml.commons.model.expressions.KiePMMLTextIndex;
-import org.kie.pmml.commons.model.expressions.KiePMMLTextIndexNormalization;
-import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
-import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
 import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 
 public class KiePMMLTextIndexFactoryTest {
 

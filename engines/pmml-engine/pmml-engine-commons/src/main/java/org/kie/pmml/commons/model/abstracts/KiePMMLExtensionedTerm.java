@@ -15,9 +15,9 @@
  */
 package org.kie.pmml.commons.model.abstracts;
 
-import java.util.List;
-
 import org.kie.pmml.commons.model.KiePMMLExtension;
+
+import java.util.List;
 
 public abstract class KiePMMLExtensionedTerm extends AbstractKiePMMLComponent {
 

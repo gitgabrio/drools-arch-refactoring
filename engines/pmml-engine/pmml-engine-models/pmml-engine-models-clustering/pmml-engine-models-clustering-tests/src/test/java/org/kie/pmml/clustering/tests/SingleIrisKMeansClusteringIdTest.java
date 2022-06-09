@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SingleIrisKMeansClusteringIdTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "SingleIrisKMeansClustering_id";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "SingleIrisKMeansClustering";
     private static final String TARGET_FIELD = "class";
 

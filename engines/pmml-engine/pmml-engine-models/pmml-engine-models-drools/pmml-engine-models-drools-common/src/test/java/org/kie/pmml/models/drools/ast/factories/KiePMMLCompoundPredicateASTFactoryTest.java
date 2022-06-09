@@ -60,11 +60,11 @@ public class KiePMMLCompoundPredicateASTFactoryTest {
             predicates.forEach(compoundPredicate::addPredicates);
             final List<KiePMMLDroolsRule> rules = new ArrayList<>();
             PredicateASTFactoryData predicateASTFactoryData = getPredicateASTFactoryData(compoundPredicate,
-                                                                                         Collections.emptyList(),
-                                                                                         rules,
-                                                                                         parentPath,
-                                                                                         currentRule,
-                                                                                         fieldTypeMap);
+                    Collections.emptyList(),
+                    rules,
+                    parentPath,
+                    currentRule,
+                    fieldTypeMap);
             KiePMMLCompoundPredicateASTFactory.factory(predicateASTFactoryData).declareRuleFromCompoundPredicate(result, true);
             assertThat(rules).hasSize(1);
             final KiePMMLDroolsRule retrieved = rules.get(0);
@@ -106,11 +106,11 @@ public class KiePMMLCompoundPredicateASTFactoryTest {
             predicates.forEach(compoundPredicate::addPredicates);
             final List<KiePMMLDroolsRule> rules = new ArrayList<>();
             PredicateASTFactoryData predicateASTFactoryData = getPredicateASTFactoryData(compoundPredicate,
-                                                                                         Collections.emptyList(),
-                                                                                         rules,
-                                                                                         parentPath,
-                                                                                         currentRule,
-                                                                                         fieldTypeMap);
+                    Collections.emptyList(),
+                    rules,
+                    parentPath,
+                    currentRule,
+                    fieldTypeMap);
             KiePMMLCompoundPredicateASTFactory.factory(predicateASTFactoryData).declareRuleFromCompoundPredicate(result, false);
             assertThat(rules).hasSize(1);
             final KiePMMLDroolsRule retrieved = rules.get(0);
@@ -146,11 +146,11 @@ public class KiePMMLCompoundPredicateASTFactoryTest {
         predicates.forEach(compoundPredicate::addPredicates);
         final List<KiePMMLDroolsRule> rules = new ArrayList<>();
         PredicateASTFactoryData predicateASTFactoryData = getPredicateASTFactoryData(compoundPredicate,
-                                                                                     Collections.emptyList(),
-                                                                                     rules,
-                                                                                     parentPath,
-                                                                                     currentRule,
-                                                                                     fieldTypeMap);
+                Collections.emptyList(),
+                rules,
+                parentPath,
+                currentRule,
+                fieldTypeMap);
         KiePMMLCompoundPredicateASTFactory.factory(predicateASTFactoryData).declareRuleFromCompoundPredicate(result, true);
         int expectedRules = (predicates.size() * 2) + 1; // For each "surrogate" predicate two rules -"TRUE" and "FALSE" - are generated; one more rule is generated for the Compound predicate itself
         assertThat(rules).hasSize(expectedRules);
@@ -211,11 +211,11 @@ public class KiePMMLCompoundPredicateASTFactoryTest {
         predicates.forEach(compoundPredicate::addPredicates);
         final List<KiePMMLDroolsRule> rules = new ArrayList<>();
         PredicateASTFactoryData predicateASTFactoryData = getPredicateASTFactoryData(compoundPredicate,
-                                                                                     Collections.emptyList(),
-                                                                                     rules,
-                                                                                     parentPath,
-                                                                                     currentRule,
-                                                                                     fieldTypeMap);
+                Collections.emptyList(),
+                rules,
+                parentPath,
+                currentRule,
+                fieldTypeMap);
         KiePMMLCompoundPredicateASTFactory.factory(predicateASTFactoryData).declareRuleFromCompoundPredicate(result, false);
         int expectedRules = (predicates.size() * 2) + 1; // For each "surrogate" predicate two rules -"TRUE" and "FALSE" - are generated; one more rule is generated for the Compound predicate itself
         assertThat(rules).hasSize(expectedRules);
@@ -267,11 +267,11 @@ public class KiePMMLCompoundPredicateASTFactoryTest {
                 .mapToObj(index -> {
                     String predicateName = "SIMPLEPREDICATE-" + index;
                     fieldTypeMap.put(predicateName,
-                                     new KiePMMLOriginalTypeGeneratedType(DataType.STRING.value(),
-                                                                          getSanitizedClassName(predicateName.toUpperCase())));
+                            new KiePMMLOriginalTypeGeneratedType(DataType.STRING.value(),
+                                    getSanitizedClassName(predicateName.toUpperCase())));
                     return PMMLModelTestUtils.getSimplePredicate(predicateName,
-                                                                 "VALUE-" + index,
-                                                                 SimplePredicate.Operator.LESS_THAN);
+                            "VALUE-" + index,
+                            SimplePredicate.Operator.LESS_THAN);
                 })
                 .collect(Collectors.toList());
 

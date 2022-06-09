@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.dmg.pmml.LinearNorm;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLLinearNorm;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils.getRandomLinearNorm;
 import static org.kie.pmml.compilation.commons.factories.InstanceFactoriesTestCommon.commonVerifyKiePMMLLinearNorm;

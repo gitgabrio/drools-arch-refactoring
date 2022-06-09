@@ -69,16 +69,16 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     @Override
     public E getKiePMMLModel(final CompilationDTO<T> compilationDTO) {
         logger.trace("getKiePMMLModel {} {} {}", compilationDTO.getPackageName(), compilationDTO.getFields(),
-                     compilationDTO.getModel());
+                compilationDTO.getModel());
         if (!(compilationDTO.getHasClassloader() instanceof HasKnowledgeBuilder)) {
             throw new KiePMMLException(String.format(EXPECTING_HAS_KNOWLEDGEBUILDER_TEMPLATE,
-                                                     compilationDTO.getHasClassloader().getClass().getName()));
+                    compilationDTO.getHasClassloader().getClass().getName()));
         }
         HasKnowledgeBuilder hasKnowledgeBuilder = (HasKnowledgeBuilder) compilationDTO.getHasClassloader();
         KnowledgeBuilderImpl knowledgeBuilder = (KnowledgeBuilderImpl) hasKnowledgeBuilder.getKnowledgeBuilder();
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         KiePMMLDroolsAST kiePMMLDroolsAST = getKiePMMLDroolsASTCommon(compilationDTO.getFields(),
-                                                                      compilationDTO.getModel(), fieldTypeMap);
+                compilationDTO.getModel(), fieldTypeMap);
         final DroolsCompilationDTO<T> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(compilationDTO, fieldTypeMap);
         E toReturn = getKiePMMLDroolsModel(droolsCompilationDTO);
@@ -97,15 +97,15 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     @Override
     public KiePMMLDroolsModelWithSources getKiePMMLModelWithSources(final CompilationDTO<T> compilationDTO) {
         logger.trace("getKiePMMLModelWithSources {} {} {}", compilationDTO.getPackageName(),
-                     compilationDTO.getFields(), compilationDTO.getModel());
+                compilationDTO.getFields(), compilationDTO.getModel());
         if (!(compilationDTO.getHasClassloader() instanceof HasKnowledgeBuilder)) {
             throw new KiePMMLException(String.format(EXPECTING_HAS_KNOWLEDGEBUILDER_TEMPLATE,
-                                                     compilationDTO.getHasClassloader().getClass().getName()));
+                    compilationDTO.getHasClassloader().getClass().getName()));
         }
         try {
             final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
             KiePMMLDroolsAST kiePMMLDroolsAST = getKiePMMLDroolsASTCommon(compilationDTO.getFields(),
-                                                                          compilationDTO.getModel(), fieldTypeMap);
+                    compilationDTO.getModel(), fieldTypeMap);
             final DroolsCompilationDTO<T> droolsCompilationDTO =
                     DroolsCompilationDTO.fromCompilationDTO(compilationDTO, fieldTypeMap);
             Map<String, String> sourcesMap = getKiePMMLDroolsModelSourcesMap(droolsCompilationDTO);
@@ -116,13 +116,13 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
             packageDescr.setPreferredPkgUUID(pkgUUID);
             Map<String, String> rulesSourceMap = Collections.unmodifiableMap(getRulesSourceMap(packageDescr));
             KiePMMLDroolsModelWithSources toReturn = new KiePMMLDroolsModelWithSources(compilationDTO.getModelName(),
-                                                                                       compilationDTO.getPackageName(),
-                                                                                       compilationDTO.getKieMiningFields(),
-                                                                                       compilationDTO.getKieOutputFields(),
-                                                                                       compilationDTO.getKieTargetFields(),
-                                                                                       sourcesMap,
-                                                                                       pkgUUID,
-                                                                                       rulesSourceMap);
+                    compilationDTO.getPackageName(),
+                    compilationDTO.getKieMiningFields(),
+                    compilationDTO.getKieOutputFields(),
+                    compilationDTO.getKieTargetFields(),
+                    sourcesMap,
+                    pkgUUID,
+                    rulesSourceMap);
             knowledgeBuilder.registerPackage(packageDescr);
             return toReturn;
         } catch (Exception e) {
@@ -133,17 +133,17 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     @Override
     public KiePMMLModelWithSources getKiePMMLModelWithSourcesCompiled(final CompilationDTO<T> compilationDTO) {
         logger.trace("getKiePMMLModelWithSourcesCompiled {} {} {}", compilationDTO.getPackageName(),
-                     compilationDTO.getFields(), compilationDTO.getModel());
+                compilationDTO.getFields(), compilationDTO.getModel());
         if (!(compilationDTO.getHasClassloader() instanceof HasKnowledgeBuilder)) {
             throw new KiePMMLException(String.format(EXPECTING_HAS_KNOWLEDGEBUILDER_TEMPLATE,
-                                                     compilationDTO.getHasClassloader().getClass().getName()));
+                    compilationDTO.getHasClassloader().getClass().getName()));
         }
         try {
             HasKnowledgeBuilder hasKnowledgeBuilder = (HasKnowledgeBuilder) compilationDTO.getHasClassloader();
             KnowledgeBuilderImpl knowledgeBuilder = (KnowledgeBuilderImpl) hasKnowledgeBuilder.getKnowledgeBuilder();
             final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
             KiePMMLDroolsAST kiePMMLDroolsAST = getKiePMMLDroolsASTCommon(compilationDTO.getFields(),
-                                                                          compilationDTO.getModel(), fieldTypeMap);
+                    compilationDTO.getModel(), fieldTypeMap);
             final DroolsCompilationDTO<T> droolsCompilationDTO =
                     DroolsCompilationDTO.fromCompilationDTO(compilationDTO, fieldTypeMap);
             Map<String, String> sourcesMap = getKiePMMLDroolsModelSourcesMap(droolsCompilationDTO);
@@ -153,13 +153,13 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
             packageDescr.setPreferredPkgUUID(pkgUUID);
             Map<String, String> rulesSourceMap = Collections.unmodifiableMap(getRulesSourceMap(packageDescr));
             KiePMMLDroolsModelWithSources toReturn = new KiePMMLDroolsModelWithSources(compilationDTO.getModelName(),
-                                                                                       compilationDTO.getPackageName(),
-                                                                                       compilationDTO.getKieMiningFields(),
-                                                                                       compilationDTO.getKieOutputFields(),
-                                                                                       compilationDTO.getKieTargetFields(),
-                                                                                       sourcesMap,
-                                                                                       pkgUUID,
-                                                                                       rulesSourceMap);
+                    compilationDTO.getPackageName(),
+                    compilationDTO.getKieMiningFields(),
+                    compilationDTO.getKieOutputFields(),
+                    compilationDTO.getKieTargetFields(),
+                    sourcesMap,
+                    pkgUUID,
+                    rulesSourceMap);
             // Needed to compile Rules from PackageDescr
             CompositePackageDescr compositePackageDescr = new CompositePackageDescr(null, packageDescr);
             knowledgeBuilder.buildPackages(Collections.singletonList(compositePackageDescr));
@@ -180,8 +180,8 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     public abstract E getKiePMMLDroolsModel(final DroolsCompilationDTO<T> compilationDTO);
 
     /**
-     * @param fields Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
-     * DerivedFields from Transformations/LocalTransformations, OutputFields
+     * @param fields       Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
+     *                     DerivedFields from Transformations/LocalTransformations, OutputFields
      * @param model
      * @param fieldTypeMap
      * @param types
@@ -200,8 +200,8 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     public abstract Map<String, String> getKiePMMLDroolsModelSourcesMap(final DroolsCompilationDTO<T> compilationDTO) throws IOException;
 
     /**
-     * @param fields Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
-     * DerivedFields from Transformations/LocalTransformations, OutputFields
+     * @param fields       Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
+     *                     DerivedFields from Transformations/LocalTransformations, OutputFields
      * @param model
      * @param fieldTypeMap
      * @return
@@ -224,21 +224,22 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
         List<GeneratedFile> generatedRuleFiles = generateRulesFiles(packageDescr);
         return generatedRuleFiles.stream()
                 .collect(Collectors.toMap(generatedFile -> generatedFile.getPath()
-                                                  .replace('/', '.')
-                                                  .replace(".java", ""),
-                                          generatedFile -> new String(generatedFile.getData())));
+                                .replace('/', '.')
+                                .replace(".java", ""),
+                        generatedFile -> new String(generatedFile.getData())));
     }
 
     /**
      * This method depends on exec-model. Be aware in case of refactoring
+     *
      * @param packageDescr
      * @return
      */
     protected List<GeneratedFile> generateRulesFiles(PackageDescr packageDescr) {
         ModelBuilderImpl<PackageSources> modelBuilder = new ModelBuilderImpl<>(PackageSources::dumpSources,
-                                                                               (KnowledgeBuilderConfigurationImpl) newKnowledgeBuilderConfiguration(getClass().getClassLoader()),
-                                                                               new ReleaseIdImpl("dummy:dummy:0.0.0"),
-                                                                               false);
+                (KnowledgeBuilderConfigurationImpl) newKnowledgeBuilderConfiguration(getClass().getClassLoader()),
+                new ReleaseIdImpl("dummy:dummy:0.0.0"),
+                false);
         CompositeKnowledgeBuilder batch = modelBuilder.batch();
         batch.add(new DescrResource(packageDescr), ResourceType.DESCR);
         try {

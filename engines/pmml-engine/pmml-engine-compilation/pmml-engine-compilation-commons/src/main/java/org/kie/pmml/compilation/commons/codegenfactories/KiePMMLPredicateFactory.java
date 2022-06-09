@@ -15,16 +15,10 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.List;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
-import org.dmg.pmml.CompoundPredicate;
-import org.dmg.pmml.False;
-import org.dmg.pmml.Field;
-import org.dmg.pmml.Predicate;
-import org.dmg.pmml.SimplePredicate;
-import org.dmg.pmml.SimpleSetPredicate;
-import org.dmg.pmml.True;
+import org.dmg.pmml.*;
+
+import java.util.List;
 
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLCompoundPredicateFactory.getCompoundPredicateVariableDeclaration;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLFalsePredicateFactory.getFalsePredicateVariableDeclaration;

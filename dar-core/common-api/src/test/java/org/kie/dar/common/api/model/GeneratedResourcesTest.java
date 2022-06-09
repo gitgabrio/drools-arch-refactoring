@@ -45,7 +45,7 @@ class GeneratedResourcesTest {
 
         generatedResources = new GeneratedResources();
         generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model) , fullClassName));
+        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model), fullClassName));
         assertThat(generatedResources.size()).isEqualTo(2);
 
         generatedClassResource = new GeneratedClassResource(fullClassName);

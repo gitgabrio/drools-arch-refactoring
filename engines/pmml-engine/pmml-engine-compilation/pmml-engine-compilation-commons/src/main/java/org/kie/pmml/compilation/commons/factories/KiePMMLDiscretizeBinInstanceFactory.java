@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.dmg.pmml.DiscretizeBin;
 import org.kie.pmml.commons.model.expressions.KiePMMLDiscretizeBin;
 import org.kie.pmml.commons.model.expressions.KiePMMLInterval;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 
@@ -43,8 +43,8 @@ public class KiePMMLDiscretizeBinInstanceFactory {
         KiePMMLInterval interval = KiePMMLIntervalInstanceFactory.getKiePMMLInterval(discretizeBin.getInterval());
         String binValue = discretizeBin.getBinValue() != null ? discretizeBin.getBinValue().toString() : null;
         return new KiePMMLDiscretizeBin(UUID.randomUUID().toString(),
-                                        getKiePMMLExtensions(discretizeBin.getExtensions()),
-                                        binValue,
-                                        interval);
+                getKiePMMLExtensions(discretizeBin.getExtensions()),
+                binValue,
+                interval);
     }
 }

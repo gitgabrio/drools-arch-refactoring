@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.TransformationDictionary;
 import org.kie.pmml.commons.transformations.KiePMMLDefineFunction;
 import org.kie.pmml.commons.transformations.KiePMMLDerivedField;
 import org.kie.pmml.commons.transformations.KiePMMLTransformationDictionary;
+
+import java.util.List;
+import java.util.UUID;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLDefineFunctionInstanceFactory.getKiePMMLDefineFunctions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLDerivedFieldInstanceFactory.getKiePMMLDerivedFields;
@@ -41,7 +41,7 @@ public class KiePMMLTransformationDictionaryInstanceFactory {
     public static KiePMMLTransformationDictionary getKiePMMLTransformationDictionary(final TransformationDictionary toConvert,
                                                                                      final List<Field<?>> fields) {
         final List<KiePMMLDerivedField> kiePMMLDerivedFields = getKiePMMLDerivedFields(toConvert.getDerivedFields(),
-                                                                                       fields);
+                fields);
         final List<KiePMMLDefineFunction> kiePMMLDefineFunctions =
                 getKiePMMLDefineFunctions(toConvert.getDefineFunctions());
         return KiePMMLTransformationDictionary.builder(UUID.randomUUID().toString(), getKiePMMLExtensions(toConvert.getExtensions()))

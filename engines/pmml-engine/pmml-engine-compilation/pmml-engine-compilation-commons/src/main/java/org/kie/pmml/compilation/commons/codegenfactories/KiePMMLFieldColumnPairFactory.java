@@ -26,9 +26,7 @@ import org.dmg.pmml.FieldColumnPair;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
 import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
@@ -61,11 +59,11 @@ public class KiePMMLFieldColumnPairFactory {
         final BlockStmt toReturn = methodDeclaration.getBody().orElseThrow(() -> new KiePMMLException(String.format(MISSING_BODY_TEMPLATE, methodDeclaration)));
 
 
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, FIELDCOLUMNPAIR) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, FIELDCOLUMNPAIR, toReturn)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, FIELDCOLUMNPAIR).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, FIELDCOLUMNPAIR, toReturn)));
         variableDeclarator.setName(variableName);
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, FIELDCOLUMNPAIR, toReturn)))
-        .asObjectCreationExpr();
+                .asObjectCreationExpr();
         objectCreationExpr.getArguments().set(0, new StringLiteralExpr(fieldColumnPair.getField().getValue()));
         objectCreationExpr.getArguments().set(2, new StringLiteralExpr(fieldColumnPair.getColumn()));
         return toReturn;

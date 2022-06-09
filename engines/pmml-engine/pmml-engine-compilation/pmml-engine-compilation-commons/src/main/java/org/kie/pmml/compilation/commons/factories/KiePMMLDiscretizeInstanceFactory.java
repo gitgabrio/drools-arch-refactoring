@@ -15,13 +15,13 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.dmg.pmml.Discretize;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.expressions.KiePMMLDiscretize;
 import org.kie.pmml.commons.model.expressions.KiePMMLDiscretizeBin;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLDiscretizeBinInstanceFactory.getKiePMMLDiscretizeBins;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
@@ -44,10 +44,10 @@ public class KiePMMLDiscretizeInstanceFactory {
         DATA_TYPE dataType = discretize.getDataType() != null ? DATA_TYPE.byName(discretize.getDataType().value()) :
                 null;
         return new KiePMMLDiscretize(discretize.getField().getValue(),
-                                     getKiePMMLExtensions(discretize.getExtensions()),
-                                     discretizeBins,
-                                     mapMissingTo,
-                                     defaultValue,
-                                     dataType);
+                getKiePMMLExtensions(discretize.getExtensions()),
+                discretizeBins,
+                mapMissingTo,
+                defaultValue,
+                dataType);
     }
 }

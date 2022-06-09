@@ -30,7 +30,7 @@ public class KiePMMLFieldRefInstanceFactory {
 
     static KiePMMLFieldRef getKiePMMLFieldRef(final FieldRef fieldRef) {
         return new KiePMMLFieldRef(fieldRef.getField().getValue(),
-                                   KiePMMLExtensionInstanceFactory.getKiePMMLExtensions(fieldRef.getExtensions()),
-                                   fieldRef.getMapMissingTo());
+                KiePMMLExtensionInstanceFactory.getKiePMMLExtensions(fieldRef.getExtensions()),
+                fieldRef.getMapMissingTo());
     }
 }

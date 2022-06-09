@@ -15,29 +15,20 @@
  */
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.util.Map;
-
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.ArrayCreationExpr;
-import com.github.javaparser.ast.expr.ArrayInitializerExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.ObjectCreationExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.dmg.pmml.Row;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
+import java.util.Map;
+
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.api.utils.ModelUtils.getRowDataMap;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForObject;
 import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
@@ -76,7 +67,7 @@ public class KiePMMLRowFactory {
         final VariableDeclarator columnValuesVariableDeclarator =
                 getVariableDeclarator(toReturn, COLUMN_VALUES).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, ROW, toReturn)));
         columnValuesVariableDeclarator.setName(columnValuesVariableName);
-        final MethodCallExpr columnValuesVariableInit =columnValuesVariableDeclarator.getInitializer()
+        final MethodCallExpr columnValuesVariableInit = columnValuesVariableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, COLUMN_VALUES, toReturn)))
                 .asMethodCallExpr();
         final MethodCallExpr columnValuesVariableScope = columnValuesVariableInit.getScope()
@@ -97,11 +88,11 @@ public class KiePMMLRowFactory {
         });
         columnValuesVariableArrayInit.setValues(arguments);
 
-        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, ROW) .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, ROW, toReturn)));
+        final VariableDeclarator variableDeclarator = getVariableDeclarator(toReturn, ROW).orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_IN_BODY, ROW, toReturn)));
         variableDeclarator.setName(variableName);
         final ObjectCreationExpr objectCreationExpr = variableDeclarator.getInitializer()
                 .orElseThrow(() -> new KiePMMLException(String.format(MISSING_VARIABLE_INITIALIZER_TEMPLATE, ROW, toReturn)))
-        .asObjectCreationExpr();
+                .asObjectCreationExpr();
         final NameExpr nameExpr = new NameExpr(columnValuesVariableName);
         objectCreationExpr.getArguments().set(0, nameExpr);
         return toReturn;

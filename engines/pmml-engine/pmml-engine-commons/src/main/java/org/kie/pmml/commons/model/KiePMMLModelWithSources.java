@@ -15,15 +15,15 @@
  */
 package org.kie.pmml.commons.model;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.api.models.OutputField;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.api.runtime.PMMLContext;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Interface used to identify a given <code>HasSourcesMap</code> as <b>container</b> for KiePMMLModel' sources

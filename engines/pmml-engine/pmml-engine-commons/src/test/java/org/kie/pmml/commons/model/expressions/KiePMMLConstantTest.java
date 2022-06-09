@@ -16,11 +16,11 @@
 
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.ProcessingDTO;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

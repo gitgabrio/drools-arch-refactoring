@@ -16,11 +16,6 @@
 
 package org.kie.pmml.mining.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,12 +23,17 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MiningModelSummedTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MiningModelSummed";
-    private static final String FILE_NAME =  FILE_NAME_NO_SUFFIX + ".pmml";
+    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "MiningModelSummed";
     private static final String TARGET_FIELD = "result";
     private final String INPUT1 = "input1";
@@ -47,9 +47,9 @@ public class MiningModelSummedTest extends AbstractPMMLTest {
     private double expectedResult;
 
     public void initMiningModelSummedTest(double input1,
-                                 double input2,
-                                 double input3,
-                                 double expectedResult) {
+                                          double input2,
+                                          double input3,
+                                          double expectedResult) {
         this.input1 = input1;
         this.input2 = input2;
         this.input3 = input3;

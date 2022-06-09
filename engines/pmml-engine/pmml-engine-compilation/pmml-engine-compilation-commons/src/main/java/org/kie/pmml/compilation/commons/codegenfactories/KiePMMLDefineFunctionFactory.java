@@ -30,16 +30,11 @@ import org.dmg.pmml.ParameterField;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
-import static org.kie.pmml.commons.Constants.MISSING_BODY_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_INITIALIZER_TEMPLATE;
-import static org.kie.pmml.commons.Constants.MISSING_VARIABLE_IN_BODY;
-import static org.kie.pmml.commons.Constants.VARIABLE_NAME_TEMPLATE;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForDataType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getExpressionForOpType;
-import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.getVariableDeclarator;
-import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
+import static org.kie.pmml.commons.Constants.*;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLExpressionFactory.getKiePMMLExpressionBlockStmt;
 import static org.kie.pmml.compilation.commons.codegenfactories.KiePMMLParameterFieldFactory.getParameterFieldVariableDeclaration;
+import static org.kie.pmml.compilation.commons.utils.CommonCodegenUtils.*;
+import static org.kie.pmml.compilation.commons.utils.JavaParserUtils.MAIN_CLASS_NOT_FOUND;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLDefineFunction</code> code-generators
@@ -75,12 +70,12 @@ public class KiePMMLDefineFunctionFactory {
         final BlockStmt toReturn = new BlockStmt();
         int counter = 0;
         final NodeList<Expression> parameterFieldArguments = new NodeList<>();
-        for (ParameterField parameterField: defineFunction.getParameterFields()) {
+        for (ParameterField parameterField : defineFunction.getParameterFields()) {
             String nestedVariableName = String.format(VARIABLE_NAME_TEMPLATE, defineFunction.getName(), counter);
             parameterFieldArguments.add(new NameExpr(nestedVariableName));
             BlockStmt toAdd = getParameterFieldVariableDeclaration(nestedVariableName, parameterField);
             toAdd.getStatements().forEach(toReturn::addStatement);
-            counter ++;
+            counter++;
         }
         String kiePMMLExpression = String.format("%s_Expression", defineFunction.getName());
         BlockStmt toAdd = getKiePMMLExpressionBlockStmt(kiePMMLExpression, defineFunction.getExpression());

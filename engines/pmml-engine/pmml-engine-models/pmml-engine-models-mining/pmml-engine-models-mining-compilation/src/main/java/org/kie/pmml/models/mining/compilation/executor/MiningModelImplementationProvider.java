@@ -64,20 +64,16 @@ public class MiningModelImplementationProvider implements ModelImplementationPro
 
     @Override
     public KiePMMLModelWithSources getKiePMMLModelWithSources(final CompilationDTO<MiningModel> compilationDTO) {
-//        if (!(compilationDTO.getHasClassloader() instanceof HasKnowledgeBuilder)) {
-//            throw new KiePMMLException(String.format(EXPECTING_HAS_KNOWLEDGEBUILDER_TEMPLATE,
-//                                                     compilationDTO.getHasClassloader().getClass().getName()));
-//        }
         final List<KiePMMLModel> nestedModels = new ArrayList<>();
         final Map<String, String> sourcesMap =
                 KiePMMLMiningModelFactory.getKiePMMLMiningModelSourcesMap(MiningModelCompilationDTO.fromCompilationDTO(compilationDTO),
-                                                                          nestedModels);
+                        nestedModels);
         return new KiePMMLMiningModelWithSources(compilationDTO.getModelName(),
-                                                 compilationDTO.getPackageName(),
-                                                 compilationDTO.getKieMiningFields(),
-                                                 compilationDTO.getKieOutputFields(),
-                                                 compilationDTO.getKieTargetFields(),
-                                                 sourcesMap,
-                                                 nestedModels);
+                compilationDTO.getPackageName(),
+                compilationDTO.getKieMiningFields(),
+                compilationDTO.getKieOutputFields(),
+                compilationDTO.getKieTargetFields(),
+                sourcesMap,
+                nestedModels);
     }
 }

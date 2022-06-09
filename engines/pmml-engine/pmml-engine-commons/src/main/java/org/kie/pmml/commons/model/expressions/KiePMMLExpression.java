@@ -15,9 +15,9 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.io.Serializable;
-
 import org.kie.pmml.commons.model.ProcessingDTO;
+
+import java.io.Serializable;
 
 /**
  * @see <a href=http://dmg.org/pmml/v4-4/Transformations.html#xsdGroup_EXPRESSION>EXPRESSION</a>

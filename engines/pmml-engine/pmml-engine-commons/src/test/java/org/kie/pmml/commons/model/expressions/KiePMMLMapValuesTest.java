@@ -16,15 +16,15 @@
 
 package org.kie.pmml.commons.model.expressions;
 
+import org.junit.jupiter.api.Test;
+import org.kie.pmml.commons.model.ProcessingDTO;
+import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.junit.jupiter.api.Test;
-import org.kie.pmml.commons.model.ProcessingDTO;
-import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.CommonTestingUtility.getProcessingDTO;
@@ -43,14 +43,14 @@ public class KiePMMLMapValuesTest {
                     Map<String, Object> columnValues = IntStream.range(0, 3)
                             .boxed()
                             .collect(Collectors.toMap(j -> "KEY-" + i + "-" + j,
-                                                      j -> "VALUE-" + i + "-" + j));
+                                    j -> "VALUE-" + i + "-" + j));
                     return new KiePMMLRow(columnValues);
                 })
                 .collect(Collectors.toList());
         INLINE_TABLE = new KiePMMLInlineTable("name", Collections.emptyList(), rows);
         FIELDCOLUMNPAIRS = IntStream.range(0, 2).mapToObj(i -> new KiePMMLFieldColumnPair("FIELD-" + i,
-                                                                                          Collections.emptyList(),
-                                                                                          "VALUE-1-" + i))
+                        Collections.emptyList(),
+                        "VALUE-1-" + i))
                 .collect(Collectors.toList());
     }
 

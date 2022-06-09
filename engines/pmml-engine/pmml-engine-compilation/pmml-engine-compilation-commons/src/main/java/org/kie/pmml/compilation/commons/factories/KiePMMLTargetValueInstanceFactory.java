@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-
 import org.dmg.pmml.TargetValue;
 import org.kie.pmml.commons.model.KiePMMLTargetValue;
+
+import java.util.Collections;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLTargetValue</code> instance
@@ -34,11 +34,11 @@ public class KiePMMLTargetValueInstanceFactory {
         final String value = targetValue.getValue() != null ? targetValue.getValue().toString() : null;
         final String displayValue = targetValue.getDisplayValue() != null ? targetValue.getDisplayValue() : null;
         final org.kie.pmml.api.models.TargetValue kieTargetValue = new org.kie.pmml.api.models.TargetValue(value,
-                                                                                                           displayValue,
-                                                                                                           targetValue.getPriorProbability(),
-                                                                                                           targetValue.getDefaultValue());
+                displayValue,
+                targetValue.getPriorProbability(),
+                targetValue.getDefaultValue());
         return KiePMMLTargetValue.builder(kieTargetValue.getName(),
-                                          Collections.emptyList(), kieTargetValue)
+                        Collections.emptyList(), kieTargetValue)
                 .build();
     }
 }

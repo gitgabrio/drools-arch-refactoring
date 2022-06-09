@@ -15,10 +15,10 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-
 import org.dmg.pmml.False;
 import org.kie.pmml.commons.model.predicates.KiePMMLFalsePredicate;
+
+import java.util.Collections;
 
 /**
  * Class meant to provide <i>helper</i> method to retrieve <code>KiePMMLFalsePredicate</code> instance

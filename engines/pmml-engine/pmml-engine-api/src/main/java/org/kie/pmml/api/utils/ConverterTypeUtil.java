@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.api.utils;
 
-import java.math.BigDecimal;
-import java.util.function.Predicate;
-
 import org.apache.commons.math3.util.Precision;
 import org.kie.pmml.api.exceptions.KiePMMLException;
+
+import java.math.BigDecimal;
+import java.util.function.Predicate;
 
 /**
  * Class meant to provide helper methods to <b>convert</b> a given object to another one of a requested type
@@ -51,6 +51,7 @@ public class ConverterTypeUtil {
     /**
      * Convert the given <code>Object</code> to expected <code>Class</code>.
      * It throws <code>KiePMMLInternalException</code> if conversion has failed
+     *
      * @param expectedClass
      * @param originalObject
      * @return
@@ -90,7 +91,7 @@ public class ConverterTypeUtil {
                 break;
             default:
                 throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                         expectedClass.getName()));
+                        expectedClass.getName()));
         }
         return toReturn;
     }
@@ -108,15 +109,15 @@ public class ConverterTypeUtil {
             return originalObject.shortValue();
         } else {
             throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                     expectedClass.getName()));
+                    expectedClass.getName()));
         }
     }
 
     static Object convertFromDouble(Class<?> expectedClass, Double originalObject) {
         if (IS_INTEGER.test(expectedClass)) {
-            return  (int) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
+            return (int) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else if (IS_LONG.test(expectedClass)) {
-            return  (long) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
+            return (long) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else if (IS_FLOAT.test(expectedClass)) {
             return originalObject.floatValue();
         } else if (IS_BYTE.test(expectedClass)) {
@@ -125,15 +126,15 @@ public class ConverterTypeUtil {
             return (short) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else {
             throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                     expectedClass.getName()));
+                    expectedClass.getName()));
         }
     }
 
     static Object convertFromFloat(Class<?> expectedClass, Float originalObject) {
         if (IS_INTEGER.test(expectedClass)) {
-            return  (int) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
+            return (int) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else if (IS_LONG.test(expectedClass)) {
-            return  (long) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
+            return (long) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else if (IS_DOUBLE.test(expectedClass)) {
             return originalObject.doubleValue();
         } else if (IS_BYTE.test(expectedClass)) {
@@ -142,7 +143,7 @@ public class ConverterTypeUtil {
             return (short) Precision.round(originalObject, 0, BigDecimal.ROUND_HALF_UP);
         } else {
             throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                     expectedClass.getName()));
+                    expectedClass.getName()));
         }
     }
 
@@ -166,11 +167,11 @@ public class ConverterTypeUtil {
                 return Short.parseShort(originalObject);
             } else {
                 throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                         expectedClass.getName()));
+                        expectedClass.getName()));
             }
         } catch (Exception e) {
             throw new KiePMMLException(String.format(FAILED_CONVERSION, originalObject,
-                                                     expectedClass.getName()));
+                    expectedClass.getName()));
         }
     }
 

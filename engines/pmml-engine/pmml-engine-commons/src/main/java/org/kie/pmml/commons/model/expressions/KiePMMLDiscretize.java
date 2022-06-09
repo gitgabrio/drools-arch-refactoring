@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.commons.model.expressions;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.kie.pmml.commons.model.expressions.ExpressionsUtils.getFromPossibleSources;
 

@@ -15,11 +15,11 @@
  */
 package org.kie.pmml.runtime.core.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.api.pmml.ParameterInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PMMLRequestDataBuilder {
 

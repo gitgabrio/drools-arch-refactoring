@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.compilation.commons.factories;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.dmg.pmml.CompoundPredicate;
 import org.dmg.pmml.Field;
 import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.commons.model.predicates.KiePMMLCompoundPredicate;
 import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.kie.pmml.compilation.commons.factories.KiePMMLExtensionInstanceFactory.getKiePMMLExtensions;
 import static org.kie.pmml.compilation.commons.factories.KiePMMLPredicateInstanceFactory.getKiePMMLPredicates;
@@ -44,7 +44,7 @@ public class KiePMMLCompoundPredicateInstanceFactory {
         final List<KiePMMLPredicate> kiePMMLPredicates = compoundPredicate.hasPredicates() ?
                 getKiePMMLPredicates(compoundPredicate.getPredicates(), fields) : Collections.emptyList();
         return KiePMMLCompoundPredicate.builder(getKiePMMLExtensions(compoundPredicate.getExtensions()),
-                                                booleanOperator)
+                        booleanOperator)
                 .withKiePMMLPredicates(kiePMMLPredicates)
                 .build();
     }

@@ -16,24 +16,9 @@
 
 package org.kie.pmml.compilation.commons.codegenfactories;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.IntStream;
-
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import org.dmg.pmml.Apply;
-import org.dmg.pmml.Constant;
-import org.dmg.pmml.DataType;
-import org.dmg.pmml.DefineFunction;
-import org.dmg.pmml.DerivedField;
-import org.dmg.pmml.FieldName;
-import org.dmg.pmml.FieldRef;
-import org.dmg.pmml.OpType;
-import org.dmg.pmml.ParameterField;
-import org.dmg.pmml.TransformationDictionary;
+import org.dmg.pmml.*;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.commons.model.expressions.KiePMMLApply;
 import org.kie.pmml.commons.model.expressions.KiePMMLConstant;
@@ -44,9 +29,15 @@ import org.kie.pmml.commons.transformations.KiePMMLParameterField;
 import org.kie.pmml.commons.transformations.KiePMMLTransformationDictionary;
 import org.kie.pmml.compilation.commons.utils.JavaParserUtils;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilationWithImports;
 
 public class KiePMMLTransformationDictionaryFactoryTest {
 

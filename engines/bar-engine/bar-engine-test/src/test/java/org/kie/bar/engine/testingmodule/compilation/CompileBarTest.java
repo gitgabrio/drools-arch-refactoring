@@ -69,7 +69,7 @@ class CompileBarTest {
     @Test
     void compileRedirectBar() {
         File barFile = getFileFromFileName("RedirectBar.bar");
-        DARResource darResourceBar = new DARFileResource( barFile);
+        DARResource darResourceBar = new DARFileResource(barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.size()).isEqualTo(2);

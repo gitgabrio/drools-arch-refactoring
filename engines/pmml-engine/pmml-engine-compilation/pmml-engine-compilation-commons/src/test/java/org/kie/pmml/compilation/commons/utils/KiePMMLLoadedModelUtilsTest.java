@@ -16,9 +16,6 @@
 
 package org.kie.pmml.compilation.commons.utils;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.dmg.pmml.Field;
 import org.dmg.pmml.Model;
 import org.dmg.pmml.PMML;
@@ -27,16 +24,17 @@ import org.kie.pmml.api.enums.OP_TYPE;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameOpType;
 
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
 import static org.kie.pmml.api.enums.OP_TYPE.CATEGORICAL;
 import static org.kie.pmml.api.enums.OP_TYPE.CONTINUOUS;
 import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;
-import static org.kie.pmml.compilation.api.utils.ModelUtils.getOpType;
-import static org.kie.pmml.compilation.api.utils.ModelUtils.getTargetFieldName;
-import static org.kie.pmml.compilation.api.utils.ModelUtils.getTargetFields;
+import static org.kie.pmml.compilation.api.utils.ModelUtils.*;
 import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.MODELNAME_TEMPLATE;
-import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
 
 public class KiePMMLLoadedModelUtilsTest {
 

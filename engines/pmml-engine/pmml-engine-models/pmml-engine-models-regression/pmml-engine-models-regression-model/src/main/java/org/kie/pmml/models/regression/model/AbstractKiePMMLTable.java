@@ -15,16 +15,16 @@
  */
 package org.kie.pmml.models.regression.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
-
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.kie.pmml.api.iinterfaces.SerializableFunction;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLExtension;
 import org.kie.pmml.commons.model.abstracts.AbstractKiePMMLComponent;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public abstract class AbstractKiePMMLTable extends AbstractKiePMMLComponent {
 

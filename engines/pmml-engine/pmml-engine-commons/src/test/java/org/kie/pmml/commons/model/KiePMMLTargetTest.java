@@ -16,12 +16,12 @@
 
 package org.kie.pmml.commons.model;
 
-import java.util.Collections;
-
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.CAST_INTEGER;
 import org.kie.pmml.api.models.TargetField;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

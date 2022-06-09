@@ -25,7 +25,6 @@ import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.exceptions.KiePMMLInternalException;
 import org.kie.pmml.api.models.PMMLStep;
 import org.kie.pmml.api.runtime.PMMLContext;
-import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.predicates.KiePMMLPredicate;
 import org.kie.pmml.commons.model.tuples.KiePMMLNameValue;
@@ -35,6 +34,7 @@ import org.kie.pmml.models.mining.model.enums.MULTIPLE_MODEL_METHOD;
 import org.kie.pmml.models.mining.model.segmentation.KiePMMLSegment;
 import org.kie.pmml.runtime.api.exceptions.KiePMMLModelException;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
+import org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,32 +101,6 @@ public class PMMLMiningModelEvaluator implements PMMLModelEvaluator<KiePMMLMinin
         toReturn.setResultObjectName(toEvaluate.getTargetField());
         toReturn.setResultCode(resultCode.getName());
         return toReturn;
-    }
-
-    /**
-     * Retrieve the <code>PMMLRuntime</code> to be used for the given <b>segment</b>
-     * to reuse them.
-     *
-     * @param kModulePackageName
-     * @param containerModelName
-     * @return
-     */
-    PMMLRuntime getPMMLRuntime(final String kModulePackageName, final String containerModelName) {
-//        final String key = containerModelName + "_" + kModulePackageName;
-//        InternalKnowledgeBase kieBase = MAPPED_KIEBASES.computeIfAbsent(key, s -> {
-//            final KiePackage kiePackage = knowledgeBase.getKiePackage(kModulePackageName);
-//            final List<KiePackage> packages = kiePackage != null ?
-//                    Collections.singletonList(knowledgeBase.getKiePackage(kModulePackageName)) :
-//                    Collections.emptyList();
-//            RuleBaseConfiguration conf = new RuleBaseConfiguration();
-//            conf.setClassLoader(((RuleBase) knowledgeBase).getRootClassLoader());
-//            InternalKnowledgeBase toReturn = KnowledgeBaseFactory.newKnowledgeBase(kModulePackageName, conf);
-//            toReturn.addPackages(packages);
-//            return toReturn;
-//        });
-//        KieRuntimeFactory kieRuntimeFactory = KieRuntimeFactory.of(kieBase);
-//        return kieRuntimeFactory.get(PMMLRuntime.class);
-        return null;
     }
 
     /**
@@ -284,8 +258,7 @@ public class PMMLMiningModelEvaluator implements PMMLModelEvaluator<KiePMMLMinin
         final List<KiePMMLSegment> segments = toEvaluate.getSegmentation().getSegments();
         final LinkedHashMap<String, KiePMMLNameValueProbabilityMapTuple> inputData = new LinkedHashMap<>();
         for (KiePMMLSegment segment : segments) {
-            Optional<PMML4Result> segmentResult = evaluateSegment(segment, pmmlContext,
-                    toEvaluate.getName());
+            Optional<PMML4Result> segmentResult = evaluateSegment(segment, pmmlContext);
             segmentResult.ifPresent(pmml4Result -> populateInputDataWithSegmentResult(pmml4Result,
                     pmmlContext,
                     multipleModelMethod,
@@ -301,22 +274,16 @@ public class PMMLMiningModelEvaluator implements PMMLModelEvaluator<KiePMMLMinin
      *
      * @param toEvaluate
      * @param pmmlContext
-     * @param containerModelName
      * @return
      */
     private Optional<PMML4Result> evaluateSegment(final KiePMMLSegment toEvaluate,
-                                                  final PMMLContext pmmlContext,
-                                                  final String containerModelName) {
+                                                  final PMMLContext pmmlContext) {
         logger.trace("evaluateSegment {}", toEvaluate.getId());
         final KiePMMLPredicate kiePMMLPredicate = toEvaluate.getKiePMMLPredicate();
         Optional<PMML4Result> toReturn = Optional.empty();
         Map<String, Object> values = getUnwrappedParametersMap(pmmlContext.getRequestData().getMappedRequestParams());
-        String modelName = toEvaluate.getModel().getName();
-
         if (kiePMMLPredicate.evaluate(values)) {
-            final PMMLRuntime pmmlRuntime = getPMMLRuntime(toEvaluate.getModel().getKModulePackageName(), containerModelName);
-            logger.trace("{}: matching predicate, evaluating... ", toEvaluate.getId());
-            toReturn = Optional.ofNullable(pmmlRuntime.evaluate(modelName, pmmlContext));
+            toReturn = Optional.ofNullable(PMMLRuntimeHelper.evaluate(toEvaluate.getModel(), pmmlContext));
         }
         return toReturn;
     }

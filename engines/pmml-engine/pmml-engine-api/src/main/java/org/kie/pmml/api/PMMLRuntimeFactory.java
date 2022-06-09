@@ -15,16 +15,17 @@
  */
 package org.kie.pmml.api;
 
-import java.io.File;
-
 import org.kie.api.KieBase;
 import org.kie.pmml.api.runtime.PMMLRuntime;
+
+import java.io.File;
 
 public interface PMMLRuntimeFactory {
 
     /**
      * Retrieve a <code>PMMLRuntime</code> bound to the <code>org.dmg.pmml.PMMLModel</code>
      * that should be present in the given <code><File</code>
+     *
      * @param pmmlFile
      * @return
      */
@@ -48,7 +49,7 @@ public interface PMMLRuntimeFactory {
      * with the given <b>gav</b>
      *
      * @param pmmlFileName
-     * @param kieBase the name of the Kiebase configured inside the <b>kmodule.xml</b> of the loaded <b>kjar</b>
+     * @param kieBase      the name of the Kiebase configured inside the <b>kmodule.xml</b> of the loaded <b>kjar</b>
      * @param gav
      * @return
      */

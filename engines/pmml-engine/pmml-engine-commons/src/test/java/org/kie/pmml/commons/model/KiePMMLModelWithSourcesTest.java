@@ -16,14 +16,14 @@
 
 package org.kie.pmml.commons.model;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.testingutility.PMMLContextTest;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -39,18 +39,18 @@ public class KiePMMLModelWithSourcesTest {
     @BeforeEach
     public void setup() {
         kiePMMLModelWithSources = new KiePMMLModelWithSources(MODEL_NAME,
-                                                              PACKAGE_NAME,
-                                                              Collections.emptyList(),
-                                                              Collections.emptyList(),
-                                                              Collections.emptyList(),
-                                                              SOURCES_MAP,
-                                                              false);
+                PACKAGE_NAME,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                Collections.emptyList(),
+                SOURCES_MAP,
+                false);
     }
 
     @Test
     void evaluate() {
         assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
-            kiePMMLModelWithSources.evaluate( Collections.EMPTY_MAP, new PMMLContextTest());
+            kiePMMLModelWithSources.evaluate(Collections.EMPTY_MAP, new PMMLContextTest());
         });
     }
 

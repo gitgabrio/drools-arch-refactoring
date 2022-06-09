@@ -20,7 +20,6 @@ import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 /**
