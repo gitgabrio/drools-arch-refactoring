@@ -12,6 +12,10 @@
     <name>PMML :: ENGINE :: Models :: Mining :: Runtime</name>
     <description>PMML Mining Runtime</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

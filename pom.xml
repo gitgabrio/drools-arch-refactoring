@@ -28,6 +28,8 @@
         <rewrite.maven.plugin.version>4.23.0</rewrite.maven.plugin.version>
         <rewrite.testing.frameworks.version>1.22.0</rewrite.testing.frameworks.version>
         <archunit.maven.plugin.version>2.9.1</archunit.maven.plugin.version>
+        <jdepend.maven.plugin.version>2.0</jdepend.maven.plugin.version>
+        <skip.jdepend>true</skip.jdepend>
     </properties>
 
     <modules>
@@ -272,6 +274,11 @@
                     <artifactId>arch-unit-maven-plugin</artifactId>
                     <version>${archunit.maven.plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jdepend-maven-plugin</artifactId>
+                    <version>${jdepend.maven.plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -373,6 +380,13 @@
 <!--                        <version>1.0.0</version>-->
 <!--                    </dependency>-->
 <!--                </dependencies>-->
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${skip.jdepend}</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>

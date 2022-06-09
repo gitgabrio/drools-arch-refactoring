@@ -12,6 +12,10 @@
     <name>PMML :: ENGINE :: Models :: Clustering :: Runtime</name>
     <description>PMML Clustering Runtime</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

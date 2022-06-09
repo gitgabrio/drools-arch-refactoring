@@ -13,6 +13,10 @@
     <name>PMML :: ENGINE :: Models :: Clustering :: Compilation</name>
     <description>PMML Clustering Compilation</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

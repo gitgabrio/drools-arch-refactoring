@@ -16,6 +16,7 @@
 
     <properties>
         <sonar.coverage.exclusions>**/exceptions/**.java,**/model/predicates/**.java</sonar.coverage.exclusions>
+        <skip.jdepend>false</skip.jdepend>
     </properties>
 
     <dependencies>

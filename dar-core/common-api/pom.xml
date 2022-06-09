@@ -12,6 +12,10 @@
 
     <artifactId>common-api</artifactId>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

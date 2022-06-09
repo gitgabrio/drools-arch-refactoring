@@ -14,6 +14,10 @@
     <name>PMML :: ENGINE :: Models :: Regression :: Compilation</name>
     <description>PMML Regression Compilation</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

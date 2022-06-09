@@ -13,6 +13,10 @@
     <name>PMML :: ENGINE :: Models :: Clustering :: Model</name>
     <description>KiePMML Model for Clustering implementation</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

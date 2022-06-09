@@ -16,6 +16,7 @@
 
     <properties>
         <commons.math.version>3.4.1</commons.math.version>
+        <skip.jdepend>false</skip.jdepend>
     </properties>
 
     <dependencyManagement>

@@ -15,6 +15,7 @@
 
     <properties>
         <sonar.coverage.exclusions>**/segmentation/**.java</sonar.coverage.exclusions>
+        <skip.jdepend>false</skip.jdepend>
     </properties>
 
     <dependencies>

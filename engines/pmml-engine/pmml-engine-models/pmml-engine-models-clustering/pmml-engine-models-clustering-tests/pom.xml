@@ -13,6 +13,10 @@
     <name>PMML :: ENGINE :: Models :: Clustering :: Tests</name>
     <description>PMML Clustering Tests</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- TEST -->
         <!-- PMML -->

@@ -14,6 +14,10 @@
     <name>PMML :: ENGINE :: Compilation :: API</name>
     <description>API specific for PMML Compiler</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

@@ -13,6 +13,10 @@
     <name>PMML :: ENGINE :: Models :: Mining :: Compilation</name>
     <description>PMML Mining Compilation</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- PMML -->
         <dependency>

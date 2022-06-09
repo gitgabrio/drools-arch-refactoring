@@ -12,6 +12,10 @@
 
     <artifactId>foo-engine-compilation</artifactId>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.kie</groupId>

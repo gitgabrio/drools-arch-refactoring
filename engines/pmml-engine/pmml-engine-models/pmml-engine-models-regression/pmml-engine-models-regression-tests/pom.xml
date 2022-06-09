@@ -13,6 +13,10 @@
     <name>PMML :: ENGINE :: Models :: Regression :: Tests</name>
     <description>PMML Regression Tests</description>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
     <dependencies>
         <!-- TEST -->
         <!-- PMML -->

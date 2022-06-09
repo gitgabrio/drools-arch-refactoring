@@ -12,5 +12,9 @@
 
     <artifactId>bar-engine-api</artifactId>
 
+    <properties>
+        <skip.jdepend>false</skip.jdepend>
+    </properties>
+
 
 </project>
