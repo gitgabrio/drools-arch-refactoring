@@ -3,18 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>engines</artifactId>
+        <artifactId>drl-engine</artifactId>
         <groupId>org.kie</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>drl_engine</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>drl_engine_compilation</module>
-        <module>drl_engine_runtime</module>
-    </modules>
+    <artifactId>drl-engine-runtime</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

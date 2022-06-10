@@ -17,7 +17,7 @@
         <module>foo-engine</module>
         <module>bar-engine</module>
         <module>pmml-engine</module>
-        <module>drl_engine</module>
+        <module>drl-engine</module>
     </modules>
 
     <dependencies>
