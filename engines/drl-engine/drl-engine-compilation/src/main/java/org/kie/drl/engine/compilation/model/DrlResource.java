@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.compilation.model;
+package org.kie.drl.engine.compilation.model;
 
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.AbstractDARCallableCompilationOutput;
+import org.kie.dar.compilationmanager.api.model.DARResource;
 
-public class DARCallableOutputPMML extends AbstractDARCallableCompilationOutput {
+public interface DrlResource extends DARResource {
 
-    public DARCallableOutputPMML(FRI fri, String fullClassName) {
-        super(fri, fullClassName);
-    }
+    /**
+     * This should return the string used as <b>base path</b> in the generated <code>FRI</code>
+     * @return
+     */
+    String getBasePath();
 }

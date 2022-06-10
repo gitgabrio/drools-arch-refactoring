@@ -17,6 +17,7 @@ package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +29,11 @@ public abstract class DARCallableOutputClassesContainer extends AbstractDARCalla
 
     protected DARCallableOutputClassesContainer(FRI fri, String fullClassName, Map<String, byte[]> compiledClassMap) {
         super(fri, fullClassName);
+        this.compiledClassMap = compiledClassMap;
+    }
+
+    protected DARCallableOutputClassesContainer(FRI fri, List<String> fullClassNames, Map<String, byte[]> compiledClassMap) {
+        super(fri, fullClassNames);
         this.compiledClassMap = compiledClassMap;
     }
 

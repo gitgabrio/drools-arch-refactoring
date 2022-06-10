@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>drl-engine-compilation</artifactId>
+    <artifactId>drl-engine-tests</artifactId>
 
-    <name>DRL :: ENGINE :: Compilation</name>
-    <description>DRL Compilation</description>
+    <name>DRL :: ENGINE :: Tests</name>
+    <description>DRL Tests</description>
 
     <properties>
         <skip.jdepend>false</skip.jdepend>
@@ -21,14 +21,29 @@
     <dependencies>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>compilation-manager-api</artifactId>
+            <artifactId>drl-engine-compilation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>drl-engine-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>compilation-manager-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>runtime-manager-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
-            <artifactId>drools-model-project-codegen</artifactId>
+            <artifactId>drools-canonical-model</artifactId>
             <version>${kie.drools.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-
+    
 
 </project>

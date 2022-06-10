@@ -1,4 +1,4 @@
-package org.kie.drl.compilation;/*
+package org.kie.drl.engine.compilation;/*
  * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.drl.engine.compilation.model.DrlFileSetResource;
+import org.kie.drl.engine.compilation.service.KieCompilerServiceDrl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -49,7 +51,7 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource toProcess = new DrlFileCollectionResource(files);
+        DARResource toProcess = new DrlFileSetResource(files, "BasePath");
         // this is really only testing the constant field "drl" so it is always true...
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         toProcess = () -> "DARRedirectOutput";
@@ -63,9 +65,9 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource toProcess = new DrlFileCollectionResource(files);
+        DARResource toProcess = new DrlFileSetResource(files, "BasePath");
         List<DARCompilationOutput> retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotEmpty().hasSize(1);
+        assertThat(retrieved).isNotNull().hasSize(1);
     }
 
 }
