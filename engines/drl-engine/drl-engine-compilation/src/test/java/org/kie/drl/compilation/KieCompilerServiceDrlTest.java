@@ -16,9 +16,7 @@ package org.kie.drl.compilation;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -30,11 +28,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 
 class KieCompilerServiceDrlTest {
 
@@ -70,23 +65,7 @@ class KieCompilerServiceDrlTest {
                 .collect(Collectors.toSet());
         DARResource toProcess = new DrlFileCollectionResource(files);
         List<DARCompilationOutput> retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-        assertThat(retrieved).isNotEmpty().hasSize(0);
-//
-////     TODO after enabling drools models
-////        pmmlFile = getFileFromFileName("SimpleSetPredicateTree.pmml");
-////        toProcess = new DARFileResource(pmmlFile);
-////        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-////        assertThat(retrieved).isNotNull();
-////        assertThat(retrieved instanceof DARRedirectOutputBar).isTrue();
-////        assertThat(((DARRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
-//
-//        try {
-//            toProcess = () -> "DARRedirectOutput";
-//            kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-//            fail("Expecting KieCompilerServiceException");
-//        } catch (Exception e) {
-//            assertThat(e instanceof KieCompilerServiceException).isTrue();
-//        }
+        assertThat(retrieved).isNotEmpty().hasSize(1);
     }
 
 }

@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class KieCompilerServiceDrl implements KieCompilerService {
@@ -87,12 +86,14 @@ public class KieCompilerServiceDrl implements KieCompilerService {
 
         for (KogitoPackageSources pkgSources : packageSources) {
             pkgSources.collectGeneratedFiles(legacyModelFiles);
-            // modelFiles.addAll(generateInternalResource(pkgSources));
         }
 
 
         Map<String, String> sourceCode = legacyModelFiles.stream()
-                .collect(Collectors.toMap(GeneratedFile::getPath, generatedFile -> new String(generatedFile.getData(), StandardCharsets.UTF_8)));
+                .collect(Collectors.toMap(generatedFile -> generatedFile.getPath()
+                        .replace(".java", "")
+                        .replace('/', '.'),
+                        generatedFile -> new String(generatedFile.getData(), StandardCharsets.UTF_8)));
 
         Map<String, byte[]> compiledClasses = compileClasses(sourceCode, memoryCompilerClassLoader);
 
