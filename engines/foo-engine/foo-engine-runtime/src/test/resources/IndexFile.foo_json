@@ -6,7 +6,7 @@
       "model": "foo",
       "fri": "/foo/dar"
     },
-    "fullClassName": "org.kie.foo.engine.compilation.model.DarFooResources"
+    "fullClassNames": ["org.kie.foo.engine.compilation.model.DarFooResources"]
   },
   {
     "step-type": "class",

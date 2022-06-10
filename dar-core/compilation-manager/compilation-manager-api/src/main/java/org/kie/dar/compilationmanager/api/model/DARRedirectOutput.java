@@ -17,6 +17,8 @@ package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
+import java.util.List;
+
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
@@ -30,7 +32,7 @@ public class DARRedirectOutput extends AbstractDARCallableCompilationOutput impl
     private final Object content;
 
     protected DARRedirectOutput(FRI fri, String targetEngine, Object content) {
-        super(fri, null);
+        super(fri, (List<String>) null);
         this.targetEngine = targetEngine;
         this.content = content;
     }

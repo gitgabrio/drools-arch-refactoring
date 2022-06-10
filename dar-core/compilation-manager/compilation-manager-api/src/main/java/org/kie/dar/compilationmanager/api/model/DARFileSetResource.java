@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.compilationmanager.core.mocks;
+package org.kie.dar.compilationmanager.api.model;
 
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARCallableOutput;
+import java.io.File;
+import java.util.Set;
 
-import java.util.Collections;
-import java.util.List;
+public class DARFileSetResource extends DARSetResource<File> {
 
-public class MockDARCallableOutput implements DARCallableOutput {
-
-    private FRI fri = new FRI("mock/dar/output/module", "mock");
-
-    @Override
-    public FRI getFri() {
-        return fri;
+    public DARFileSetResource(Set<File> modelFiles, String type) {
+        super(modelFiles, type);
     }
 
-    @Override
-    public List<String> getFullClassNames() {
-        return Collections.singletonList("mock.dar.output.Module");
-    }
 
 }

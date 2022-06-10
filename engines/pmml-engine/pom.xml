@@ -16,7 +16,6 @@
     <description>Support for PMML-Encoded Predictive Models</description>
 
     <properties>
-        <kie.drools.version>8.23.0-SNAPSHOT</kie.drools.version>
         <jpmml.model.version>1.5.1</jpmml.model.version>
         <jaxb.runtime.version>2.3.6</jaxb.runtime.version>
     </properties>

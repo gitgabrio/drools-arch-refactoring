@@ -15,6 +15,7 @@
  */
 package org.kie.dar.common.api.model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,23 +30,23 @@ public final class GeneratedExecutableResource implements GeneratedResource {
     private final FRI fri;
 
 
-    private final String fullClassName;
+    private final List<String> fullClassNames;
 
     public GeneratedExecutableResource() {
         this(null, null);
     }
 
-    public GeneratedExecutableResource(FRI fri, String fullClassName) {
+    public GeneratedExecutableResource(FRI fri, List<String> fullClassNames) {
         this.fri = fri;
-        this.fullClassName = fullClassName;
+        this.fullClassNames = fullClassNames;
     }
 
     public FRI getFri() {
         return fri;
     }
 
-    public String getFullClassName() {
-        return fullClassName;
+    public List<String> getFullClassNames() {
+        return fullClassNames;
     }
 
     @Override

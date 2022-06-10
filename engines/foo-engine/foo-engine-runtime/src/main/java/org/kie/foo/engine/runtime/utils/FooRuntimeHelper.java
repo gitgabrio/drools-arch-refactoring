@@ -46,11 +46,12 @@ public class FooRuntimeHelper {
         return getGeneratedFinalResource(fri).isPresent();
     }
 
+    @SuppressWarnings("unchecked")
     public static FooResources loadFooResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedExecutableResource finalResource = getGeneratedFinalResource(fri)
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
-        String fullBarResourcesSourceClassName = finalResource.getFullClassName();
         try {
+            String fullBarResourcesSourceClassName = finalResource.getFullClassNames().get(0);
             final Class<? extends FooResources> aClass =
                     (Class<? extends FooResources>) memoryCompilerClassLoader.loadClass(fullBarResourcesSourceClassName);
             return aClass.getDeclaredConstructor().newInstance();

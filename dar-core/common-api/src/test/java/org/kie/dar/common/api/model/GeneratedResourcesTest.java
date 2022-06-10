@@ -17,6 +17,8 @@ package org.kie.dar.common.api.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GeneratedResourcesTest {
@@ -27,33 +29,33 @@ class GeneratedResourcesTest {
         GeneratedResource generatedClassResource = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
-        assertThat(generatedResources.size()).isEqualTo(2);
+        assertThat(generatedResources).hasSize(2);
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        assertThat(generatedResources.size()).isEqualTo(1);
+        generatedResources.add(new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName)));
+        generatedResources.add(new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName)));
+        assertThat(generatedResources).hasSize(1);
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        assertThat(generatedResources.size()).isEqualTo(1);
+        generatedResources.add(new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName)));
+        generatedResources.add(new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName)));
+        assertThat(generatedResources).hasSize(1);
 
         generatedResources = new GeneratedResources();
-        generatedResources.add(new GeneratedExecutableResource(fri, fullClassName));
-        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model), fullClassName));
-        assertThat(generatedResources.size()).isEqualTo(2);
+        generatedResources.add(new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName)));
+        generatedResources.add(new GeneratedExecutableResource(new FRI("different-fri", model), Collections.singletonList(fullClassName)));
+        assertThat(generatedResources).hasSize(2);
 
         generatedClassResource = new GeneratedClassResource(fullClassName);
-        generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
+        generatedFinalResource = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
         generatedResources = new GeneratedResources();
         generatedResources.add(generatedClassResource);
         generatedResources.add(generatedFinalResource);
-        assertThat(generatedResources.size()).isEqualTo(2);
+        assertThat(generatedResources).hasSize(2);
         assertThat(generatedResources.contains(generatedClassResource)).isTrue();
         assertThat(generatedResources.contains(generatedFinalResource)).isTrue();
     }

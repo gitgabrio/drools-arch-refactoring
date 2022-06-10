@@ -105,11 +105,12 @@ public class PMMLRuntimeHelper {
                 .map(o -> new DAROutputPMML(toEvaluate.getFRI(), null)); // TODO fix for drools models));
     }
 
+    @SuppressWarnings("unchecked")
     static KiePMMLModelFactory loadKiePMMLModelFactory(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri)
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
-        String fullKiePMMLModelFactorySourceClassName = finalResource.getFullClassName();
         try {
+            String fullKiePMMLModelFactorySourceClassName = finalResource.getFullClassNames().get(0);
             final Class<? extends KiePMMLModelFactory> aClass =
                     (Class<? extends KiePMMLModelFactory>) memoryCompilerClassLoader.loadClass(fullKiePMMLModelFactorySourceClassName);
             return aClass.getDeclaredConstructor().newInstance();

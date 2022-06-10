@@ -15,22 +15,21 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
-import java.io.File;
 import java.util.Set;
 
-public class DARFileCollectionResource implements DARResource {
+public abstract class DARSetResource<T> implements DARResource {
 
-    private final Set<File> modelFiles;
+    private final Set<T> resources;
     private String type;
 
-    public DARFileCollectionResource(Set<File> modelFiles, String type) {
-        this.modelFiles = modelFiles;
+    public DARSetResource(Set<T> resources, String type) {
+        this.resources = resources;
         this.type = type;
     }
 
     @Override
-    public Set<File> getContent() {
-        return modelFiles;
+    public Set<T> getContent() {
+        return resources;
     }
 
     public String getModelType() {

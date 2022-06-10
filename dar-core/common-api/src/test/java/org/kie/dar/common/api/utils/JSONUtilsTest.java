@@ -22,6 +22,7 @@ import org.kie.dar.common.api.model.*;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -44,8 +45,8 @@ class JSONUtilsTest {
         retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertThat(retrieved).isEqualTo(expected);
 
-        generatedResource = new GeneratedExecutableResource(fri, fullClassName);
-        expected = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), fullClassName);
+        generatedResource = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
+        expected = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassNames\":[\"%s\"]}", JSONUtils.getFRIString(fri), fullClassName);
         retrieved = JSONUtils.getGeneratedResourceString(generatedResource);
         assertThat(retrieved).isEqualTo(expected);
     }
@@ -54,18 +55,15 @@ class JSONUtilsTest {
     void getGeneratedResourceObject() throws JsonProcessingException {
         String generatedResourceString = "{\"step-type\":\"redirect\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"this/is/fri_foo\"},\"target\":\"foo\"}";
         GeneratedResource retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved instanceof GeneratedRedirectResource).isTrue();
+        assertThat(retrieved).isNotNull().isInstanceOf(GeneratedRedirectResource.class);
 
         generatedResourceString = "{\"step-type\":\"class\",\"fullClassName\":\"full.class.Name\"}\"";
         retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved instanceof GeneratedClassResource).isTrue();
+        assertThat(retrieved).isNotNull().isInstanceOf(GeneratedClassResource.class);
 
-        generatedResourceString = "{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"this/is/fri_foo\",\"model\":\"foo\"},\"fullClassName\":\"full.class.Name\"}";
+        generatedResourceString = "{\"step-type\":\"executable\",\"fri\":{\"basePath\":\"this/is/fri\",\"fri\":\"this/is/fri_foo\",\"model\":\"foo\"},\"fullClassNames\":[\"full.class.Name\"]}";
         retrieved = JSONUtils.getGeneratedResourceObject(generatedResourceString);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved instanceof GeneratedExecutableResource).isTrue();
+        assertThat(retrieved).isNotNull().isInstanceOf(GeneratedExecutableResource.class);
     }
 
     @Test
@@ -74,15 +72,15 @@ class JSONUtilsTest {
         GeneratedResource generatedIntermediateResource = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, fullClassName);
+        GeneratedResource generatedFinalResource = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
         GeneratedResources generatedResources = new GeneratedResources();
         generatedResources.add(generatedIntermediateResource);
         generatedResources.add(generatedFinalResource);
         String retrieved = JSONUtils.getGeneratedResourcesString(generatedResources);
         String expected1 = String.format("{\"step-type\":\"class\",\"fullClassName\":\"%s\"}", fullClassName);
-        String expected2 = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassName\":\"%s\"}", JSONUtils.getFRIString(fri), fullClassName);
-        assertThat(retrieved.contains(expected1)).isTrue();
-        assertThat(retrieved.contains(expected2)).isTrue();
+        String expected2 = String.format("{\"step-type\":\"executable\",\"fri\":%s,\"fullClassNames\":[\"%s\"]}", JSONUtils.getFRIString(fri), fullClassName);
+        assertThat(retrieved).contains(expected1);
+        assertThat(retrieved).contains(expected2);
     }
 
     @Test
@@ -94,9 +92,9 @@ class JSONUtilsTest {
         GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
         String model = "foo";
         FRI fri = new FRI("this/is/fri", model);
-        GeneratedResource expected2 = new GeneratedExecutableResource(fri, fullClassName);
-        assertThat(retrieved.contains(expected1)).isTrue();
-        assertThat(retrieved.contains(expected2)).isTrue();
+        GeneratedResource expected2 = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
+        assertThat(retrieved).contains(expected1);
+        assertThat(retrieved).contains(expected2);
     }
 
     @Test
@@ -112,9 +110,9 @@ class JSONUtilsTest {
             GeneratedResource expected1 = new GeneratedClassResource(fullClassName);
             String model = "foo";
             FRI fri = new FRI("this/is/fri", model);
-            GeneratedResource expected2 = new GeneratedExecutableResource(fri, fullClassName);
-            assertThat(retrieved.contains(expected1)).isTrue();
-            assertThat(retrieved.contains(expected2)).isTrue();
+            GeneratedResource expected2 = new GeneratedExecutableResource(fri, Collections.singletonList(fullClassName));
+            assertThat(retrieved).contains(expected1);
+            assertThat(retrieved).contains(expected2);
         } catch (Exception e) {
             fail("", e);
         }

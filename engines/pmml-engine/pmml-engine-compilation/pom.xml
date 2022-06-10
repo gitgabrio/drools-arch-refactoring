@@ -12,8 +12,8 @@
     <artifactId>pmml-engine-compilation</artifactId>
     <packaging>pom</packaging>
 
-    <name>PMML :: ENGINE :: Compiler</name>
-    <description>PMML Compiler</description>
+    <name>PMML :: ENGINE :: Compilation</name>
+    <description>PMML Compilation</description>
 
     <modules>
         <module>pmml-engine-compilation-api</module>

@@ -6,7 +6,7 @@
       "model": "foo",
       "fri": "/foo/this/is/fri"
     },
-    "fullClassName": "full.class.Name"
+    "fullClassNames": ["full.class.Name"]
   },
   {
     "step-type": "class",

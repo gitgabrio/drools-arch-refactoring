@@ -6,7 +6,7 @@
       "model": "pmml",
       "fri": "/pmml/testmod"
     },
-    "fullClassName": "org.kie.pmml.compilation.model.TestingModelFactory"
+    "fullClassNames": ["org.kie.pmml.compilation.model.TestingModelFactory"]
   },
   {
     "step-type": "class",

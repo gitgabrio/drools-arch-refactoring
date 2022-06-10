@@ -17,15 +17,23 @@ package org.kie.dar.compilationmanager.api.model;
 
 import org.kie.dar.common.api.model.FRI;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractDARCallableCompilationOutput implements DARCallableOutput {
 
     private final FRI fri;
-    private final String fullClassName;
+    private final List<String> fullClassNames;
 
     protected AbstractDARCallableCompilationOutput(FRI fri, String fullClassName) {
-        this.fri = fri;
-        this.fullClassName = fullClassName;
+        this(fri, Collections.singletonList(fullClassName));
     }
+
+    protected AbstractDARCallableCompilationOutput(FRI fri, List<String> fullClassNames) {
+        this.fri = fri;
+        this.fullClassNames = fullClassNames;
+    }
+
 
     /**
      * Returns the <b>full resource identifier</b> to be invoked for execution
@@ -37,12 +45,9 @@ public abstract class AbstractDARCallableCompilationOutput implements DARCallabl
         return fri;
     }
 
-    /**
-     * Returns the <b>full class name</b> to be instantiated for execution
-     *
-     * @return
-     */
-    public String getFullClassName() {
-        return fullClassName;
+    @Override
+    public List<String> getFullClassNames() {
+        return fullClassNames;
     }
+
 }

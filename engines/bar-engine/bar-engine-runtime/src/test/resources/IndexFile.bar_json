@@ -6,7 +6,7 @@
       "model": "bar",
       "fri": "/bar/dar"
     },
-    "fullClassName": "org.kie.bar.engine.compilation.model.DarBarResources"
+    "fullClassNames": ["org.kie.bar.engine.compilation.model.DarBarResources"]
   },
   {
     "step-type": "class",

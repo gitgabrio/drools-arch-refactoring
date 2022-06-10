@@ -127,7 +127,7 @@ public class CompilationManagerUtils {
         if (compilationOutput instanceof DARRedirectOutput) {
             return new GeneratedRedirectResource(((DARRedirectOutput) compilationOutput).getFri(), ((DARRedirectOutput) compilationOutput).getTargetEngine());
         } else if (compilationOutput instanceof DARCallableOutput) {
-            return new GeneratedExecutableResource(((DARCallableOutput) compilationOutput).getFri(), ((DARCallableOutput) compilationOutput).getFullClassName());
+            return new GeneratedExecutableResource(((DARCallableOutput) compilationOutput).getFri(), ((DARCallableOutput) compilationOutput).getFullClassNames());
         } else {
             throw new KieCompilerServiceException("Unmanaged type " + compilationOutput.getClass().getName());
         }
