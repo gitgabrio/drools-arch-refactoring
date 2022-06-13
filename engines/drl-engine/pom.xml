@@ -21,7 +21,7 @@
         <module>drl-engine-runtime-common</module>
         <module>drl-engine-kiesession-local</module>
         <module>drl-engine-tests</module>
-        <module>drl-map-input</module>
+        <module>drl-engine-map-input</module>
     </modules>
 
     <dependencyManagement>
@@ -42,13 +42,25 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>drl-engine-kiesession-local</artifactId>
+                <artifactId>drl-engine-kiesession-local-runtime</artifactId>
                 <groupId>org.kie</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <artifactId>drl-engine-kiesession-local-runtime</artifactId>
                 <groupId>org.kie</groupId>
+                <scope>test</scope>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-map-input-runtime</artifactId>
+                <groupId>org.kie</groupId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-map-input-runtime</artifactId>
+                <groupId>org.kie</groupId>
+                <scope>test</scope>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

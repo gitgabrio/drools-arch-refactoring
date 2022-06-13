@@ -34,6 +34,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>drl-engine-kiesession-local-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>drl-engine-map-input-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-canonical-model</artifactId>
             <version>${kie.drools.version}</version>
