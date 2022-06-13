@@ -16,12 +16,9 @@
 package org.kie.pmml.runtime.core.utils;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedExecutableResource;
 import org.kie.dar.common.api.model.GeneratedRedirectResource;
-import org.kie.dar.common.api.model.GeneratedResources;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
@@ -40,15 +37,13 @@ import org.kie.pmml.runtime.core.model.DAROutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
-import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 import static org.kie.pmml.runtime.core.utils.PostProcess.postProcess;
 import static org.kie.pmml.runtime.core.utils.PreProcess.preProcess;
@@ -158,54 +153,6 @@ public class PMMLRuntimeHelper {
                 .stream()
                 .filter(model -> Objects.equals(modelName, model.getName()))
                 .findFirst();
-    }
-
-    static Optional<IndexFile> getIndexFile() {
-        IndexFile toSearch = new IndexFile("pmml");
-        File existingFile;
-        try {
-            existingFile = getFileFromFileName(toSearch.getName());
-            toSearch = new IndexFile(existingFile);
-            logger.debug("IndexFile {} exists", toSearch.getName());
-            return Optional.of(toSearch);
-        } catch (KieDARCommonException e) {
-            logger.debug("IndexFile {} does not exists.", toSearch.getName());
-            return Optional.empty();
-        }
-    }
-
-    static Optional<GeneratedExecutableResource> getGeneratedExecutableResource(FRI fri) {
-        return getIndexFile().map(indexFile -> {
-            try {
-                GeneratedResources generatedResources = getGeneratedResourcesObject(indexFile);
-                return generatedResources.stream()
-                        .filter(generatedResource -> generatedResource instanceof GeneratedExecutableResource &&
-                                ((GeneratedExecutableResource) generatedResource).getFri().equals(fri))
-                        .findFirst()
-                        .map(GeneratedExecutableResource.class::cast)
-                        .orElse(null);
-            } catch (IOException e) {
-                logger.debug("Failed to read GeneratedResources from {}.", indexFile.getName(), e);
-                return null;
-            }
-        });
-    }
-
-    static Optional<GeneratedRedirectResource> getGeneratedRedirectResource(FRI fri) {
-        return getIndexFile().map(indexFile -> {
-            try {
-                GeneratedResources generatedResources = getGeneratedResourcesObject(indexFile);
-                return generatedResources.stream()
-                        .filter(generatedResource -> generatedResource instanceof GeneratedRedirectResource &&
-                                ((GeneratedRedirectResource) generatedResource).getFri().equals(fri))
-                        .findFirst()
-                        .map(GeneratedRedirectResource.class::cast)
-                        .orElse(null);
-            } catch (IOException e) {
-                logger.debug("Failed to read GeneratedResources from {}.", indexFile.getName(), e);
-                return null;
-            }
-        });
     }
 
     /**

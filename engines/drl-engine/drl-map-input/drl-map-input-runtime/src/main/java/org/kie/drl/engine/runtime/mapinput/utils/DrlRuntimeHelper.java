@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.drl.engine.runtime.kiesession.local.utils;
+package org.kie.drl.engine.runtime.mapinput.utils;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
-import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
+import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class DrlRuntimeHelper {
         return getGeneratedExecutableResource(fri).isPresent();
     }
 
-    public static Optional<DAROutputDrlKieSessionLocal> execute(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<DAROutputDrlMap> execute(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
             kieSession = loadKieSession(toEvaluate.getFRI(), memoryCompilerClassLoader);
@@ -60,7 +60,7 @@ public class DrlRuntimeHelper {
         try {
             String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             FRI sessionFRI = new FRI(sessionPath, "drl");
-            return Optional.of(new DAROutputDrlKieSessionLocal(sessionFRI, kieSession));
+            return Optional.of(new DAROutputDrlMap(sessionFRI, null));
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     DrlRuntimeHelper.class.getName(),
