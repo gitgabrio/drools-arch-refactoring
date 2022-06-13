@@ -16,20 +16,43 @@
     <description>Support for Rules</description>
 
     <modules>
-        <module>drl-engine-compilation</module>
-        <module>drl-engine-runtime</module>
-        <module>drl-engine-test</module>
+        <module>drl-engine-api</module>
+        <module>drl-engine-compilation-common</module>
+        <module>drl-engine-runtime-common</module>
+        <module>drl-engine-kiesession-local</module>
+        <module>drl-engine-tests</module>
+        <module>drl-map-input</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <artifactId>drl-engine-compilation</artifactId>
+                <artifactId>drl-engine-api</artifactId>
                 <groupId>org.kie</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>drl-engine-runtime</artifactId>
+                <artifactId>drl-engine-compilation-common</artifactId>
+                <groupId>org.kie</groupId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-runtime-common</artifactId>
+                <groupId>org.kie</groupId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-kiesession-local</artifactId>
+                <groupId>org.kie</groupId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-kiesession-local-runtime</artifactId>
+                <groupId>org.kie</groupId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>drl-engine-tests</artifactId>
                 <groupId>org.kie</groupId>
                 <version>${project.version}</version>
             </dependency>

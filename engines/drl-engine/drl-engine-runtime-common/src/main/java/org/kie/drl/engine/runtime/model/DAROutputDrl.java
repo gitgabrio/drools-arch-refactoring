@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.api.model;
+package org.kie.drl.engine.runtime.model;
 
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
-public abstract class AbstractDAROutput<T> implements DAROutput<T> {
+/**
+ * Generic <code>DAROutput</code> specific for DRL engines, to be subclassed depending on the actual implementation needs
+ * @param <T>
+ */
+public class DAROutputDrl<T> extends AbstractDAROutput<T> {
 
-    private final FRI fri;
-    private final T outputData;
-
-    protected AbstractDAROutput(FRI fri, T outputData) {
-        this.fri = fri;
-        this.outputData = outputData;
+    // TODO {mfusco} Define a generic (instead of "String") that could reasonably contain any given "output" from rule execution
+    public DAROutputDrl(FRI fri, T outputData) {
+        super(fri, outputData);
     }
 
-    @Override
-    public FRI getFRI() {
-        return fri;
-    }
-
-    @Override
-    public T getOutputData() {
-        return outputData;
-    }
 }

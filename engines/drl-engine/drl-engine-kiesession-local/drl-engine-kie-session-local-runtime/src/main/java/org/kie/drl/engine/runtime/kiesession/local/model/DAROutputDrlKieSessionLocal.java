@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.dar.runtimemanager.api.model;
+package org.kie.drl.engine.runtime.kiesession.local.model;
 
+import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
+import org.kie.drl.engine.runtime.model.DAROutputDrl;
 
-public abstract class AbstractDAROutput<T> implements DAROutput<T> {
+/**
+ * <code>DAROutputDrl</code> specific for local kiesession usage.
+ * Its only scope it is to return a <code>KieSession</code> instance.
+ *
+ * The returned <code>FRI</code> will contain the session id as last element of the path
+ */
+public class DAROutputDrlKieSessionLocal extends DAROutputDrl<KieSession> {
 
-    private final FRI fri;
-    private final T outputData;
-
-    protected AbstractDAROutput(FRI fri, T outputData) {
-        this.fri = fri;
-        this.outputData = outputData;
-    }
-
-    @Override
-    public FRI getFRI() {
-        return fri;
-    }
-
-    @Override
-    public T getOutputData() {
-        return outputData;
+    public DAROutputDrlKieSessionLocal(FRI fri, KieSession kieSession) {
+        super(fri, kieSession);
     }
 }
