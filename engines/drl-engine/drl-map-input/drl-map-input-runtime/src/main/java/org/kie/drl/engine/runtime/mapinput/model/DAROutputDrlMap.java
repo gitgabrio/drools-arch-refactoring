@@ -25,9 +25,9 @@ import java.util.Map;
  * Its scope it is to return a <code>Map</code> with the result of the evaluation.
  * To be used, for example, by PMML
  */
-public class DAROutputDrlMap extends DAROutputDrl<Map> {
+public class DAROutputDrlMap extends DAROutputDrl<Map<String, Object>> {
 
-    public DAROutputDrlMap(FRI fri, Map inputData) {
+    public DAROutputDrlMap(FRI fri, Map<String, Object> inputData) {
         super(fri, inputData);
     }
 }

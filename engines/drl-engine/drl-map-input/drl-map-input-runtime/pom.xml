@@ -27,6 +27,11 @@
             <version>${kie.drools.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-commands</artifactId>
+            <version>8.23.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <properties>

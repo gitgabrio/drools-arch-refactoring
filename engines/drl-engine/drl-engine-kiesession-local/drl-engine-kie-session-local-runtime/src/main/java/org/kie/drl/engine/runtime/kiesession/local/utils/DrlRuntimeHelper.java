@@ -40,7 +40,7 @@ public class DrlRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        return getGeneratedExecutableResource(fri).isPresent();
+        return getGeneratedExecutableResource(fri, "drl").isPresent();
     }
 
     public static Optional<DAROutputDrlKieSessionLocal> execute(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {

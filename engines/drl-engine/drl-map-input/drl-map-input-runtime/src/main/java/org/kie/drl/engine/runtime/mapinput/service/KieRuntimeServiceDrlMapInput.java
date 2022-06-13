@@ -17,6 +17,7 @@ package org.kie.drl.engine.runtime.mapinput.service;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
@@ -29,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<Map, Map, DARInputDrlMap, DAROutputDrlMap> {
+public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInputDTO, Map<String, Object>, DARInputDrlMap, DAROutputDrlMap> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceDrlMapInput.class.getName());
 

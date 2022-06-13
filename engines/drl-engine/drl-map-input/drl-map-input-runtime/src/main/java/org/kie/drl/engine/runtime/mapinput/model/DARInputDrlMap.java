@@ -16,18 +16,17 @@
 package org.kie.drl.engine.runtime.mapinput.model;
 
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.drl.engine.runtime.model.DARInputDrl;
-
-import java.util.Map;
 
 /**
  * <code>DARInputDrl</code> specific for map input usage.
  * Its scope it is to provide a <code>Map</code> with the data needed for the evaluation.
  * To be used, for example, by PMML
  */
-public class DARInputDrlMap extends DARInputDrl<Map> {
+public class DARInputDrlMap extends DARInputDrl<DARMapInputDTO> {
 
-    public DARInputDrlMap(FRI fri, Map inputData) {
+    public DARInputDrlMap(FRI fri, DARMapInputDTO inputData) {
         super(fri, inputData);
     }
 }

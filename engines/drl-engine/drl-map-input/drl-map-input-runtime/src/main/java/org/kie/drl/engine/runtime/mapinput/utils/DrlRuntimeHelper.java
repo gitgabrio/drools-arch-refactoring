@@ -40,7 +40,7 @@ public class DrlRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        return getGeneratedExecutableResource(fri).isPresent();
+        return getGeneratedExecutableResource(fri, "drl").isPresent();
     }
 
     public static Optional<DAROutputDrlMap> execute(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
@@ -58,6 +58,11 @@ public class DrlRuntimeHelper {
             return Optional.empty();
         }
         try {
+            MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, "name", "packageName",
+                    toEvaluate.getInputData());
+            final MapInputSessionUtils mapInputSessionUtils = builder.build();
+            mapInputSessionUtils.fireAllRules();
+
             String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             FRI sessionFRI = new FRI(sessionPath, "drl");
             return Optional.of(new DAROutputDrlMap(sessionFRI, null));

@@ -35,12 +35,12 @@ public class FooRuntimeHelper {
     }
 
     public static boolean canManage(FRI fri) {
-        return getGeneratedExecutableResource(fri).isPresent();
+        return getGeneratedExecutableResource(fri, "foo").isPresent();
     }
 
     @SuppressWarnings("unchecked")
     public static FooResources loadFooResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri)
+        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri, "foo")
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         try {
             String fullBarResourcesSourceClassName = finalResource.getFullClassNames().get(0);

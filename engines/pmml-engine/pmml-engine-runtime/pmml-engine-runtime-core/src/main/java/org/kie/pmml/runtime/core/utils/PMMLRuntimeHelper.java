@@ -59,7 +59,7 @@ public class PMMLRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        return Stream.of(getGeneratedExecutableResource(fri), getGeneratedRedirectResource(fri))
+        return Stream.of(getGeneratedExecutableResource(fri, "pmml"), getGeneratedRedirectResource(fri, "pmml"))
                 .anyMatch(Optional::isPresent);
     }
 
@@ -83,7 +83,7 @@ public class PMMLRuntimeHelper {
     }
 
     public static Optional<DAROutputPMML> redirect(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI()).orElse(null);
+        GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI(), "pmml").orElse(null);
         if (redirectResource == null) {
             logger.warn("{} can not redirect {}", PMMLRuntimeHelper.class.getName(), toEvaluate.getFRI());
             return Optional.empty();
@@ -102,7 +102,7 @@ public class PMMLRuntimeHelper {
 
     @SuppressWarnings("unchecked")
     static KiePMMLModelFactory loadKiePMMLModelFactory(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri)
+        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri, "pmml")
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         try {
             String fullKiePMMLModelFactorySourceClassName = finalResource.getFullClassNames().get(0);

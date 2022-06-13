@@ -132,21 +132,21 @@ class PMMLRuntimeHelperTest {
         // TODO for drools models
     }
 
-    @Test
-    void getIndexFile() {
-        Optional<IndexFile> retrieved = PMMLRuntimeHelper.getIndexFile();
-        assertThat(retrieved).isNotNull().isPresent();
-    }
+//    @Test
+//    void getIndexFile() {
+//        Optional<IndexFile> retrieved = PMMLRuntimeHelper.getIndexFile();
+//        assertThat(retrieved).isNotNull().isPresent();
+//    }
 
-    @Test
-    void getGeneratedExecutableResource() {
-        FRI fri = new FRI("testmod", "pmml");
-        Optional<GeneratedExecutableResource> retrieved = PMMLRuntimeHelper.getGeneratedExecutableResource(fri);
-        assertThat(retrieved).isNotNull().isPresent();
-        fri = new FRI("notestmod", "pmml");
-        retrieved = PMMLRuntimeHelper.getGeneratedExecutableResource(fri);
-        assertThat(retrieved).isNotNull().isNotPresent();
-    }
+//    @Test
+//    void getGeneratedExecutableResource() {
+//        FRI fri = new FRI("testmod", "pmml");
+//        Optional<GeneratedExecutableResource> retrieved = PMMLRuntimeHelper.getGeneratedExecutableResource(fri);
+//        assertThat(retrieved).isNotNull().isPresent();
+//        fri = new FRI("notestmod", "pmml");
+//        retrieved = PMMLRuntimeHelper.getGeneratedExecutableResource(fri);
+//        assertThat(retrieved).isNotNull().isNotPresent();
+//    }
 
     @Test
     void getGeneratedRedirectResource() {

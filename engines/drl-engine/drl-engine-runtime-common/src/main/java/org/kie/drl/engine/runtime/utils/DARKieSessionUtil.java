@@ -32,7 +32,7 @@ public class DARKieSessionUtil {
     }
 
     public static KieSession loadKieSession(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedExecutableResource finalResource = GeneratedResourceUtils.getGeneratedExecutableResource(fri)
+        GeneratedExecutableResource finalResource = GeneratedResourceUtils.getGeneratedExecutableResource(fri, "drl")
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         List<Model> models = finalResource.getFullClassNames().stream().map(className -> loadModel(className, memoryCompilerClassLoader)).collect(Collectors.toList());
         // TODO {mfusco} retrieve a kiebase/kiesession from List<Model>

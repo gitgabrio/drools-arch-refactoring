@@ -45,6 +45,7 @@ public class Constants {
     public static final String VARIABLE_NAME_TEMPLATE = "%s_%s";
     public static final String EXPRESSION_NOT_MANAGED = "Expression %s not managed";
 
+
     //
     public static final String GET_MODEL = "getModel";
     public static final String PACKAGE_NAME = "PACKAGE_NAME";
@@ -58,6 +59,7 @@ public class Constants {
     public static final String EMPTY_LIST = "emptyList";
     public static final String AS_LIST = "asList";
     public static final String TO_RETURN = "toReturn";
+    public static final String OUTPUTFIELDS_MAP_IDENTIFIER = "$outputFieldsMap";
 
     //
     public static final String INDEXFILE_DIRECTORY_PROPERTY = "indexfile.directory";

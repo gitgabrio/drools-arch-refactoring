@@ -38,11 +38,11 @@ public class GeneratedResourceUtils {
     private GeneratedResourceUtils() {
     }
 
-    public static Optional<GeneratedExecutableResource> getGeneratedExecutableResource(FRI fri) {
+    public static Optional<GeneratedExecutableResource> getGeneratedExecutableResource(FRI fri, String modelType) {
         // TODO @mfusco: define a unique subpath identifier for this specific runtime implementation, e.g.
         // The received FRI here would be the one with the specific subpath (e.g. /drl/kiesessionlocal/something) but the compiled resource
         // won't contain the "subpath", but only the main one - i.e. /drl/something)
-        return getIndexFile(fri.getModel()).map(indexFile -> {
+        return getIndexFile(modelType).map(indexFile -> {
             try {
                 GeneratedResources generatedResources = getGeneratedResourcesObject(indexFile);
                 return generatedResources.stream()
@@ -58,8 +58,8 @@ public class GeneratedResourceUtils {
         });
     }
 
-    public static Optional<GeneratedRedirectResource> getGeneratedRedirectResource(FRI fri) {
-        return getIndexFile(fri.getModel()).map(indexFile -> {
+    public static Optional<GeneratedRedirectResource> getGeneratedRedirectResource(FRI fri, String modelType) {
+        return getIndexFile(modelType).map(indexFile -> {
             try {
                 GeneratedResources generatedResources = getGeneratedResourcesObject(indexFile);
                 return generatedResources.stream()

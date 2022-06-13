@@ -47,7 +47,7 @@ public class BarRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        return Stream.of(getGeneratedExecutableResource(fri), getGeneratedRedirectResource(fri))
+        return Stream.of(getGeneratedExecutableResource(fri, "bar"), getGeneratedRedirectResource(fri, "bar"))
                 .anyMatch(Optional::isPresent);
     }
 
@@ -77,7 +77,7 @@ public class BarRuntimeHelper {
      */
     @SuppressWarnings({"unchecked", "raw"})
     public static Optional<DAROutputBar> redirect(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI()).orElse(null);
+        GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI(), "bar").orElse(null);
         if (redirectResource == null) {
             logger.warn("{} can not redirect {}", BarRuntimeHelper.class.getName(), toEvaluate.getFRI());
             return Optional.empty();
@@ -96,12 +96,12 @@ public class BarRuntimeHelper {
         return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput) o).getOutputData().toString()));
+                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput<?>) o).getOutputData().toString()));
     }
 
     @SuppressWarnings("unchecked")
     static BarResources loadBarResources(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri)
+        GeneratedExecutableResource finalResource = getGeneratedExecutableResource(fri, "bar")
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         try {
             String fullBarResourcesSourceClassName = finalResource.getFullClassNames().get(0);
