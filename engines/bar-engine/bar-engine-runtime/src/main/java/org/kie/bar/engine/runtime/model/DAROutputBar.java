@@ -19,15 +19,9 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
 public class DAROutputBar extends AbstractDAROutput<String> {
-    private final String outputData;
 
     public DAROutputBar(FRI fri, String outputData) {
-        super(fri);
-        this.outputData = outputData;
+        super(fri, outputData);
     }
 
-    @Override
-    public String getOutputData() {
-        return outputData;
-    }
 }

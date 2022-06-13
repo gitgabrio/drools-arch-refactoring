@@ -20,15 +20,8 @@ import org.kie.dar.runtimemanager.api.model.AbstractDAROutput;
 
 public class DAROutputFoo extends AbstractDAROutput<String> {
 
-    private final String outputData;
-
     public DAROutputFoo(FRI fri, String outputData) {
-        super(fri);
-        this.outputData = outputData;
+        super(fri, outputData);
     }
 
-    @Override
-    public String getOutputData() {
-        return outputData;
-    }
 }

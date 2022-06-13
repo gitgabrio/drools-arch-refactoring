@@ -115,6 +115,9 @@ public class DrlRuntimeHelper {
     }
 
     static Optional<GeneratedExecutableResource> getGeneratedExecutableResource(FRI fri) {
+        // TODO @mfusco: define a unique subpath identifier for this specific runtime implementation, e.g.
+        // The received FRI here would be the one with the specific subpath (e.g. /drl/kiesessionlocal/something) but the compiled resource
+        // won't contain the "subpath", but only the main one - i.e. /drl/something)
         return getIndexFile().map(indexFile -> {
             try {
                 GeneratedResources generatedResources = getGeneratedResourcesObject(indexFile);
