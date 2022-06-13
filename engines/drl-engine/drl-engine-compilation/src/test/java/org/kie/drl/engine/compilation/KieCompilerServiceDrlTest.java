@@ -51,11 +51,11 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource toProcess = new DrlFileSetResource(files, "BasePath");
+        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
         // this is really only testing the constant field "drl" so it is always true...
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        toProcess = () -> "DARRedirectOutput";
-        assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
+        DARResource<String> toProcess2 = () -> "DARRedirectOutput";
+        assertThat(kieCompilerService.canManageResource(toProcess2)).isFalse();
     }
 
 
@@ -65,7 +65,7 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource toProcess = new DrlFileSetResource(files, "BasePath");
+        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
         List<DARCompilationOutput> retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().hasSize(1);
     }

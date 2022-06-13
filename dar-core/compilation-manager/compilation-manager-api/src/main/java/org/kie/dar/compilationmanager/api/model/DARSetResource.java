@@ -17,7 +17,7 @@ package org.kie.dar.compilationmanager.api.model;
 
 import java.util.Set;
 
-public abstract class DARSetResource<T> implements DARResource {
+public abstract class DARSetResource<T> implements DARResource<Set<T>> {
 
     private final Set<T> resources;
     private String type;

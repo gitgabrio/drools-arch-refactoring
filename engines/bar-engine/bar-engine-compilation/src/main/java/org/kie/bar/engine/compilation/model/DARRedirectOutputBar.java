@@ -20,7 +20,7 @@ import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 
 import java.io.File;
 
-public class DARRedirectOutputBar extends DARRedirectOutput {
+public class DARRedirectOutputBar extends DARRedirectOutput<File> {
 
 
     public DARRedirectOutputBar(FRI fri, File modelFile) {

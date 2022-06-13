@@ -22,16 +22,16 @@ import java.util.List;
 /**
  * A generic <i>Resource</i> to be processed by specific engine
  */
-public class DARRedirectOutput extends AbstractDARCallableCompilationOutput implements DARResource {
+public abstract class DARRedirectOutput<T> extends AbstractDARCallableCompilationOutput implements DARResource<T> {
 
     private final String targetEngine;
 
     /**
      * This is the <b>payload</b> to forward to the target compilation-engine
      */
-    private final Object content;
+    private final T content;
 
-    protected DARRedirectOutput(FRI fri, String targetEngine, Object content) {
+    protected DARRedirectOutput(FRI fri, String targetEngine, T content) {
         super(fri, (List<String>) null);
         this.targetEngine = targetEngine;
         this.content = content;
@@ -42,7 +42,7 @@ public class DARRedirectOutput extends AbstractDARCallableCompilationOutput impl
     }
 
     @Override
-    public Object getContent() {
+    public T getContent() {
         return content;
     }
 

@@ -123,7 +123,7 @@ public class DrlCompilerHelper {
 
     static void addPackageDescr(PackageDescr packageDescr, Resource resource, Map<String, CompositePackageDescr> packages) {
         CompositePackageDescr compositePackageDescr =
-                packages.computeIfAbsent(packageDescr.getNamespace(), CompositePackageDescr::new);
+                packages.computeIfAbsent(packageDescr.getNamespace(), (CompositePackageDescr) -> new CompositePackageDescr());
         compositePackageDescr.addPackageDescr(resource, packageDescr);
     }
 

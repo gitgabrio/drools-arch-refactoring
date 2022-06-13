@@ -22,7 +22,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class DARFileResource implements DARResource {
+public final class DARFileResource implements DARResource<File> {
 
     private final File modelFile;
 
@@ -31,7 +31,7 @@ public final class DARFileResource implements DARResource {
     }
 
     @Override
-    public Object getContent() {
+    public File getContent() {
         return modelFile;
     }
 

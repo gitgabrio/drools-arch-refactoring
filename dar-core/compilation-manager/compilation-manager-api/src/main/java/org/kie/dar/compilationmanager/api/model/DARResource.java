@@ -15,7 +15,7 @@
  */
 package org.kie.dar.compilationmanager.api.model;
 
-public interface DARResource {
+public interface DARResource<T> {
 
-    Object getContent();
+    T getContent();
 }

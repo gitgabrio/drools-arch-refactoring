@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractDrlFileSetResource extends DARFileSetResource implements DrlResource {
+public abstract class AbstractDrlFileSetResource extends DARFileSetResource implements DrlResource<Set<File>> {
 
     private final Set<FileSystemResource> fileSystemResources;
 

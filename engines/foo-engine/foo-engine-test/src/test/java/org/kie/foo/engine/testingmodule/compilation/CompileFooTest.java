@@ -46,7 +46,7 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARRedirectOutput darResourceFileFoo = new DARRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", fooFile) {
+        DARRedirectOutput<File> darResourceFileFoo = new DARRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", fooFile) {
         };
         List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();

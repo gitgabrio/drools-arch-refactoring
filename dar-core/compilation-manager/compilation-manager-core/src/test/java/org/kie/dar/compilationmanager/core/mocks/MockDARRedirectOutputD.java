@@ -18,7 +18,7 @@ package org.kie.dar.compilationmanager.core.mocks;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 
-public class MockDARRedirectOutputD extends DARRedirectOutput {
+public class MockDARRedirectOutputD extends DARRedirectOutput<String> {
 
     public MockDARRedirectOutputD() {
         super(new FRI("this/is/mock/friD", "mock"), "notmock", "MockDARRedirectOutputD");

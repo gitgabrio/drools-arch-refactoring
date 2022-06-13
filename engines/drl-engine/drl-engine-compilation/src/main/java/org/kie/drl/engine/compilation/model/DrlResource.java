@@ -17,7 +17,7 @@ package org.kie.drl.engine.compilation.model;
 
 import org.kie.dar.compilationmanager.api.model.DARResource;
 
-public interface DrlResource extends DARResource {
+public interface DrlResource<T> extends DARResource<T> {
 
     /**
      * This should return the string used as <b>base path</b> in the generated <code>FRI</code>

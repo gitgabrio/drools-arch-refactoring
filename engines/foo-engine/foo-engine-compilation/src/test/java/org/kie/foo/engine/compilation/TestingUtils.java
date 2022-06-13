@@ -57,7 +57,7 @@ public class TestingUtils {
     }
 
 
-    public static DARResource getDARResource() {
+    public static DARResource<String> getDARResource() {
         return () -> "UnmanagedResource";
     }
 
@@ -65,7 +65,7 @@ public class TestingUtils {
         return new DARFileResource(fooFile);
     }
 
-    public static DARRedirectOutput getDARResourceIntermediate() {
+    public static DARRedirectOutput<String> getDARResourceIntermediate() {
         return new DARRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", "Content") {
         };
     }

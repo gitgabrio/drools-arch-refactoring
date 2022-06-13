@@ -5,7 +5,7 @@ import org.kie.dar.compilationmanager.api.model.DARSetResource;
 
 import java.util.Set;
 
-public class DrlPackageDescrSetResource extends DARSetResource<PackageDescr> implements DrlResource {
+public class DrlPackageDescrSetResource extends DARSetResource<PackageDescr> implements DrlResource<Set<PackageDescr>> {
 
     private String basePath;
 
