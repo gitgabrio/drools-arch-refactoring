@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OrderApprovalRegressionTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "OrderApproval";
-    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
+    
     private static final String MODEL_NAME = "OrderApprovalRegression";
     private static final String TARGET_FIELD = "approval";
     private static final String PROBABILITY_FALSE = "probability(false)";
@@ -66,7 +66,7 @@ public class OrderApprovalRegressionTest extends AbstractPMMLTest {
 
     @BeforeAll
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     public static Collection<Object[]> data() {

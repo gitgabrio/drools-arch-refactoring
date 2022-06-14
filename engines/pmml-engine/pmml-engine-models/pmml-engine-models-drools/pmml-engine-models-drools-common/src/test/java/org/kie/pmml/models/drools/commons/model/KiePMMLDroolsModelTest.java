@@ -49,7 +49,7 @@ public class KiePMMLDroolsModelTest {
 
     @Test(expected = KiePMMLException.class)
     public void evaluateNoKieBase() {
-        kiePMMLDroolsModel.evaluate("NOT_KIE_BASE", new HashMap<>(), null);
+        kiePMMLDroolsModel.evaluate(new HashMap<>(), null);
     }
 
     private final class KiePMMLDroolsModelFake extends KiePMMLDroolsModel {

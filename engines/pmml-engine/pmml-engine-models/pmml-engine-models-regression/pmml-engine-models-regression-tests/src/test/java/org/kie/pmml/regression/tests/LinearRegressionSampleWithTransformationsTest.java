@@ -36,7 +36,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "LinearRegressionSampleWithTransformations";
-    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
+    
     private static final String MODEL_NAME = "LinearRegressionSampleWithTransformations";
     private static final String TARGET_FIELD = "number_of_claims";
 
@@ -85,7 +85,7 @@ public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLT
 
     @BeforeAll
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     public static Collection<Object[]> data() {

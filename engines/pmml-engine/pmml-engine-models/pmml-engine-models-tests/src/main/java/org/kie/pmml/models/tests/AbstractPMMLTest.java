@@ -46,6 +46,7 @@ public class AbstractPMMLTest {
 
 
     protected static PMMLRuntime getPMMLRuntime(String fileName) {
+        fileName += ".pmml";
         compilationManager = new CompilationManagerImpl();
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         File pmmlFile = getFile(fileName);

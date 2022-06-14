@@ -35,7 +35,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 public class ClusterWithTransformationsTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "ClusterWithTransformations";
-    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
     private static final String MODEL_NAME = "ClusterWithTransformations";
     private static final String TARGET_FIELD = "class";
     private static final String OUT_NORMCONTINUOUS_FIELD = "out_normcontinuous_field";
@@ -67,7 +66,7 @@ public class ClusterWithTransformationsTest extends AbstractPMMLTest {
 
     @BeforeAll
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     public static Collection<Object[]> data() {

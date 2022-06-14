@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>pmml-engine-models-drools-tree-compiler</artifactId>
+            <artifactId>pmml-engine-models-drools-tree-compilation</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

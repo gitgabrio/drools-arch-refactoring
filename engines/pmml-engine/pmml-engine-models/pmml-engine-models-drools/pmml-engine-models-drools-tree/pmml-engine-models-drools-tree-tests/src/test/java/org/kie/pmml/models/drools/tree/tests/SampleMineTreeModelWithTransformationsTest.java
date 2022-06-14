@@ -16,11 +16,6 @@
 
 package org.kie.pmml.models.drools.tree.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,12 +25,18 @@ import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest {
 
-    private static final String FILE_NAME = "SampleMineTreeModelWithTransformations.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "SampleMineTreeModelWithTransformations";
+    
     private static final String MODEL_NAME = "SampleMineTreeModelWithTransformations";
     private static final String TARGET_FIELD = "decision";
     private static final String OUT_DER_TEMPERATURE = "out_der_temperature";
@@ -64,7 +65,7 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
 
     @BeforeClass
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     @Parameterized.Parameters
@@ -131,7 +132,7 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         inputData.put("temperature", temperature);
         inputData.put("humidity", humidity);
         inputData.put("text_input", TEXT_INPUT);
-        evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
     }
 
     @Test
@@ -141,7 +142,7 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         inputData.put("humidity", String.valueOf(humidity));
         inputData.put("text_input", TEXT_INPUT);
         inputData.put("input3", "34.1");
-        assertThat(evaluate(pmmlRuntime, inputData, MODEL_NAME)).isNotNull();
+        assertThat(evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME)).isNotNull();
     }
 
     @Test(expected = KiePMMLException.class)
@@ -151,7 +152,7 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         inputData.put("humidity", humidity);
         inputData.put("text_input", TEXT_INPUT);
         inputData.put("input3", true);
-        evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
     }
 
     @Test(expected = KiePMMLException.class)
@@ -161,6 +162,6 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         inputData.put("humidity", humidity);
         inputData.put("text_input", TEXT_INPUT);
         inputData.put("input3", 4.1);
-        evaluate(pmmlRuntime, inputData, MODEL_NAME);
+        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
     }
 }

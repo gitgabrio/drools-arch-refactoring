@@ -16,14 +16,6 @@
 
 package org.kie.pmml.models.drools.scorecard.tests;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,12 +24,16 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class SimpleScorecardCategoricalTest extends AbstractPMMLTest {
 
-    private static final String FILE_NAME = "Simple-Scorecard_Categorical.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "Simple-Scorecard_Categorical";
     private static final String MODEL_NAME = "SimpleScorecardCategorical";
     private static final String TARGET_FIELD = "Score";
     private static final String REASON_CODE1_FIELD = "Reason Code 1";
@@ -62,7 +58,7 @@ public class SimpleScorecardCategoricalTest extends AbstractPMMLTest {
 
     @BeforeClass
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     @Parameterized.Parameters
@@ -90,12 +86,12 @@ public class SimpleScorecardCategoricalTest extends AbstractPMMLTest {
 
     @Test
     public void testSimpleScorecardCategoricalVerifyNoException() {
-        getSamples().stream().map(sample -> evaluate(pmmlRuntime, sample, MODEL_NAME)).forEach((x) -> assertThat(x).isNotNull());
+        getSamples().stream().map(sample -> evaluate(pmmlRuntime, sample, FILE_NAME_NO_SUFFIX, MODEL_NAME)).forEach((x) -> assertThat(x).isNotNull());
     }
 
     @Test
     public void testSimpleScorecardCategoricalVerifyNoReasonCodeWithoutScore() {
-        getSamples().stream().map(sample -> evaluate(pmmlRuntime, sample, MODEL_NAME))
+        getSamples().stream().map(sample -> evaluate(pmmlRuntime, sample, FILE_NAME_NO_SUFFIX, MODEL_NAME))
                 .filter(pmml4Result -> pmml4Result.getResultVariables().get(TARGET_FIELD) == null)
                 .forEach(pmml4Result -> {
                     assertThat(pmml4Result.getResultVariables()).doesNotContainKey(REASON_CODE1_FIELD);

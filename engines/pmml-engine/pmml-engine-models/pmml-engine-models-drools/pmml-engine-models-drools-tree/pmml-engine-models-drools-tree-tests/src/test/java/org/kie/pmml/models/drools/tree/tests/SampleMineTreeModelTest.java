@@ -33,7 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class SampleMineTreeModelTest extends AbstractPMMLTest {
 
-    private static final String FILE_NAME = "SampleMine.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "SampleMine";
+    
+
     private static final String MODEL_NAME = "SampleMineTreeModel";
     private static final String TARGET_FIELD = "decision";
     private static PMMLRuntime pmmlRuntime;
@@ -50,7 +52,7 @@ public class SampleMineTreeModelTest extends AbstractPMMLTest {
 
     @BeforeClass
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     @Parameterized.Parameters

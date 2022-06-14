@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MultipleMixedMiningTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MultipleMining";
-    private static final String FILE_NAME = FILE_NAME_NO_SUFFIX + ".pmml";
+    
     private static final String MODEL_NAME = "MixedMining";
     private static final String TARGET_FIELD = "categoricalResult";
     private static PMMLRuntime pmmlRuntime;
@@ -66,7 +66,7 @@ public class MultipleMixedMiningTest extends AbstractPMMLTest {
 
     @BeforeAll
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     public static Collection<Object[]> data() {

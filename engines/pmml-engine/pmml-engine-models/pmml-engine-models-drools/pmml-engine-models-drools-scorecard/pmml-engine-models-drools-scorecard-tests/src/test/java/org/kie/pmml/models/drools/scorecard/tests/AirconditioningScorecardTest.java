@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class AirconditioningScorecardTest extends AbstractPMMLTest {
-    private static final String FILE_NAME = "air-conditioning-weather-scorecard.pmml";
+    private static final String FILE_NAME_NO_SUFFIX = "air-conditioning-weather-scorecard";
     private static final String MODEL_NAME = "Forecast Score";
     private static final String TARGET_FIELD = "forecastScore";
     private static PMMLRuntime pmmlRuntime;
@@ -55,7 +55,7 @@ public class AirconditioningScorecardTest extends AbstractPMMLTest {
 
     @BeforeClass
     public static void setupClass() {
-        pmmlRuntime = getPMMLRuntime(FILE_NAME);
+        pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
     @Parameterized.Parameters

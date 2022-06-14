@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>pmml-engine-models-drools-scorecard-compiler</artifactId>
+            <artifactId>pmml-engine-models-drools-scorecard-compilation</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -15,15 +15,16 @@
  */
 package org.kie.pmml.models.drools.commons.model;
 
-import java.util.List;
-import java.util.Map;
-
+import org.drools.drl.ast.descr.PackageDescr;
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.api.models.OutputField;
 import org.kie.pmml.api.models.TargetField;
 import org.kie.pmml.commons.HasRule;
 import org.kie.pmml.commons.model.IsDrools;
 import org.kie.pmml.commons.model.KiePMMLModelWithSources;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * KIE representation of PMML model that use <b>Drools</b> for implementation
@@ -32,8 +33,9 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
         HasRule {
 
     private static final long serialVersionUID = -168095076511604775L;
-    protected Map<String, String> rulesSourceMap;
     private final String pkgUUID;
+
+    private final PackageDescr packageDescr;
 
     public KiePMMLDroolsModelWithSources(final String modelName,
                                          final String kmodulePackageName,
@@ -42,10 +44,10 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
                                          final List<TargetField> targetFields,
                                          final Map<String, String> sourcesMap,
                                          final String pkgUUID,
-                                         final Map<String, String> rulesSourceMap) {
+                                         final PackageDescr packageDescr) {
         super(modelName, kmodulePackageName, miningFields, outputFields, targetFields, sourcesMap, false);
         this.pkgUUID = pkgUUID;
-        this.rulesSourceMap = rulesSourceMap;
+        this.packageDescr = packageDescr;
     }
 
     @Override
@@ -53,9 +55,8 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
         return pkgUUID;
     }
 
-    @Override
-    public Map<String, String> getRulesSourcesMap() {
-        return rulesSourceMap;
+    public PackageDescr getPackageDescr() {
+        return packageDescr;
     }
 
 }

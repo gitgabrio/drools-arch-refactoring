@@ -33,7 +33,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +91,7 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
             String pkgUUID = getPkgUUID("gav", compilationDTO.getPackageName());
             packageDescr.setPreferredPkgUUID(pkgUUID);
 //            Map<String, String> rulesSourceMap = Collections.unmodifiableMap(getRulesSourceMap(packageDescr));
-            Map<String, String> rulesSourceMap = Collections.emptyMap();
+//            Map<String, String> rulesSourceMap = Collections.emptyMap();
             KiePMMLDroolsModelWithSources toReturn = new KiePMMLDroolsModelWithSources(compilationDTO.getModelName(),
                     compilationDTO.getPackageName(),
                     compilationDTO.getKieMiningFields(),
@@ -100,7 +99,7 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
                     compilationDTO.getKieTargetFields(),
                     sourcesMap,
                     pkgUUID,
-                    rulesSourceMap);
+                    packageDescr);
 //            knowledgeBuilder.registerPackage(packageDescr);
             return toReturn;
         } catch (Exception e) {
@@ -150,12 +149,6 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
     public PackageDescr getPackageDescr(final KiePMMLDroolsAST kiePMMLDroolsAST, final String packageName) {
         return getBaseDescr(kiePMMLDroolsAST, packageName);
     }
-
-    /**
-     * @param compilationDTO
-     * @return
-     */
-    public abstract E getKiePMMLDroolsModel(final DroolsCompilationDTO<T> compilationDTO);
 
     /**
      * @param fields       Should contain all fields retrieved from model, i.e. DataFields from DataDictionary,
