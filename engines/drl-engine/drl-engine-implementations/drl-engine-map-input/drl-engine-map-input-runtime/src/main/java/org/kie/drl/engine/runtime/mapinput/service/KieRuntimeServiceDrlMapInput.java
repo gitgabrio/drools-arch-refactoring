@@ -15,7 +15,6 @@
  */
 package org.kie.drl.engine.runtime.mapinput.service;
 
-import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;

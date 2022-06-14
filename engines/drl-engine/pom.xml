@@ -19,9 +19,8 @@
         <module>drl-engine-api</module>
         <module>drl-engine-compilation-common</module>
         <module>drl-engine-runtime-common</module>
-        <module>drl-engine-kiesession-local</module>
+        <module>drl-engine-implementations</module>
         <module>drl-engine-tests</module>
-        <module>drl-engine-map-input</module>
     </modules>
 
     <dependencyManagement>
