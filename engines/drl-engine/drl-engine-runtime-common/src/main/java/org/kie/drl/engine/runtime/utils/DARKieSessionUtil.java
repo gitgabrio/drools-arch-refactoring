@@ -16,6 +16,8 @@
 package org.kie.drl.engine.runtime.utils;
 
 import org.drools.model.Model;
+import org.drools.modelcompiler.builder.KieBaseBuilder;
+import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedExecutableResource;
@@ -35,16 +37,18 @@ public class DARKieSessionUtil {
         GeneratedExecutableResource finalResource = GeneratedResourceUtils.getGeneratedExecutableResource(fri, "drl")
                 .orElseThrow(() -> new KieRuntimeServiceException("Can not find expected GeneratedExecutableResource for " + fri));
         List<Model> models = finalResource.getFullClassNames().stream().map(className -> loadModel(className, memoryCompilerClassLoader)).collect(Collectors.toList());
-        // TODO {mfusco} retrieve a kiebase/kiesession from List<Model>
-        return null;
+        KieBase kieBase = KieBaseBuilder.createKieBaseFromModel(models);
+
+        KieSession toReturn = kieBase.newKieSession();
+        // TODO find a way to set a unique identifier for the created session -
+        return toReturn;
     }
 
 
     static Model loadModel(String fullModelResourcesSourceClassName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
-            String fullDrlResourcesSourceClassName = fullModelResourcesSourceClassName;
             final Class<? extends Model> aClass =
-                    (Class<? extends Model>) memoryCompilerClassLoader.loadClass(fullDrlResourcesSourceClassName);
+                    (Class<? extends Model>) memoryCompilerClassLoader.loadClass(fullModelResourcesSourceClassName);
             return aClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new KieRuntimeServiceException(e);
