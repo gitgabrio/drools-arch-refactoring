@@ -16,17 +16,38 @@
 package org.kie.drl.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.kie.api.runtime.KieSession;
+import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
+import org.kie.drl.engine.compilation.model.DrlFileSetResource;
+import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
 import org.kie.memorycompiler.KieMemoryCompiler;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.kie.drl.engine.runtime.kiesession.local.utils.DrlRuntimeHelper.SUBPATH;
 
 class RuntimeDrlTest {
 
     private static RuntimeManager runtimeManager;
     private static CompilationManager compilationManager;
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
+    private static final String basePath = "TestingRule";
 
     @BeforeAll
     static void setUp() {
@@ -35,35 +56,35 @@ class RuntimeDrlTest {
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
-//    @Test
-//    void evaluateFooCompilationOnTheFly() throws IOException {
-//        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
-//        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-//        assertThat(darOutput.isEmpty()).isTrue();
-//        File fooFile = getFileFromFileName("DarFoo.foo");
-//        DARResource darResourceFileFoo = new DARFileResource(fooFile);
-//        List<IndexFile> indexFiles = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
-//        assertThat(indexFiles.size()).isEqualTo(1);
-//        IndexFile retrieved = indexFiles.get(0);
-//        assertThat(retrieved.exists()).isTrue();
-//        GeneratedResources generatedResources = getGeneratedResourcesObject(retrieved);
-//        retrieved.delete();
-//    }
-//
-//    @Test
-//    void evaluateFooStaticCompilation() {
-//        DARInputFoo toEvaluate = new DARInputFoo(new FRI("staticdar", "foo"), "InputData");
-//        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
-//        assertThat(darOutput.isPresent()).isTrue();
-//    }
-//
-//    public static File getFileFromFileName(String fileName) {
-//        try {
-//            final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
-//            return Paths.get(resource.toURI()).toFile();
-//        } catch (Exception e) {
-//            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
-//                    e.getMessage()), e);
-//        }
-//    }
+    @Test
+    @SuppressWarnings("raw")
+    void evaluateWithKieSessionLocalStaticCompilation() {
+        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(SUBPATH + FRI.SLASH + basePath, "drl"), "");
+                Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(darOutput).isNotNull().isPresent();
+        assertThat(darOutput.get()).isInstanceOf(DAROutputDrlKieSessionLocal.class);
+        DAROutputDrlKieSessionLocal retrieved = (DAROutputDrlKieSessionLocal) darOutput.get();
+        assertThat(retrieved.getOutputData()).isNotNull().isInstanceOf(KieSession.class);
+    }
+
+    @Test
+    @SuppressWarnings("raw")
+    void evaluateWithKieSessionLocalCompilationOnTheFly() throws IOException {
+        String onTheFlyPath = "OnTheFlyPath";
+        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(SUBPATH + FRI.SLASH + onTheFlyPath, "drl"), "");
+        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(darOutput).isNotNull().isNotPresent();
+        Set<File> files = Files.walk(Path.of("src/test/resources"))
+                .map(Path::toFile)
+                .filter(File::isFile)
+                .collect(Collectors.toSet());
+        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, onTheFlyPath);
+        compilationManager.processResource(toProcess, memoryCompilerClassLoader);
+        darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        assertThat(darOutput).isNotNull().isPresent();
+        assertThat(darOutput.get()).isInstanceOf(DAROutputDrlKieSessionLocal.class);
+        DAROutputDrlKieSessionLocal retrieved = (DAROutputDrlKieSessionLocal) darOutput.get();
+        assertThat(retrieved.getOutputData()).isNotNull().isInstanceOf(KieSession.class);
+    }
+
 }

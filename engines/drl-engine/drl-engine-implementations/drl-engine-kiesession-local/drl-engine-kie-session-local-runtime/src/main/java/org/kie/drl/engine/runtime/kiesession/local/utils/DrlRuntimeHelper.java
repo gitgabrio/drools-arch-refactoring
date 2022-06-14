@@ -34,26 +34,32 @@ public class DrlRuntimeHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(DrlRuntimeHelper.class.getName());
 
+    public static final String SUBPATH = "kiesessionlocal";
+    public static final String PATH = "/drl" + SLASH + SUBPATH;
+
 
     private DrlRuntimeHelper() {
     }
 
 
     public static boolean canManage(FRI fri) {
-        return getGeneratedExecutableResource(fri, "drl").isPresent();
+        if (fri.getFri().startsWith(PATH)) {
+            return getGeneratedExecutableResource(getCleanedFRI(fri), "drl").isPresent();
+        } else {
+            return false;
+        }
     }
 
     public static Optional<DAROutputDrlKieSessionLocal> execute(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
-            kieSession = loadKieSession(toEvaluate.getFRI(), memoryCompilerClassLoader);
+            kieSession = loadKieSession(getCleanedFRI(toEvaluate.getFRI()), memoryCompilerClassLoader);
         } catch (Exception e) {
             logger.warn("{} can not execute {}",
                     DrlRuntimeHelper.class.getName(),
                     toEvaluate.getFRI());
             return Optional.empty();
         }
-        // TODO {mfusco} :)
         if (kieSession == null) {
             return Optional.empty();
         }
@@ -66,6 +72,10 @@ public class DrlRuntimeHelper {
                     DrlRuntimeHelper.class.getName(),
                     toEvaluate.getFRI()));
         }
+    }
+
+    static FRI getCleanedFRI(FRI originalFRI) {
+        return new FRI(originalFRI.getBasePath().replace(SUBPATH + SLASH, ""), originalFRI.getModel());
     }
 
 }

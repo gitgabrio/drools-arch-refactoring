@@ -40,6 +40,6 @@ public class KieRuntimeServiceDrlKieSessionLocal implements KieRuntimeService<St
 
     @Override
     public Optional<DAROutputDrlKieSessionLocal> evaluateInput(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader);
+        return canManageInput(toEvaluate.getFRI(), memoryCompilerClassLoader) ? DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader) : Optional.empty();
     }
 }
