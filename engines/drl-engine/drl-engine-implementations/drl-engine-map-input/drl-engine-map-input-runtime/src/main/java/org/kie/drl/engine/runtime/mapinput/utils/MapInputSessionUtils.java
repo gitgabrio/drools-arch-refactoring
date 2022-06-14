@@ -53,8 +53,12 @@ public class MapInputSessionUtils {
         this.packageName = packageName;
         this.kieSession = kieSession;
         commands = new ArrayList<>();
-        darMapInputDTO.getInserts().forEach(toInsert -> commands.add(COMMAND_FACTORY_SERVICE.newInsert(toInsert)));
-        darMapInputDTO.getGlobals().forEach((key, value) -> commands.add(COMMAND_FACTORY_SERVICE.newSetGlobal(key, value)));
+
+        darMapInputDTO.getInserts().forEach(kieSession::insert);
+        darMapInputDTO.getGlobals().forEach(kieSession::setGlobal);
+
+//        darMapInputDTO.getInserts().forEach(toInsert -> commands.add(COMMAND_FACTORY_SERVICE.newInsert(toInsert)));
+//        darMapInputDTO.getGlobals().forEach((key, value) -> commands.add(COMMAND_FACTORY_SERVICE.newSetGlobal(key, value)));
         addObjectsToSession(darMapInputDTO.getUnwrappedInputParams(), darMapInputDTO.getFieldTypeMap());
     }
 
@@ -66,8 +70,11 @@ public class MapInputSessionUtils {
      * Invoke <code>KieSession.fireAllRules()</code>
      */
     public void fireAllRules() {
-        BatchExecutionCommand batchExecutionCommand = COMMAND_FACTORY_SERVICE.newBatchExecution(commands);
-        kieSession.execute(batchExecutionCommand);
+//        BatchExecutionCommand batchExecutionCommand = COMMAND_FACTORY_SERVICE.newBatchExecution(commands);
+//        kieSession.execute(batchExecutionCommand);
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
     }
 
     /**

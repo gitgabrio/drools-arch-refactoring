@@ -20,6 +20,7 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
+import org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +28,15 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils.getCleanedFRI;
 import static org.kie.drl.engine.runtime.utils.DARKieSessionUtil.loadKieSession;
 
 public class DrlRuntimeHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(DrlRuntimeHelper.class.getName());
+
+    public static final String SUBPATH = "mapinput";
+    public static final String PATH = "/drl" + SLASH + SUBPATH;
 
 
     private DrlRuntimeHelper() {
@@ -40,20 +44,19 @@ public class DrlRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        return getGeneratedExecutableResource(fri, "drl").isPresent();
+        return DARKieRuntimeDrlUtils.canManage(fri, PATH, SUBPATH);
     }
 
     public static Optional<DAROutputDrlMap> execute(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
-            kieSession = loadKieSession(toEvaluate.getFRI(), memoryCompilerClassLoader);
+            kieSession = loadKieSession(getCleanedFRI(toEvaluate.getFRI(), SUBPATH), memoryCompilerClassLoader);
         } catch (Exception e) {
             logger.warn("{} can not execute {}",
                     DrlRuntimeHelper.class.getName(),
                     toEvaluate.getFRI());
             return Optional.empty();
         }
-        // TODO {mfusco} :)
         if (kieSession == null) {
             return Optional.empty();
         }
@@ -61,15 +64,15 @@ public class DrlRuntimeHelper {
             MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, "name", "packageName",
                     toEvaluate.getInputData());
             final MapInputSessionUtils mapInputSessionUtils = builder.build();
+            String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             mapInputSessionUtils.fireAllRules();
 
-            String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             FRI sessionFRI = new FRI(sessionPath, "drl");
-            return Optional.of(new DAROutputDrlMap(sessionFRI, null));
+            return Optional.of(new DAROutputDrlMap(sessionFRI, null)); // TODO @mfusco
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     DrlRuntimeHelper.class.getName(),
-                    toEvaluate.getFRI()));
+                    toEvaluate.getFRI()), e);
         }
     }
 

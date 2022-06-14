@@ -6,7 +6,7 @@ public class Rulesefe9b92fdd254fbabc9e9002be0d51d6 implements org.drools.model.M
 
     @Override
     public String getName() {
-        return "org.kie.drl.engine.compilation.model";
+        return "org.kie.drl.engine.kiesession.local.compilation.model.test";
     }
 
     @Override

@@ -20,6 +20,7 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
 import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils.getCleanedFRI;
 import static org.kie.drl.engine.runtime.utils.DARKieSessionUtil.loadKieSession;
 
 public class DrlRuntimeHelper {
@@ -43,17 +44,13 @@ public class DrlRuntimeHelper {
 
 
     public static boolean canManage(FRI fri) {
-        if (fri.getFri().startsWith(PATH)) {
-            return getGeneratedExecutableResource(getCleanedFRI(fri), "drl").isPresent();
-        } else {
-            return false;
-        }
+        return DARKieRuntimeDrlUtils.canManage(fri, PATH, SUBPATH);
     }
 
     public static Optional<DAROutputDrlKieSessionLocal> execute(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
-            kieSession = loadKieSession(getCleanedFRI(toEvaluate.getFRI()), memoryCompilerClassLoader);
+            kieSession = loadKieSession(getCleanedFRI(toEvaluate.getFRI(), SUBPATH), memoryCompilerClassLoader);
         } catch (Exception e) {
             logger.warn("{} can not execute {}",
                     DrlRuntimeHelper.class.getName(),
@@ -72,10 +69,6 @@ public class DrlRuntimeHelper {
                     DrlRuntimeHelper.class.getName(),
                     toEvaluate.getFRI()));
         }
-    }
-
-    static FRI getCleanedFRI(FRI originalFRI) {
-        return new FRI(originalFRI.getBasePath().replace(SUBPATH + SLASH, ""), originalFRI.getModel());
     }
 
 }
