@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+title PMML-DRL Resource
+
+autonumber 1
+actor Input_provider
+note over Input_provider: Any service requiring PMML evaluation (e.g. Kogito, KieServer)
+
+Input_provider -> Runtime_Manager: execute (DARInputPMML)
+Runtime_Manager --> KieRuntimeServicePMML: canManageInput (DARInputPMML)
+KieRuntimeServicePMML --> Runtime_Manager: true
+Runtime_Manager --> KieRuntimeServicePMML: evaluateInput (DARInputPMML)
+KieRuntimeServicePMML --> KiePMMLDroolsModel: evaluate
+KiePMMLDroolsModel --> Runtime_Manager: execute (AbstractDARInput<DARMapInputDTO>)
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (AbstractDARInput<DARMapInputDTO>)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: true
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: evaluateInput (AbstractDARInput<DARMapInputDTO>)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: Optional<DAROutputDrlMap>
+Runtime_Manager --> KiePMMLDroolsModel: Optional<DAROutputDrlMap>
+KiePMMLDroolsModel --> KieRuntimeServicePMML: PMML4Result
+KieRuntimeServicePMML --> Runtime_Manager: Optional<DAROutputPMML>
+Runtime_Manager -> Input_provider: Optional<DAROutputPMML>
+
+
+@enduml

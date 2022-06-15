@@ -22,9 +22,9 @@ public abstract class AbstractDARInput<T> implements DARInput<T> {
     private final FRI fri;
     private final T inputData;
 
-    protected AbstractDARInput(FRI fri, T inpuData) {
+    protected AbstractDARInput(FRI fri, T inputData) {
         this.fri = fri;
-        this.inputData = inpuData;
+        this.inputData = inputData;
     }
 
     @Override

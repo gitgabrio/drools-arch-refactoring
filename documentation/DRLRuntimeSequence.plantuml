@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+title KieSessionLocal Resource
+
+autonumber 1
+actor Input_provider
+note over Input_provider: Any service requiring DRL evaluation (e.g. Kogito, KieServer)
+
+Input_provider -> Runtime_Manager: execute (DARInputDrlKieSessionLocal)
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (DARInputDrlKieSessionLocal)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: false
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (DARInputDrlKieSessionLocal)
+KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: true
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: evaluateInput (DARInputDrlKieSessionLocal)
+KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: Optional<DAROutputDrlKieSessionLocal>
+Runtime_Manager -> Input_provider: Optional<DAROutputDrlKieSessionLocal>
+
+
+newpage MapInput Resource
+
+autonumber 1
+note over Input_provider: Any service requiring DRL evaluation (e.g. Kogito, KieServer)
+
+Input_provider -> Runtime_Manager: execute (DARInputDrlMap)
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (DARInputDrlMap)
+KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: false
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (DARInputDrlMap)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: true
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: evaluateInput (DARInputDrlMap)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: Optional<DAROutputDrlMap>
+Runtime_Manager -> Input_provider: Optional<DAROutputDrlMap>
+
+@enduml

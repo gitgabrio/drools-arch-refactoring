@@ -18,7 +18,9 @@ package org.kie.drl.engine.runtime.mapinput.utils;
 import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.dar.runtimemanager.api.model.DARInput;
+import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
 import org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils;
@@ -42,10 +44,10 @@ public class DrlRuntimeHelper {
 
 
     public static boolean canManage(DARInput toEvaluate) {
-        return (toEvaluate instanceof DARInputDrlMap) && getGeneratedExecutableResource(toEvaluate.getFRI(), "drl").isPresent();
+        return (toEvaluate instanceof AbstractDARInput) && (toEvaluate.getInputData() instanceof DARMapInputDTO) && getGeneratedExecutableResource(toEvaluate.getFRI(), "drl").isPresent();
     }
 
-    public static Optional<DAROutputDrlMap> execute(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<DAROutputDrlMap> execute(AbstractDARInput<DARMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
             kieSession = loadKieSession(toEvaluate.getFRI(), memoryCompilerClassLoader);
