@@ -39,9 +39,12 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "bar"), memoryCompilerClassLoader)).isTrue();
-        assertThat(kieRuntimeService.canManageInput(new FRI("/bar/dar", "notbar"), memoryCompilerClassLoader)).isFalse();
-        assertThat(kieRuntimeService.canManageInput(new FRI("darfoo", "bar"), memoryCompilerClassLoader)).isFalse();
+        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "bar"), "InputData");
+        assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isTrue();
+        toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
+        assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
+        toEvaluate = new DARInputBar(new FRI("darfoo", "bar"), "InputData");
+        assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
     }
 
     @Test

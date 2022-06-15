@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.drl.engine.runtime.kiesession.local.utils.DrlRuntimeHelper.SUBPATH;
 
 class RuntimeDrlTest {
 
@@ -59,7 +58,7 @@ class RuntimeDrlTest {
     @Test
     @SuppressWarnings("raw")
     void evaluateWithKieSessionLocalStaticCompilation() {
-        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(SUBPATH + FRI.SLASH + basePath, "drl"), "");
+        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(basePath, "drl"), "");
                 Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isPresent();
         assertThat(darOutput.get()).isInstanceOf(DAROutputDrlKieSessionLocal.class);
@@ -71,7 +70,7 @@ class RuntimeDrlTest {
     @SuppressWarnings("raw")
     void evaluateWithKieSessionLocalCompilationOnTheFly() throws IOException {
         String onTheFlyPath = "OnTheFlyPath";
-        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(SUBPATH + FRI.SLASH + onTheFlyPath, "drl"), "");
+        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(onTheFlyPath, "drl"), "");
         Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isNotPresent();
         Set<File> files = Files.walk(Path.of("src/test/resources"))

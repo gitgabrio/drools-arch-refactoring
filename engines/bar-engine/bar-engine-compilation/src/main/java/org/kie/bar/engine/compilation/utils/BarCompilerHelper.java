@@ -56,7 +56,7 @@ public class BarCompilerHelper {
     }
 
     public static DARCompilationOutput getDARCompilationOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        if (((File) resource.getContent()).getName().startsWith("Redirect")) {
+        if ((resource.getContent()).getName().startsWith("Redirect")) {
             return getDARRedirectOutputBar(resource);
         } else {
             return getDARFinalOutputBar(resource, memoryClassLoader);
@@ -64,7 +64,7 @@ public class BarCompilerHelper {
     }
 
     static DARCallableOutputBar getDARFinalOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        String fileName = ((File) resource.getContent()).getName().toLowerCase();
+        String fileName = ( resource.getContent()).getName().toLowerCase();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI(basePath, "bar");
         String simpleClassName = getSanitizedClassName(fri.getFri());
@@ -83,10 +83,10 @@ public class BarCompilerHelper {
     }
 
     static DARRedirectOutputBar getDARRedirectOutputBar(DARFileResource resource) {
-        String fileName = ((File) resource.getContent()).getName().toLowerCase();
+        String fileName = (resource.getContent()).getName().toLowerCase();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI(basePath, "bar");
-        return new DARRedirectOutputBar(fri, (File) resource.getContent());
+        return new DARRedirectOutputBar(fri, resource.getContent());
     }
 
     static CompilationUnit getBarResourcesCompilationUnit(Set<String> generatedSources, String barResourcesSourceClassName) {

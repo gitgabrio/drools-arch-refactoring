@@ -21,6 +21,8 @@ import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLModel;
@@ -42,6 +44,8 @@ class PMMLRuntimeHelperTest {
 
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
+    private static final String basePath = "testmod";
+    
     @BeforeAll
     static void setUp() {
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
@@ -49,14 +53,19 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void canManage() {
-        assertThat(PMMLRuntimeHelper.canManage(new FRI("/pmml/testmod", "pmml"))).isTrue();
-        assertThat(PMMLRuntimeHelper.canManage(new FRI("/pmml/testmod", "not_pmml"))).isFalse();
-        assertThat(PMMLRuntimeHelper.canManage(new FRI("darfoo", "pmml"))).isFalse();
+        FRI fri = new FRI(basePath, "pmml");
+        AbstractDARInput darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isTrue();
+        darInputPMML = new AbstractDARInput<>(fri, ""){};
+        assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isFalse();
+        fri = new FRI("darfoo", "pmml");
+        darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isFalse();
     }
 
     @Test
     void execute() {
-        FRI fri = new FRI("testmod", "pmml");
+        FRI fri = new FRI(basePath, "pmml");
         DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         Optional<DAROutputPMML> retrieved = PMMLRuntimeHelper.execute(darInputPMML, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
@@ -69,7 +78,7 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void loadKiePMMLModelFactory() {
-        KiePMMLModelFactory retrieved = PMMLRuntimeHelper.loadKiePMMLModelFactory(new FRI("testmod", "pmml"), memoryCompilerClassLoader);
+        KiePMMLModelFactory retrieved = PMMLRuntimeHelper.loadKiePMMLModelFactory(new FRI(basePath, "pmml"), memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getKiePMMLModels()).hasSize(1);
         KiePMMLModel kiePmmlModel = retrieved.getKiePMMLModels().get(0);
@@ -79,7 +88,7 @@ class PMMLRuntimeHelperTest {
     @Test
     void loadNotExistingKiePMMLModelFactory() {
         try {
-            PMMLRuntimeHelper.loadKiePMMLModelFactory(new FRI("testmod", "notpmml"), memoryCompilerClassLoader);
+            PMMLRuntimeHelper.loadKiePMMLModelFactory(new FRI(basePath, "notpmml"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(KieRuntimeServiceException.class);
@@ -88,7 +97,7 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void getDAROutput() {
-        FRI fri = new FRI("testmod", "pmml");
+        FRI fri = new FRI(basePath, "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         DAROutputPMML retrieved = PMMLRuntimeHelper.getDAROutput(kiePmmlModelFactory, darInputPMML);
@@ -97,7 +106,7 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void evaluate() {
-        FRI fri = new FRI("testmod", "pmml");
+        FRI fri = new FRI(basePath, "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         List<KiePMMLModel> kiePMMLModels = kiePmmlModelFactory.getKiePMMLModels();
         PMMLContext pmmlContext = getPMMLContext("fileName", "TestMod");
@@ -107,7 +116,7 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void testEvaluate() {
-        FRI fri = new FRI("testmod", "pmml");
+        FRI fri = new FRI(basePath, "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         KiePMMLModel kiePMMLModel = kiePmmlModelFactory.getKiePMMLModels().get(0);
         PMMLContext pmmlContext = getPMMLContext("fileName", "TestMod");
@@ -117,7 +126,7 @@ class PMMLRuntimeHelperTest {
 
     @Test
     void getModel() {
-        FRI fri = new FRI("testmod", "pmml");
+        FRI fri = new FRI(basePath, "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
         Optional<KiePMMLModel> retrieved = PMMLRuntimeHelper.getModel(kiePmmlModelFactory.getKiePMMLModels(), "TestMod");
         assertThat(retrieved).isNotNull().isPresent();

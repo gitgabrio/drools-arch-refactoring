@@ -16,6 +16,7 @@
 package org.kie.dar.runtimemanager.api.mocks;
 
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Arrays;
@@ -27,8 +28,10 @@ public class MockKieRuntimeServiceAB extends AbstractMockKieRuntimeService {
     private static List<FRI> managedResources = Arrays.asList(new FRI(MockDARInputA.class.getPackageName(), MockDARInputA.class.getSimpleName()),
             new FRI(MockDARInputB.class.getPackageName(), MockDARInputB.class.getSimpleName()));
 
+
     @Override
-    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return managedResources.contains(fri);
+    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return managedResources.contains(toEvaluate.getFRI());
     }
+
 }

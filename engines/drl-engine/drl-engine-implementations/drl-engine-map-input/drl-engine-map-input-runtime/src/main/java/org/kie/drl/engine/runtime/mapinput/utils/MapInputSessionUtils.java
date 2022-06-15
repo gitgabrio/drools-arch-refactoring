@@ -110,6 +110,8 @@ public class MapInputSessionUtils {
                 }
                 Object toAdd = factType.newInstance();
                 factType.set(toAdd, "value", entry.getValue());
+
+
                 commands.add(COMMAND_FACTORY_SERVICE.newInsert(toAdd));
             } catch (Exception e) {
                 throw new KieRuntimeServiceException(e.getMessage(), e);

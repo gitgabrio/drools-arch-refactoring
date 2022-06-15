@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
@@ -36,6 +37,13 @@ public class GeneratedResourceUtils {
     private static final Logger logger = LoggerFactory.getLogger(GeneratedResourceUtils.class.getName());
 
     private GeneratedResourceUtils() {
+    }
+
+    public static boolean isPresentExecutableOrRedirect(FRI fri, String modelType) {
+        return Stream
+                .of(getGeneratedExecutableResource(fri, modelType),
+                        getGeneratedRedirectResource(fri, modelType))
+                .anyMatch(Optional::isPresent);
     }
 
     public static Optional<GeneratedExecutableResource> getGeneratedExecutableResource(FRI fri, String modelType) {

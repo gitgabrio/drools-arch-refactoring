@@ -31,13 +31,15 @@ public interface KieRuntimeService<S, U, T extends DARInput<S>, E extends DAROut
 
 
     /**
-     * Every engine is responsible to verify if it can evaluate a result with the resource of the given <code>FRI</code>
+     * Every engine is responsible to verify if it can evaluate a result with the resource of the given <code>T</code>
+     * (that contains a specific <code>FRI</code>)
      *
-     * @param fri
+     * @param toEvaluate
      * @param memoryCompilerClassLoader
      * @return
      */
-    boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
+    // TODO @gcardosi replace FRI with T - selected based on Type AND fri - remove subpath for DRL
+    boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader);
 
     /**
      * Produce one <code>DAROutput</code> from the given <code>DARInput</code>

@@ -20,8 +20,8 @@ import java.util.Set;
 
 public class DARFileSetResource extends DARSetResource<File> {
 
-    public DARFileSetResource(Set<File> modelFiles, String type) {
-        super(modelFiles, type);
+    public DARFileSetResource(Set<File> modelFiles, String type, String basePath) {
+        super(modelFiles, type, basePath);
     }
 
 

@@ -21,6 +21,7 @@ import org.kie.bar.engine.runtime.model.DARInputBar;
 import org.kie.bar.engine.runtime.model.DAROutputBar;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,16 +38,21 @@ class BarRuntimeHelperTest {
 
     @Test
     void canManage() {
-        assertThat(BarRuntimeHelper.canManage(new FRI("/bar/dar", "bar"))).isTrue();
-        assertThat(BarRuntimeHelper.canManage(new FRI("/bar/dar", "notbar"))).isFalse();
-        assertThat(BarRuntimeHelper.canManage(new FRI("darfoo", "bar"))).isFalse();
+        FRI fri = new FRI("/bar/dar", "bar");
+        AbstractDARInput darInputBar = new DARInputBar(fri, "InputData");
+        assertThat(BarRuntimeHelper.canManage(darInputBar)).isTrue();
+        darInputBar = new AbstractDARInput(fri, "InputData") {};
+        assertThat(BarRuntimeHelper.canManage(darInputBar)).isFalse();
+        fri = new FRI("/bar/dar", "notbar");
+        darInputBar = new DARInputBar(fri, "InputData");
+        assertThat(BarRuntimeHelper.canManage(darInputBar)).isFalse();
     }
 
     @Test
     void loadExistingBarResources() {
         BarResources retrieved = BarRuntimeHelper.loadBarResources(new FRI("dar", "bar"), memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
-        assertThat(retrieved.getManagedResources().size()).isEqualTo(2);
+        assertThat(retrieved.getManagedResources()).hasSize(2);
         assertThat(retrieved.getManagedResources().contains("BarResOne")).isTrue();
         assertThat(retrieved.getManagedResources().contains("BarResTwo")).isTrue();
     }

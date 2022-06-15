@@ -14,14 +14,12 @@ package org.kie.drl.engine.runtime.mapinput.utils;/*
  * limitations under the License.
  */
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
-import org.kie.dar.runtimemanager.api.model.DAROriginalTypeGeneratedType;
 import org.kie.drl.engine.mapinput.compilation.model.test.Applicant;
-import org.kie.drl.engine.mapinput.compilation.model.test.LoanAppDto;
 import org.kie.drl.engine.mapinput.compilation.model.test.LoanApplication;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
@@ -44,12 +42,15 @@ class DrlRuntimeHelperTest {
 
     @Test
     void canManage() {
-        FRI fri = new FRI(DrlRuntimeHelper.SUBPATH + FRI.SLASH + basePath, "drl");
-        assertThat(DrlRuntimeHelper.canManage(fri)).isTrue();
-        fri = new FRI(basePath, "drl");
-        assertThat(DrlRuntimeHelper.canManage(fri)).isFalse();
-        fri = new FRI(DrlRuntimeHelper.SUBPATH + FRI.SLASH + "notexisting", "drl");
-        assertThat(DrlRuntimeHelper.canManage(fri)).isFalse();
+        FRI fri = new FRI(basePath, "drl");
+        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, null);
+        assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isTrue();
+        darInputDrlMap = new AbstractDARInput(fri, "") {
+        };
+        assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isFalse();
+        fri = new FRI("notexisting", "drl");
+        darInputDrlMap = new DARInputDrlMap(fri, null);
+        assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isFalse();
     }
 
     @Test
@@ -67,7 +68,7 @@ class DrlRuntimeHelperTest {
 
         DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap());
 
-        DARInputDrlMap darInputDrlMap = new DARInputDrlMap(new FRI(DrlRuntimeHelper.SUBPATH + FRI.SLASH + basePath, "drl"), darMapInputDTO);
+        DARInputDrlMap darInputDrlMap = new DARInputDrlMap(new FRI(basePath, "drl"), darMapInputDTO);
         Optional<DAROutputDrlMap> retrieved = DrlRuntimeHelper.execute(darInputDrlMap, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
         assertThat(approvedApplications).hasSize(1);

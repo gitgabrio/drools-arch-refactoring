@@ -48,6 +48,11 @@
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-compilation-core</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- EXTERNAL -->
         <dependency>
             <groupId>org.jpmml</groupId>

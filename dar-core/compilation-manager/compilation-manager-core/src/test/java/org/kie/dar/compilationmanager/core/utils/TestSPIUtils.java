@@ -16,6 +16,7 @@ package org.kie.dar.compilationmanager.core.utils;/*
 
 import org.junit.jupiter.api.Test;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.dar.compilationmanager.api.utils.SPIUtils;
 import org.kie.dar.compilationmanager.core.mocks.*;
 
 import java.util.Arrays;

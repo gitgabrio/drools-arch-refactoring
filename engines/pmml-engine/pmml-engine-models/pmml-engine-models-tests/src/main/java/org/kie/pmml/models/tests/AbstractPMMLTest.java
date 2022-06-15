@@ -50,8 +50,8 @@ public class AbstractPMMLTest {
         compilationManager = new CompilationManagerImpl();
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         File pmmlFile = getFile(fileName);
-        DARResource darResourceBar = new DARFileResource(pmmlFile);
-        List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
+        DARResource darResource = new DARFileResource(pmmlFile);
+        List<IndexFile> indexFiles = compilationManager.processResource(darResource, memoryCompilerClassLoader);
         return new PMMLRuntimeInternalImpl(memoryCompilerClassLoader);
     }
 

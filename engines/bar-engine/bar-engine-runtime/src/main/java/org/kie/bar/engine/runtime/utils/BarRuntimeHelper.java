@@ -31,10 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.*;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 
 public class BarRuntimeHelper {
@@ -46,9 +44,8 @@ public class BarRuntimeHelper {
     }
 
 
-    public static boolean canManage(FRI fri) {
-        return Stream.of(getGeneratedExecutableResource(fri, "bar"), getGeneratedRedirectResource(fri, "bar"))
-                .anyMatch(Optional::isPresent);
+    public static boolean canManage(DARInput toEvaluate) {
+        return (toEvaluate instanceof DARInputBar) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "bar");
     }
 
     public static Optional<DAROutputBar> execute(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
@@ -87,7 +84,7 @@ public class BarRuntimeHelper {
 
         };
 
-        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
+        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput, true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return Optional.empty();

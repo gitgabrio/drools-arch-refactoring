@@ -18,6 +18,7 @@ package org.kie.drl.engine.runtime.mapinput.utils;
 import org.kie.api.runtime.KieSession;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
 import org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils;
@@ -28,29 +29,26 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils.getCleanedFRI;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
 import static org.kie.drl.engine.runtime.utils.DARKieSessionUtil.loadKieSession;
 
 public class DrlRuntimeHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(DrlRuntimeHelper.class.getName());
 
-    public static final String SUBPATH = "mapinput";
-    public static final String PATH = "/drl" + SLASH + SUBPATH;
-
 
     private DrlRuntimeHelper() {
     }
 
 
-    public static boolean canManage(FRI fri) {
-        return DARKieRuntimeDrlUtils.canManage(fri, PATH, SUBPATH);
+    public static boolean canManage(DARInput toEvaluate) {
+        return (toEvaluate instanceof DARInputDrlMap) && getGeneratedExecutableResource(toEvaluate.getFRI(), "drl").isPresent();
     }
 
     public static Optional<DAROutputDrlMap> execute(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KieSession kieSession;
         try {
-            kieSession = loadKieSession(getCleanedFRI(toEvaluate.getFRI(), SUBPATH), memoryCompilerClassLoader);
+            kieSession = loadKieSession(toEvaluate.getFRI(), memoryCompilerClassLoader);
         } catch (Exception e) {
             logger.warn("{} can not execute {}",
                     DrlRuntimeHelper.class.getName(),

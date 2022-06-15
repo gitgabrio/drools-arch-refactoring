@@ -38,8 +38,10 @@ class KieRuntimeServiceFooTest {
 
     @Test
     void canManageResource() {
-        assertThat(kieRuntimeService.canManageInput(new FRI("dar", "foo"), memoryCompilerClassLoader)).isTrue();
-        assertThat(kieRuntimeService.canManageInput(new FRI("dar", "notfoo"), memoryCompilerClassLoader)).isFalse();
+        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
+        assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isTrue();
+        toEvaluate = new DARInputFoo(new FRI("dar", "notfoo"), "InputData");
+        assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
     }
 
     @Test

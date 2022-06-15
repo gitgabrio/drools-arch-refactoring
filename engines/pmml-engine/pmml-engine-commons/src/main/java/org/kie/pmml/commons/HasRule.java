@@ -23,4 +23,5 @@ import org.kie.pmml.commons.model.HasSourcesMap;
 public interface HasRule extends HasSourcesMap {
 
     String getPkgUUID();
+    Object getPackageDescr();
 }

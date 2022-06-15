@@ -49,6 +49,12 @@
             <version>${kie.drools.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-model-compiler</artifactId>
+            <version>${kie.drools.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     
 

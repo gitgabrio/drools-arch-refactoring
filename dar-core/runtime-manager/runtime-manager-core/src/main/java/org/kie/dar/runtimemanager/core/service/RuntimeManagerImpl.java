@@ -35,7 +35,7 @@ public class RuntimeManagerImpl implements RuntimeManager {
     @Override
     @SuppressWarnings({"unchecked", "raw"})
     public Optional<DAROutput> evaluateInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate.getFRI(), true, memoryCompilerClassLoader);
+        Optional<KieRuntimeService> retrieved = getKieRuntimeService(toEvaluate, true, memoryCompilerClassLoader);
         if (retrieved.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return Optional.empty();

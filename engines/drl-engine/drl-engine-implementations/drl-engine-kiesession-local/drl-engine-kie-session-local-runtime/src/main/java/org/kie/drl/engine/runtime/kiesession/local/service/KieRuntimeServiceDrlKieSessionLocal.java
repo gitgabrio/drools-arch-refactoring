@@ -16,7 +16,7 @@
 package org.kie.drl.engine.runtime.kiesession.local.service;
 
 import org.kie.api.runtime.KieSession;
-import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
 import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
@@ -34,12 +34,12 @@ public class KieRuntimeServiceDrlKieSessionLocal implements KieRuntimeService<St
 
 
     @Override
-    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return DrlRuntimeHelper.canManage(fri);
+    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return DrlRuntimeHelper.canManage(toEvaluate);
     }
 
     @Override
     public Optional<DAROutputDrlKieSessionLocal> evaluateInput(DARInputDrlKieSessionLocal toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return canManageInput(toEvaluate.getFRI(), memoryCompilerClassLoader) ? DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader) : Optional.empty();
+        return canManageInput(toEvaluate, memoryCompilerClassLoader) ? DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader) : Optional.empty();
     }
 }

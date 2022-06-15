@@ -16,6 +16,7 @@
 package org.kie.drl.engine.runtime.mapinput.service;
 
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
@@ -35,8 +36,8 @@ public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInp
 
 
     @Override
-    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return DrlRuntimeHelper.canManage(fri);
+    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return DrlRuntimeHelper.canManage(toEvaluate);
     }
 
     @Override

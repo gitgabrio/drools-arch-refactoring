@@ -97,6 +97,9 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
         AbstractDARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {
 
         };
+        // TODO retrieve runtimesercie
+        // invoke runtimeservice.evaluate
+
         return toReturn;
     }
 
@@ -149,7 +152,7 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
 
         };
 
-        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
+        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput, true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return;

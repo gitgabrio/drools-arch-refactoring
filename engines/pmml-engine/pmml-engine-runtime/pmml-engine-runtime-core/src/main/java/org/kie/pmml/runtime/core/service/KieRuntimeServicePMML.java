@@ -16,7 +16,7 @@
 package org.kie.pmml.runtime.core.service;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.runtime.PMMLContext;
@@ -36,8 +36,8 @@ public class KieRuntimeServicePMML implements KieRuntimeService<PMMLContext, PMM
 
 
     @Override
-    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return canManage(fri);
+    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return canManage(toEvaluate);
     }
 
     @Override

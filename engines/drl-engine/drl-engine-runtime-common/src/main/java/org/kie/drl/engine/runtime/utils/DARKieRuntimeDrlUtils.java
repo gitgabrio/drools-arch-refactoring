@@ -15,25 +15,10 @@
  */
 package org.kie.drl.engine.runtime.utils;
 
-import org.kie.dar.common.api.model.FRI;
-
-import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
-
 public class DARKieRuntimeDrlUtils {
 
     private DARKieRuntimeDrlUtils() {
     }
 
-    public static boolean canManage(FRI fri, String path, String subPath) {
-        if (fri.getFri().startsWith(path)) {
-            return getGeneratedExecutableResource(getCleanedFRI(fri, subPath), "drl").isPresent();
-        } else {
-            return false;
-        }
-    }
 
-    public static FRI getCleanedFRI(FRI originalFRI, String subPath) {
-        return new FRI(originalFRI.getBasePath().replace(subPath + SLASH, ""), originalFRI.getModel());
-    }
 }

@@ -35,8 +35,8 @@ public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, D
 
 
     @Override
-    public boolean canManageInput(FRI fri, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return canManage(fri);
+    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        return canManage(toEvaluate.getFRI());
     }
 
     @Override

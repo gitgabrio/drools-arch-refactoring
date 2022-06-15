@@ -25,7 +25,7 @@ public abstract class AbstractMockKieRuntimeService<T extends AbstractMockDARInp
 
     @Override
     public Optional<MockDAROutput> evaluateInput(T toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        if (!canManageInput(toEvaluate.getFRI(), memoryCompilerClassLoader)) {
+        if (!canManageInput(toEvaluate, memoryCompilerClassLoader)) {
             throw new KieRuntimeServiceException(String.format("Unmanaged input %s", toEvaluate.getFRI()));
         }
         return Optional.of(new MockDAROutput());

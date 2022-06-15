@@ -20,11 +20,14 @@ import java.util.Set;
 public abstract class DARSetResource<T> implements DARResource<Set<T>> {
 
     private final Set<T> resources;
-    private String type;
+    private String model;
 
-    public DARSetResource(Set<T> resources, String type) {
+    private String basePath;
+
+    protected DARSetResource(Set<T> resources, String model, String basePath) {
         this.resources = resources;
-        this.type = type;
+        this.model = model;
+        this.basePath = basePath;
     }
 
     @Override
@@ -33,7 +36,15 @@ public abstract class DARSetResource<T> implements DARResource<Set<T>> {
     }
 
     public String getModelType() {
-        return type;
+        return model;
+    }
+
+    /**
+     * This should return the string used as <b>base path</b> in the generated <code>FRI</code>
+     * @return
+     */
+    public String getBasePath() {
+        return basePath;
     }
 
 }

@@ -37,7 +37,7 @@ import static org.kie.dar.common.api.constants.Constants.INDEXFILE_DIRECTORY_PRO
 import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
 import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 import static org.kie.dar.common.api.utils.JSONUtils.writeGeneratedResourcesObject;
-import static org.kie.dar.compilationmanager.core.utils.SPIUtils.getKieCompilerService;
+import static org.kie.dar.compilationmanager.api.utils.SPIUtils.getKieCompilerService;
 
 public class CompilationManagerUtils {
 

@@ -40,10 +40,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.*;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 import static org.kie.pmml.runtime.core.utils.PostProcess.postProcess;
 import static org.kie.pmml.runtime.core.utils.PreProcess.preProcess;
@@ -58,9 +56,8 @@ public class PMMLRuntimeHelper {
     }
 
 
-    public static boolean canManage(FRI fri) {
-        return Stream.of(getGeneratedExecutableResource(fri, "pmml"), getGeneratedRedirectResource(fri, "pmml"))
-                .anyMatch(Optional::isPresent);
+    public static boolean canManage(DARInput toEvaluate) {
+        return (toEvaluate instanceof DARInputPMML) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "pmml");
     }
 
     public static Optional<DAROutputPMML> execute(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
@@ -91,7 +88,7 @@ public class PMMLRuntimeHelper {
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
         DARInput redirectInput = new DARInputPMML(targetFri, toEvaluate.getInputData()); // TODO fix for drools models
 
-        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput.getFRI(), true, memoryCompilerClassLoader);
+        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput, true, memoryCompilerClassLoader);
         if (targetService.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
             return Optional.empty();
