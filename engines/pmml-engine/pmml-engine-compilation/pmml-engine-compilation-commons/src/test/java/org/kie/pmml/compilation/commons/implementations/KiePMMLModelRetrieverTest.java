@@ -49,7 +49,7 @@ public class KiePMMLModelRetrieverTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final Optional<KiePMMLModel> retrieved =
                 getFromCommonDataAndTransformationDictionaryAndModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
@@ -57,12 +57,13 @@ public class KiePMMLModelRetrieverTest {
 
     @Test
     void getFromDataDictionaryAndModelWithSourcesWithoutProvider() throws Exception {
+        String fileName = ONE_MINING_TARGET_SOURCE.substring(0, ONE_MINING_TARGET_SOURCE.lastIndexOf('.'));
         pmml = KiePMMLUtil.load(getFileInputStream(ONE_MINING_TARGET_SOURCE), ONE_MINING_TARGET_SOURCE);
         final CommonCompilationDTO compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), fileName);
         final Optional<KiePMMLModel> retrieved =
                 getFromCommonDataAndTransformationDictionaryAndModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
@@ -78,7 +79,7 @@ public class KiePMMLModelRetrieverTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         model,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final Optional<KiePMMLModel> retrieved =
                 getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCompiled(compilationDTO);
         assertThat(retrieved).isNotNull().isPresent();
@@ -86,6 +87,7 @@ public class KiePMMLModelRetrieverTest {
 
     @Test
     void getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCompiledWithoutProvider() throws Exception {
+        String fileName = MINING_MODEL_WITH_NESTED_REFERS_SOURCE.substring(0, MINING_MODEL_WITH_NESTED_REFERS_SOURCE.lastIndexOf('.'));
         pmml = KiePMMLUtil.load(getFileInputStream(MINING_MODEL_WITH_NESTED_REFERS_SOURCE),
                 MINING_MODEL_WITH_NESTED_REFERS_SOURCE);
         MiningModel parentModel = (MiningModel) pmml.getModels().get(0);
@@ -94,7 +96,7 @@ public class KiePMMLModelRetrieverTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         model,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), fileName);
         final Optional<KiePMMLModel> retrieved =
                 getFromCommonDataAndTransformationDictionaryAndModelWithSourcesCompiled(compilationDTO);
         assertThat(retrieved).isNotNull();

@@ -65,9 +65,10 @@ public abstract class AbstractSpecificCompilationDTO<T extends Model> implements
     protected AbstractSpecificCompilationDTO(final PMML pmml,
                                              final T model,
                                              final HasClassLoader hasClassLoader,
+                                             final String fileName,
                                              final String packageName,
                                              final List<Field<?>> fields) {
-        this(CommonCompilationDTO.fromPackageNameAndFields(pmml, model, hasClassLoader, packageName, fields));
+        this(CommonCompilationDTO.fromPackageNameAndFields(pmml, model, hasClassLoader, fileName, packageName, fields));
     }
 
     /**
@@ -138,6 +139,11 @@ public abstract class AbstractSpecificCompilationDTO<T extends Model> implements
     @Override
     public String getModelName() {
         return source.getModelName();
+    }
+
+    @Override
+    public String getFileName() {
+        return source.getFileName();
     }
 
     @Override

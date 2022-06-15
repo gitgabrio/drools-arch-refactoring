@@ -70,7 +70,7 @@ public class RegressionModelImplementationProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_1);
         final KiePMMLModelWithSources retrieved = PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
         final Map<String, String> sourcesMap = retrieved.getSourcesMap();

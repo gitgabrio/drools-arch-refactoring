@@ -76,6 +76,13 @@ public interface CompilationDTO<T extends Model> extends Serializable {
      */
     String getModelName();
 
+    /**
+     * Returns the <b>name of the file</b> containing the <code>Model</code>, <b>without the suffix `.pmml`</b>
+     *
+     * @return
+     */
+    String getFileName();
+
     String getTargetFieldName();
 
     /**

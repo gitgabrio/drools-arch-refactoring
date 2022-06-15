@@ -37,6 +37,7 @@ import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
 class MiningModelImplementationProviderTest {
 
     private static final MiningModelImplementationProvider PROVIDER = new MiningModelImplementationProvider();
+
     private static final String SOURCE_REGRESSION = "MiningModel_Regression.pmml";
     //    private static final String SOURCE_TREE = "MiningModel_TreeModel.pmml";
 //    private static final String SOURCE_SCORECARD = "MiningModel_Scorecard.pmml";
@@ -132,7 +133,7 @@ class MiningModelImplementationProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         miningmodel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), source);
         final KiePMMLMiningModelWithSources retrieved =
                 (KiePMMLMiningModelWithSources) PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();

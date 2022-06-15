@@ -52,7 +52,8 @@ import static org.kie.pmml.models.drools.utils.KiePMMLASTTestUtils.getFieldTypeM
 
 public class KiePMMLScorecardModelFactoryTest {
 
-    private static final String SOURCE_1 = "ScorecardSample.pmml";
+    private static final String SOURCE_BASE = "ScorecardSample";
+    private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
     private static final String TARGET_FIELD = "overallScore";
     private static PMML pmml;
     private static Scorecard scorecardModel;
@@ -81,7 +82,7 @@ public class KiePMMLScorecardModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         scorecardModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         final DroolsCompilationDTO<Scorecard> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(compilationDTO,
                         fieldTypeMap);
@@ -111,7 +112,7 @@ public class KiePMMLScorecardModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         scorecardModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         final DroolsCompilationDTO<Scorecard> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(compilationDTO,
                         new HashMap<>());

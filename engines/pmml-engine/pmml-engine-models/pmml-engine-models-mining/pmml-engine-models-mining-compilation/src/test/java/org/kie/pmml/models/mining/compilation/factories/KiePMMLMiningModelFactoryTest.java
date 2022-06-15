@@ -71,7 +71,7 @@ public class KiePMMLMiningModelFactoryTest extends AbstractKiePMMLFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         MINING_MODEL,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final MiningModelCompilationDTO compilationDTO =
                 MiningModelCompilationDTO.fromCompilationDTO(source);
         final Map<String, String> retrieved =
@@ -91,7 +91,7 @@ public class KiePMMLMiningModelFactoryTest extends AbstractKiePMMLFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         MINING_MODEL,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final MiningModelCompilationDTO compilationDTO =
                 MiningModelCompilationDTO.fromCompilationDTO(source);
         KiePMMLMiningModelFactory.setConstructor(compilationDTO, modelTemplate);

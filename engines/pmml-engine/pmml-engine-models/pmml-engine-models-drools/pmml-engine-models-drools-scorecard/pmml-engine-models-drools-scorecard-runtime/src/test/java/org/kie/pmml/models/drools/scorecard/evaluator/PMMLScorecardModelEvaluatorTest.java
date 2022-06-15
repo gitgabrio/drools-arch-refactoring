@@ -43,7 +43,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class PMMLScorecardModelEvaluatorTest {
 
-    private static final String SOURCE_1 = "ScorecardSample.pmml";
+    private static final String SOURCE_BASE = "ScorecardSample";
+    private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
     private static final Logger logger = LoggerFactory.getLogger(PMMLScorecardModelEvaluatorTest.class);
     private static final String modelName = "Sample Score";
     private static final String PACKAGE_NAME = "PACKAGE_NAME";
@@ -80,7 +81,7 @@ public class PMMLScorecardModelEvaluatorTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         (Scorecard) pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
     }
 
     @Parameterized.Parameters

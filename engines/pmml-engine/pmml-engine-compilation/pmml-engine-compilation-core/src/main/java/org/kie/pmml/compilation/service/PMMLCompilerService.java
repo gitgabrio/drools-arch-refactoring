@@ -24,7 +24,6 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.exceptions.ExternalException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.commons.HasRedirectOutput;
-import org.kie.pmml.commons.HasRule;
 import org.kie.pmml.commons.model.HasClassLoader;
 import org.kie.pmml.commons.model.KiePMMLFactoryModel;
 import org.kie.pmml.commons.model.KiePMMLModel;
@@ -78,7 +77,11 @@ public class PMMLCompilerService {
             Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
             allSourcesMap.putAll(sourcesMap);
             if (kiePMMLModelWithSources instanceof HasRedirectOutput) {
-                sendRedirectRequest(((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput(), memoryClassLoader);
+//                DARSetResource original = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
+////                DARSetResource updated = new DARRedirectOutputPMMLDrl(new FRI(modelName, "pmml"), packageDescr, "drl", modelName);
+//                DARSetResource updated = new DARSetResource() {
+//                };
+                toReturn.addAll(getRedirectCompilation(((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput(), memoryClassLoader));
             }
         });
         List<KiePMMLFactoryModel> kiePMMLFactoryModels = kiePmmlModels
@@ -98,15 +101,14 @@ public class PMMLCompilerService {
         return toReturn;
     }
 
-    static void sendRedirectRequest(DARSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static List<DARCompilationOutput> getRedirectCompilation(DARSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         Optional<KieCompilerService> targetService = getKieCompilerService(redirectOutput, true);
         if (targetService.isEmpty()) {
             logger.warn("Cannot find KieRuntimeService for {}", redirectOutput);
-            return;
+            return Collections.emptyList();
         }
 
-        List<DARCompilationOutput> darCompilationOutputs = targetService.get().processResource(redirectOutput, memoryClassLoader);
-        System.out.println(darCompilationOutputs);
+        return targetService.get().processResource(redirectOutput, memoryClassLoader);
     }
 
     /**

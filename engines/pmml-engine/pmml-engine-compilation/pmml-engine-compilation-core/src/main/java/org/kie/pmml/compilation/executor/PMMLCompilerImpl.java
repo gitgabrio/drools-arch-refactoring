@@ -56,7 +56,7 @@ public class PMMLCompilerImpl implements PMMLCompiler {
         try {
             PMML commonPMMLModel = KiePMMLUtil.load(inputStream, fileName);
             List<Model> models = commonPMMLModel.getModels();
-            final List<KiePMMLModel> toReturn = getModelsWithSources(packageName, commonPMMLModel, hasClassLoader);
+            final List<KiePMMLModel> toReturn = getModelsWithSources(packageName, commonPMMLModel, hasClassLoader, fileName);
             final List<KiePMMLFactoryModel> toAdd = toReturn.stream()
                     .map(kiePMMLModel -> getKiePMMLFactoryModel(kiePMMLModel, models, packageName)).collect(Collectors.toList());
             toReturn.addAll(toAdd);
@@ -113,7 +113,8 @@ public class PMMLCompilerImpl implements PMMLCompiler {
      * @throws KiePMMLException if any <code>KiePMMLInternalException</code> has been thrown during execution
      */
     private List<Map<String, String>> getModelSourcesMap(final String packageName, final PMML pmml,
-                                                         final HasClassLoader hasClassLoader) {
+                                                         final HasClassLoader hasClassLoader,
+                                                         final String fileName) {
         logger.trace("getModelSourcesMap {}", pmml);
         return pmml
                 .getModels()
@@ -121,7 +122,7 @@ public class PMMLCompilerImpl implements PMMLCompiler {
                 .map(model -> {
                     final CommonCompilationDTO<?> compilationDTO =
                             CommonCompilationDTO.fromGeneratedPackageNameAndFields(packageName, pmml, model,
-                                    hasClassLoader);
+                                    hasClassLoader, fileName);
                     return getSourcesMapFromCommonDataAndTransformationDictionaryAndModel(compilationDTO);
                 })
                 .filter(Optional::isPresent)
@@ -161,11 +162,13 @@ public class PMMLCompilerImpl implements PMMLCompiler {
      *
      * @param packageName    the package into which put all the generated classes out of the given <code>PMML</code>
      * @param hasClassLoader Using <code>HasClassloader</code>
+     * @param fileName
      * @return
      * @throws KiePMMLException if any <code>KiePMMLInternalException</code> has been thrown during execution
      */
     private List<KiePMMLModel> getModelsWithSources(final String packageName, final PMML pmml,
-                                                    final HasClassLoader hasClassLoader) {
+                                                    final HasClassLoader hasClassLoader,
+                                                    final String fileName) {
         logger.trace("getModels {}", pmml);
         return pmml
                 .getModels()
@@ -173,7 +176,7 @@ public class PMMLCompilerImpl implements PMMLCompiler {
                 .map(model -> {
                     final CommonCompilationDTO<?> compilationDTO =
                             CommonCompilationDTO.fromGeneratedPackageNameAndFields(packageName, pmml, model,
-                                    hasClassLoader);
+                                    hasClassLoader, fileName);
                     return getFromCommonDataAndTransformationDictionaryAndModelWithSources(compilationDTO);
                 })
                 .filter(Optional::isPresent)

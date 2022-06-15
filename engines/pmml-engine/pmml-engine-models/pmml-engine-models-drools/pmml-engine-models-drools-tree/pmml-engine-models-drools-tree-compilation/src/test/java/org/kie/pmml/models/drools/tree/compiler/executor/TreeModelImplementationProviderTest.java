@@ -33,7 +33,8 @@ import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
 public class TreeModelImplementationProviderTest {
 
     private static final TreeModelImplementationProvider PROVIDER = new TreeModelImplementationProvider();
-    private static final String SOURCE_1 = "TreeSample.pmml";
+    private static final String SOURCE_BASE = "TreeSample";
+    private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
 
     @Test
     public void getPMMLModelType() {
@@ -48,7 +49,7 @@ public class TreeModelImplementationProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         (TreeModel) pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         final KiePMMLDroolsModelWithSources retrieved = PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
     }

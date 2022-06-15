@@ -32,7 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ScorecardModelImplementationProviderTest {
 
     private static final ScorecardModelImplementationProvider PROVIDER = new ScorecardModelImplementationProvider();
-    private static final String SOURCE_1 = "ScorecardSample.pmml";
+
+    private static final String SOURCE_BASE = "ScorecardSample";
+    private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
     private static final String PACKAGE_NAME = "PACKAGE_NAME";
 
     @Test
@@ -48,7 +50,7 @@ public class ScorecardModelImplementationProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         (Scorecard) pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         final KiePMMLDroolsModelWithSources retrieved = PROVIDER.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
     }

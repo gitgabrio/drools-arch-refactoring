@@ -70,7 +70,7 @@ public class PMMLTreeModelEvaluatorTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         (TreeModel) pmml.getModels().get(0),
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_1);
 
     }
 

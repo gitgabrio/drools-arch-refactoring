@@ -103,7 +103,7 @@ public class KiePMMLClusteringModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         clusteringModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         KiePMMLClusteringModel retrieved =
                 KiePMMLClusteringModelFactory.getKiePMMLClusteringModel(ClusteringCompilationDTO.fromCompilationDTO(compilationDTO));
         assertThat(retrieved).isNotNull();
@@ -129,7 +129,7 @@ public class KiePMMLClusteringModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         clusteringModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         Map<String, String> retrieved =
                 KiePMMLClusteringModelFactory.getKiePMMLClusteringModelSourcesMap(ClusteringCompilationDTO.fromCompilationDTO(compilationDTO));
         assertThat(retrieved).isNotNull();
@@ -208,7 +208,7 @@ public class KiePMMLClusteringModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         clusteringModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         String expectedModelClass =
                 KiePMMLClusteringModel.ModelClass.class.getCanonicalName() + "." + clusteringModel.getModelClass().name();
         ComparisonMeasure comparisonMeasure = clusteringModel.getComparisonMeasure();

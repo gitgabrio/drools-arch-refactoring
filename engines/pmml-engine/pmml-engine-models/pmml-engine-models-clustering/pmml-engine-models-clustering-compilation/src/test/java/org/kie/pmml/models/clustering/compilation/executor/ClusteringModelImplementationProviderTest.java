@@ -61,7 +61,7 @@ public class ClusteringModelImplementationProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         model,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         KiePMMLModelWithSources retrieved = PROVIDER.getKiePMMLModelWithSources(compilationDTO);
 
         assertThat(retrieved).isNotNull();

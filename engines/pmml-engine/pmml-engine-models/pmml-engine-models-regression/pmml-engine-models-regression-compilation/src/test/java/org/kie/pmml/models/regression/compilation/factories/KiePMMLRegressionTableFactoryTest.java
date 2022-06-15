@@ -105,7 +105,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final RegressionCompilationDTO compilationDTO =
                 RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(source,
                         regressionModel.getRegressionTables(),
@@ -147,7 +147,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final RegressionCompilationDTO compilationDTO =
                 RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(source,
                         new ArrayList<>(),
@@ -184,7 +184,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final RegressionCompilationDTO compilationDTO =
                 RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(source,
                         new ArrayList<>(),
@@ -222,7 +222,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final RegressionCompilationDTO compilationDTO =
                 RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(source,
                         new ArrayList<>(),
@@ -383,7 +383,7 @@ public class KiePMMLRegressionTableFactoryTest extends AbstractKiePMMLRegression
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         regressionModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), "fileName");
         final RegressionCompilationDTO compilationDTO =
                 RegressionCompilationDTO.fromCompilationDTORegressionTablesAndNormalizationMethod(source,
                         new ArrayList<>(),

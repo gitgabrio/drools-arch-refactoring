@@ -45,7 +45,8 @@ import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataD
 
 public class DroolsModelProviderTest {
 
-    private static final String SOURCE_1 = "SimpleScorecardWithTransformations.pmml";
+    private static final String SOURCE_BASE = "SimpleScorecardWithTransformations";
+    private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
     //  Needed to avoid Mockito usage
     private static final Map<String, String> SOURCE_MAP = new HashMap<>();
     private static PMML pmml;
@@ -93,7 +94,7 @@ public class DroolsModelProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         scorecard,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         KiePMMLDroolsModelWithSources retrieved = droolsModelProvider.getKiePMMLModelWithSources(compilationDTO);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getSourcesMap()).isEqualTo(SOURCE_MAP);
@@ -111,7 +112,7 @@ public class DroolsModelProviderTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         scorecard,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_BASE);
         droolsModelProvider.getKiePMMLModelWithSources(compilationDTO);
     }
 

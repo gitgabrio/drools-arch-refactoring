@@ -28,6 +28,8 @@ import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import java.util.List;
 import java.util.Map;
 
+import static org.kie.dar.common.api.model.FRI.SLASH;
+
 /**
  * KIE representation of PMML model that use <b>Drools</b> for implementation
  */
@@ -42,6 +44,7 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
     private final DARRedirectOutputPMMLDrl redirectOutput;
 
     public KiePMMLDroolsModelWithSources(final String modelName,
+                                         final String fileName,
                                          final String kmodulePackageName,
                                          final List<MiningField> miningFields,
                                          final List<OutputField> outputFields,
@@ -52,7 +55,8 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
         super(modelName, kmodulePackageName, miningFields, outputFields, targetFields, sourcesMap, false);
         this.pkgUUID = pkgUUID;
         this.packageDescr = packageDescr;
-        redirectOutput = new DARRedirectOutputPMMLDrl(new FRI(modelName, "pmml"), packageDescr, "drl", modelName);
+        String basePath = fileName + SLASH + modelName;
+        redirectOutput = new DARRedirectOutputPMMLDrl(new FRI(basePath, "pmml"), packageDescr, "drl", modelName);
     }
 
     @Override

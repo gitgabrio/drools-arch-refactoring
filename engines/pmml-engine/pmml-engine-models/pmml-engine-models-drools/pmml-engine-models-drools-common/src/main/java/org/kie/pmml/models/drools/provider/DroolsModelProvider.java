@@ -93,6 +93,7 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
 //            Map<String, String> rulesSourceMap = Collections.unmodifiableMap(getRulesSourceMap(packageDescr));
 //            Map<String, String> rulesSourceMap = Collections.emptyMap();
             KiePMMLDroolsModelWithSources toReturn = new KiePMMLDroolsModelWithSources(compilationDTO.getModelName(),
+                    compilationDTO.getFileName(),
                     compilationDTO.getPackageName(),
                     compilationDTO.getKieMiningFields(),
                     compilationDTO.getKieOutputFields(),

@@ -81,7 +81,7 @@ public class KiePMMLTreeModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         treeModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_1);
         final DroolsCompilationDTO<TreeModel> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(compilationDTO,
                         fieldTypeMap);
@@ -113,7 +113,7 @@ public class KiePMMLTreeModelFactoryTest {
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
                         treeModel,
-                        new HasClassLoaderMock());
+                        new HasClassLoaderMock(), SOURCE_1);
         final DroolsCompilationDTO<TreeModel> droolsCompilationDTO =
                 DroolsCompilationDTO.fromCompilationDTO(compilationDTO,
                         new HashMap<>());
