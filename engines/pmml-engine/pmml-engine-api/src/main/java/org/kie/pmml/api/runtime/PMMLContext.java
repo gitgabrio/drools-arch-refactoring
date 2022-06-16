@@ -75,4 +75,10 @@ public interface PMMLContext extends Context {
 
     Set<PMMLListener> getPMMLListeners();
 
+    /**
+     *
+     * @return
+     */
+    Object getMemoryClassLoader(); // Using Object to avoid depending on kiememorycompiler
+
 }

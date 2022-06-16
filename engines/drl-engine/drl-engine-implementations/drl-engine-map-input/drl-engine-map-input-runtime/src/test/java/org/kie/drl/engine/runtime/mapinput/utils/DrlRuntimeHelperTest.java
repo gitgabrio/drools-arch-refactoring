@@ -66,7 +66,7 @@ class DrlRuntimeHelperTest {
         globals.put("approvedApplications", approvedApplications);
         globals.put("maxAmount", 5000);
 
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap());
+        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap(), "packageName");
 
         DARInputDrlMap darInputDrlMap = new DARInputDrlMap(new FRI(basePath, "drl"), darMapInputDTO);
         Optional<DAROutputDrlMap> retrieved = DrlRuntimeHelper.execute(darInputDrlMap, memoryCompilerClassLoader);

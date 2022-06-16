@@ -152,7 +152,7 @@ class PMMLRuntimeHelperTest {
     }
 
     private PMMLContext getPMMLContext(String fileName, String modelName) {
-        return new PMMLContextImpl(getPMMLRequestData(modelName), fileName);
+        return new PMMLContextImpl(getPMMLRequestData(modelName), fileName, memoryCompilerClassLoader);
     }
 
     private PMMLRequestData getPMMLRequestData(String modelName) {

@@ -17,6 +17,10 @@ package org.kie.pmml.runtime.core.service;
 
 import org.kie.api.pmml.PMML4Result;
 import org.kie.dar.common.api.model.FRI;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.DAROutput;
+import org.kie.dar.runtimemanager.api.service.RuntimeManager;
+import org.kie.dar.runtimemanager.api.utils.SPIUtils;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.models.PMMLModel;
 import org.kie.pmml.api.runtime.PMMLContext;
@@ -30,14 +34,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.canManage;
-import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.execute;
 
 public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
 
     private static final Logger logger = LoggerFactory.getLogger(PMMLRuntimeInternalImpl.class);
 
+    private static final RuntimeManager runtimeManager = SPIUtils.getRuntimeManager(true).get();
+
     private final KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
 
     public PMMLRuntimeInternalImpl(KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         this.memoryCompilerClassLoader = memoryCompilerClassLoader;
@@ -48,11 +53,11 @@ public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
         String basePath = context.getFileName() + SLASH + modelName;
         FRI fri = new FRI(basePath, "pmml");
         DARInputPMML darInputPMML = new DARInputPMML(fri, context);
-        if (!canManage(darInputPMML)) {
-            return null;
+        Optional<DAROutput> retrieved = runtimeManager.evaluateInput(darInputPMML, memoryCompilerClassLoader);
+        if (!(retrieved.get() instanceof DAROutputPMML)) {
+            throw new KieRuntimeServiceException("Expected DAROutputPMML , retrieved " + retrieved.get().getClass());
         }
-        Optional<DAROutputPMML> retrieved = execute(darInputPMML, memoryCompilerClassLoader);
-        return retrieved.map(DAROutputPMML::getOutputData).orElse(null);
+        return retrieved.map(DAROutputPMML.class::cast).map(DAROutputPMML::getOutputData).orElse(null);
     }
 
     @Override

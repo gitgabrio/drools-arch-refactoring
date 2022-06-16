@@ -20,15 +20,6 @@
             <groupId>org.kie</groupId>
             <artifactId>pmml-engine-runtime-api</artifactId>
         </dependency>
-        <!-- DROOLS -->
-        <!--    <dependency>-->
-        <!--      <groupId>org.drools</groupId>-->
-        <!--      <artifactId>drools-core</artifactId>-->
-        <!--    </dependency>-->
-        <!--    <dependency>-->
-        <!--      <groupId>org.drools</groupId>-->
-        <!--      <artifactId>drools-commands</artifactId>-->
-        <!--    </dependency>-->
         <!-- EXTERNAL -->
         <!-- TEST -->
         <!-- PMML -->
@@ -41,6 +32,15 @@
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>runtime-manager-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>runtime-manager-core</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>drl-engine-map-input-runtime</artifactId>
+            <groupId>org.kie</groupId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

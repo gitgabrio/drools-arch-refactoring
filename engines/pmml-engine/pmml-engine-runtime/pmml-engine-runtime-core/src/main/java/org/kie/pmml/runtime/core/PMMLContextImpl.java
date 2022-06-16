@@ -16,6 +16,7 @@
 package org.kie.pmml.runtime.core;
 
 import org.kie.api.pmml.PMMLRequestData;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLListener;
 
@@ -41,19 +42,22 @@ public class PMMLContextImpl implements PMMLContext {
     private final Map<String, Object> outputFieldsMap = new HashMap<>();
     private final Set<PMMLListener> pmmlListeners = new HashSet<>();
 
+    private final KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
     private Object predictedDisplayValue;
     private Object entityId;
     private Object affinity;
     private LinkedHashMap<String, Double> probabilityResultMap;
 
-    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName) {
+    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         name = "Context_" + ID_GENERATOR.incrementAndGet();
         set(PMML_REQUEST_DATA, pmmlRequestData);
         this.fileName = fileName;
+        this.memoryCompilerClassLoader = memoryCompilerClassLoader;
     }
 
-    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName, final Set<PMMLListener> pmmlListeners) {
-        this(pmmlRequestData, fileName);
+    public PMMLContextImpl(final PMMLRequestData pmmlRequestData, String fileName, final Set<PMMLListener> pmmlListeners, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+        this(pmmlRequestData, fileName, memoryCompilerClassLoader);
         this.pmmlListeners.addAll(pmmlListeners);
     }
 
@@ -233,4 +237,10 @@ public class PMMLContextImpl implements PMMLContext {
     public Set<PMMLListener> getPMMLListeners() {
         return Collections.unmodifiableSet(pmmlListeners);
     }
+
+    @Override
+    public Object getMemoryClassLoader() {
+        return memoryCompilerClassLoader;
+    }
+
 }

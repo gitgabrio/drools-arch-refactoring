@@ -55,6 +55,11 @@
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-runtime-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
             <artifactId>drl-engine-compilation-common</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

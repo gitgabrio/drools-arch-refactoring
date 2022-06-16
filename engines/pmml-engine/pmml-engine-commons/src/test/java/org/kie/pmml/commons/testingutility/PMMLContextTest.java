@@ -153,4 +153,9 @@ public class PMMLContextTest implements PMMLContext {
     public Set<PMMLListener> getPMMLListeners() {
         return null;
     }
+
+    @Override
+    public Object getMemoryClassLoader() {
+        return null;
+    }
 }

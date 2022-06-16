@@ -17,10 +17,11 @@ package org.kie.pmml.models.drools.tree.evaluator;
 
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.tree.TreeModel;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.kie.api.KieBase;
 import org.kie.api.pmml.PMMLRequestData;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
@@ -38,6 +39,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.commons.Constants.PACKAGE_NAME;
 
 public class PMMLTreeModelEvaluatorTest {
+
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
     private static final String SOURCE_1 = "TreeSample.pmml";
     private static final Logger logger = LoggerFactory.getLogger(PMMLTreeModelEvaluatorTest.class);
@@ -59,7 +62,7 @@ public class PMMLTreeModelEvaluatorTest {
     private final String RAIN = "rain";
     private final String TARGET_FIELD = "whatIdo";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         evaluator = new PMMLTreeModelEvaluator();
         final PMML pmml = TestUtils.loadFromFile(SOURCE_1);
@@ -71,7 +74,7 @@ public class PMMLTreeModelEvaluatorTest {
                         pmml,
                         (TreeModel) pmml.getModels().get(0),
                         new HasClassLoaderMock(), SOURCE_1);
-
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     @Test
@@ -161,7 +164,7 @@ public class PMMLTreeModelEvaluatorTest {
 
     private void commonEvaluate(String modelName, Map<String, Object> inputData, String expectedScore) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData, "filename");
+        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData, "filename", memoryCompilerClassLoader);
         commonEvaluate(pmmlContext, expectedScore);
     }
 

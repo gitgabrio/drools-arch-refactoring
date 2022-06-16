@@ -15,6 +15,7 @@
  */
 package org.kie.drl.engine.runtime.mapinput.service;
 
+import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
@@ -29,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInputDTO, Map<String, Object>, DARInputDrlMap, DAROutputDrlMap> {
+public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInputDTO, Map<String, Object>, AbstractDARInput<DARMapInputDTO>, DAROutputDrlMap> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceDrlMapInput.class.getName());
 
@@ -40,7 +41,7 @@ public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInp
     }
 
     @Override
-    public Optional<DAROutputDrlMap> evaluateInput(DARInputDrlMap toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<DAROutputDrlMap> evaluateInput(AbstractDARInput<DARMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader);
     }
 }

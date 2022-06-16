@@ -17,17 +17,19 @@ package org.kie.pmml.models.drools.scorecard.evaluator;
 
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
+import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.PMML_MODEL;
+import org.kie.pmml.api.enums.ResultCode;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.api.testutils.TestUtils;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;
-import org.kie.pmml.models.drools.scorecard.compiler.executor.ScorecardModelImplementationProvider;
 import org.kie.pmml.runtime.core.PMMLContextImpl;
 import org.kie.pmml.runtime.core.utils.PMMLRequestDataBuilder;
 import org.slf4j.Logger;
@@ -43,12 +45,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Parameterized.class)
 public class PMMLScorecardModelEvaluatorTest {
 
+    private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
+
     private static final String SOURCE_BASE = "ScorecardSample";
     private static final String SOURCE_1 = SOURCE_BASE + ".pmml";
     private static final Logger logger = LoggerFactory.getLogger(PMMLScorecardModelEvaluatorTest.class);
     private static final String modelName = "Sample Score";
     private static final String PACKAGE_NAME = "PACKAGE_NAME";
-    private static final ScorecardModelImplementationProvider provider = new ScorecardModelImplementationProvider();
+    //    private static final ScorecardModelImplementationProvider provider = new ScorecardModelImplementationProvider();
     private static PMMLScorecardModelEvaluator evaluator;
     private final String AGE = "age";
     private final String OCCUPATION = "occupation";
@@ -70,8 +74,9 @@ public class PMMLScorecardModelEvaluatorTest {
         this.expectedResult = expectedResult;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
+        memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         evaluator = new PMMLScorecardModelEvaluator();
         final PMML pmml = TestUtils.loadFromFile(SOURCE_1);
         assertThat(pmml).isNotNull();
@@ -287,7 +292,7 @@ public class PMMLScorecardModelEvaluatorTest {
 
     private void commonEvaluate(Map<String, Object> inputData) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData, "");
+        PMMLContext pmmlContext = new PMMLContextImpl(pmmlRequestData, "", memoryCompilerClassLoader);
         commonEvaluate(pmmlContext);
     }
 

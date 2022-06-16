@@ -20,11 +20,11 @@ import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
 
 import java.io.File;
 
-public class DARRedirectOutputPMML extends DARRedirectOutput<File> {
+public class DARRedirectOutputPMML extends DARRedirectOutput<String> {
 
 
-    public DARRedirectOutputPMML(FRI fri, File modelFile) {
-        super(fri, "rules", modelFile);
+    public DARRedirectOutputPMML(FRI fri, String modelFile) {
+        super(fri, "drl", modelFile);
     }
 
 }

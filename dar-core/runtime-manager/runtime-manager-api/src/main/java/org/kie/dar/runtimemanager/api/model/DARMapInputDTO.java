@@ -31,11 +31,18 @@ public class DARMapInputDTO implements Serializable {
     private final Map<String, Object> unwrappedInputParams;
     private final Map<String, DAROriginalTypeGeneratedType> fieldTypeMap;
 
-    public DARMapInputDTO(final List<Object> inserts, final Map<String, Object> globals, Map<String, Object> unwrappedInputParams, Map<String, DAROriginalTypeGeneratedType> fieldTypeMap) {
+    private final String packageName;
+
+    public DARMapInputDTO(final List<Object> inserts,
+                          final Map<String, Object> globals,
+                          final Map<String, Object> unwrappedInputParams,
+                          final Map<String, DAROriginalTypeGeneratedType> fieldTypeMap,
+                          final String packageName) {
         this.inserts = inserts;
         this.globals = globals;
         this.unwrappedInputParams = unwrappedInputParams;
         this.fieldTypeMap = fieldTypeMap;
+        this.packageName = packageName;
     }
 
     public List<Object> getInserts() {
@@ -52,5 +59,9 @@ public class DARMapInputDTO implements Serializable {
 
     public Map<String, DAROriginalTypeGeneratedType> getFieldTypeMap() {
         return Collections.unmodifiableMap(fieldTypeMap);
+    }
+
+    public String getPackageName() {
+        return packageName;
     }
 }

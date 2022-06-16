@@ -15,9 +15,6 @@
  */
 package org.kie.drl.engine.runtime.mapinput.utils;
 
-import org.drools.commands.impl.CommandFactoryServiceImpl;
-import org.kie.api.command.BatchExecutionCommand;
-import org.kie.api.command.Command;
 import org.kie.api.definition.type.FactType;
 import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.runtime.KieSession;
@@ -27,8 +24,6 @@ import org.kie.dar.runtimemanager.api.model.DAROriginalTypeGeneratedType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.kie.dar.common.api.constants.Constants.OUTPUTFIELDS_MAP_IDENTIFIER;
@@ -42,37 +37,28 @@ public class MapInputSessionUtils {
     private static final Logger logger = LoggerFactory.getLogger(MapInputSessionUtils.class.getName());
 
 
-    private static final CommandFactoryServiceImpl COMMAND_FACTORY_SERVICE = new CommandFactoryServiceImpl();
     final KieSession kieSession;
     final String modelName;
     final String packageName;
-    final List<Command> commands;
 
-    private MapInputSessionUtils(final KieSession kieSession, final String modelName, final String packageName, final DARMapInputDTO darMapInputDTO) {
+    private MapInputSessionUtils(final KieSession kieSession, final String modelName, final DARMapInputDTO darMapInputDTO) {
         this.modelName = modelName;
-        this.packageName = packageName;
+        this.packageName = darMapInputDTO.getPackageName();
         this.kieSession = kieSession;
-        commands = new ArrayList<>();
 
         darMapInputDTO.getInserts().forEach(kieSession::insert);
         darMapInputDTO.getGlobals().forEach(kieSession::setGlobal);
-
-//        darMapInputDTO.getInserts().forEach(toInsert -> commands.add(COMMAND_FACTORY_SERVICE.newInsert(toInsert)));
-//        darMapInputDTO.getGlobals().forEach((key, value) -> commands.add(COMMAND_FACTORY_SERVICE.newSetGlobal(key, value)));
         addObjectsToSession(darMapInputDTO.getUnwrappedInputParams(), darMapInputDTO.getFieldTypeMap());
     }
 
-    public static Builder builder(final KieSession kieSession, final String modelName, final String packageName, final DARMapInputDTO darMapInputDTO) {
-        return new Builder(kieSession, modelName, packageName, darMapInputDTO);
+    public static Builder builder(final KieSession kieSession, final String modelName, final DARMapInputDTO darMapInputDTO) {
+        return new Builder(kieSession, modelName, darMapInputDTO);
     }
 
     /**
      * Invoke <code>KieSession.fireAllRules()</code>
      */
     public void fireAllRules() {
-//        BatchExecutionCommand batchExecutionCommand = COMMAND_FACTORY_SERVICE.newBatchExecution(commands);
-//        kieSession.execute(batchExecutionCommand);
-
         kieSession.fireAllRules();
         kieSession.dispose();
     }
@@ -84,8 +70,8 @@ public class MapInputSessionUtils {
      * @param globalName its global name
      */
     void insertObjectInSession(final Object toInsert, final String globalName) {
-        commands.add(COMMAND_FACTORY_SERVICE.newInsert(toInsert));
-        commands.add(COMMAND_FACTORY_SERVICE.newSetGlobal(globalName, toInsert));
+        kieSession.insert(toInsert);
+        kieSession.setGlobal(globalName, toInsert);
     }
 
     /**
@@ -110,9 +96,7 @@ public class MapInputSessionUtils {
                 }
                 Object toAdd = factType.newInstance();
                 factType.set(toAdd, "value", entry.getValue());
-
-
-                commands.add(COMMAND_FACTORY_SERVICE.newInsert(toAdd));
+                kieSession.insert(toAdd);
             } catch (Exception e) {
                 throw new KieRuntimeServiceException(e.getMessage(), e);
             }
@@ -123,8 +107,8 @@ public class MapInputSessionUtils {
 
         MapInputSessionUtils toBuild;
 
-        private Builder(final KieSession kieSession, final String modelName, final String packageName, final DARMapInputDTO darMapInputDTO) {
-            this.toBuild = new MapInputSessionUtils(kieSession, modelName, packageName, darMapInputDTO);
+        private Builder(final KieSession kieSession, final String modelName, final DARMapInputDTO darMapInputDTO) {
+            this.toBuild = new MapInputSessionUtils(kieSession, modelName, darMapInputDTO);
         }
 
         /**
@@ -140,6 +124,7 @@ public class MapInputSessionUtils {
 
         /**
          * Insert <code>Map&lt;String, Object&gt;</code> <b>outputFieldsMap</b> to the underlying <code>KieSession</code>.
+         *
          * @param outputFieldsMap
          * @return
          */

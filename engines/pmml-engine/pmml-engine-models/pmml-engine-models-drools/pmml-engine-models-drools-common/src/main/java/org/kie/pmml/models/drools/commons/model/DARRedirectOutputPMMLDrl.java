@@ -31,8 +31,8 @@ public class DARRedirectOutputPMMLDrl extends DARSetResource<PackageDescr> imple
     private final FRI fri;
     private final PackageDescr packageDescr;
 
-    public DARRedirectOutputPMMLDrl(FRI fri, PackageDescr packageDescr, String type, String basePath) {
-        super(Collections.singleton(packageDescr), type, basePath);
+    public DARRedirectOutputPMMLDrl(FRI fri, PackageDescr packageDescr, String type) {
+        super(Collections.singleton(packageDescr), type, fri.getBasePath());
         this.fri = fri;
         this.packageDescr = packageDescr;
     }

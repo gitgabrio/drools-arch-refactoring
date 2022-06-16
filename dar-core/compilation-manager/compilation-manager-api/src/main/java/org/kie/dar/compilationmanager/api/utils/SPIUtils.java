@@ -16,6 +16,7 @@
 package org.kie.dar.compilationmanager.api.utils;
 
 import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,8 @@ public class SPIUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SPIUtils.class.getName());
 
-    private static final ServiceLoader<KieCompilerService> loader = ServiceLoader.load(KieCompilerService.class);
+    private static final ServiceLoader<CompilationManager> compilationManagerLoader = ServiceLoader.load(CompilationManager.class);
+    private static final ServiceLoader<KieCompilerService> kieCompilerServiceLoader = ServiceLoader.load(KieCompilerService.class);
 
     public static Optional<KieCompilerService> getKieCompilerService(DARResource resource, boolean refresh) {
         logger.debug("getKieCompilerService {} {}", resource, refresh);
@@ -49,10 +51,25 @@ public class SPIUtils {
         return toReturn;
     }
 
+    public static Optional<CompilationManager> getCompilationManager(boolean refresh) {
+        logger.debug("getCompilationManager {}", refresh);
+        List<CompilationManager> toReturn = new ArrayList<>();
+        Iterator<CompilationManager> managers = getManagers(refresh);
+        managers.forEachRemaining(toReturn::add);
+        return toReturn.stream().findFirst();
+    }
+
     private static Iterator<KieCompilerService> getServices(boolean refresh) {
         if (refresh) {
-            loader.reload();
+            kieCompilerServiceLoader.reload();
         }
-        return loader.iterator();
+        return kieCompilerServiceLoader.iterator();
+    }
+
+    private static Iterator<CompilationManager> getManagers(boolean refresh) {
+        if (refresh) {
+            compilationManagerLoader.reload();
+        }
+        return compilationManagerLoader.iterator();
     }
 }

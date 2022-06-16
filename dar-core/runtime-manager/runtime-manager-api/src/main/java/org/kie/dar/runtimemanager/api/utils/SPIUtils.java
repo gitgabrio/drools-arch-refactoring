@@ -15,9 +15,9 @@
  */
 package org.kie.dar.runtimemanager.api.utils;
 
-import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,9 @@ public class SPIUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SPIUtils.class.getName());
 
-    private static final ServiceLoader<KieRuntimeService> loader = ServiceLoader.load(KieRuntimeService.class);
+    private static final ServiceLoader<RuntimeManager> runtimeManagerLoader = ServiceLoader.load(RuntimeManager.class);
+
+    private static final ServiceLoader<KieRuntimeService> kieRuntimeServiceLoader = ServiceLoader.load(KieRuntimeService.class);
 
     public static Optional<KieRuntimeService> getKieRuntimeService(DARInput<?> darInput, boolean refresh, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         logger.debug("getKieRuntimeService {} {}", darInput, refresh);
@@ -51,10 +53,26 @@ public class SPIUtils {
         return toReturn;
     }
 
+    public static Optional<RuntimeManager> getRuntimeManager(boolean refresh) {
+        logger.debug("getRuntimeManager {}", refresh);
+        List<RuntimeManager> toReturn = new ArrayList<>();
+        Iterator<RuntimeManager> managers = getManagers(refresh);
+        managers.forEachRemaining(toReturn::add);
+        return toReturn.stream().findFirst();
+    }
+
+
     private static Iterator<KieRuntimeService> getServices(boolean refresh) {
         if (refresh) {
-            loader.reload();
+            kieRuntimeServiceLoader.reload();
         }
-        return loader.iterator();
+        return kieRuntimeServiceLoader.iterator();
+    }
+
+    private static Iterator<RuntimeManager> getManagers(boolean refresh) {
+        if (refresh) {
+            runtimeManagerLoader.reload();
+        }
+        return runtimeManagerLoader.iterator();
     }
 }

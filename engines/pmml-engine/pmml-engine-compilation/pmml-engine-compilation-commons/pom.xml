@@ -26,10 +26,6 @@
         </dependency>
         <!-- DROOLS -->
         <!-- EXTERNAL -->
-        <dependency>
-            <groupId>com.github.javaparser</groupId>
-            <artifactId>javaparser-core</artifactId>
-        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>org.kie</groupId>

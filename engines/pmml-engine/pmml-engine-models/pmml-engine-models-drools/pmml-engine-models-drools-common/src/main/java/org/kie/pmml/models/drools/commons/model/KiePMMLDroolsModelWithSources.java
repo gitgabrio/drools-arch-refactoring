@@ -56,7 +56,7 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
         this.pkgUUID = pkgUUID;
         this.packageDescr = packageDescr;
         String basePath = fileName + SLASH + modelName;
-        redirectOutput = new DARRedirectOutputPMMLDrl(new FRI(basePath, "pmml"), packageDescr, "drl", modelName);
+        redirectOutput = new DARRedirectOutputPMMLDrl(new FRI(basePath, "pmml"), packageDescr, "drl");
     }
 
     @Override

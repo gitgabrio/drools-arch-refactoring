@@ -48,10 +48,6 @@ public class IrisDataTreeTest extends AbstractPMMLTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {6.9, 3.1, 5.1, 2.3, "virginica"},
-                {5.8, 2.6, 4.0, 1.2, "versicolor"},
-                {5.7, 3.0, 4.2, 1.2, "versicolor"},
-                {5.0, 3.3, 1.4, 0.2, "setosa"},
-                {5.4, 3.9, 1.3, 0.4, "setosa"}
         });
     }
 
@@ -63,8 +59,7 @@ public class IrisDataTreeTest extends AbstractPMMLTest {
         inputData.put("Petal.Length", petalLength);
         inputData.put("Petal.Width", petalWidth);
         PMML4Result pmml4Result = evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
-
-        assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isNotNull();
-        assertThat(pmml4Result.getResultVariables().get(TARGET_FIELD)).isEqualTo(expectedResult);
+        assertThat(pmml4Result).isNotNull();
+        assertThat(pmml4Result.getResultVariables()).containsEntry(TARGET_FIELD, expectedResult);
     }
 }

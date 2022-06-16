@@ -21,6 +21,7 @@ import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.compilationmanager.api.model.DARFileResource;
 import org.kie.dar.compilationmanager.api.model.DARResource;
 import org.kie.dar.compilationmanager.api.service.CompilationManager;
+import org.kie.dar.compilationmanager.api.utils.SPIUtils;
 import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.models.PMMLStep;
@@ -41,13 +42,12 @@ import static org.kie.dar.common.api.utils.FileUtils.getFile;
 
 public class AbstractPMMLTest {
 
-    private static CompilationManager compilationManager = new CompilationManagerImpl();
+    private static final CompilationManager compilationManager = SPIUtils.getCompilationManager(true).get();
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
 
 
     protected static PMMLRuntime getPMMLRuntime(String fileName) {
         fileName += ".pmml";
-        compilationManager = new CompilationManagerImpl();
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         File pmmlFile = getFile(fileName);
         DARResource darResource = new DARFileResource(pmmlFile);
@@ -71,7 +71,7 @@ public class AbstractPMMLTest {
                                    final String fileName,
                                    final String modelName) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName));
+        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName, memoryCompilerClassLoader));
     }
 
     protected PMML4Result evaluate(final PMMLRuntime pmmlRuntime,
@@ -80,7 +80,7 @@ public class AbstractPMMLTest {
                                    final String modelName,
                                    final Set<PMMLListener> pmmlListeners) {
         final PMMLRequestData pmmlRequestData = getPMMLRequestData(modelName, inputData);
-        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName, pmmlListeners));
+        return pmmlRuntime.evaluate(modelName, new PMMLContextImpl(pmmlRequestData, fileName, pmmlListeners, memoryCompilerClassLoader));
     }
 
     protected PMMLListenerTest getPMMLListener() {

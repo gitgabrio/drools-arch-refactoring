@@ -19,11 +19,11 @@ import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedRedirectResource;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
-import org.kie.dar.runtimemanager.api.model.DAROriginalTypeGeneratedType;
+import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.dar.runtimemanager.api.model.*;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.dar.runtimemanager.api.service.RuntimeManager;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
@@ -41,8 +41,10 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static org.kie.dar.common.api.model.FRI.SLASH;
 import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
+import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getRuntimeManager;
 import static org.kie.pmml.models.drools.commons.factories.KiePMMLDescrFactory.PMML4_RESULT_IDENTIFIER;
 import static org.kie.pmml.models.drools.utils.KiePMMLAgendaListenerUtils.getAgendaEventListener;
 
@@ -90,15 +92,20 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> new DAROriginalTypeGeneratedType(entry.getValue().getOriginalType(),
-                                entry.getValue().getOriginalType())));
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap);
+                                entry.getValue().getGeneratedType())));
+        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap, this.getKModulePackageName());
 
-        FRI fri = new FRI(this.getName(), "pmml");
-        AbstractDARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {
-
-        };
+        String basePath = context.getFileName() + SLASH + this.getName();
+        FRI fri = new FRI(basePath, "drl");
+        DARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {};
         // TODO retrieve runtimesercie
         // invoke runtimeservice.evaluate
+
+        Optional<RuntimeManager> runtimeManager = getRuntimeManager(true);
+        if (runtimeManager.isEmpty()) {
+            throw new KieRuntimeServiceException("Cannot find RuntimeManager");
+        }
+        Optional<DAROutput>  output = runtimeManager.get().evaluateInput (input, (KieMemoryCompiler.MemoryCompilerClassLoader) context.getMemoryClassLoader());
 
         return toReturn;
     }

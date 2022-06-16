@@ -15,9 +15,12 @@
  */
 package org.kie.pmml.compilation.service;
 
+import org.kie.dar.common.api.io.IndexFile;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.utils.StringUtils;
+import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.compilationmanager.api.model.*;
+import org.kie.dar.compilationmanager.api.service.CompilationManager;
 import org.kie.dar.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -32,6 +35,7 @@ import org.kie.pmml.compilation.executor.PMMLCompiler;
 import org.kie.pmml.compilation.executor.PMMLCompilerImpl;
 import org.kie.pmml.compilation.impl.HasClassloaderImpl;
 import org.kie.pmml.compilation.model.DARCallableOutputPMMLClassesContainer;
+import org.kie.pmml.compilation.model.DARRedirectOutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +46,7 @@ import java.util.stream.Collectors;
 import static org.kie.dar.common.api.model.FRI.SLASH;
 import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
 import static org.kie.dar.common.api.utils.FileNameUtils.removeSuffix;
+import static org.kie.dar.compilationmanager.api.utils.SPIUtils.getCompilationManager;
 import static org.kie.dar.compilationmanager.api.utils.SPIUtils.getKieCompilerService;
 
 
@@ -77,11 +82,10 @@ public class PMMLCompilerService {
             Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
             allSourcesMap.putAll(sourcesMap);
             if (kiePMMLModelWithSources instanceof HasRedirectOutput) {
-//                DARSetResource original = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
-////                DARSetResource updated = new DARRedirectOutputPMMLDrl(new FRI(modelName, "pmml"), packageDescr, "drl", modelName);
-//                DARSetResource updated = new DARSetResource() {
-//                };
-                toReturn.addAll(getRedirectCompilation(((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput(), memoryClassLoader));
+                DARSetResource redirectResource = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
+                getRedirectCompilation(redirectResource, memoryClassLoader);
+                FRI fri = new FRI(redirectResource.getBasePath(), "pmml");
+                toReturn.add(new DARRedirectOutputPMML(fri, kiePMMLModelWithSources.getName()));
             }
         });
         List<KiePMMLFactoryModel> kiePMMLFactoryModels = kiePmmlModels
@@ -101,14 +105,12 @@ public class PMMLCompilerService {
         return toReturn;
     }
 
-    static List<DARCompilationOutput> getRedirectCompilation(DARSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        Optional<KieCompilerService> targetService = getKieCompilerService(redirectOutput, true);
-        if (targetService.isEmpty()) {
-            logger.warn("Cannot find KieRuntimeService for {}", redirectOutput);
-            return Collections.emptyList();
+    static List<IndexFile> getRedirectCompilation(DARSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        Optional<CompilationManager> compilationManager = getCompilationManager(true);
+        if (compilationManager.isEmpty()) {
+            throw new KieCompilerServiceException("Cannot find CompilationManager");
         }
-
-        return targetService.get().processResource(redirectOutput, memoryClassLoader);
+        return compilationManager.get().processResource(redirectOutput, memoryClassLoader);
     }
 
     /**

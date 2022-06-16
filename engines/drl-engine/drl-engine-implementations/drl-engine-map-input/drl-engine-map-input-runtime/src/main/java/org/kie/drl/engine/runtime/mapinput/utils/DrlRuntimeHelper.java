@@ -61,8 +61,7 @@ public class DrlRuntimeHelper {
             return Optional.empty();
         }
         try {
-            MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, "name", "packageName",
-                    toEvaluate.getInputData());
+            MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, "name", toEvaluate.getInputData());
             final MapInputSessionUtils mapInputSessionUtils = builder.build();
             String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             mapInputSessionUtils.fireAllRules();

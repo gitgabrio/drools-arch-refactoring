@@ -15,7 +15,6 @@
  */
 package org.kie.dar.runtimemanager.api.service;
 
-import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DAROutput;
 import org.kie.memorycompiler.KieMemoryCompiler;
