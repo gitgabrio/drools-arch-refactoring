@@ -17,7 +17,6 @@
 package org.kie.pmml.mining.tests;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.pmml.api.models.PMMLStep;
@@ -32,7 +31,6 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled // TODO after rules models/framework listener implementation
 public class MiningListenerTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MultipleMining";
@@ -103,9 +101,9 @@ public class MiningListenerTest extends AbstractPMMLTest {
 
     private void commonValidateStep(final PMMLStep toValidate) {
         Map<String, Object> retrieved = toValidate.getInfo();
-        assertThat(retrieved.containsKey("SEGMENT")).isTrue();
-        assertThat(retrieved.containsKey("RESULT CODE")).isTrue();
-        assertThat(retrieved.containsKey("MODEL")).isTrue();
-        assertThat(retrieved.containsKey("RESULT")).isTrue();
+        assertThat(retrieved).containsKey("SEGMENT");
+        assertThat(retrieved).containsKey("RESULT CODE");
+        assertThat(retrieved).containsKey("MODEL");
+        assertThat(retrieved).containsKey("RESULT");
     }
 }

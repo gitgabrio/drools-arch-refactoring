@@ -49,6 +49,53 @@
             <artifactId>pmml-engine-models-regression-runtime</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-regression-compilation</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-regression-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-drools-scorecard-compilation</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-drools-scorecard-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-drools-tree-compilation</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-drools-tree-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-clustering-compilation</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-models-clustering-runtime</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>pmml-engine-compilation-api</artifactId>
@@ -58,6 +105,23 @@
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>pmml-engine-compilation-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>pmml-engine-runtime-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>drl-engine-compilation-common</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>drl-engine-map-input-runtime</artifactId>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- KIE -->

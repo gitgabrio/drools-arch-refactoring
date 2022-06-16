@@ -17,7 +17,6 @@
 package org.kie.pmml.mining.tests;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
@@ -33,7 +32,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.pmml.api.enums.ResultCode.FAIL;
 import static org.kie.pmml.api.enums.ResultCode.OK;
 
-@Disabled // TODO after rules models
 public class PredicatesMiningTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "MiningModel_Predicates";
