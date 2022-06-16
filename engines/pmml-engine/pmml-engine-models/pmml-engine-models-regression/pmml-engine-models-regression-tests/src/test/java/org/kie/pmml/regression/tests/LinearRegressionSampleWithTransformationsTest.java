@@ -21,7 +21,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.pmml.api.exceptions.KiePMMLException;
+import org.kie.pmml.api.exceptions.KiePMMLInputDataException;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
@@ -36,7 +37,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "LinearRegressionSampleWithTransformations";
-    
+
     private static final String MODEL_NAME = "LinearRegressionSampleWithTransformations";
     private static final String TARGET_FIELD = "number_of_claims";
 
@@ -173,7 +174,7 @@ public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLT
     @ParameterizedTest
     void testLinearRegressionSampleWithTransformationsWithoutRequired(double age, double salary, String car_location, double expectedResult) {
         initLinearRegressionSampleWithTransformationsTest(age, salary, car_location, expectedResult);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLInputDataException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("age", age);
             inputData.put("salary", salary);
@@ -200,7 +201,7 @@ public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLT
     @ParameterizedTest
     void testLinearRegressionSampleWithTransformationsNotConvertible(double age, double salary, String car_location, double expectedResult) {
         initLinearRegressionSampleWithTransformationsTest(age, salary, car_location, expectedResult);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("age", age);
             inputData.put("salary", salary);
@@ -215,7 +216,7 @@ public class LinearRegressionSampleWithTransformationsTest extends AbstractPMMLT
     @ParameterizedTest
     void testLinearRegressionSampleInvalidValue(double age, double salary, String car_location, double expectedResult) {
         initLinearRegressionSampleWithTransformationsTest(age, salary, car_location, expectedResult);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLInputDataException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("age", age);
             inputData.put("salary", salary);

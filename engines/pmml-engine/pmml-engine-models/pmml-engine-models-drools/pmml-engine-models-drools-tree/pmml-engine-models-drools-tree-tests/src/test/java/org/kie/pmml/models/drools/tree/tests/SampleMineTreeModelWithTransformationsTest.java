@@ -16,11 +16,11 @@
 
 package org.kie.pmml.models.drools.tree.tests;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
+import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
@@ -31,12 +31,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
-@RunWith(Parameterized.class)
 public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest {
 
     private static final String FILE_NAME_NO_SUFFIX = "SampleMineTreeModelWithTransformations";
-    
+
     private static final String MODEL_NAME = "SampleMineTreeModelWithTransformations";
     private static final String TARGET_FIELD = "decision";
     private static final String OUT_DER_TEMPERATURE = "out_der_temperature";
@@ -57,18 +57,17 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
     private double humidity;
     private String expectedResult;
 
-    public SampleMineTreeModelWithTransformationsTest(double temperature, double humidity, String expectedResult) {
+    public void initSampleMineTreeModelWithTransformationsTest(double temperature, double humidity, String expectedResult) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.expectedResult = expectedResult;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setupClass() {
         pmmlRuntime = getPMMLRuntime(FILE_NAME_NO_SUFFIX);
     }
 
-    @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {30.0, 10.0, "sunglasses"},
@@ -77,8 +76,10 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         });
     }
 
-    @Test
-    public void testSampleMineTreeModelWithTransformations() throws Exception {
+    @MethodSource("data")
+    @ParameterizedTest
+    void testSampleMineTreeModelWithTransformations(double temperature, double humidity, String expectedResult) throws Exception {
+        initSampleMineTreeModelWithTransformationsTest(temperature, humidity, expectedResult);
         final Map<String, Object> inputData = new HashMap<>();
         inputData.put("temperature", temperature);
         inputData.put("humidity", humidity);
@@ -126,17 +127,23 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         assertThat(pmml4Result.getResultVariables().get(OUT_TEXT_INDEX_NORMALIZATION_FIELD)).isEqualTo(1.0);
     }
 
-    @Test(expected = KiePMMLException.class)
-    public void testSampleMineTreeModelWithTransformationsWithoutRequired() {
-        final Map<String, Object> inputData = new HashMap<>();
-        inputData.put("temperature", temperature);
-        inputData.put("humidity", humidity);
-        inputData.put("text_input", TEXT_INPUT);
-        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+    @MethodSource("data")
+    @ParameterizedTest
+    void testSampleMineTreeModelWithTransformationsWithoutRequired(double temperature, double humidity, String expectedResult) {
+        initSampleMineTreeModelWithTransformationsTest(temperature, humidity, expectedResult);
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
+            final Map<String, Object> inputData = new HashMap<>();
+            inputData.put("temperature", temperature);
+            inputData.put("humidity", humidity);
+            inputData.put("text_input", TEXT_INPUT);
+            evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+        });
     }
 
-    @Test
-    public void testSampleMineTreeModelWithTransformationsConvertible() {
+    @MethodSource("data")
+    @ParameterizedTest
+    void testSampleMineTreeModelWithTransformationsConvertible(double temperature, double humidity, String expectedResult) {
+        initSampleMineTreeModelWithTransformationsTest(temperature, humidity, expectedResult);
         final Map<String, Object> inputData = new HashMap<>();
         inputData.put("temperature", String.valueOf(temperature));
         inputData.put("humidity", String.valueOf(humidity));
@@ -145,23 +152,31 @@ public class SampleMineTreeModelWithTransformationsTest extends AbstractPMMLTest
         assertThat(evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME)).isNotNull();
     }
 
-    @Test(expected = KiePMMLException.class)
-    public void testSampleMineTreeModelWithTransformationsNotConvertible() {
-        final Map<String, Object> inputData = new HashMap<>();
-        inputData.put("temperature", temperature);
-        inputData.put("humidity", humidity);
-        inputData.put("text_input", TEXT_INPUT);
-        inputData.put("input3", true);
-        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+    @MethodSource("data")
+    @ParameterizedTest
+    void testSampleMineTreeModelWithTransformationsNotConvertible(double temperature, double humidity, String expectedResult) {
+        initSampleMineTreeModelWithTransformationsTest(temperature, humidity, expectedResult);
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
+            final Map<String, Object> inputData = new HashMap<>();
+            inputData.put("temperature", temperature);
+            inputData.put("humidity", humidity);
+            inputData.put("text_input", TEXT_INPUT);
+            inputData.put("input3", true);
+            evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+        });
     }
 
-    @Test(expected = KiePMMLException.class)
-    public void testSampleMineTreeModelWithTransformationsInvalidValue() {
-        final Map<String, Object> inputData = new HashMap<>();
-        inputData.put("temperature", temperature);
-        inputData.put("humidity", humidity);
-        inputData.put("text_input", TEXT_INPUT);
-        inputData.put("input3", 4.1);
-        evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+    @MethodSource("data")
+    @ParameterizedTest
+    void testSampleMineTreeModelWithTransformationsInvalidValue(double temperature, double humidity, String expectedResult) {
+        initSampleMineTreeModelWithTransformationsTest(temperature, humidity, expectedResult);
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
+            final Map<String, Object> inputData = new HashMap<>();
+            inputData.put("temperature", temperature);
+            inputData.put("humidity", humidity);
+            inputData.put("text_input", TEXT_INPUT);
+            inputData.put("input3", 4.1);
+            evaluate(pmmlRuntime, inputData, FILE_NAME_NO_SUFFIX, MODEL_NAME);
+        });
     }
 }

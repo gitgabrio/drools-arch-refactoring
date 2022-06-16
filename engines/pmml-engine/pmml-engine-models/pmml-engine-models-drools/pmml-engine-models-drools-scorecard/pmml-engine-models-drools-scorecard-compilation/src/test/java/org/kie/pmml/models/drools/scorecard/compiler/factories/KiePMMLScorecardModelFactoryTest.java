@@ -25,8 +25,8 @@ import com.github.javaparser.ast.expr.StringLiteralExpr;
 import org.dmg.pmml.DataDictionary;
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
@@ -59,7 +59,7 @@ public class KiePMMLScorecardModelFactoryTest {
     private static Scorecard scorecardModel;
     private static ClassOrInterfaceDeclaration classOrInterfaceDeclaration;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         pmml = TestUtils.loadFromFile(SOURCE_1);
         assertThat(pmml).isNotNull();
@@ -73,7 +73,7 @@ public class KiePMMLScorecardModelFactoryTest {
     }
 
     @Test
-    public void getKiePMMLScorecardModelSourcesMap() {
+    void getKiePMMLScorecardModelSourcesMap() {
         final DataDictionary dataDictionary = pmml.getDataDictionary();
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(dataDictionary,
                 pmml.getTransformationDictionary(),
@@ -93,7 +93,7 @@ public class KiePMMLScorecardModelFactoryTest {
     }
 
     @Test
-    public void getKiePMMLDroolsAST() {
+    void getKiePMMLDroolsAST() {
         final DataDictionary dataDictionary = pmml.getDataDictionary();
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(dataDictionary,
                 pmml.getTransformationDictionary(),
@@ -105,7 +105,7 @@ public class KiePMMLScorecardModelFactoryTest {
     }
 
     @Test
-    public void setConstructor() {
+    void setConstructor() {
         final String targetField = "overallScore";
         final ClassOrInterfaceDeclaration modelTemplate = classOrInterfaceDeclaration.clone();
         final CommonCompilationDTO<Scorecard> compilationDTO =

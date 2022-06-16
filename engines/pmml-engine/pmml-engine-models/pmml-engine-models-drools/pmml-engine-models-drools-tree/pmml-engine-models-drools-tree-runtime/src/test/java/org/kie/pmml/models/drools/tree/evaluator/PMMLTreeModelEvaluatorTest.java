@@ -17,8 +17,8 @@ package org.kie.pmml.models.drools.tree.evaluator;
 
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.tree.TreeModel;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -78,12 +78,12 @@ public class PMMLTreeModelEvaluatorTest {
     }
 
     @Test
-    public void getPMMLModelType() {
+    void getPMMLModelType() {
         assertThat(evaluator.getPMMLModelType()).isEqualTo(PMML_MODEL.TREE_MODEL);
     }
 
     @Test
-    public void evaluateNull() throws Exception {
+    void evaluateNull() throws Exception {
         Map<String, Object> inputData = new HashMap<>();
         inputData.put(OUTLOOK, SUNNY);
         commonEvaluate(modelName, inputData, null);
@@ -104,7 +104,7 @@ public class PMMLTreeModelEvaluatorTest {
     }
 
     @Test
-    public void evaluateWillPlay() throws Exception {
+    void evaluateWillPlay() throws Exception {
         Map<String, Object> inputData = new HashMap<>();
         inputData.put(OUTLOOK, SUNNY);
         inputData.put(TEMPERATURE, 65.0);
@@ -113,7 +113,7 @@ public class PMMLTreeModelEvaluatorTest {
     }
 
     @Test
-    public void evaluateNoPlay() throws Exception {
+    void evaluateNoPlay() throws Exception {
         Map<String, Object> inputData = new HashMap<>();
         inputData.put(OUTLOOK, SUNNY);
         inputData.put(TEMPERATURE, 65.0);
@@ -139,7 +139,7 @@ public class PMMLTreeModelEvaluatorTest {
     }
 
     @Test
-    public void evaluateMayPlay() throws Exception {
+    void evaluateMayPlay() throws Exception {
         Map<String, Object> inputData = new HashMap<>();
         inputData.put(OUTLOOK, OVERCAST);
         inputData.put(TEMPERATURE, 70.0);
@@ -149,7 +149,7 @@ public class PMMLTreeModelEvaluatorTest {
     }
 
     @Test
-    public void evaluateWhoPlay() throws Exception {
+    void evaluateWhoPlay() throws Exception {
         Map<String, Object> inputData = new HashMap<>();
         inputData.put(TEMPERATURE, 75.0);
         inputData.put(WINDY, "true");

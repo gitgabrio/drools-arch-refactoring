@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.dmg.pmml.DataType;
 import org.dmg.pmml.SimplePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.BOOLEAN_OPERATOR;
 import org.kie.pmml.api.enums.ResultCode;
 import org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils;
@@ -40,7 +40,7 @@ import static org.kie.pmml.models.drools.utils.KiePMMLASTTestUtils.getPredicateA
 public class KiePMMLSimplePredicateASTFactoryTest {
 
     @Test
-    public void declareRuleFromSimplePredicateSurrogateFinalLeaf() {
+    void declareRuleFromSimplePredicateSurrogateFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         SimplePredicate simplePredicate = getSimplePredicate("outlook",
                 "VALUE",
@@ -108,7 +108,7 @@ public class KiePMMLSimplePredicateASTFactoryTest {
     }
 
     @Test
-    public void declareRuleFromSimplePredicateSurrogateNotFinalLeaf() {
+    void declareRuleFromSimplePredicateSurrogateNotFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         SimplePredicate simplePredicate = getSimplePredicate("outlook",
                 "VALUE",
@@ -175,7 +175,7 @@ public class KiePMMLSimplePredicateASTFactoryTest {
     }
 
     @Test
-    public void declareRuleFromSimplePredicateFinalLeaf() {
+    void declareRuleFromSimplePredicateFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         SimplePredicate simplePredicate = getSimplePredicate("outlook",
                 "VALUE",
@@ -212,7 +212,7 @@ public class KiePMMLSimplePredicateASTFactoryTest {
     }
 
     @Test
-    public void declareIntermediateRuleFromSimplePredicateNotFinalLeaf() {
+    void declareIntermediateRuleFromSimplePredicateNotFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         SimplePredicate simplePredicate = getSimplePredicate("outlook",
                 "VALUE",

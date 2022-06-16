@@ -43,7 +43,7 @@ class DrlRuntimeHelperTest {
     @Test
     void canManage() {
         FRI fri = new FRI(basePath, "drl");
-        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, null);
+        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, new DARMapInputDTO(null, null, null, null, null));
         assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isTrue();
         darInputDrlMap = new AbstractDARInput(fri, "") {
         };

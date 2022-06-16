@@ -26,9 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.*;
+import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.canManage;
+import static org.kie.pmml.runtime.core.utils.PMMLRuntimeHelper.execute;
 
 public class KieRuntimeServicePMML implements KieRuntimeService<PMMLContext, PMML4Result, DARInputPMML, DAROutputPMML> {
 
@@ -42,11 +42,7 @@ public class KieRuntimeServicePMML implements KieRuntimeService<PMMLContext, PMM
 
     @Override
     public Optional<DAROutputPMML> evaluateInput(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        return Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
-                        redirect(toEvaluate, memoryCompilerClassLoader))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .findFirst();
+        return execute(toEvaluate, memoryCompilerClassLoader);
 
     }
 }

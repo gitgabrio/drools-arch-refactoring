@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.dmg.pmml.Array;
 import org.dmg.pmml.SimpleSetPredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.ResultCode;
 import org.kie.pmml.compilation.api.testutils.PMMLModelTestUtils;
 import org.kie.pmml.models.drools.ast.KiePMMLDroolsRule;
@@ -40,7 +40,7 @@ import static org.kie.pmml.models.drools.utils.KiePMMLASTTestUtils.getPredicateA
 public class KiePMMLSimpleSetPredicateASTFactoryTest {
 
     @Test
-    public void declareRuleFromSimpleSetPredicateIsInFinalLeaf() {
+    void declareRuleFromSimpleSetPredicateIsInFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         List<String> values = Arrays.asList("-5", "0.5", "1", "10");
         final SimpleSetPredicate simpleSetPredicate = getSimpleSetPredicate("input1",
@@ -80,7 +80,7 @@ public class KiePMMLSimpleSetPredicateASTFactoryTest {
     }
 
     @Test
-    public void declareRuleFromSimpleSetPredicateIsInNotFinalLeaf() {
+    void declareRuleFromSimpleSetPredicateIsInNotFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         List<String> values = Arrays.asList("-5", "0.5", "1", "10");
         final SimpleSetPredicate simpleSetPredicate = getSimpleSetPredicate("input1",
@@ -120,7 +120,7 @@ public class KiePMMLSimpleSetPredicateASTFactoryTest {
     }
 
     @Test
-    public void declareRuleFromSimpleSetPredicateIsNotInFinalLeaf() {
+    void declareRuleFromSimpleSetPredicateIsNotInFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         List<String> values = Arrays.asList("3", "8.5");
         final SimpleSetPredicate simpleSetPredicate = getSimpleSetPredicate("input2",
@@ -161,7 +161,7 @@ public class KiePMMLSimpleSetPredicateASTFactoryTest {
     }
 
     @Test
-    public void declareRuleFromSimpleSetPredicateIsNotInNotFinalLeaf() {
+    void declareRuleFromSimpleSetPredicateIsNotInNotFinalLeaf() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         List<String> values = Arrays.asList("3", "8.5");
         final SimpleSetPredicate simpleSetPredicate = getSimpleSetPredicate("input2",

@@ -19,7 +19,6 @@ import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedRedirectResource;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.*;
 import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
@@ -28,6 +27,7 @@ import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.enums.ResultCode;
+import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.IsDrools;
 import org.kie.pmml.commons.model.KiePMMLExtension;
@@ -79,9 +79,6 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
                            final PMMLContext context) {
         logger.trace("evaluate {}", requestData);
         final PMML4Result toReturn = getPMML4Result(targetField);
-        String fullClassName = this.getClass().getName();
-        String packageName = fullClassName.contains(".") ?
-                fullClassName.substring(0, fullClassName.lastIndexOf('.')) : "";
 
         List<Object> inserts = Arrays.asList(new KiePMMLStatusHolder(), toReturn);
         final Map<String, Object> globals = new HashMap<>();
@@ -97,16 +94,18 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
 
         String basePath = context.getFileName() + SLASH + this.getName();
         FRI fri = new FRI(basePath, "drl");
-        DARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {};
-        // TODO retrieve runtimesercie
-        // invoke runtimeservice.evaluate
+        DARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {
+        };
 
         Optional<RuntimeManager> runtimeManager = getRuntimeManager(true);
         if (runtimeManager.isEmpty()) {
             throw new KieRuntimeServiceException("Cannot find RuntimeManager");
         }
-        Optional<DAROutput>  output = runtimeManager.get().evaluateInput (input, (KieMemoryCompiler.MemoryCompilerClassLoader) context.getMemoryClassLoader());
-
+        Optional<DAROutput> output = runtimeManager.get().evaluateInput(input, (KieMemoryCompiler.MemoryCompilerClassLoader) context.getMemoryClassLoader());
+        // TODO manage for different kind of retrieved output
+        if (output.isEmpty()) {
+            throw new KiePMMLException("Failed to retrieve value for " + this.getName());
+        }
         return toReturn;
     }
 

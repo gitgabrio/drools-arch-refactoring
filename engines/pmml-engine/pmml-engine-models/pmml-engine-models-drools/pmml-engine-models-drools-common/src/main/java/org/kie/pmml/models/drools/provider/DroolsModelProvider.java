@@ -90,8 +90,6 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
             PackageDescr packageDescr = getPackageDescr(kiePMMLDroolsAST, compilationDTO.getPackageName());
             String pkgUUID = getPkgUUID("gav", compilationDTO.getPackageName());
             packageDescr.setPreferredPkgUUID(pkgUUID);
-//            Map<String, String> rulesSourceMap = Collections.unmodifiableMap(getRulesSourceMap(packageDescr));
-//            Map<String, String> rulesSourceMap = Collections.emptyMap();
             KiePMMLDroolsModelWithSources toReturn = new KiePMMLDroolsModelWithSources(compilationDTO.getModelName(),
                     compilationDTO.getFileName(),
                     compilationDTO.getPackageName(),
@@ -101,7 +99,6 @@ public abstract class DroolsModelProvider<T extends Model, E extends KiePMMLDroo
                     sourcesMap,
                     pkgUUID,
                     packageDescr);
-//            knowledgeBuilder.registerPackage(packageDescr);
             return toReturn;
         } catch (Exception e) {
             throw new KiePMMLException(e);

@@ -17,7 +17,7 @@ package org.kie.pmml.models.drools.scorecard.compiler.executor;
 
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.dar.common.api.utils.FileUtils;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
@@ -38,13 +38,13 @@ public class ScorecardModelImplementationProviderTest {
     private static final String PACKAGE_NAME = "PACKAGE_NAME";
 
     @Test
-    public void getPMMLModelType() {
+    void getPMMLModelType() {
         assertThat(PROVIDER.getPMMLModelType()).isEqualTo(PMML_MODEL.SCORECARD_MODEL);
     }
 
 
     @Test
-    public void getKiePMMLModelWithSources() throws Exception {
+    void getKiePMMLModelWithSources() throws Exception {
         final PMML pmml = getPMML(SOURCE_1);
         final CommonCompilationDTO<Scorecard> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,

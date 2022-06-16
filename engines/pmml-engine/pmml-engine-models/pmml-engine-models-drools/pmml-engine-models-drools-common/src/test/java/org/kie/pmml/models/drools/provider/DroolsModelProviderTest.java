@@ -19,11 +19,10 @@ package org.kie.pmml.models.drools.provider;
 import org.dmg.pmml.*;
 import org.dmg.pmml.scorecard.Scorecard;
 import org.drools.drl.ast.descr.PackageDescr;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.DATA_TYPE;
 import org.kie.pmml.api.enums.PMML_MODEL;
-import org.kie.pmml.api.exceptions.KiePMMLException;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.api.testutils.TestUtils;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;
@@ -53,7 +52,7 @@ public class DroolsModelProviderTest {
     private static Scorecard scorecard;
     private static DroolsModelProvider<Scorecard, ? extends KiePMMLDroolsModel> droolsModelProvider;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         pmml = TestUtils.loadFromFile(SOURCE_1);
         assertThat(pmml).isNotNull();
@@ -89,7 +88,7 @@ public class DroolsModelProviderTest {
     }
 
     @Test
-    public void getKiePMMLModelWithSourcesWithKnowledgeBuilder() {
+    void getKiePMMLModelWithSourcesWithKnowledgeBuilder() {
         final CommonCompilationDTO<Scorecard> compilationDTO =
                 CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
                         pmml,
@@ -106,25 +105,15 @@ public class DroolsModelProviderTest {
         assertThat(retrieved).isNotNull();
     }
 
-    @Test(expected = KiePMMLException.class)
-    public void getKiePMMLModelWithSourcesNoKnowledgeBuilder() {
-        final CommonCompilationDTO<Scorecard> compilationDTO =
-                CommonCompilationDTO.fromGeneratedPackageNameAndFields(PACKAGE_NAME,
-                        pmml,
-                        scorecard,
-                        new HasClassLoaderMock(), SOURCE_BASE);
-        droolsModelProvider.getKiePMMLModelWithSources(compilationDTO);
-    }
-
     @Test
-    public void getPackageDescr() {
+    void getPackageDescr() {
         KiePMMLDroolsAST kiePMMLDroolsAST = new KiePMMLDroolsAST(Collections.emptyList(), Collections.emptyList());
         PackageDescr retrieved = droolsModelProvider.getPackageDescr(kiePMMLDroolsAST, PACKAGE_NAME);
         commonVerifyPackageDescr(retrieved, PACKAGE_NAME);
     }
 
     @Test
-    public void getKiePMMLDroolsASTCommon() {
+    void getKiePMMLDroolsASTCommon() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();
         final List<Field<?>> fields =
                 getFieldsFromDataDictionaryAndTransformationDictionaryAndLocalTransformations(pmml.getDataDictionary(),

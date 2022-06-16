@@ -26,8 +26,8 @@ import org.dmg.pmml.DataDictionary;
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.tree.TreeModel;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
@@ -60,7 +60,7 @@ public class KiePMMLTreeModelFactoryTest {
     private static TreeModel treeModel;
     private static ClassOrInterfaceDeclaration classOrInterfaceDeclaration;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         pmml = TestUtils.loadFromFile(SOURCE_1);
         assertThat(pmml).isNotNull();
@@ -73,7 +73,7 @@ public class KiePMMLTreeModelFactoryTest {
     }
 
     @Test
-    public void getKiePMMLScorecardModelSourcesMap() {
+    void getKiePMMLScorecardModelSourcesMap() {
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(pmml.getDataDictionary(),
                 pmml.getTransformationDictionary(),
                 treeModel.getLocalTransformations());
@@ -91,7 +91,7 @@ public class KiePMMLTreeModelFactoryTest {
     }
 
     @Test
-    public void getKiePMMLDroolsAST() {
+    void getKiePMMLDroolsAST() {
         final DataDictionary dataDictionary = pmml.getDataDictionary();
         final Map<String, KiePMMLOriginalTypeGeneratedType> fieldTypeMap = getFieldTypeMap(pmml.getDataDictionary(),
                 pmml.getTransformationDictionary(),
@@ -106,7 +106,7 @@ public class KiePMMLTreeModelFactoryTest {
     }
 
     @Test
-    public void setConstructor() {
+    void setConstructor() {
         final String targetField = "whatIdo";
         final ClassOrInterfaceDeclaration modelTemplate = classOrInterfaceDeclaration.clone();
         final CommonCompilationDTO<TreeModel> compilationDTO =

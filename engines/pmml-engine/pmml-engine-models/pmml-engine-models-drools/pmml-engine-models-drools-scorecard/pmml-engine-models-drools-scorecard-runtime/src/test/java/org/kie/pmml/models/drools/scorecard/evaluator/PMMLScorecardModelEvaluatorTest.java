@@ -17,10 +17,9 @@ package org.kie.pmml.models.drools.scorecard.evaluator;
 
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -42,7 +41,6 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Parameterized.class)
 public class PMMLScorecardModelEvaluatorTest {
 
     private static KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader;
@@ -65,7 +63,7 @@ public class PMMLScorecardModelEvaluatorTest {
     private boolean validLicense;
     private double expectedResult;
 
-    public PMMLScorecardModelEvaluatorTest(double age, String occupation, String residenceState,
+    public void initPMMLScorecardModelEvaluatorTest(double age, String occupation, String residenceState,
                                            boolean validLicense, double expectedResult) {
         this.age = age;
         this.occupation = occupation;
@@ -89,7 +87,6 @@ public class PMMLScorecardModelEvaluatorTest {
                         new HasClassLoaderMock(), SOURCE_BASE);
     }
 
-    @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {4.0, "SKYDIVER", "AP", true, -8.655},
@@ -275,13 +272,17 @@ public class PMMLScorecardModelEvaluatorTest {
         });
     }
 
-    @Test
-    public void getPMMLModelType() {
+    @MethodSource("data")
+    @ParameterizedTest
+    void getPMMLModelType(double age, String occupation, String residenceState, boolean validLicense, double expectedResult) {
+        initPMMLScorecardModelEvaluatorTest(age, occupation, residenceState, validLicense, expectedResult);
         assertThat(evaluator.getPMMLModelType()).isEqualTo(PMML_MODEL.SCORECARD_MODEL);
     }
 
-    @Test
-    public void testScorecardSample() {
+    @MethodSource("data")
+    @ParameterizedTest
+    void testScorecardSample(double age, String occupation, String residenceState, boolean validLicense, double expectedResult) {
+        initPMMLScorecardModelEvaluatorTest(age, occupation, residenceState, validLicense, expectedResult);
         final Map<String, Object> inputData = new HashMap<>();
         inputData.put(AGE, age);
         inputData.put(OCCUPATION, occupation);

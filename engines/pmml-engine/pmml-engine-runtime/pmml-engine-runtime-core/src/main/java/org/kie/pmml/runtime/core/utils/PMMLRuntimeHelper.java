@@ -18,10 +18,8 @@ package org.kie.pmml.runtime.core.utils;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.dar.common.api.model.FRI;
 import org.kie.dar.common.api.model.GeneratedExecutableResource;
-import org.kie.dar.common.api.model.GeneratedRedirectResource;
 import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -41,8 +39,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.*;
-import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
 import static org.kie.pmml.runtime.core.utils.PostProcess.postProcess;
 import static org.kie.pmml.runtime.core.utils.PreProcess.preProcess;
 
@@ -72,29 +70,13 @@ public class PMMLRuntimeHelper {
         }
         try {
             return Optional.of(getDAROutput(kiePMMLModelFactory, toEvaluate));
+        } catch (KiePMMLException e) {
+            throw e;
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     PMMLRuntimeHelper.class.getName(),
                     toEvaluate.getFRI()), e);
         }
-    }
-
-    public static Optional<DAROutputPMML> redirect(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
-        GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI(), "pmml").orElse(null);
-        if (redirectResource == null) {
-            logger.warn("{} can not redirect {}", PMMLRuntimeHelper.class.getName(), toEvaluate.getFRI());
-            return Optional.empty();
-        }
-        FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInput redirectInput = new DARInputPMML(targetFri, toEvaluate.getInputData()); // TODO fix for drools models
-
-        Optional<KieRuntimeService> targetService = getKieRuntimeService(redirectInput, true, memoryCompilerClassLoader);
-        if (targetService.isEmpty()) {
-            logger.warn("Cannot find KieRuntimeService for {}", toEvaluate.getFRI());
-            return Optional.empty();
-        }
-        return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
-                .map(o -> new DAROutputPMML(toEvaluate.getFRI(), null)); // TODO fix for drools models));
     }
 
     @SuppressWarnings("unchecked")

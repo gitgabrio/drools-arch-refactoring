@@ -22,7 +22,6 @@ import org.kie.dar.common.api.model.FRI;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DARKieSessionUtilTest {
 
@@ -40,13 +39,13 @@ class DARKieSessionUtilTest {
     void loadKieSession() {
         FRI fri = new FRI(basePath, "drl");
         KieSession retrieved = DARKieSessionUtil.loadKieSession(fri, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
         assertThat(retrieved.getIdentifier()).isZero();
     }
 
     @Test
     void loadModel() {
         Model retrieved = DARKieSessionUtil.loadModel(fullModelResourcesSourceClassName, memoryCompilerClassLoader);
-        assertNotNull(retrieved);
+        assertThat(retrieved).isNotNull();
     }
 }
