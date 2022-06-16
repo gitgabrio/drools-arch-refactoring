@@ -97,7 +97,7 @@ public class PMMLCompilerImpl implements PMMLCompiler {
             String missingClasses = String.join(", ", expectedClasses);
             throw new KiePMMLException("Expected generated class " + missingClasses + " not found");
         }
-        String factoryClassName = kiePMMLModel.getName() + "Factory";
+        String factoryClassName = getSanitizedClassName(kiePMMLModel.getName()) + "Factory";
         Map<String, String> factorySourceMap = getFactorySourceCode(factoryClassName, packageName, expectedClassModelTypeMap);
         return new KiePMMLFactoryModel(factoryClassName, packageName,
                 factorySourceMap);

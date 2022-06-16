@@ -20,7 +20,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.pmml.api.exceptions.KiePMMLException;
+import org.kie.pmml.api.exceptions.KiePMMLInputDataException;
 import org.kie.pmml.api.runtime.PMMLRuntime;
 import org.kie.pmml.models.tests.AbstractPMMLTest;
 
@@ -143,7 +144,7 @@ public class ClusterWithTransformationsTest extends AbstractPMMLTest {
     @ParameterizedTest
     void testClusterWithTransformationsWithoutRequired(double sepalLength, double sepalWidth, double petalLength, double petalWidth, String irisClass, double outNormcontinuousField) {
         initClusterWithTransformationsTest(sepalLength, sepalWidth, petalLength, petalWidth, irisClass, outNormcontinuousField);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLInputDataException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("sepal_length", sepalLength);
             inputData.put("sepal_width", sepalWidth);
@@ -172,7 +173,7 @@ public class ClusterWithTransformationsTest extends AbstractPMMLTest {
     @ParameterizedTest
     void testClusterWithTransformationsNotConvertible(double sepalLength, double sepalWidth, double petalLength, double petalWidth, String irisClass, double outNormcontinuousField) {
         initClusterWithTransformationsTest(sepalLength, sepalWidth, petalLength, petalWidth, irisClass, outNormcontinuousField);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("sepal_length", sepalLength);
             inputData.put("sepal_width", sepalWidth);
@@ -188,7 +189,7 @@ public class ClusterWithTransformationsTest extends AbstractPMMLTest {
     @ParameterizedTest
     void testClusterWithTransformationsInvalidValue(double sepalLength, double sepalWidth, double petalLength, double petalWidth, String irisClass, double outNormcontinuousField) {
         initClusterWithTransformationsTest(sepalLength, sepalWidth, petalLength, petalWidth, irisClass, outNormcontinuousField);
-        assertThatExceptionOfType(KieRuntimeServiceException.class).isThrownBy(() -> {
+        assertThatExceptionOfType(KiePMMLInputDataException.class).isThrownBy(() -> {
             final Map<String, Object> inputData = new HashMap<>();
             inputData.put("sepal_length", sepalLength);
             inputData.put("sepal_width", sepalWidth);

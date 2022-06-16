@@ -45,6 +45,7 @@ import static org.kie.dar.common.api.model.FRI.SLASH;
 import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getRuntimeManager;
+import static org.kie.pmml.models.drools.commons.factories.KiePMMLDescrFactory.OUTPUTFIELDS_MAP_IDENTIFIER;
 import static org.kie.pmml.models.drools.commons.factories.KiePMMLDescrFactory.PMML4_RESULT_IDENTIFIER;
 import static org.kie.pmml.models.drools.utils.KiePMMLAgendaListenerUtils.getAgendaEventListener;
 
@@ -80,9 +81,10 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
         logger.trace("evaluate {}", requestData);
         final PMML4Result toReturn = getPMML4Result(targetField);
 
-        List<Object> inserts = Arrays.asList(new KiePMMLStatusHolder(), toReturn);
+        List<Object> inserts = Arrays.asList(new KiePMMLStatusHolder());
         final Map<String, Object> globals = new HashMap<>();
         globals.put(PMML4_RESULT_IDENTIFIER, toReturn);
+        globals.put(OUTPUTFIELDS_MAP_IDENTIFIER, context.getOutputFieldsMap());
 
 
         Map<String, DAROriginalTypeGeneratedType> convertedFieldTypeMap = fieldTypeMap.entrySet()
@@ -90,7 +92,7 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> new DAROriginalTypeGeneratedType(entry.getValue().getOriginalType(),
                                 entry.getValue().getGeneratedType())));
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap, this.getKModulePackageName());
+        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap, this.getName(),  this.getKModulePackageName());
 
         String basePath = context.getFileName() + SLASH + this.getName();
         FRI fri = new FRI(basePath, "drl");

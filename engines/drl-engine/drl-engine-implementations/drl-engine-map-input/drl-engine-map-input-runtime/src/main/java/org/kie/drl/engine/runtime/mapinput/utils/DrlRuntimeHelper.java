@@ -21,9 +21,7 @@ import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
 import org.kie.dar.runtimemanager.api.model.DARInput;
 import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
-import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
-import org.kie.drl.engine.runtime.utils.DARKieRuntimeDrlUtils;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +59,7 @@ public class DrlRuntimeHelper {
             return Optional.empty();
         }
         try {
-            MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, "name", toEvaluate.getInputData());
+            MapInputSessionUtils.Builder builder = MapInputSessionUtils.builder(kieSession, toEvaluate.getInputData());
             final MapInputSessionUtils mapInputSessionUtils = builder.build();
             String sessionPath = toEvaluate.getFRI().getBasePath() + SLASH + kieSession.getIdentifier();
             mapInputSessionUtils.fireAllRules();

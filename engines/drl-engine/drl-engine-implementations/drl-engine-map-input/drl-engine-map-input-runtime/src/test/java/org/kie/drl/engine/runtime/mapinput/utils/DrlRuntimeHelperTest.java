@@ -43,7 +43,7 @@ class DrlRuntimeHelperTest {
     @Test
     void canManage() {
         FRI fri = new FRI(basePath, "drl");
-        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, new DARMapInputDTO(null, null, null, null, null));
+        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, new DARMapInputDTO(null, null, null, null, null, null));
         assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isTrue();
         darInputDrlMap = new AbstractDARInput(fri, "") {
         };
@@ -66,7 +66,7 @@ class DrlRuntimeHelperTest {
         globals.put("approvedApplications", approvedApplications);
         globals.put("maxAmount", 5000);
 
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap(), "packageName");
+        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap(), "modelname", "packageName");
 
         DARInputDrlMap darInputDrlMap = new DARInputDrlMap(new FRI(basePath, "drl"), darMapInputDTO);
         Optional<DAROutputDrlMap> retrieved = DrlRuntimeHelper.execute(darInputDrlMap, memoryCompilerClassLoader);

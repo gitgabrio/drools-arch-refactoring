@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.kie.dar.common.api.model.FRI.SLASH;
+import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
 
 public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
 
@@ -50,12 +51,15 @@ public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
 
     @Override
     public PMML4Result evaluate(String modelName, PMMLContext context) {
-        String basePath = context.getFileName() + SLASH + modelName;
+        String basePath = context.getFileName() + SLASH + getSanitizedClassName(modelName);
         FRI fri = new FRI(basePath, "pmml");
         DARInputPMML darInputPMML = new DARInputPMML(fri, context);
         Optional<DAROutput> retrieved = runtimeManager.evaluateInput(darInputPMML, memoryCompilerClassLoader);
+        if (retrieved.isEmpty()) {
+            throw new KieRuntimeServiceException("Failed to retrieve DAROutput");
+        }
         if (!(retrieved.get() instanceof DAROutputPMML)) {
-            throw new KieRuntimeServiceException("Expected DAROutputPMML , retrieved " + retrieved.get().getClass());
+            throw new KieRuntimeServiceException("Expected DAROutputPMML, retrieved " + retrieved.get().getClass());
         }
         return retrieved.map(DAROutputPMML.class::cast).map(DAROutputPMML::getOutputData).orElse(null);
     }
