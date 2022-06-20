@@ -1,4 +1,4 @@
-# drools-arch-refactoring
+# efesto
 -------------------------
 
 This project aims at re-design the drools overall framework.
