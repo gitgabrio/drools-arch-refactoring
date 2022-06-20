@@ -17,8 +17,8 @@ package org.kie.foo.engine.compilation.utils;/*
 import com.github.javaparser.ast.CompilationUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.foo.engine.compilation.model.DARCallableOutputFoo;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.foo.engine.compilation.model.EfestoCallableOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
+import static org.kie.efesto.common.utils.JavaParserUtils.getFullClassName;
 import static org.kie.foo.engine.compilation.TestingUtils.*;
 
 class FooCompilerHelperTest {
@@ -41,9 +41,9 @@ class FooCompilerHelperTest {
     }
 
     @Test
-    void getDARProcessedFoo() {
-        DARResource darResourceFoo = getDARFileResource(getFileFromFileName("DarFoo.foo"));
-        DARCallableOutputFoo retrieved = FooCompilerHelper.getDARProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
+    void getEfestoProcessedFoo() {
+        EfestoResource darResourceFoo = getEfestoFileResource(getFileFromFileName("DarFoo.foo"));
+        EfestoCallableOutputFoo retrieved = FooCompilerHelper.getEfestoProcessedFoo(darResourceFoo, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         Map<String, byte[]> retrievedByteCode = retrieved.getCompiledClassesMap();
         retrievedByteCode.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode, fullClassName, memoryCompilerClassLoader));

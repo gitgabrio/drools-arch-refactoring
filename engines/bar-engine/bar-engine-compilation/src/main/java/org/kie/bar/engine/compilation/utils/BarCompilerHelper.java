@@ -23,13 +23,13 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
-import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
-import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.utils.JavaParserUtils;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
+import org.kie.bar.engine.compilation.model.EfestoCallableOutputBar;
+import org.kie.bar.engine.compilation.model.EfestoRedirectOutputBar;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.utils.JavaParserUtils;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -39,9 +39,9 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.kie.bar.engine.api.constants.Constants.BAR_MODEL_PACKAGE_NAME;
-import static org.kie.dar.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
-import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
+import static org.kie.efesto.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
+import static org.kie.efesto.common.utils.JavaParserUtils.getFullClassName;
+import static org.kie.efesto.common.utils.StringUtils.getSanitizedClassName;
 
 public class BarCompilerHelper {
 
@@ -55,15 +55,15 @@ public class BarCompilerHelper {
     private BarCompilerHelper() {
     }
 
-    public static DARCompilationOutput getDARCompilationOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    public static EfestoCompilationOutput getEfestoCompilationOutputBar(EfestoFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         if ((resource.getContent()).getName().startsWith("Redirect")) {
-            return getDARRedirectOutputBar(resource);
+            return getEfestoRedirectOutputBar(resource);
         } else {
-            return getDARFinalOutputBar(resource, memoryClassLoader);
+            return getEfestoFinalOutputBar(resource, memoryClassLoader);
         }
     }
 
-    static DARCallableOutputBar getDARFinalOutputBar(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static EfestoCallableOutputBar getEfestoFinalOutputBar(EfestoFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         String fileName = ( resource.getContent()).getName().toLowerCase();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI(basePath, "bar");
@@ -79,14 +79,14 @@ public class BarCompilerHelper {
         String fullResourceClassName = getFullClassName(barResourcesSourceCompilationUnit);
         sourcesMap.put(fullResourceClassName, barResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARCallableOutputBar(fri, fullResourceClassName, compiledClasses);
+        return new EfestoCallableOutputBar(fri, fullResourceClassName, compiledClasses);
     }
 
-    static DARRedirectOutputBar getDARRedirectOutputBar(DARFileResource resource) {
+    static EfestoRedirectOutputBar getEfestoRedirectOutputBar(EfestoFileResource resource) {
         String fileName = (resource.getContent()).getName().toLowerCase();
         String basePath = fileName.substring(0, fileName.lastIndexOf('.'));
         FRI fri = new FRI(basePath, "bar");
-        return new DARRedirectOutputBar(fri, resource.getContent());
+        return new EfestoRedirectOutputBar(fri, resource.getContent());
     }
 
     static CompilationUnit getBarResourcesCompilationUnit(Set<String> generatedSources, String barResourcesSourceClassName) {

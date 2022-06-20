@@ -18,16 +18,16 @@ package org.kie.drl.engine.runtime.mapinput.utils;
 import org.kie.api.definition.type.FactType;
 import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.runtime.KieSession;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
-import org.kie.dar.runtimemanager.api.model.DAROriginalTypeGeneratedType;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
+import org.kie.efesto.runtimemanager.api.model.EfestoOriginalTypeGeneratedType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-import static org.kie.dar.common.api.constants.Constants.OUTPUTFIELDS_MAP_IDENTIFIER;
-import static org.kie.dar.common.api.constants.Constants.PACKAGE_CLASS_TEMPLATE;
+import static org.kie.efesto.common.api.constants.Constants.OUTPUTFIELDS_MAP_IDENTIFIER;
+import static org.kie.efesto.common.api.constants.Constants.PACKAGE_CLASS_TEMPLATE;
 
 /**
  * Class used to isolate all the <code>KieSession</code> instantiation/usage details
@@ -43,7 +43,7 @@ public class MapInputSessionUtils {
 
 //    final List<Command> commands;
 
-    private MapInputSessionUtils(final KieSession kieSession, final DARMapInputDTO darMapInputDTO) {
+    private MapInputSessionUtils(final KieSession kieSession, final EfestoMapInputDTO darMapInputDTO) {
         this.modelName = darMapInputDTO.getModelName();
         this.packageName = darMapInputDTO.getPackageName();
         this.kieSession = kieSession;
@@ -61,7 +61,7 @@ public class MapInputSessionUtils {
 //        addObjectsToSession(darMapInputDTO.getUnwrappedInputParams(), darMapInputDTO.getFieldTypeMap());
     }
 
-    public static Builder builder(final KieSession kieSession, final DARMapInputDTO darMapInputDTO) {
+    public static Builder builder(final KieSession kieSession, final EfestoMapInputDTO darMapInputDTO) {
         return new Builder(kieSession, darMapInputDTO);
     }
 
@@ -95,7 +95,7 @@ public class MapInputSessionUtils {
      * @param unwrappedInputParams
      * @param fieldTypeMap
      */
-    private void addObjectsToSession(final Map<String, Object> unwrappedInputParams, final Map<String, DAROriginalTypeGeneratedType> fieldTypeMap) {
+    private void addObjectsToSession(final Map<String, Object> unwrappedInputParams, final Map<String, EfestoOriginalTypeGeneratedType> fieldTypeMap) {
         for (Map.Entry<String, Object> entry : unwrappedInputParams.entrySet()) {
             if (!fieldTypeMap.containsKey(entry.getKey())) {
                 throw new KieRuntimeServiceException(String.format("Field %s not mapped to generated type", entry.getKey()));
@@ -122,7 +122,7 @@ public class MapInputSessionUtils {
 
         MapInputSessionUtils toBuild;
 
-        private Builder(final KieSession kieSession, final DARMapInputDTO darMapInputDTO) {
+        private Builder(final KieSession kieSession, final EfestoMapInputDTO darMapInputDTO) {
             this.toBuild = new MapInputSessionUtils(kieSession, darMapInputDTO);
         }
 

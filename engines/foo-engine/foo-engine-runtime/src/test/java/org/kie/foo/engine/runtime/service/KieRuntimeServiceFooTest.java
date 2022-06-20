@@ -16,9 +16,9 @@ package org.kie.foo.engine.runtime.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.foo.engine.runtime.model.DARInputFoo;
-import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.foo.engine.runtime.model.EfestoInputFoo;
+import org.kie.foo.engine.runtime.model.EfestoOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Optional;
@@ -38,26 +38,26 @@ class KieRuntimeServiceFooTest {
 
     @Test
     void canManageResource() {
-        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
+        EfestoInputFoo toEvaluate = new EfestoInputFoo(new FRI("efesto", "foo"), "InputData");
         assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isTrue();
-        toEvaluate = new DARInputFoo(new FRI("dar", "notfoo"), "InputData");
+        toEvaluate = new EfestoInputFoo(new FRI("efesto", "notfoo"), "InputData");
         assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInputExistingFooResources() {
-        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
-        Optional<DAROutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputFoo toEvaluate = new EfestoInputFoo(new FRI("efesto", "foo"), "InputData");
+        Optional<EfestoOutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrieved).isPresent();
-        DAROutputFoo darOutputFoo = retrieved.get();
+        EfestoOutputFoo darOutputFoo = retrieved.get();
         assertThat(darOutputFoo.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(darOutputFoo.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
 
     @Test
     void evaluateInputNotExistingFooResources() {
-        DARInputFoo toEvaluate = new DARInputFoo(new FRI("DarFoo", "notfoo"), "InputData");
-        Optional<DAROutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputFoo toEvaluate = new EfestoInputFoo(new FRI("DarFoo", "notfoo"), "InputData");
+        Optional<EfestoOutputFoo> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isNotPresent();
     }
 

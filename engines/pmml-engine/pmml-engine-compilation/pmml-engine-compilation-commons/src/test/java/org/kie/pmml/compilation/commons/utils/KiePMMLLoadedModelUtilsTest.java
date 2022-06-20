@@ -29,7 +29,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
+import static org.kie.efesto.common.api.utils.FileUtils.getFileInputStream;
 import static org.kie.pmml.api.enums.OP_TYPE.CATEGORICAL;
 import static org.kie.pmml.api.enums.OP_TYPE.CONTINUOUS;
 import static org.kie.pmml.compilation.api.CommonTestingUtils.getFieldsFromDataDictionary;

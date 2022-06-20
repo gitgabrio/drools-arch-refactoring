@@ -16,13 +16,13 @@ package org.kie.bar.engine.compilation.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
-import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.bar.engine.compilation.model.EfestoCallableOutputBar;
+import org.kie.bar.engine.compilation.model.EfestoRedirectOutputBar;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -46,34 +46,34 @@ class KieCompilerServiceBarTest {
     @Test
     void canManageResource() {
         File barFile = getFileFromFileName("DarBar.bar");
-        DARResource toProcess = new DARFileResource(barFile);
+        EfestoResource toProcess = new EfestoFileResource(barFile);
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
         barFile = getFileFromFileName("RedirectBar.bar");
-        toProcess = new DARFileResource(barFile);
+        toProcess = new EfestoFileResource(barFile);
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        toProcess = () -> "DARRedirectOutput";
+        toProcess = () -> "EfestoRedirectOutput";
         assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
     }
 
     @Test
     void processResource() {
         File barFile = getFileFromFileName("DarBar.bar");
-        DARResource toProcess = new DARFileResource(barFile);
-        List<DARCompilationOutput> listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        EfestoResource toProcess = new EfestoFileResource(barFile);
+        List<EfestoCompilationOutput> listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(listRetrieved).isNotNull().hasSize(1);
-        DARCompilationOutput retrieved = listRetrieved.get(0);
-        assertThat(retrieved).isInstanceOf(DARCallableOutputBar.class);
+        EfestoCompilationOutput retrieved = listRetrieved.get(0);
+        assertThat(retrieved).isInstanceOf(EfestoCallableOutputBar.class);
 
         barFile = getFileFromFileName("RedirectBar.bar");
-        toProcess = new DARFileResource(barFile);
+        toProcess = new EfestoFileResource(barFile);
         listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(listRetrieved).isNotNull().hasSize(1);
         retrieved = listRetrieved.get(0);
-        assertThat(retrieved).isNotNull().isInstanceOf(DARRedirectOutputBar.class);
-        assertThat(((DARRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
+        assertThat(retrieved).isNotNull().isInstanceOf(EfestoRedirectOutputBar.class);
+        assertThat(((EfestoRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
 
         try {
-            toProcess = () -> "DARRedirectOutput";
+            toProcess = () -> "EfestoRedirectOutput";
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {

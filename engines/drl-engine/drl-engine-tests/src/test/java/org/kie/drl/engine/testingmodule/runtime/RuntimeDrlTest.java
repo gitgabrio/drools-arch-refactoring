@@ -18,16 +18,16 @@ package org.kie.drl.engine.testingmodule.runtime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
-import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.core.service.RuntimeManagerImpl;
 import org.kie.drl.engine.compilation.model.DrlFileSetResource;
-import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
-import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.kiesession.local.model.EfestoInputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.kiesession.local.model.EfestoOutputDrlKieSessionLocal;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -58,11 +58,11 @@ class RuntimeDrlTest {
     @Test
     @SuppressWarnings("raw")
     void evaluateWithKieSessionLocalStaticCompilation() {
-        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(basePath, "drl"), "");
-                Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputDrlKieSessionLocal toEvaluate = new EfestoInputDrlKieSessionLocal(new FRI(basePath, "drl"), "");
+                Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isPresent();
-        assertThat(darOutput.get()).isInstanceOf(DAROutputDrlKieSessionLocal.class);
-        DAROutputDrlKieSessionLocal retrieved = (DAROutputDrlKieSessionLocal) darOutput.get();
+        assertThat(darOutput.get()).isInstanceOf(EfestoOutputDrlKieSessionLocal.class);
+        EfestoOutputDrlKieSessionLocal retrieved = (EfestoOutputDrlKieSessionLocal) darOutput.get();
         assertThat(retrieved.getOutputData()).isNotNull().isInstanceOf(KieSession.class);
     }
 
@@ -70,19 +70,19 @@ class RuntimeDrlTest {
     @SuppressWarnings("raw")
     void evaluateWithKieSessionLocalCompilationOnTheFly() throws IOException {
         String onTheFlyPath = "OnTheFlyPath";
-        DARInputDrlKieSessionLocal toEvaluate = new DARInputDrlKieSessionLocal(new FRI(onTheFlyPath, "drl"), "");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputDrlKieSessionLocal toEvaluate = new EfestoInputDrlKieSessionLocal(new FRI(onTheFlyPath, "drl"), "");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isNotPresent();
         Set<File> files = Files.walk(Path.of("src/test/resources"))
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, onTheFlyPath);
+        EfestoResource<Set<File>> toProcess = new DrlFileSetResource(files, onTheFlyPath);
         compilationManager.processResource(toProcess, memoryCompilerClassLoader);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isPresent();
-        assertThat(darOutput.get()).isInstanceOf(DAROutputDrlKieSessionLocal.class);
-        DAROutputDrlKieSessionLocal retrieved = (DAROutputDrlKieSessionLocal) darOutput.get();
+        assertThat(darOutput.get()).isInstanceOf(EfestoOutputDrlKieSessionLocal.class);
+        EfestoOutputDrlKieSessionLocal retrieved = (EfestoOutputDrlKieSessionLocal) darOutput.get();
         assertThat(retrieved.getOutputData()).isNotNull().isInstanceOf(KieSession.class);
     }
 

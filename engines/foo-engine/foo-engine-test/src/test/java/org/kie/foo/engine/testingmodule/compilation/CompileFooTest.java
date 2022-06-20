@@ -17,12 +17,12 @@ package org.kie.foo.engine.testingmodule.compilation;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.compilationmanager.api.model.EfestoRedirectOutput;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -46,7 +46,7 @@ class CompileFooTest {
     @Test
     void compileFoo() {
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARRedirectOutput<File> darResourceFileFoo = new DARRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", fooFile) {
+        EfestoRedirectOutput<File> darResourceFileFoo = new EfestoRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", fooFile) {
         };
         List<IndexFile> retrieved = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
@@ -58,7 +58,7 @@ class CompileFooTest {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }

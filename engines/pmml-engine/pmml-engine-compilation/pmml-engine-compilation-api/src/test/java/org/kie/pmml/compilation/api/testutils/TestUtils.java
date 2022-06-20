@@ -16,7 +16,7 @@
 package org.kie.pmml.compilation.api.testutils;
 
 import org.dmg.pmml.PMML;
-import org.kie.dar.common.api.utils.FileUtils;
+import org.kie.efesto.common.api.utils.FileUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;

@@ -2,9 +2,9 @@
   {
     "step-type": "executable",
     "fri": {
-      "basePath": "/dar",
+      "basePath": "/efesto",
       "model": "foo",
-      "fri": "/foo/dar"
+      "fri": "/foo/efesto"
     },
     "fullClassNames": ["org.kie.foo.engine.compilation.model.DarFooResources"]
   },

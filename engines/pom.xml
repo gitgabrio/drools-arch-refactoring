@@ -23,7 +23,7 @@
     <dependencies>
         <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>dar-common-utils</artifactId>
+            <artifactId>efesto-common-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -16,9 +16,9 @@ package org.kie.bar.engine.compilation.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.compilation.model.DARCallableOutputBar;
-import org.kie.bar.engine.compilation.model.DARRedirectOutputBar;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
+import org.kie.bar.engine.compilation.model.EfestoCallableOutputBar;
+import org.kie.bar.engine.compilation.model.EfestoRedirectOutputBar;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -36,19 +36,19 @@ class BarCompilerHelperTest {
     }
 
     @Test
-    void getDARFinalOutputBar() {
+    void getEfestoFinalOutputBar() {
         File barFile = getFileFromFileName("RedirectBar.bar");
-        DARFileResource darResourceBar = new DARFileResource(barFile);
-        DARCallableOutputBar retrieved = BarCompilerHelper.getDARFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
+        EfestoFileResource darResourceBar = new EfestoFileResource(barFile);
+        EfestoCallableOutputBar retrieved = BarCompilerHelper.getEfestoFinalOutputBar(darResourceBar, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
 
     }
 
     @Test
-    void getDARRedirectOutputBar() {
+    void getEfestoRedirectOutputBar() {
         File fooFile = getFileFromFileName("DarBar.bar");
-        DARFileResource darResourceBar = new DARFileResource(fooFile);
-        DARRedirectOutputBar retrieved = BarCompilerHelper.getDARRedirectOutputBar(darResourceBar);
+        EfestoFileResource darResourceBar = new EfestoFileResource(fooFile);
+        EfestoRedirectOutputBar retrieved = BarCompilerHelper.getEfestoRedirectOutputBar(darResourceBar);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getTargetEngine()).isEqualTo("foo");
     }

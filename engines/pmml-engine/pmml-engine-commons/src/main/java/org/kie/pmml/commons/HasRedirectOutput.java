@@ -16,12 +16,12 @@
 package org.kie.pmml.commons;
 
 
-import org.kie.dar.compilationmanager.api.model.DARSetResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoSetResource;
 
 /**
  * Interface used to decouple <code>PMMLCompilerService</code> from <code>KiePMMLDroolsModelWithSources</code>
  */
 public interface HasRedirectOutput<T> {
 
-    DARSetResource<T> getRedirectOutput();
+    EfestoSetResource<T> getRedirectOutput();
 }

@@ -16,24 +16,24 @@
 package org.kie.pmml.runtime.core.service;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
-import org.kie.dar.runtimemanager.api.utils.SPIUtils;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.api.utils.SPIUtils;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.models.PMMLModel;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.runtime.api.executor.PMMLRuntimeInternal;
-import org.kie.pmml.runtime.core.model.DARInputPMML;
-import org.kie.pmml.runtime.core.model.DAROutputPMML;
+import org.kie.pmml.runtime.core.model.EfestoInputPMML;
+import org.kie.pmml.runtime.core.model.EfestoOutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.kie.dar.common.api.model.FRI.SLASH;
+import static org.kie.efesto.common.api.model.FRI.SLASH;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedClassName;
 
 public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
@@ -53,15 +53,15 @@ public class PMMLRuntimeInternalImpl implements PMMLRuntimeInternal {
     public PMML4Result evaluate(String modelName, PMMLContext context) {
         String basePath = context.getFileName() + SLASH + getSanitizedClassName(modelName);
         FRI fri = new FRI(basePath, "pmml");
-        DARInputPMML darInputPMML = new DARInputPMML(fri, context);
-        Optional<DAROutput> retrieved = runtimeManager.evaluateInput(darInputPMML, memoryCompilerClassLoader);
+        EfestoInputPMML darInputPMML = new EfestoInputPMML(fri, context);
+        Optional<EfestoOutput> retrieved = runtimeManager.evaluateInput(darInputPMML, memoryCompilerClassLoader);
         if (retrieved.isEmpty()) {
-            throw new KieRuntimeServiceException("Failed to retrieve DAROutput");
+            throw new KieRuntimeServiceException("Failed to retrieve EfestoOutput");
         }
-        if (!(retrieved.get() instanceof DAROutputPMML)) {
-            throw new KieRuntimeServiceException("Expected DAROutputPMML, retrieved " + retrieved.get().getClass());
+        if (!(retrieved.get() instanceof EfestoOutputPMML)) {
+            throw new KieRuntimeServiceException("Expected EfestoOutputPMML, retrieved " + retrieved.get().getClass());
         }
-        return retrieved.map(DAROutputPMML.class::cast).map(DAROutputPMML::getOutputData).orElse(null);
+        return retrieved.map(EfestoOutputPMML.class::cast).map(EfestoOutputPMML::getOutputData).orElse(null);
     }
 
     @Override

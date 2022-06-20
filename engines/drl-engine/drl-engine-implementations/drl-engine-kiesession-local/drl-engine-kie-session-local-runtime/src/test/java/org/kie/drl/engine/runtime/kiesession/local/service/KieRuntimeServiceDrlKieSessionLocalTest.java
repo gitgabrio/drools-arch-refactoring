@@ -17,10 +17,10 @@ package org.kie.drl.engine.runtime.kiesession.local.service;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.drl.engine.runtime.kiesession.local.model.DARInputDrlKieSessionLocal;
-import org.kie.drl.engine.runtime.kiesession.local.model.DAROutputDrlKieSessionLocal;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.drl.engine.runtime.kiesession.local.model.EfestoInputDrlKieSessionLocal;
+import org.kie.drl.engine.runtime.kiesession.local.model.EfestoOutputDrlKieSessionLocal;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Optional;
@@ -42,20 +42,20 @@ class KieRuntimeServiceDrlKieSessionLocalTest {
     @Test
     void canManageInput() {
         FRI fri = new FRI(basePath, "drl");
-        DARInputDrlKieSessionLocal darInputDrlKieSessionLocal = new DARInputDrlKieSessionLocal(fri, "");
+        EfestoInputDrlKieSessionLocal darInputDrlKieSessionLocal = new EfestoInputDrlKieSessionLocal(fri, "");
         assertThat(kieRuntimeServiceDrlKieSessionLocal.canManageInput(darInputDrlKieSessionLocal, memoryCompilerClassLoader)).isTrue();
         fri = new FRI("notexisting", "drl");
-        darInputDrlKieSessionLocal = new DARInputDrlKieSessionLocal(fri, "");
+        darInputDrlKieSessionLocal = new EfestoInputDrlKieSessionLocal(fri, "");
         assertThat(kieRuntimeServiceDrlKieSessionLocal.canManageInput(darInputDrlKieSessionLocal, memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInput() {
-        DARInputDrlKieSessionLocal darInputDrlKieSessionLocal = new DARInputDrlKieSessionLocal(new FRI(basePath, "drl"), "");
-        Optional<DAROutputDrlKieSessionLocal> retrieved = kieRuntimeServiceDrlKieSessionLocal.evaluateInput(darInputDrlKieSessionLocal, memoryCompilerClassLoader);
+        EfestoInputDrlKieSessionLocal darInputDrlKieSessionLocal = new EfestoInputDrlKieSessionLocal(new FRI(basePath, "drl"), "");
+        Optional<EfestoOutputDrlKieSessionLocal> retrieved = kieRuntimeServiceDrlKieSessionLocal.evaluateInput(darInputDrlKieSessionLocal, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
         assertThat(retrieved.get().getOutputData()).isNotNull().isInstanceOf(KieSession.class);
-        darInputDrlKieSessionLocal = new DARInputDrlKieSessionLocal(new FRI("notexisting", "drl"), "");
+        darInputDrlKieSessionLocal = new EfestoInputDrlKieSessionLocal(new FRI("notexisting", "drl"), "");
         retrieved = kieRuntimeServiceDrlKieSessionLocal.evaluateInput(darInputDrlKieSessionLocal, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isNotPresent();
     }

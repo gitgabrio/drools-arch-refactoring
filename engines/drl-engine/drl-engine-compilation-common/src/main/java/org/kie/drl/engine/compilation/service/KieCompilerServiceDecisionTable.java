@@ -1,9 +1,9 @@
 package org.kie.drl.engine.compilation.service;
 
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.drl.engine.compilation.model.DecisionTableFileSetResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -15,12 +15,12 @@ import static org.kie.drl.engine.compilation.utils.DrlCompilerHelper.getDrlCalla
 public class KieCompilerServiceDecisionTable implements KieCompilerService {
 
     @Override
-    public <T extends DARResource> boolean canManageResource(T toProcess) {
+    public <T extends EfestoResource> boolean canManageResource(T toProcess) {
         return toProcess instanceof DecisionTableFileSetResource;
     }
 
     @Override
-    public <T extends DARResource, E extends DARCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public <T extends EfestoResource, E extends EfestoCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("%s can not process %s",
                     this.getClass().getName(),

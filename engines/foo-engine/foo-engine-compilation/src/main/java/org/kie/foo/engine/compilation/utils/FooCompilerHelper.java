@@ -23,13 +23,13 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.utils.JavaParserUtils;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.foo.engine.compilation.model.DARCallableOutputFoo;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.utils.JavaParserUtils;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoRedirectOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.foo.engine.compilation.model.EfestoCallableOutputFoo;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -38,9 +38,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.kie.dar.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
-import static org.kie.dar.common.utils.JavaParserUtils.getFullClassName;
-import static org.kie.dar.common.utils.StringUtils.getSanitizedClassName;
+import static org.kie.efesto.common.utils.CommonCodegenUtils.getSuperConstructorInvocation;
+import static org.kie.efesto.common.utils.JavaParserUtils.getFullClassName;
+import static org.kie.efesto.common.utils.StringUtils.getSanitizedClassName;
 import static org.kie.foo.engine.api.constants.Constants.FOO_MODEL_PACKAGE_NAME;
 
 public class FooCompilerHelper {
@@ -54,17 +54,17 @@ public class FooCompilerHelper {
     private FooCompilerHelper() {
     }
 
-    public static DARCallableOutputFoo getDARProcessedFoo(DARResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        if (resource instanceof DARFileResource) {
-            return getDARProcessedFooFromFile((DARFileResource) resource, memoryClassLoader);
-        } else if (resource instanceof DARRedirectOutput) {
-            return getDARProcessedFooFromIntermediate((DARRedirectOutput) resource, memoryClassLoader);
+    public static EfestoCallableOutputFoo getEfestoProcessedFoo(EfestoResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        if (resource instanceof EfestoFileResource) {
+            return getEfestoProcessedFooFromFile((EfestoFileResource) resource, memoryClassLoader);
+        } else if (resource instanceof EfestoRedirectOutput) {
+            return getEfestoProcessedFooFromIntermediate((EfestoRedirectOutput) resource, memoryClassLoader);
         } else {
-            throw new KieCompilerServiceException("Unexpected DARIntermediateOutputFoo " + resource.getClass());
+            throw new KieCompilerServiceException("Unexpected EfestoIntermediateOutputFoo " + resource.getClass());
         }
     }
 
-    static DARCallableOutputFoo getDARProcessedFooFromFile(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static EfestoCallableOutputFoo getEfestoProcessedFooFromFile(EfestoFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         FRI fri = new FRI(((File) resource.getContent()).getAbsolutePath(), "foo");
         String simpleClassName = getSanitizedClassName(fri.getFri());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
@@ -78,10 +78,10 @@ public class FooCompilerHelper {
         String fullResourcesClassName = getFullClassName(fooResourcesSourceCompilationUnit);
         sourcesMap.put(fullResourcesClassName, fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARCallableOutputFoo(fri, fullResourcesClassName, compiledClasses);
+        return new EfestoCallableOutputFoo(fri, fullResourcesClassName, compiledClasses);
     }
 
-    static DARCallableOutputFoo getDARProcessedFooFromIntermediate(DARRedirectOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static EfestoCallableOutputFoo getEfestoProcessedFooFromIntermediate(EfestoRedirectOutput resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         FRI fooFri = new FRI(resource.getFri().getBasePath(), "foo");
         String simpleClassName = getSanitizedClassName(fooFri.getFri());
         CompilationUnit compilationUnit = JavaParserUtils.getCompilationUnit(simpleClassName,
@@ -95,7 +95,7 @@ public class FooCompilerHelper {
         String fullResourcesClassName = getFullClassName(fooResourcesSourceCompilationUnit);
         sourcesMap.put(fullResourcesClassName, fooResourcesSourceCompilationUnit.toString());
         final Map<String, byte[]> compiledClasses = compileClasses(sourcesMap, memoryClassLoader);
-        return new DARCallableOutputFoo(fooFri, fullResourcesClassName, compiledClasses);
+        return new EfestoCallableOutputFoo(fooFri, fullResourcesClassName, compiledClasses);
     }
 
     static CompilationUnit getFooResourcesCompilationUnit(Set<String> generatedSources, String fooResourcesSourceClassName) {

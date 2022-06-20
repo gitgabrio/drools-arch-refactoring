@@ -16,10 +16,10 @@ package org.kie.foo.engine.compilation.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
-import org.kie.foo.engine.compilation.model.DARCallableOutputFoo;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
+import org.kie.foo.engine.compilation.model.EfestoCallableOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.List;
@@ -42,24 +42,24 @@ class KieCompilerServiceFooTest {
 
     @Test
     void canManageResource() {
-        DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
+        EfestoResource toProcess = getEfestoFileResource(getFileFromFileName("DarFoo.foo"));
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        toProcess = getDARResourceIntermediate();
+        toProcess = getEfestoResourceIntermediate();
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        toProcess = getDARResource();
+        toProcess = getEfestoResource();
         assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
     }
 
     @Test
     void processResource() {
-        DARResource toProcess = getDARFileResource(getFileFromFileName("DarFoo.foo"));
-        List<DARCallableOutputFoo> listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        EfestoResource toProcess = getEfestoFileResource(getFileFromFileName("DarFoo.foo"));
+        List<EfestoCallableOutputFoo> listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(listRetrieved).isNotNull().hasSize(1);
-        DARCallableOutputFoo retrieved = listRetrieved.get(0);
+        EfestoCallableOutputFoo retrieved = listRetrieved.get(0);
         Map<String, byte[]> retrievedByteCode1 = retrieved.getCompiledClassesMap();
         retrievedByteCode1.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode1, fullClassName, memoryCompilerClassLoader));
 
-        toProcess = getDARResourceIntermediate();
+        toProcess = getEfestoResourceIntermediate();
         listRetrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(listRetrieved).isNotNull().hasSize(1);
         retrieved = listRetrieved.get(0);
@@ -67,7 +67,7 @@ class KieCompilerServiceFooTest {
         retrievedByteCode2.forEach((fullClassName, bytes) -> commonEvaluateByteCode(retrievedByteCode2, fullClassName, memoryCompilerClassLoader));
 
         try {
-            toProcess = getDARResource();
+            toProcess = getEfestoResource();
             kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
             fail("Expecting KieCompilerServiceException");
         } catch (Exception e) {

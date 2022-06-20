@@ -21,7 +21,7 @@ import org.drools.drl.parser.DroolsParserException;
 import org.drools.util.io.FileSystemResource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.drl.engine.compilation.model.DrlCallableClassesContainer;
 import org.kie.drl.engine.compilation.model.DrlFileSetResource;
 import org.kie.drl.engine.compilation.model.DrlPackageDescrSetResource;
@@ -37,7 +37,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.api.model.FRI.SLASH;
+import static org.kie.efesto.common.api.model.FRI.SLASH;
 
 class DrlCompilerHelperTest {
 
@@ -68,19 +68,19 @@ class DrlCompilerHelperTest {
     void getDrlCallableClassesContainerFromPackageDescrResource() {
         String basePath = UUID.randomUUID().toString();
         DrlPackageDescrSetResource toProcess = new DrlPackageDescrSetResource(packageDescrs, basePath);
-        DARCompilationOutput retrieved = DrlCompilerHelper.getDrlCallableClassesContainer(toProcess, memoryCompilerClassLoader);
-        commonVerifyDARCompilationOutput(retrieved, basePath);
+        EfestoCompilationOutput retrieved = DrlCompilerHelper.getDrlCallableClassesContainer(toProcess, memoryCompilerClassLoader);
+        commonVerifyEfestoCompilationOutput(retrieved, basePath);
     }
 
     @Test
     void getDrlCallableClassesContainerFromFileResource() {
         String basePath = UUID.randomUUID().toString();
         DrlFileSetResource toProcess = new DrlFileSetResource(drlFiles, basePath);
-        DARCompilationOutput retrieved = DrlCompilerHelper.getDrlCallableClassesContainer(toProcess, memoryCompilerClassLoader);
-        commonVerifyDARCompilationOutput(retrieved, basePath);
+        EfestoCompilationOutput retrieved = DrlCompilerHelper.getDrlCallableClassesContainer(toProcess, memoryCompilerClassLoader);
+        commonVerifyEfestoCompilationOutput(retrieved, basePath);
     }
 
-    private void commonVerifyDARCompilationOutput(DARCompilationOutput toVerify, String baseBath) {
+    private void commonVerifyEfestoCompilationOutput(EfestoCompilationOutput toVerify, String baseBath) {
         assertThat(toVerify).isNotNull().isInstanceOf(DrlCallableClassesContainer.class);
         DrlCallableClassesContainer retrieved = (DrlCallableClassesContainer) toVerify;
         assertThat(retrieved.getFri().getModel()).isEqualTo("drl");

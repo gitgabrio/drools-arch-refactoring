@@ -15,33 +15,33 @@
  */
 package org.kie.bar.engine.compilation.service;
 
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getDARCompilationOutputBar;
+import static org.kie.bar.engine.compilation.utils.BarCompilerHelper.getEfestoCompilationOutputBar;
 
 public class KieCompilerServiceBar implements KieCompilerService {
 
     @Override
-    public <T extends DARResource> boolean canManageResource(T toProcess) {
-        return toProcess instanceof DARFileResource && ((DARFileResource) toProcess).getModelType().equalsIgnoreCase("bar");
+    public <T extends EfestoResource> boolean canManageResource(T toProcess) {
+        return toProcess instanceof EfestoFileResource && ((EfestoFileResource) toProcess).getModelType().equalsIgnoreCase("bar");
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends DARResource, E extends DARCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public <T extends EfestoResource, E extends EfestoCompilationOutput> List<E> processResource(T toProcess, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         if (!canManageResource(toProcess)) {
             throw new KieCompilerServiceException(String.format("%s can not process %s",
                     this.getClass().getName(),
                     toProcess.getClass().getName()));
         }
-        return (List<E>) Collections.singletonList(getDARCompilationOutputBar((DARFileResource) toProcess, memoryCompilerClassLoader));
+        return (List<E>) Collections.singletonList(getEfestoCompilationOutputBar((EfestoFileResource) toProcess, memoryCompilerClassLoader));
     }
 }

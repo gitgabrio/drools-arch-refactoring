@@ -15,12 +15,12 @@
  */
 package org.kie.drl.engine.runtime.mapinput.service;
 
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
-import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
-import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
+import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
+import org.kie.drl.engine.runtime.mapinput.model.EfestoInputDrlMap;
+import org.kie.drl.engine.runtime.mapinput.model.EfestoOutputDrlMap;
 import org.kie.drl.engine.runtime.mapinput.utils.DrlRuntimeHelper;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
@@ -30,18 +30,18 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<DARMapInputDTO, Map<String, Object>, AbstractDARInput<DARMapInputDTO>, DAROutputDrlMap> {
+public class KieRuntimeServiceDrlMapInput implements KieRuntimeService<EfestoMapInputDTO, Map<String, Object>, AbstractEfestoInput<EfestoMapInputDTO>, EfestoOutputDrlMap> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceDrlMapInput.class.getName());
 
 
     @Override
-    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public boolean canManageInput(EfestoInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return DrlRuntimeHelper.canManage(toEvaluate);
     }
 
     @Override
-    public Optional<DAROutputDrlMap> evaluateInput(AbstractDARInput<DARMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<EfestoOutputDrlMap> evaluateInput(AbstractEfestoInput<EfestoMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return DrlRuntimeHelper.execute(toEvaluate, memoryCompilerClassLoader);
     }
 }

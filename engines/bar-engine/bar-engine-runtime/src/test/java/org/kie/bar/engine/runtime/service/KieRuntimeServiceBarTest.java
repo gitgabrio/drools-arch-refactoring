@@ -17,9 +17,9 @@ package org.kie.bar.engine.runtime.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.runtime.model.DARInputBar;
-import org.kie.bar.engine.runtime.model.DAROutputBar;
-import org.kie.dar.common.api.model.FRI;
+import org.kie.bar.engine.runtime.model.EfestoInputBar;
+import org.kie.bar.engine.runtime.model.EfestoOutputBar;
+import org.kie.efesto.common.api.model.FRI;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.Optional;
@@ -39,20 +39,20 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void canManageResource() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "bar"), "InputData");
+        EfestoInputBar toEvaluate = new EfestoInputBar(new FRI("/bar/efesto", "bar"), "InputData");
         assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isTrue();
-        toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
+        toEvaluate = new EfestoInputBar(new FRI("/bar/efesto", "notbar"), "InputData");
         assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
-        toEvaluate = new DARInputBar(new FRI("darfoo", "bar"), "InputData");
+        toEvaluate = new EfestoInputBar(new FRI("darfoo", "bar"), "InputData");
         assertThat(kieRuntimeService.canManageInput(toEvaluate, memoryCompilerClassLoader)).isFalse();
     }
 
     @Test
     void evaluateInputExistingBarResources() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("/dar", "bar"), "InputData");
-        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(new FRI("/efesto", "bar"), "InputData");
+        Optional<EfestoOutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrieved).isPresent();
-        DAROutputBar darOutputBar = retrieved.get();
+        EfestoOutputBar darOutputBar = retrieved.get();
         assertThat(darOutputBar.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(darOutputBar.getOutputData()).isEqualTo(toEvaluate.getInputData());
 
@@ -60,8 +60,8 @@ class KieRuntimeServiceBarTest {
 
     @Test
     void evaluateInputNotExistingBarResources() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("/bar/dar", "notbar"), "InputData");
-        Optional<DAROutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(new FRI("/bar/efesto", "notbar"), "InputData");
+        Optional<EfestoOutputBar> retrieved = kieRuntimeService.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isNotPresent();
     }
 

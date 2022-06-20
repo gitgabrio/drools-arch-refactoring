@@ -18,15 +18,15 @@ package org.kie.bar.engine.testingmodule.compilation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedClassResource;
-import org.kie.dar.common.api.model.GeneratedResources;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedClassResource;
+import org.kie.efesto.common.api.model.GeneratedResources;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
+import static org.kie.efesto.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class CompileBarTest {
 
@@ -56,12 +56,12 @@ class CompileBarTest {
     public void init() {
         try {
             getFileFromFileName("IndexFile.foo_json").delete();
-        } catch (KieDARCommonException e) {
+        } catch (KieEfestoCommonException e) {
             // Ignore
         }
         try {
             getFileFromFileName("IndexFile.bar_json").delete();
-        } catch (KieDARCommonException e) {
+        } catch (KieEfestoCommonException e) {
             // Ignore
         }
     }
@@ -69,7 +69,7 @@ class CompileBarTest {
     @Test
     void compileRedirectBar() {
         File barFile = getFileFromFileName("RedirectBar.bar");
-        DARResource darResourceBar = new DARFileResource(barFile);
+        EfestoResource darResourceBar = new EfestoFileResource(barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.size()).isEqualTo(2);
@@ -79,15 +79,15 @@ class CompileBarTest {
 
         // TODO
 //        assertTrue(darCompilationOutput.isPresent());
-//        DARCompilationOutput retrieved = darCompilationOutput.get();
-//        assertTrue(retrieved instanceof DARCallableOutputFoo);
+//        EfestoCompilationOutput retrieved = darCompilationOutput.get();
+//        assertTrue(retrieved instanceof EfestoCallableOutputFoo);
     }
 
     @Test
     void compileExecuteBar() throws IOException {
         FRI fri = new FRI("bar/darbar", "bar");
         File barFile = getFileFromFileName("DarBar.bar");
-        DARResource darResourceBar = new DARFileResource(barFile);
+        EfestoResource darResourceBar = new EfestoFileResource(barFile);
         List<IndexFile> retrieved = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         int involvedEngines = 1;
         assertThat(retrieved.size()).isEqualTo(involvedEngines);
@@ -113,7 +113,7 @@ class CompileBarTest {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }

@@ -16,11 +16,11 @@ package org.kie.foo.engine.runtime.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.api.model.FooResources;
-import org.kie.foo.engine.runtime.model.DARInputFoo;
-import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.foo.engine.runtime.model.EfestoInputFoo;
+import org.kie.foo.engine.runtime.model.EfestoOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +37,7 @@ class FooRuntimeHelperTest {
 
     @Test
     void loadExistingFooResources() {
-        FooResources retrieved = FooRuntimeHelper.loadFooResources(new FRI("dar", "foo"), memoryCompilerClassLoader);
+        FooResources retrieved = FooRuntimeHelper.loadFooResources(new FRI("efesto", "foo"), memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getManagedResources().size()).isEqualTo(2);
         assertThat(retrieved.getManagedResources().contains("FooResOne")).isTrue();
@@ -47,7 +47,7 @@ class FooRuntimeHelperTest {
     @Test
     void loadNotExistingFooResources() {
         try {
-            FooRuntimeHelper.loadFooResources(new FRI("dar", "notfoo"), memoryCompilerClassLoader);
+            FooRuntimeHelper.loadFooResources(new FRI("efesto", "notfoo"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertThat(e instanceof KieRuntimeServiceException).isTrue();
@@ -55,11 +55,11 @@ class FooRuntimeHelperTest {
     }
 
     @Test
-    void getDAROutput() {
-        FRI fri = new FRI("dar", "foo");
+    void getEfestoOutput() {
+        FRI fri = new FRI("efesto", "foo");
         FooResources fooResources = FooRuntimeHelper.loadFooResources(fri, memoryCompilerClassLoader);
-        DARInputFoo darInputFoo = new DARInputFoo(fri, "InputData");
-        DAROutputFoo retrieved = FooRuntimeHelper.getDAROutput(fooResources, darInputFoo);
+        EfestoInputFoo darInputFoo = new EfestoInputFoo(fri, "InputData");
+        EfestoOutputFoo retrieved = FooRuntimeHelper.getEfestoOutput(fooResources, darInputFoo);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getFRI()).isEqualTo(darInputFoo.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(darInputFoo.getInputData());

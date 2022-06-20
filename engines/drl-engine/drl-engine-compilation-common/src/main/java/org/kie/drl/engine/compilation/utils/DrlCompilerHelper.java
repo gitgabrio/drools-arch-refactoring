@@ -26,9 +26,9 @@ import org.drools.model.project.codegen.RuleCodegenError;
 import org.drools.modelcompiler.builder.GeneratedFile;
 import org.drools.modelcompiler.tool.ExplicitCanonicalModelCompiler;
 import org.kie.api.io.Resource;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARSetResource;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoSetResource;
 import org.kie.drl.engine.compilation.model.DecisionTableFileSetResource;
 import org.kie.drl.engine.compilation.model.DrlCallableClassesContainer;
 import org.kie.drl.engine.compilation.model.DrlFileSetResource;
@@ -60,7 +60,7 @@ public class DrlCompilerHelper {
         throw new KieCompilerServiceException("Not implemented, yet");
     }
 
-    public static DrlCallableClassesContainer getDrlCallableClassesContainer(DARSetResource<PackageDescr> resources, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static DrlCallableClassesContainer getDrlCallableClassesContainer(EfestoSetResource<PackageDescr> resources, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         Map<String, CompositePackageDescr> packages = new HashMap<>();
         for (PackageDescr packageDescr : resources.getContent()) {
             addPackageDescr(packageDescr, packageDescr.getResource(), packages);

@@ -19,17 +19,17 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.dar.runtimemanager.api.model.DARInput;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.commons.model.KiePMMLModel;
 import org.kie.pmml.commons.model.KiePMMLModelFactory;
 import org.kie.pmml.runtime.core.PMMLContextImpl;
-import org.kie.pmml.runtime.core.model.DARInputPMML;
-import org.kie.pmml.runtime.core.model.DAROutputPMML;
+import org.kie.pmml.runtime.core.model.EfestoInputPMML;
+import org.kie.pmml.runtime.core.model.EfestoOutputPMML;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,22 +54,22 @@ class PMMLRuntimeHelperTest {
     @Test
     void canManage() {
         FRI fri = new FRI(basePath, "pmml");
-        AbstractDARInput darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        AbstractEfestoInput darInputPMML = new EfestoInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isTrue();
-        darInputPMML = new AbstractDARInput<>(fri, ""){};
+        darInputPMML = new AbstractEfestoInput<>(fri, ""){};
         assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isFalse();
         fri = new FRI("darfoo", "pmml");
-        darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        darInputPMML = new EfestoInputPMML(fri, getPMMLContext("fileName", "TestMod"));
         assertThat(PMMLRuntimeHelper.canManage(darInputPMML)).isFalse();
     }
 
     @Test
     void execute() {
         FRI fri = new FRI(basePath, "pmml");
-        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
-        Optional<DAROutputPMML> retrieved = PMMLRuntimeHelper.execute(darInputPMML, memoryCompilerClassLoader);
+        EfestoInputPMML darInputPMML = new EfestoInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        Optional<EfestoOutputPMML> retrieved = PMMLRuntimeHelper.execute(darInputPMML, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
-        commonEvaluateDAROutputPMML(retrieved.get(), darInputPMML);
+        commonEvaluateEfestoOutputPMML(retrieved.get(), darInputPMML);
     }
 
     @Test
@@ -96,12 +96,12 @@ class PMMLRuntimeHelperTest {
     }
 
     @Test
-    void getDAROutput() {
+    void getEfestoOutput() {
         FRI fri = new FRI(basePath, "pmml");
         KiePMMLModelFactory kiePmmlModelFactory = PMMLRuntimeHelper.loadKiePMMLModelFactory(fri, memoryCompilerClassLoader);
-        DARInputPMML darInputPMML = new DARInputPMML(fri, getPMMLContext("fileName", "TestMod"));
-        DAROutputPMML retrieved = PMMLRuntimeHelper.getDAROutput(kiePmmlModelFactory, darInputPMML);
-        commonEvaluateDAROutputPMML(retrieved, darInputPMML);
+        EfestoInputPMML darInputPMML = new EfestoInputPMML(fri, getPMMLContext("fileName", "TestMod"));
+        EfestoOutputPMML retrieved = PMMLRuntimeHelper.getEfestoOutput(kiePmmlModelFactory, darInputPMML);
+        commonEvaluateEfestoOutputPMML(retrieved, darInputPMML);
     }
 
     @Test
@@ -139,7 +139,7 @@ class PMMLRuntimeHelperTest {
         // TODO for drools models
     }
 
-    private void commonEvaluateDAROutputPMML(DAROutputPMML toEvaluate, DARInputPMML darInputPMML) {
+    private void commonEvaluateEfestoOutputPMML(EfestoOutputPMML toEvaluate, EfestoInputPMML darInputPMML) {
         assertThat(toEvaluate).isNotNull();
         assertThat(toEvaluate.getFRI()).isEqualTo(darInputPMML.getFRI());
         commonEvaluatePMML4Result(toEvaluate.getOutputData(), darInputPMML.getInputData().getRequestData());

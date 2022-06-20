@@ -16,10 +16,10 @@
 package org.kie.pmml.runtime.core.utils;
 
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedExecutableResource;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.DARInput;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedExecutableResource;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.api.exceptions.KiePMMLException;
@@ -30,8 +30,8 @@ import org.kie.pmml.commons.model.ProcessingDTO;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluator;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinder;
 import org.kie.pmml.runtime.core.executor.PMMLModelEvaluatorFinderImpl;
-import org.kie.pmml.runtime.core.model.DARInputPMML;
-import org.kie.pmml.runtime.core.model.DAROutputPMML;
+import org.kie.pmml.runtime.core.model.EfestoInputPMML;
+import org.kie.pmml.runtime.core.model.EfestoOutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +39,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
+import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
 import static org.kie.pmml.runtime.core.utils.PostProcess.postProcess;
 import static org.kie.pmml.runtime.core.utils.PreProcess.preProcess;
 
@@ -54,11 +54,11 @@ public class PMMLRuntimeHelper {
     }
 
 
-    public static boolean canManage(DARInput toEvaluate) {
-        return (toEvaluate instanceof DARInputPMML) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "pmml");
+    public static boolean canManage(EfestoInput toEvaluate) {
+        return (toEvaluate instanceof EfestoInputPMML) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "pmml");
     }
 
-    public static Optional<DAROutputPMML> execute(DARInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<EfestoOutputPMML> execute(EfestoInputPMML toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         KiePMMLModelFactory kiePMMLModelFactory;
         try {
             kiePMMLModelFactory = loadKiePMMLModelFactory(toEvaluate.getFRI(), memoryCompilerClassLoader);
@@ -69,7 +69,7 @@ public class PMMLRuntimeHelper {
             return Optional.empty();
         }
         try {
-            return Optional.of(getDAROutput(kiePMMLModelFactory, toEvaluate));
+            return Optional.of(getEfestoOutput(kiePMMLModelFactory, toEvaluate));
         } catch (KiePMMLException e) {
             throw e;
         } catch (Exception e) {
@@ -93,10 +93,10 @@ public class PMMLRuntimeHelper {
         }
     }
 
-    static DAROutputPMML getDAROutput(KiePMMLModelFactory kiePMMLModelFactory, DARInputPMML darInputPMML) {
+    static EfestoOutputPMML getEfestoOutput(KiePMMLModelFactory kiePMMLModelFactory, EfestoInputPMML darInputPMML) {
         List<KiePMMLModel> kiePMMLModels = kiePMMLModelFactory.getKiePMMLModels();
         PMML4Result result = evaluate(kiePMMLModels, darInputPMML.getInputData());
-        return new DAROutputPMML(darInputPMML.getFRI(), result);
+        return new EfestoOutputPMML(darInputPMML.getFRI(), result);
     }
 
     static PMML4Result evaluate(final List<KiePMMLModel> kiePMMLModels, final PMMLContext pmmlContext) {

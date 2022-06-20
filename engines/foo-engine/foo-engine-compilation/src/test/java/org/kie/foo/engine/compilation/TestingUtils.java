@@ -15,11 +15,11 @@
  */
 package org.kie.foo.engine.compilation;
 
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARRedirectOutput;
-import org.kie.dar.compilationmanager.api.model.DARResource;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoRedirectOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -51,22 +51,22 @@ public class TestingUtils {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }
 
 
-    public static DARResource<String> getDARResource() {
+    public static EfestoResource<String> getEfestoResource() {
         return () -> "UnmanagedResource";
     }
 
-    public static DARFileResource getDARFileResource(File fooFile) {
-        return new DARFileResource(fooFile);
+    public static EfestoFileResource getEfestoFileResource(File fooFile) {
+        return new EfestoFileResource(fooFile);
     }
 
-    public static DARRedirectOutput<String> getDARResourceIntermediate() {
-        return new DARRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", "Content") {
+    public static EfestoRedirectOutput<String> getEfestoResourceIntermediate() {
+        return new EfestoRedirectOutput(new FRI("this/is/fri", "not_foo"), "foo", "Content") {
         };
     }
 

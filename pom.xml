@@ -33,8 +33,8 @@
     </properties>
 
     <modules>
-        <module>dar-common-utils</module>
-        <module>dar-core</module>
+        <module>efesto-common-utils</module>
+        <module>efesto-core</module>
         <module>engines</module>
     </modules>
 
@@ -42,7 +42,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.kie</groupId>
-                <artifactId>dar-common-utils</artifactId>
+                <artifactId>efesto-common-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -353,7 +353,7 @@
 
 <!--&lt;!&ndash;                                <checks>&ndash;&gt;-->
 <!--&lt;!&ndash;                                    &lt;!&ndash; otherwise you can specify either field or method names here. If no checks block is defined, all are executed &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <check>NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS</check>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <check>NO_CLASSES_SHOULD_ACCESS_STANEfestoD_STREAMS</check>&ndash;&gt;-->
 <!--&lt;!&ndash;                                </checks>&ndash;&gt;-->
 <!--                            </configurableRule>-->
 <!--                        </configurableRules>-->

@@ -17,17 +17,17 @@ package org.kie.bar.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.bar.engine.runtime.model.DARInputBar;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
-import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
+import org.kie.bar.engine.runtime.model.EfestoInputBar;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.core.service.RuntimeManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -54,16 +54,16 @@ class RuntimeBarTest {
     @Test
     void evaluateExecutableBarCompilationOnTheFly() {
         FRI fri = new FRI("darbar", "bar");
-        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
-        Optional<DAROutput> retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(fri, "InputData");
+        Optional<EfestoOutput> retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrievedOutput).isEmpty();
         File barFile = getFileFromFileName("DarBar.bar");
-        DARResource darResourceBar = new DARFileResource(barFile);
+        EfestoResource darResourceBar = new EfestoFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertThat(indexFiles).isNotNull().hasSize(1);
         retrievedOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(retrievedOutput).isPresent();
-        DAROutput retrieved = retrievedOutput.get();
+        EfestoOutput retrieved = retrievedOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
@@ -71,16 +71,16 @@ class RuntimeBarTest {
     @Test
     void evaluateRedirectBarCompilationOnTheFly() {
         FRI fri = new FRI("redirectbar", "bar");
-        DARInputBar toEvaluate = new DARInputBar(fri, "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(fri, "InputData");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotNull().isNotPresent();
         File barFile = getFileFromFileName("RedirectBar.bar");
-        DARResource darResourceBar = new DARFileResource(barFile);
+        EfestoResource darResourceBar = new EfestoFileResource(barFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceBar, memoryCompilerClassLoader);
         assertThat(indexFiles).isNotNull().hasSize(2);
         darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isNotEmpty();
-        DAROutput retrieved = darOutput.get();
+        EfestoOutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isInstanceOf(String.class);
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
@@ -88,20 +88,20 @@ class RuntimeBarTest {
 
     @Test
     void evaluateExecutableBarStaticCompilation() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("staticdar", "bar"), "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(new FRI("staticdar", "bar"), "InputData");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isPresent();
-        DAROutput retrieved = darOutput.get();
+        EfestoOutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(toEvaluate.getInputData());
     }
 
     @Test
     void evaluateRedirectBarStaticCompilation() {
-        DARInputBar toEvaluate = new DARInputBar(new FRI("this/is/fri", "bar"), "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputBar toEvaluate = new EfestoInputBar(new FRI("this/is/fri", "bar"), "InputData");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput).isPresent();
-        DAROutput retrieved = darOutput.get();
+        EfestoOutput retrieved = darOutput.get();
         assertThat(retrieved.getFRI()).isEqualTo(toEvaluate.getFRI());
         assertThat(retrieved.getOutputData()).isInstanceOf(String.class).isEqualTo(toEvaluate.getInputData());
     }
@@ -111,7 +111,7 @@ class RuntimeBarTest {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }

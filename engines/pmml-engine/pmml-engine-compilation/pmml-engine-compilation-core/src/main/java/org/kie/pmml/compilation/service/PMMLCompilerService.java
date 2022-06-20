@@ -15,14 +15,14 @@
  */
 package org.kie.pmml.compilation.service;
 
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.utils.StringUtils;
-import org.kie.dar.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARSetResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.utils.StringUtils;
+import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoSetResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.memorycompiler.JavaConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.exceptions.ExternalException;
@@ -32,8 +32,8 @@ import org.kie.pmml.commons.model.*;
 import org.kie.pmml.compilation.executor.PMMLCompiler;
 import org.kie.pmml.compilation.executor.PMMLCompilerImpl;
 import org.kie.pmml.compilation.impl.HasClassloaderImpl;
-import org.kie.pmml.compilation.model.DARCallableOutputPMMLClassesContainer;
-import org.kie.pmml.compilation.model.DARRedirectOutputPMML;
+import org.kie.pmml.compilation.model.EfestoCallableOutputPMMLClassesContainer;
+import org.kie.pmml.compilation.model.EfestoRedirectOutputPMML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +41,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.dar.common.api.utils.FileNameUtils.getFileName;
-import static org.kie.dar.common.api.utils.FileNameUtils.removeSuffix;
-import static org.kie.dar.compilationmanager.api.utils.SPIUtils.getCompilationManager;
+import static org.kie.efesto.common.api.model.FRI.SLASH;
+import static org.kie.efesto.common.api.utils.FileNameUtils.getFileName;
+import static org.kie.efesto.common.api.utils.FileNameUtils.removeSuffix;
+import static org.kie.efesto.compilationmanager.api.utils.SPIUtils.getCompilationManager;
 
 
 /**
@@ -61,12 +61,12 @@ public class PMMLCompilerService {
     }
 
 
-    public static List<DARCompilationOutput> getDARCompilationOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        return getDARFinalOutputPMML(resource, memoryClassLoader);
+    public static List<EfestoCompilationOutput> getEfestoCompilationOutputPMML(EfestoFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        return getEfestoFinalOutputPMML(resource, memoryClassLoader);
     }
 
-    static List<DARCompilationOutput> getDARFinalOutputPMML(DARFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
-        List<DARCompilationOutput> toReturn = new ArrayList<>();
+    static List<EfestoCompilationOutput> getEfestoFinalOutputPMML(EfestoFileResource resource, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+        List<EfestoCompilationOutput> toReturn = new ArrayList<>();
         List<KiePMMLModel> kiePmmlModels = getKiePMMLModelsFromResourcesWithConfigurationsWithSources(new HasClassloaderImpl(memoryClassLoader), Collections.singletonList(resource));
         List<KiePMMLModelWithSources> kiePmmlModelsWithSources = kiePmmlModels
                 .stream()
@@ -82,10 +82,10 @@ public class PMMLCompilerService {
 //            Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
 //            allSourcesMap.putAll(sourcesMap);
 //            if (kiePMMLModelWithSources instanceof HasRedirectOutput) {
-//                DARSetResource redirectResource = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
+//                EfestoSetResource redirectResource = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
 //                getRedirectCompilation(redirectResource, memoryClassLoader);
 //                FRI fri = new FRI(redirectResource.getBasePath(), "pmml");
-//                toReturn.add(new DARRedirectOutputPMML(fri, kiePMMLModelWithSources.getName()));
+//                toReturn.add(new EfestoRedirectOutputPMML(fri, kiePMMLModelWithSources.getName()));
 //            }
 //        });
         List<KiePMMLFactoryModel> kiePMMLFactoryModels = kiePmmlModels
@@ -100,24 +100,24 @@ public class PMMLCompilerService {
             String basePath = fileName + SLASH + modelName;
             FRI fri = new FRI(basePath, "pmml");
             String fullResourceClassName = kiePMMLFactoryModel.getSourcesMap().keySet().iterator().next();
-            toReturn.add(new DARCallableOutputPMMLClassesContainer(fri, fullResourceClassName, compiledClasses));
+            toReturn.add(new EfestoCallableOutputPMMLClassesContainer(fri, fullResourceClassName, compiledClasses));
         });
         return toReturn;
     }
 
     static void iterateOverKiePmmlModelsWithSources(
             List<KiePMMLModelWithSources> toIterate,
-            List<DARCompilationOutput> darCompilationOutputs,
+            List<EfestoCompilationOutput> darCompilationOutputs,
             Map<String, String> allSourcesMap,
             KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         toIterate.forEach(kiePMMLModelWithSources -> {
             Map<String, String> sourcesMap = kiePMMLModelWithSources.getSourcesMap();
             allSourcesMap.putAll(sourcesMap);
             if (kiePMMLModelWithSources instanceof HasRedirectOutput) {
-                DARSetResource redirectResource = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
+                EfestoSetResource redirectResource = ((HasRedirectOutput) kiePMMLModelWithSources).getRedirectOutput();
                 getRedirectCompilation(redirectResource, memoryClassLoader);
                 FRI fri = new FRI(redirectResource.getBasePath(), "pmml");
-                darCompilationOutputs.add(new DARRedirectOutputPMML(fri, kiePMMLModelWithSources.getName()));
+                darCompilationOutputs.add(new EfestoRedirectOutputPMML(fri, kiePMMLModelWithSources.getName()));
             }
             if (kiePMMLModelWithSources instanceof HasNestedModels) {
                 List<KiePMMLModelWithSources> nestedKiePmmlModelsWithSources = ((HasNestedModels) kiePMMLModelWithSources)
@@ -132,7 +132,7 @@ public class PMMLCompilerService {
 
     }
 
-    static List<IndexFile> getRedirectCompilation(DARSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
+    static List<IndexFile> getRedirectCompilation(EfestoSetResource redirectOutput, KieMemoryCompiler.MemoryCompilerClassLoader memoryClassLoader) {
         Optional<CompilationManager> compilationManager = getCompilationManager(true);
         if (compilationManager.isEmpty()) {
             throw new KieCompilerServiceException("Cannot find CompilationManager");
@@ -147,7 +147,7 @@ public class PMMLCompilerService {
      * @throws KiePMMLException  if any <code>KiePMMLInternalException</code> has been thrown during execution
      * @throws ExternalException if any other kind of <code>Exception</code> has been thrown during execution
      */
-    static List<KiePMMLModel> getKiePMMLModelsFromResourcesWithConfigurationsWithSources(HasClassLoader hasClassLoader, Collection<DARFileResource> resources) {
+    static List<KiePMMLModel> getKiePMMLModelsFromResourcesWithConfigurationsWithSources(HasClassLoader hasClassLoader, Collection<EfestoFileResource> resources) {
         return resources.stream()
                 .flatMap(resource -> getKiePMMLModelsFromResourceWithSources(hasClassLoader, resource).stream())
                 .collect(Collectors.toList());
@@ -159,7 +159,7 @@ public class PMMLCompilerService {
      * @return
      */
     static List<KiePMMLModel> getKiePMMLModelsFromResourceWithSources(HasClassLoader hasClassLoader,
-                                                                      DARFileResource resource) {
+                                                                      EfestoFileResource resource) {
         String[] classNamePackageName = getFactoryClassNamePackageName(resource);
         String packageName = classNamePackageName[1];
         try {
@@ -180,7 +180,7 @@ public class PMMLCompilerService {
      * @param resource
      * @return
      */
-    static String[] getFactoryClassNamePackageName(DARFileResource resource) {
+    static String[] getFactoryClassNamePackageName(EfestoFileResource resource) {
         String sourcePath = resource.getSourcePath();
         if (sourcePath == null || sourcePath.isEmpty()) {
             throw new IllegalArgumentException("Missing required sourcePath in resource " + resource + " -> " + resource.getClass().getName());

@@ -15,17 +15,17 @@
  */
 package org.kie.foo.engine.runtime.utils;
 
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedExecutableResource;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedExecutableResource;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.foo.engine.api.model.FooResources;
-import org.kie.foo.engine.runtime.model.DARInputFoo;
-import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.foo.engine.runtime.model.EfestoInputFoo;
+import org.kie.foo.engine.runtime.model.EfestoOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
+import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
 
 public class FooRuntimeHelper {
 
@@ -52,8 +52,8 @@ public class FooRuntimeHelper {
         }
     }
 
-    public static DAROutputFoo getDAROutput(FooResources fooResources, DARInputFoo darInputFoo) {
-        return new DAROutputFoo(darInputFoo.getFRI(), darInputFoo.getInputData());
+    public static EfestoOutputFoo getEfestoOutput(FooResources fooResources, EfestoInputFoo darInputFoo) {
+        return new EfestoOutputFoo(darInputFoo.getFRI(), darInputFoo.getInputData());
     }
 
 

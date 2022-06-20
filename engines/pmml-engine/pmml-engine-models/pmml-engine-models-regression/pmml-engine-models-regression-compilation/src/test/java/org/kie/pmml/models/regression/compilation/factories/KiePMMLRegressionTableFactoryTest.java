@@ -48,7 +48,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.groupingBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.kie.dar.common.api.utils.FileUtils.getFileContent;
+import static org.kie.efesto.common.api.utils.FileUtils.getFileContent;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getGeneratedClassName;
 import static org.kie.pmml.commons.utils.KiePMMLModelUtils.getSanitizedVariableName;
 import static org.kie.pmml.compilation.commons.testutils.CodegenTestUtils.commonValidateCompilation;

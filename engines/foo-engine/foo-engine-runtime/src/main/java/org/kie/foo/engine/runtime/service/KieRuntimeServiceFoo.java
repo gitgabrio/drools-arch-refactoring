@@ -15,12 +15,12 @@
  */
 package org.kie.foo.engine.runtime.service;
 
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
+import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.foo.engine.api.model.FooResources;
-import org.kie.foo.engine.runtime.model.DARInputFoo;
-import org.kie.foo.engine.runtime.model.DAROutputFoo;
+import org.kie.foo.engine.runtime.model.EfestoInputFoo;
+import org.kie.foo.engine.runtime.model.EfestoOutputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,22 +29,22 @@ import java.util.Optional;
 
 import static org.kie.foo.engine.runtime.utils.FooRuntimeHelper.*;
 
-public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, DARInput<String>, DAROutputFoo> {
+public class KieRuntimeServiceFoo implements KieRuntimeService<String, String, EfestoInput<String>, EfestoOutputFoo> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceFoo.class.getName());
 
 
     @Override
-    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public boolean canManageInput(EfestoInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return canManage(toEvaluate.getFRI());
     }
 
     @Override
-    public Optional<DAROutputFoo> evaluateInput(DARInput<String> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<EfestoOutputFoo> evaluateInput(EfestoInput<String> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         try {
             FooResources fooResources = loadFooResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
-            DARInputFoo darInputFoo = new DARInputFoo(toEvaluate.getFRI(), toEvaluate.getInputData());
-            return Optional.of(getDAROutput(fooResources, darInputFoo));
+            EfestoInputFoo darInputFoo = new EfestoInputFoo(toEvaluate.getFRI(), toEvaluate.getInputData());
+            return Optional.of(getEfestoOutput(fooResources, darInputFoo));
         } catch (Exception e) {
             logger.warn("{} can not evaluate {}",
                     this.getClass().getName(),

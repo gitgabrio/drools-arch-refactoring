@@ -16,24 +16,24 @@
 package org.kie.bar.engine.runtime.utils;
 
 import org.kie.bar.engine.api.model.BarResources;
-import org.kie.bar.engine.runtime.model.DARInputBar;
-import org.kie.bar.engine.runtime.model.DAROutputBar;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedExecutableResource;
-import org.kie.dar.common.api.model.GeneratedRedirectResource;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.bar.engine.runtime.model.EfestoInputBar;
+import org.kie.bar.engine.runtime.model.EfestoOutputBar;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedExecutableResource;
+import org.kie.efesto.common.api.model.GeneratedRedirectResource;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.*;
-import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
+import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.*;
+import static org.kie.efesto.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
 
 public class BarRuntimeHelper {
 
@@ -44,11 +44,11 @@ public class BarRuntimeHelper {
     }
 
 
-    public static boolean canManage(DARInput toEvaluate) {
-        return (toEvaluate instanceof DARInputBar) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "bar");
+    public static boolean canManage(EfestoInput toEvaluate) {
+        return (toEvaluate instanceof EfestoInputBar) && isPresentExecutableOrRedirect(toEvaluate.getFRI(), "bar");
     }
 
-    public static Optional<DAROutputBar> execute(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<EfestoOutputBar> execute(EfestoInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         BarResources barResources;
         try {
             barResources = loadBarResources(toEvaluate.getFRI(), memoryCompilerClassLoader);
@@ -59,7 +59,7 @@ public class BarRuntimeHelper {
             return Optional.empty();
         }
         try {
-            return Optional.of(getDAROutput(barResources, toEvaluate));
+            return Optional.of(getEfestoOutput(barResources, toEvaluate));
         } catch (Exception e) {
             throw new KieRuntimeServiceException(String.format("%s failed to execute %s",
                     BarRuntimeHelper.class.getName(),
@@ -73,14 +73,14 @@ public class BarRuntimeHelper {
      * @return
      */
     @SuppressWarnings({"unchecked", "raw"})
-    public static Optional<DAROutputBar> redirect(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public static Optional<EfestoOutputBar> redirect(EfestoInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI(), "bar").orElse(null);
         if (redirectResource == null) {
             logger.warn("{} can not redirect {}", BarRuntimeHelper.class.getName(), toEvaluate.getFRI());
             return Optional.empty();
         }
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInput<String> redirectInput = new AbstractDARInput<String>(targetFri, toEvaluate.getInputData()) {
+        EfestoInput<String> redirectInput = new AbstractEfestoInput<String>(targetFri, toEvaluate.getInputData()) {
 
         };
 
@@ -93,7 +93,7 @@ public class BarRuntimeHelper {
         return targetService.map(service -> service.evaluateInput(redirectInput, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(o -> new DAROutputBar(toEvaluate.getFRI(), ((DAROutput<?>) o).getOutputData().toString()));
+                .map(o -> new EfestoOutputBar(toEvaluate.getFRI(), ((EfestoOutput<?>) o).getOutputData().toString()));
     }
 
     @SuppressWarnings("unchecked")
@@ -110,8 +110,8 @@ public class BarRuntimeHelper {
         }
     }
 
-    static DAROutputBar getDAROutput(BarResources barResources, DARInputBar darInputBar) {
-        return new DAROutputBar(darInputBar.getFRI(), darInputBar.getInputData());
+    static EfestoOutputBar getEfestoOutput(BarResources barResources, EfestoInputBar darInputBar) {
+        return new EfestoOutputBar(darInputBar.getFRI(), darInputBar.getInputData());
     }
 
 }

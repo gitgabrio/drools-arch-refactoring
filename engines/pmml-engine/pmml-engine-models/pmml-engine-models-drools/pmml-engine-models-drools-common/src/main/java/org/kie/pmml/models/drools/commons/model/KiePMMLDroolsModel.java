@@ -17,12 +17,12 @@ package org.kie.pmml.models.drools.commons.model;
 
 import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.pmml.PMML4Result;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedRedirectResource;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.*;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedRedirectResource;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.*;
+import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.enums.MINING_FUNCTION;
 import org.kie.pmml.api.enums.PMML_MODEL;
@@ -41,10 +41,10 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.kie.dar.common.api.model.FRI.SLASH;
-import static org.kie.dar.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
-import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
-import static org.kie.dar.runtimemanager.api.utils.SPIUtils.getRuntimeManager;
+import static org.kie.efesto.common.api.model.FRI.SLASH;
+import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedRedirectResource;
+import static org.kie.efesto.runtimemanager.api.utils.SPIUtils.getKieRuntimeService;
+import static org.kie.efesto.runtimemanager.api.utils.SPIUtils.getRuntimeManager;
 import static org.kie.pmml.models.drools.commons.factories.KiePMMLDescrFactory.OUTPUTFIELDS_MAP_IDENTIFIER;
 import static org.kie.pmml.models.drools.commons.factories.KiePMMLDescrFactory.PMML4_RESULT_IDENTIFIER;
 import static org.kie.pmml.models.drools.utils.KiePMMLAgendaListenerUtils.getAgendaEventListener;
@@ -87,23 +87,23 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
         globals.put(OUTPUTFIELDS_MAP_IDENTIFIER, context.getOutputFieldsMap());
 
 
-        Map<String, DAROriginalTypeGeneratedType> convertedFieldTypeMap = fieldTypeMap.entrySet()
+        Map<String, EfestoOriginalTypeGeneratedType> convertedFieldTypeMap = fieldTypeMap.entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> new DAROriginalTypeGeneratedType(entry.getValue().getOriginalType(),
+                        entry -> new EfestoOriginalTypeGeneratedType(entry.getValue().getOriginalType(),
                                 entry.getValue().getGeneratedType())));
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap, this.getName(),  this.getKModulePackageName());
+        EfestoMapInputDTO darMapInputDTO = new EfestoMapInputDTO(inserts, globals, requestData, convertedFieldTypeMap, this.getName(),  this.getKModulePackageName());
 
         String basePath = context.getFileName() + SLASH + this.getName();
         FRI fri = new FRI(basePath, "drl");
-        DARInput<DARMapInputDTO> input = new AbstractDARInput(fri, darMapInputDTO) {
+        EfestoInput<EfestoMapInputDTO> input = new AbstractEfestoInput(fri, darMapInputDTO) {
         };
 
         Optional<RuntimeManager> runtimeManager = getRuntimeManager(true);
         if (runtimeManager.isEmpty()) {
             throw new KieRuntimeServiceException("Cannot find RuntimeManager");
         }
-        Optional<DAROutput> output = runtimeManager.get().evaluateInput(input, (KieMemoryCompiler.MemoryCompilerClassLoader) context.getMemoryClassLoader());
+        Optional<EfestoOutput> output = runtimeManager.get().evaluateInput(input, (KieMemoryCompiler.MemoryCompilerClassLoader) context.getMemoryClassLoader());
         // TODO manage for different kind of retrieved output
         if (output.isEmpty()) {
             throw new KiePMMLException("Failed to retrieve value for " + this.getName());
@@ -149,14 +149,14 @@ public abstract class KiePMMLDroolsModel extends KiePMMLModel implements IsDrool
         return Objects.hash(kiePMMLOutputFields, fieldTypeMap);
     }
 
-    private void evaluatePMML4Result(final PMML4Result pmml4Result, AbstractDARInput<DARMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    private void evaluatePMML4Result(final PMML4Result pmml4Result, AbstractEfestoInput<EfestoMapInputDTO> toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         GeneratedRedirectResource redirectResource = getGeneratedRedirectResource(toEvaluate.getFRI(), "pmml").orElse(null);
         if (redirectResource == null) {
             logger.warn("{} can not redirect {}", KiePMMLDroolsModel.class.getName(), toEvaluate.getFRI());
             return;
         }
         FRI targetFri = new FRI(redirectResource.getFri().getBasePath(), redirectResource.getTarget());
-        DARInput<DARMapInputDTO> redirectInput = new AbstractDARInput<>(targetFri, toEvaluate.getInputData()) {
+        EfestoInput<EfestoMapInputDTO> redirectInput = new AbstractEfestoInput<>(targetFri, toEvaluate.getInputData()) {
 
         };
 

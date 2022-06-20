@@ -19,7 +19,7 @@ import org.dmg.pmml.PMML;
 import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.utils.FileUtils;
+import org.kie.efesto.common.api.utils.FileUtils;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;

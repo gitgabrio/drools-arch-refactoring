@@ -17,11 +17,11 @@ package org.kie.bar.engine.runtime.utils;/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.bar.engine.api.model.BarResources;
-import org.kie.bar.engine.runtime.model.DARInputBar;
-import org.kie.bar.engine.runtime.model.DAROutputBar;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
+import org.kie.bar.engine.runtime.model.EfestoInputBar;
+import org.kie.bar.engine.runtime.model.EfestoOutputBar;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,19 +38,19 @@ class BarRuntimeHelperTest {
 
     @Test
     void canManage() {
-        FRI fri = new FRI("/bar/dar", "bar");
-        AbstractDARInput darInputBar = new DARInputBar(fri, "InputData");
+        FRI fri = new FRI("/bar/efesto", "bar");
+        AbstractEfestoInput darInputBar = new EfestoInputBar(fri, "InputData");
         assertThat(BarRuntimeHelper.canManage(darInputBar)).isTrue();
-        darInputBar = new AbstractDARInput(fri, "InputData") {};
+        darInputBar = new AbstractEfestoInput(fri, "InputData") {};
         assertThat(BarRuntimeHelper.canManage(darInputBar)).isFalse();
-        fri = new FRI("/bar/dar", "notbar");
-        darInputBar = new DARInputBar(fri, "InputData");
+        fri = new FRI("/bar/efesto", "notbar");
+        darInputBar = new EfestoInputBar(fri, "InputData");
         assertThat(BarRuntimeHelper.canManage(darInputBar)).isFalse();
     }
 
     @Test
     void loadExistingBarResources() {
-        BarResources retrieved = BarRuntimeHelper.loadBarResources(new FRI("dar", "bar"), memoryCompilerClassLoader);
+        BarResources retrieved = BarRuntimeHelper.loadBarResources(new FRI("efesto", "bar"), memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getManagedResources()).hasSize(2);
         assertThat(retrieved.getManagedResources().contains("BarResOne")).isTrue();
@@ -60,7 +60,7 @@ class BarRuntimeHelperTest {
     @Test
     void loadNotExistingBarResources() {
         try {
-            BarRuntimeHelper.loadBarResources(new FRI("dar", "notbar"), memoryCompilerClassLoader);
+            BarRuntimeHelper.loadBarResources(new FRI("efesto", "notbar"), memoryCompilerClassLoader);
             fail("Expecting KieRuntimeServiceException");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(KieRuntimeServiceException.class);
@@ -68,11 +68,11 @@ class BarRuntimeHelperTest {
     }
 
     @Test
-    void getDAROutput() {
-        FRI fri = new FRI("dar", "bar");
+    void getEfestoOutput() {
+        FRI fri = new FRI("efesto", "bar");
         BarResources barResources = BarRuntimeHelper.loadBarResources(fri, memoryCompilerClassLoader);
-        DARInputBar darInputBar = new DARInputBar(fri, "InputData");
-        DAROutputBar retrieved = BarRuntimeHelper.getDAROutput(barResources, darInputBar);
+        EfestoInputBar darInputBar = new EfestoInputBar(fri, "InputData");
+        EfestoOutputBar retrieved = BarRuntimeHelper.getEfestoOutput(barResources, darInputBar);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getFRI()).isEqualTo(darInputBar.getFRI());
         assertThat(retrieved.getOutputData()).isEqualTo(darInputBar.getInputData());

@@ -16,15 +16,15 @@ package org.kie.pmml.compilation.service;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
 
 class KieCompilerServicePMMLTest {
 
@@ -41,29 +41,29 @@ class KieCompilerServicePMMLTest {
     @Test
     void canManageResource() {
         File pmmlFile = getFileFromFileName("LinearRegressionSample.pmml");
-        DARResource toProcess = new DARFileResource(pmmlFile);
+        EfestoResource toProcess = new EfestoFileResource(pmmlFile);
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        toProcess = () -> "DARRedirectOutput";
+        toProcess = () -> "EfestoRedirectOutput";
         assertThat(kieCompilerService.canManageResource(toProcess)).isFalse();
     }
 
 //    @Test
 //    void processResource() {
 //        File pmmlFile = getFileFromFileName("TestingSample.pmml");
-//        DARResource toProcess = new DARFileResource(pmmlFile);
-//        DARCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
-//        assertThat(retrieved).isNotNull().isInstanceOf(DARCallableOutputPMML.class);
+//        EfestoResource toProcess = new EfestoFileResource(pmmlFile);
+//        EfestoCompilationOutput retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+//        assertThat(retrieved).isNotNull().isInstanceOf(EfestoCallableOutputPMML.class);
 
     // TODO after enabling drools models
 //        pmmlFile = getFileFromFileName("SimpleSetPredicateTree.pmml");
-//        toProcess = new DARFileResource(pmmlFile);
+//        toProcess = new EfestoFileResource(pmmlFile);
 //        retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
 //        assertThat(retrieved).isNotNull();
-//        assertThat(retrieved instanceof DARRedirectOutputBar).isTrue();
-//        assertThat(((DARRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
+//        assertThat(retrieved instanceof EfestoRedirectOutputBar).isTrue();
+//        assertThat(((EfestoRedirectOutputBar) retrieved).getTargetEngine()).isEqualTo("foo");
 
 //        try {
-//            toProcess = () -> "DARRedirectOutput";
+//            toProcess = () -> "EfestoRedirectOutput";
 //            kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
 //            fail("Expecting KieCompilerServiceException");
 //        } catch (Exception e) {

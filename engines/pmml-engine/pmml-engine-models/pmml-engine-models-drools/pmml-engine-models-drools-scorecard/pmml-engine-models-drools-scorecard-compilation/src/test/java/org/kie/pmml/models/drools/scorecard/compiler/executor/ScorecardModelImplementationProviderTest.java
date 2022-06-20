@@ -18,7 +18,7 @@ package org.kie.pmml.models.drools.scorecard.compiler.executor;
 import org.dmg.pmml.PMML;
 import org.dmg.pmml.scorecard.Scorecard;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.utils.FileUtils;
+import org.kie.efesto.common.api.utils.FileUtils;
 import org.kie.pmml.api.enums.PMML_MODEL;
 import org.kie.pmml.compilation.api.dto.CommonCompilationDTO;
 import org.kie.pmml.compilation.commons.mocks.HasClassLoaderMock;

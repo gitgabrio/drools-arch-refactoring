@@ -19,7 +19,7 @@ package org.kie.pmml.models.mining.compilation.factories;
 import org.dmg.pmml.*;
 import org.dmg.pmml.mining.MiningModel;
 import org.dmg.pmml.mining.Segment;
-import org.kie.dar.common.api.utils.FileUtils;
+import org.kie.efesto.common.api.utils.FileUtils;
 import org.kie.pmml.compilation.commons.utils.KiePMMLUtil;
 import org.xml.sax.SAXException;
 

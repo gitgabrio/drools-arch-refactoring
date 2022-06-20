@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.api.utils.FileUtils.getFileInputStream;
+import static org.kie.efesto.common.api.utils.FileUtils.getFileInputStream;
 import static org.kie.pmml.compilation.commons.utils.KiePMMLUtil.*;
 
 public class KiePMMLUtilTest {

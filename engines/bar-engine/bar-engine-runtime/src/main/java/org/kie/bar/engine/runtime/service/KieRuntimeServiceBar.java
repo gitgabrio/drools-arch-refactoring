@@ -15,11 +15,11 @@
  */
 package org.kie.bar.engine.runtime.service;
 
-import org.kie.bar.engine.runtime.model.DARInputBar;
-import org.kie.bar.engine.runtime.model.DAROutputBar;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.model.DARInput;
-import org.kie.dar.runtimemanager.api.service.KieRuntimeService;
+import org.kie.bar.engine.runtime.model.EfestoInputBar;
+import org.kie.bar.engine.runtime.model.EfestoOutputBar;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.model.EfestoInput;
+import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +29,18 @@ import java.util.stream.Stream;
 
 import static org.kie.bar.engine.runtime.utils.BarRuntimeHelper.*;
 
-public class KieRuntimeServiceBar implements KieRuntimeService<String, String, DARInputBar, DAROutputBar> {
+public class KieRuntimeServiceBar implements KieRuntimeService<String, String, EfestoInputBar, EfestoOutputBar> {
 
     private static final Logger logger = LoggerFactory.getLogger(KieRuntimeServiceBar.class.getName());
 
 
     @Override
-    public boolean canManageInput(DARInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public boolean canManageInput(EfestoInput toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return canManage(toEvaluate);
     }
 
     @Override
-    public Optional<DAROutputBar> evaluateInput(DARInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
+    public Optional<EfestoOutputBar> evaluateInput(EfestoInputBar toEvaluate, KieMemoryCompiler.MemoryCompilerClassLoader memoryCompilerClassLoader) {
         return Stream.of(execute(toEvaluate, memoryCompilerClassLoader),
                         redirect(toEvaluate, memoryCompilerClassLoader))
                 .filter(Optional::isPresent)

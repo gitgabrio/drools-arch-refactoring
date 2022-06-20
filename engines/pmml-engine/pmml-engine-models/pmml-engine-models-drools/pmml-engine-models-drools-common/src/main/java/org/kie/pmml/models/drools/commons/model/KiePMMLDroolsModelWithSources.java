@@ -16,7 +16,7 @@
 package org.kie.pmml.models.drools.commons.model;
 
 import org.drools.drl.ast.descr.PackageDescr;
-import org.kie.dar.common.api.model.FRI;
+import org.kie.efesto.common.api.model.FRI;
 import org.kie.pmml.api.models.MiningField;
 import org.kie.pmml.api.models.OutputField;
 import org.kie.pmml.api.models.TargetField;
@@ -28,7 +28,7 @@ import org.kie.pmml.commons.model.KiePMMLModelWithSources;
 import java.util.List;
 import java.util.Map;
 
-import static org.kie.dar.common.api.model.FRI.SLASH;
+import static org.kie.efesto.common.api.model.FRI.SLASH;
 
 /**
  * KIE representation of PMML model that use <b>Drools</b> for implementation
@@ -41,7 +41,7 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
 
     private final PackageDescr packageDescr;
 
-    private final DARRedirectOutputPMMLDrl redirectOutput;
+    private final EfestoRedirectOutputPMMLDrl redirectOutput;
 
     public KiePMMLDroolsModelWithSources(final String modelName,
                                          final String fileName,
@@ -56,7 +56,7 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
         this.pkgUUID = pkgUUID;
         this.packageDescr = packageDescr;
         String basePath = fileName + SLASH + modelName;
-        redirectOutput = new DARRedirectOutputPMMLDrl(new FRI(basePath, "pmml"), packageDescr, "drl");
+        redirectOutput = new EfestoRedirectOutputPMMLDrl(new FRI(basePath, "pmml"), packageDescr, "drl");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class KiePMMLDroolsModelWithSources extends KiePMMLModelWithSources imple
     }
 
     @Override
-    public DARRedirectOutputPMMLDrl getRedirectOutput() {
+    public EfestoRedirectOutputPMMLDrl getRedirectOutput() {
         return redirectOutput;
     }
 

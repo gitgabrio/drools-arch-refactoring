@@ -15,7 +15,7 @@
  */
 package org.kie.bar.engine.compilation;
 
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -47,7 +47,7 @@ public class TestingUtils {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }

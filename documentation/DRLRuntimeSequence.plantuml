@@ -8,14 +8,14 @@ autonumber 1
 actor Input_provider
 note over Input_provider: Any service requiring DRL evaluation (e.g. Kogito, KieServer)
 
-Input_provider -> Runtime_Manager: execute (DARInputDrlKieSessionLocal)
-Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (DARInputDrlKieSessionLocal)
+Input_provider -> Runtime_Manager: execute (EfestoInputDrlKieSessionLocal)
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (EfestoInputDrlKieSessionLocal)
 KieRuntimeServiceDrlMapInput --> Runtime_Manager: false
-Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (DARInputDrlKieSessionLocal)
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (EfestoInputDrlKieSessionLocal)
 KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: true
-Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: evaluateInput (DARInputDrlKieSessionLocal)
-KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: Optional<DAROutputDrlKieSessionLocal>
-Runtime_Manager -> Input_provider: Optional<DAROutputDrlKieSessionLocal>
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: evaluateInput (EfestoInputDrlKieSessionLocal)
+KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: Optional<EfestoOutputDrlKieSessionLocal>
+Runtime_Manager -> Input_provider: Optional<EfestoOutputDrlKieSessionLocal>
 
 
 newpage MapInput Resource
@@ -23,13 +23,13 @@ newpage MapInput Resource
 autonumber 1
 note over Input_provider: Any service requiring DRL evaluation (e.g. Kogito, KieServer)
 
-Input_provider -> Runtime_Manager: execute (DARInputDrlMap)
-Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (DARInputDrlMap)
+Input_provider -> Runtime_Manager: execute (EfestoInputDrlMap)
+Runtime_Manager --> KieRuntimeServiceDrlKieSessionLocal: canManageInput (EfestoInputDrlMap)
 KieRuntimeServiceDrlKieSessionLocal --> Runtime_Manager: false
-Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (DARInputDrlMap)
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: canManageInput (EfestoInputDrlMap)
 KieRuntimeServiceDrlMapInput --> Runtime_Manager: true
-Runtime_Manager --> KieRuntimeServiceDrlMapInput: evaluateInput (DARInputDrlMap)
-KieRuntimeServiceDrlMapInput --> Runtime_Manager: Optional<DAROutputDrlMap>
-Runtime_Manager -> Input_provider: Optional<DAROutputDrlMap>
+Runtime_Manager --> KieRuntimeServiceDrlMapInput: evaluateInput (EfestoInputDrlMap)
+KieRuntimeServiceDrlMapInput --> Runtime_Manager: Optional<EfestoOutputDrlMap>
+Runtime_Manager -> Input_provider: Optional<EfestoOutputDrlMap>
 
 @enduml

@@ -16,9 +16,9 @@ package org.kie.drl.engine.compilation;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.compilationmanager.api.model.DARCompilationOutput;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.KieCompilerService;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.drl.engine.compilation.model.DrlFileSetResource;
 import org.kie.drl.engine.compilation.service.KieCompilerServiceDrl;
 import org.kie.memorycompiler.KieMemoryCompiler;
@@ -51,10 +51,10 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
+        EfestoResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
         // this is really only testing the constant field "drl" so it is always true...
         assertThat(kieCompilerService.canManageResource(toProcess)).isTrue();
-        DARResource<String> toProcess2 = () -> "DARRedirectOutput";
+        EfestoResource<String> toProcess2 = () -> "EfestoRedirectOutput";
         assertThat(kieCompilerService.canManageResource(toProcess2)).isFalse();
     }
 
@@ -65,8 +65,8 @@ class KieCompilerServiceDrlTest {
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .collect(Collectors.toSet());
-        DARResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
-        List<DARCompilationOutput> retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
+        EfestoResource<Set<File>> toProcess = new DrlFileSetResource(files, "BasePath");
+        List<EfestoCompilationOutput> retrieved = kieCompilerService.processResource(toProcess, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().hasSize(1);
     }
 

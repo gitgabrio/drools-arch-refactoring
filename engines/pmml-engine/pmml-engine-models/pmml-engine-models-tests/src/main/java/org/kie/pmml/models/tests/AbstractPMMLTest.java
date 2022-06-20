@@ -17,12 +17,12 @@ package org.kie.pmml.models.tests;
 
 import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.api.utils.SPIUtils;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
 import org.kie.memorycompiler.KieMemoryCompiler;
 import org.kie.pmml.api.models.PMMLStep;
 import org.kie.pmml.api.runtime.PMMLListener;
@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.api.utils.FileUtils.getFile;
+import static org.kie.efesto.common.api.utils.FileUtils.getFile;
 
 public class AbstractPMMLTest {
 
@@ -50,7 +50,7 @@ public class AbstractPMMLTest {
         fileName += ".pmml";
         memoryCompilerClassLoader = new KieMemoryCompiler.MemoryCompilerClassLoader(Thread.currentThread().getContextClassLoader());
         File pmmlFile = getFile(fileName);
-        DARResource darResource = new DARFileResource(pmmlFile);
+        EfestoResource darResource = new EfestoFileResource(pmmlFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResource, memoryCompilerClassLoader);
         return new PMMLRuntimeInternalImpl(memoryCompilerClassLoader);
     }

@@ -17,18 +17,18 @@ package org.kie.drl.engine.testingmodule.runtime;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.exceptions.KieDARCommonException;
-import org.kie.dar.common.api.io.IndexFile;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.common.api.model.GeneratedResources;
-import org.kie.dar.compilationmanager.api.model.DARFileResource;
-import org.kie.dar.compilationmanager.api.model.DARResource;
-import org.kie.dar.compilationmanager.api.service.CompilationManager;
-import org.kie.dar.compilationmanager.core.service.CompilationManagerImpl;
-import org.kie.dar.runtimemanager.api.model.DAROutput;
-import org.kie.dar.runtimemanager.api.service.RuntimeManager;
-import org.kie.dar.runtimemanager.core.service.RuntimeManagerImpl;
-import org.kie.foo.engine.runtime.model.DARInputFoo;
+import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
+import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.model.GeneratedResources;
+import org.kie.efesto.compilationmanager.api.model.EfestoFileResource;
+import org.kie.efesto.compilationmanager.api.model.EfestoResource;
+import org.kie.efesto.compilationmanager.api.service.CompilationManager;
+import org.kie.efesto.compilationmanager.core.service.CompilationManagerImpl;
+import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.core.service.RuntimeManagerImpl;
+import org.kie.foo.engine.runtime.model.EfestoInputFoo;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.io.File;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.dar.common.api.utils.JSONUtils.getGeneratedResourcesObject;
+import static org.kie.efesto.common.api.utils.JSONUtils.getGeneratedResourcesObject;
 
 class RuntimeFooTest {
 
@@ -56,11 +56,11 @@ class RuntimeFooTest {
 
     @Test
     void evaluateFooCompilationOnTheFly() throws IOException {
-        DARInputFoo toEvaluate = new DARInputFoo(new FRI("dar", "foo"), "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputFoo toEvaluate = new EfestoInputFoo(new FRI("efesto", "foo"), "InputData");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput.isEmpty()).isTrue();
         File fooFile = getFileFromFileName("DarFoo.foo");
-        DARResource darResourceFileFoo = new DARFileResource(fooFile);
+        EfestoResource darResourceFileFoo = new EfestoFileResource(fooFile);
         List<IndexFile> indexFiles = compilationManager.processResource(darResourceFileFoo, memoryCompilerClassLoader);
         assertThat(indexFiles.size()).isEqualTo(1);
         IndexFile retrieved = indexFiles.get(0);
@@ -71,8 +71,8 @@ class RuntimeFooTest {
 
     @Test
     void evaluateFooStaticCompilation() {
-        DARInputFoo toEvaluate = new DARInputFoo(new FRI("staticdar", "foo"), "InputData");
-        Optional<DAROutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
+        EfestoInputFoo toEvaluate = new EfestoInputFoo(new FRI("staticdar", "foo"), "InputData");
+        Optional<EfestoOutput> darOutput = runtimeManager.evaluateInput(toEvaluate, memoryCompilerClassLoader);
         assertThat(darOutput.isPresent()).isTrue();
     }
 
@@ -81,7 +81,7 @@ class RuntimeFooTest {
             final URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
             return Paths.get(resource.toURI()).toFile();
         } catch (Exception e) {
-            throw new KieDARCommonException(String.format("Failed to retrieve %s due to %s", fileName,
+            throw new KieEfestoCommonException(String.format("Failed to retrieve %s due to %s", fileName,
                     e.getMessage()), e);
         }
     }

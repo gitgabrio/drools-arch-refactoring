@@ -16,13 +16,13 @@ package org.kie.drl.engine.runtime.mapinput.utils;/*
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.kie.dar.common.api.model.FRI;
-import org.kie.dar.runtimemanager.api.model.AbstractDARInput;
-import org.kie.dar.runtimemanager.api.model.DARMapInputDTO;
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
 import org.kie.drl.engine.mapinput.compilation.model.test.Applicant;
 import org.kie.drl.engine.mapinput.compilation.model.test.LoanApplication;
-import org.kie.drl.engine.runtime.mapinput.model.DARInputDrlMap;
-import org.kie.drl.engine.runtime.mapinput.model.DAROutputDrlMap;
+import org.kie.drl.engine.runtime.mapinput.model.EfestoInputDrlMap;
+import org.kie.drl.engine.runtime.mapinput.model.EfestoOutputDrlMap;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
 import java.util.*;
@@ -43,13 +43,13 @@ class DrlRuntimeHelperTest {
     @Test
     void canManage() {
         FRI fri = new FRI(basePath, "drl");
-        AbstractDARInput darInputDrlMap = new DARInputDrlMap(fri, new DARMapInputDTO(null, null, null, null, null, null));
+        AbstractEfestoInput darInputDrlMap = new EfestoInputDrlMap(fri, new EfestoMapInputDTO(null, null, null, null, null, null));
         assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isTrue();
-        darInputDrlMap = new AbstractDARInput(fri, "") {
+        darInputDrlMap = new AbstractEfestoInput(fri, "") {
         };
         assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isFalse();
         fri = new FRI("notexisting", "drl");
-        darInputDrlMap = new DARInputDrlMap(fri, null);
+        darInputDrlMap = new EfestoInputDrlMap(fri, null);
         assertThat(DrlRuntimeHelper.canManage(darInputDrlMap)).isFalse();
     }
 
@@ -66,10 +66,10 @@ class DrlRuntimeHelperTest {
         globals.put("approvedApplications", approvedApplications);
         globals.put("maxAmount", 5000);
 
-        DARMapInputDTO darMapInputDTO = new DARMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap(), "modelname", "packageName");
+        EfestoMapInputDTO darMapInputDTO = new EfestoMapInputDTO(inserts, globals, Collections.emptyMap(), Collections.emptyMap(), "modelname", "packageName");
 
-        DARInputDrlMap darInputDrlMap = new DARInputDrlMap(new FRI(basePath, "drl"), darMapInputDTO);
-        Optional<DAROutputDrlMap> retrieved = DrlRuntimeHelper.execute(darInputDrlMap, memoryCompilerClassLoader);
+        EfestoInputDrlMap darInputDrlMap = new EfestoInputDrlMap(new FRI(basePath, "drl"), darMapInputDTO);
+        Optional<EfestoOutputDrlMap> retrieved = DrlRuntimeHelper.execute(darInputDrlMap, memoryCompilerClassLoader);
         assertThat(retrieved).isNotNull().isPresent();
         assertThat(approvedApplications).hasSize(1);
         LoanApplication approvedApplication = approvedApplications.get(0);
